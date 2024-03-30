@@ -25,19 +25,19 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-01-21 17:44+0000\n"
-"Last-Translator: Сергій <sergiy.goncharuk.1@gmail.com>\n"
-"Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/"
-"blueman/uk/>\n"
+"PO-Revision-Date: 2024-03-30 12:33+0000\n"
+"Last-Translator: Pavlo <acid@jack.kiev.ua>\n"
+"Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/2-4/uk/"
+">\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-"X-Generator: Weblate 5.4-dev\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
+"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
+"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
+"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"X-Generator: Weblate 5.5-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -434,11 +434,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Натисніть, щоб вимкнути."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Натисніть, щоб увімкнути."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -1181,10 +1181,8 @@ msgid "Game"
 msgstr "Гра"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Універсальний телефон"
+msgstr "Універсальний невідомий"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1196,81 +1194,71 @@ msgstr "Універсальний комп'ютер"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Робоча станція"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Універсальний комп'ютер"
+msgstr "Комп'ютер серверного типу"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Портативний ПК/КПК (трансформер)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Кишеньковий комп'ютер/КПК"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Носимий ком'ютер (наручний)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Планшет"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Док-станція"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Все-в-одному"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "Сервер"
+msgstr "Blade-сервер"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Складаний"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Для носіння"
+msgstr "З'ємний"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT-шлюз"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Міпі-ПК"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Стік-ПК"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
 msgstr "Універсальний годинник"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Watch: Sports Watch"
 msgid "Sports Watch"
-msgstr "Годинники: Спортивний годинник"
+msgstr "Спортивний годинник"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
-#| msgid "Wrist watch"
 msgid "Smartwatch"
-msgstr "Наручний годинник"
+msgstr "Смарт-годинник"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
@@ -1309,44 +1297,32 @@ msgid "Generic Thermometer"
 msgstr "Універсальний термометр"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Ear Thermometer"
-msgstr "Термометр здоров'я"
+msgstr "Вушний термометр"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Heart Rate Sensor"
-msgstr "Універсальний датник пульсу"
+msgstr "Універсальний датчик пульсу"
 
 #: blueman/DeviceClass.py:200
-#, fuzzy
-#| msgid "Heart Rate"
 msgid "Heart Rate Belt"
-msgstr "Пульс"
+msgstr "Пояс вимірювання пульсу"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
-msgstr "Універсальний датник артеріального тиску"
+msgstr "Універсальний датчик артеріального тиску"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Arm Blood Pressure"
-msgstr "Артеріальний тиск"
+msgstr "Артеріальний тиск на руці"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Wrist Blood Pressure"
-msgstr "Артеріальний тиск"
+msgstr "Артеріальний тиск на зап'ястці"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "Пристрій інтерфейсу людини"
+msgstr "Універсальний пристрій інтерфейсу людини"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1378,251 +1354,211 @@ msgstr "Сканер штрих-кодів"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Сенсорна панель"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Пульт керування презентацією"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
 msgstr "Універсальний вимірювач глюкози"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "Generic Running Walking Sensor"
-msgstr "Універсальне: Датник бігу та ходьби"
+msgstr "Універсальний датчик бігу та ходьби"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "In-Shoe Running Walking Sensor"
-msgstr "Універсальне: Датник бігу та ходьби"
+msgstr "Датчик бігу та ходьби у взутті"
 
 #: blueman/DeviceClass.py:218
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Shoe Running Walking Sensor"
-msgstr "Універсальне: Датник бігу та ходьби"
+msgstr "Датчик бігу та ходьби на взутті"
 
 #: blueman/DeviceClass.py:219
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Hip Running Walking Sensor"
-msgstr "Універсальне: Датник бігу та ходьби"
+msgstr "Датчик бігу та ходьби на стегні"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "Універсальне: Їзда на велосипеді"
+msgstr "Універсальна їзда на велосипеді"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "Їзда на велосипеді: Велосипедний комп'ютер"
+msgstr "Велосипедний комп'ютер"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Їзда на велосипеді: Датник швидкості"
+msgstr "Датчик швидкості"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Їзда на велосипеді: Датник частоти обертання педалей"
+msgstr "Датчик частоти обертання педалей"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Їзда на велосипеді: Датник потужності"
+msgstr "Датчик потужності"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "Їзда на велосипеді: Датник швидкості та частоти обертання педалей"
+msgstr "Датчик швидкості та частоти обертання педалей"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Control Device"
-msgstr "Універсальний персональний мобільний пристрій"
+msgstr "Універсальний пристрій керування"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Перемикач"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Багатопозиційний перемикач"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Кнопка"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Повзунок"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Поворотний перемикач"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Сенсорна панель"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Одинарний перемикач"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Подвійний перемикач"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Потрійний перемикач"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "Служба акумулятора"
+msgstr "Перемикач акумулятора"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Перемикач накопичення енергії"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Нажимна кнопка"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Номеронабирач"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Network Device"
-msgstr "Універсальна мережа"
+msgstr "Універсальний мережевий пристрій"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Point"
 msgstr "Точка доступу"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Пристрій"
+msgstr "Mesh-пристрій"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Посередник mesh-мережі"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "Універсальний датник пульсу"
+msgstr "Універсальний датчик"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Датчик руху"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Датчик якості повітря"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Універсальний датник пульсу"
+msgstr "Датчик температури"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Датчик вологості"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Датчик витоку"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Датчик диму"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Датчик зайнятості"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Датчик дотику"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Датчик монооксиду вуглецю"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Датчик діоксиду вуглецю"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Датчик навколишнього освітлення"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Датчик енергії"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Датчика кольору світла"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Датчик дощу"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Передавач файлів"
+msgstr "Датчик вогню"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "Їзда на велосипеді: Датник швидкості"
+msgstr "Датчик вітру"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Датчик наближення"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Мультисенсор"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:264
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Ceiling Mounted Sensor"
-msgstr "Їзда на велосипеді: Датник швидкості"
+msgstr "Стельовий датчик"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
@@ -1645,10 +1581,8 @@ msgid "Vehicle Tire Pressure Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "Універсальне: Ваги"
+msgstr "Універсальні світильники"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
@@ -1731,10 +1665,8 @@ msgid "Emergency Exit Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Контролер"
+msgstr "Контролер освітлення"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
@@ -1753,10 +1685,8 @@ msgid "High-bay Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Універсальний тег"
+msgstr "Універсальний вентилятор"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
@@ -1783,16 +1713,12 @@ msgid "Wall Fan"
 msgstr ""
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
-#| msgid "Generic Clock"
 msgid "Generic HVAC"
-msgstr "Універсальні годинники"
+msgstr "Універсальна система ОВК"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Термометр: вушний"
+msgstr "Термостат"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
@@ -1835,124 +1761,104 @@ msgid "Air Curtain"
 msgstr ""
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "Універсальний звук"
+msgstr "Універсальний кондиціонер"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "Універсальний звук"
+msgstr "Універсальний зволожувач"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Heating"
-msgstr "Універсальне кільце"
+msgstr "Універсальний нагрівач"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
-#| msgid "Generic Access"
 msgid "Generic Access Control"
-msgstr "Загальний доступ"
+msgstr "Універсальний контроль доступу"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Door"
-msgstr "Точка доступу"
+msgstr "Вхідні двері"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Гаражні двері"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Двері аварійного виходу"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Lock"
-msgstr "Точка доступу"
+msgstr "Блокування доступу"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Ліфт"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Вікно"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "Вхідні ворота"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Дверний замок"
 
 #: blueman/DeviceClass.py:334
-#, fuzzy
-#| msgid "Blocked"
 msgid "Locker"
-msgstr "Заблокований"
+msgstr "Шафка"
 
 #: blueman/DeviceClass.py:335
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Motorized Device"
-msgstr "Універсальний персональний мобільний пристрій"
+msgstr "Універсальний моторизований пристрій"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "Моторизовані ворота"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Тент"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Жалюзі або штори"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "Штори"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Екран"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Power Device"
-msgstr "Універсальний персональний мобільний пристрій"
+msgstr "Універсальний пристрій живлення"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "Розетка"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Подовжувач живлення"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Плагіни"
+msgstr "Вилка"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Джерело живлення"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "Світлодіодний драйвер"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
@@ -1971,10 +1877,8 @@ msgid "Power Bank"
 msgstr ""
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Source"
-msgstr "Універсальне: Ваги"
+msgstr "Універсальне джерело світла"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
@@ -2009,10 +1913,8 @@ msgid "Organic light emitting diode (OLED)"
 msgstr ""
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Window Covering"
-msgstr "Універсальне кільце"
+msgstr "Універсальне вітринне укриття"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
@@ -2039,10 +1941,8 @@ msgid "Exterior Screen"
 msgstr ""
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Sink"
-msgstr "Універсальний звук"
+msgstr "Універсальна звукова раковина"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
@@ -2061,16 +1961,12 @@ msgid "Standmounted Speaker"
 msgstr ""
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
-#| msgid "Smartphone"
 msgid "Speakerphone"
-msgstr "Смартфон"
+msgstr "Гучномовець"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Source"
-msgstr "Універсальний звук"
+msgstr "Універсальне джерело звуку"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
@@ -2085,16 +1981,12 @@ msgid "Horn"
 msgstr ""
 
 #: blueman/DeviceClass.py:378
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Broadcasting Device"
-msgstr "Пристрій відображення розташування"
+msgstr "Трансляційний пристрій"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Служба:"
+msgstr "Служба підтримки"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
@@ -2105,26 +1997,20 @@ msgid "Broadcasting Room"
 msgstr ""
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Звуковий профіль"
+msgstr "Аудиторія"
 
 #: blueman/DeviceClass.py:383
-#, fuzzy
-#| msgid "Generic Media Player"
 msgid "Generic Motorized Vehicle"
-msgstr "Універсальний програвач медіа"
+msgstr "Універсальний моторизований транспорт"
 
 #: blueman/DeviceClass.py:384
-#, fuzzy
-#| msgid "Camera"
 msgid "Car"
-msgstr "Камера"
+msgstr "Автомобіль"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Великий вантажний автомобіль"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
@@ -2135,10 +2021,8 @@ msgid "Motorbike"
 msgstr ""
 
 #: blueman/DeviceClass.py:388
-#, fuzzy
-#| msgid "Mobility Scooter"
 msgid "Scooter"
-msgstr "Мобільний скутер"
+msgstr "Скутер"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
@@ -2149,10 +2033,8 @@ msgid "3-Wheeled Vehicle"
 msgstr ""
 
 #: blueman/DeviceClass.py:391
-#, fuzzy
-#| msgid "Vehicle"
 msgid "Light Vehicle"
-msgstr "Транспортний засіб"
+msgstr "Малолітражний автомобіль"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
