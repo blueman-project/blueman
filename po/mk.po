@@ -12,10 +12,10 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-02-24 04:21+0000\n"
+"PO-Revision-Date: 2024-04-01 16:01+0000\n"
 "Last-Translator: \"Kristijan \\\"Fremen\\\" Velkovski\" <me@krisfremen.com>\n"
-"Language-Team: Macedonian <https://hosted.weblate.org/projects/blueman/"
-"blueman/mk/>\n"
+"Language-Team: Macedonian <https://hosted.weblate.org/projects/blueman/2-4/"
+"mk/>\n"
 "Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -109,7 +109,7 @@ msgstr "_Додаден"
 
 #: data/ui/manager-main.ui:206
 msgid "_Descending"
-msgstr ""
+msgstr "_Опаѓачки"
 
 #: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
@@ -395,6 +395,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Се чини дека blueman-manager не може да се активира преку D-Bus. Типична "
+"причина за ова е скршено графичко поставување во околината за активирање D-"
+"Bus што може да се реши со повик до dbus-update-activation-environment, "
+"обично издаден од xinitrc (односно Sway конфигурацијата или слично)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -412,11 +416,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Кликнете за да се исклучи."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Кликнете за да се вклучи."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -450,6 +454,8 @@ msgstr "obexd е недостапен"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Не успеа автоматското стартување на услугата obex. Проверете дали работи "
+"демонот obex"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -551,6 +557,10 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Се појави грешка при вчитување на приклучокот. Ве молиме известете ги "
+"програмерите со содржината на оваа порака на нашата </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\""
+">веб-страница.</a>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -558,7 +568,7 @@ msgstr "Блутутот е исклучен"
 
 #: blueman/Functions.py:71
 msgid "Exit"
-msgstr ""
+msgstr "Излез"
 
 #: blueman/Functions.py:72
 msgid "Enable Bluetooth"
