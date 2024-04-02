@@ -270,12 +270,20 @@ class ManagerDeviceList(DeviceList):
     def _load_surface(self, icon_name: str, size: int) -> cairo.ImageSurface:
         window = self.get_window()
         scale = self.get_scale_factor()
-        surface = self.icon_theme.load_surface(icon_name, size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
-        if surface is None:
-            surface = self.icon_theme.load_surface("image-missing", size, scale, window, Gtk.IconLookupFlags.FORCE_SIZE)
-        assert surface is not None
+        icon_info = self.icon_theme.lookup_icon_for_scale(icon_name, size, scale, Gtk.IconLookupFlags.FORCE_SIZE)
 
-        return cast(cairo.ImageSurface, surface)
+        if icon_info is None:
+            logging.error(f"Failed to look up icon \"{icon_name}\" likely due to broken icon theme.")
+            missing_icon_info = self.icon_theme.lookup_icon_for_scale(
+                "image-missing",
+                size,
+                scale,
+                Gtk.IconLookupFlags.FORCE_SIZE
+            )
+            assert missing_icon_info is not None
+            return cast(cairo.ImageSurface, missing_icon_info.load_surface(window))
+        else:
+            return cast(cairo.ImageSurface, icon_info.load_surface(window))
 
     def _make_device_icon(self, icon_name: str, is_paired: bool, is_connected: bool, is_trusted: bool,
                           is_blocked: bool) -> cairo.ImageSurface:
