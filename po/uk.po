@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-04-02 18:33+0000\n"
+"PO-Revision-Date: 2024-04-03 18:00+0000\n"
 "Last-Translator: Pavlo <acid@jack.kiev.ua>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/2-4/uk/"
 ">\n"
@@ -33,10 +33,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
-"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
-"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
-"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
+"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
+"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
+"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 "X-Generator: Weblate 5.5-dev\n"
 
 #: data/ui/adapters-tab.ui:30
@@ -1043,7 +1043,7 @@ msgstr "Мікрофон"
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr "Гучномовець"
+msgstr "Пристрій гучного зв'язку"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
@@ -1262,7 +1262,7 @@ msgstr "Смарт-годинник"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
-msgstr "Універсальний годинник"
+msgstr "Типовий годинник"
 
 #: blueman/DeviceClass.py:190
 msgid "Generic Display"
@@ -2226,15 +2226,15 @@ msgstr "Типовий слуховий апарат"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "Внутрішній слуховий апарат"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "Зовнішній слуховий апарат"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Кохлеарний імплант"
 
 #: blueman/DeviceClass.py:444
 msgid "Generic Gaming"
@@ -2250,11 +2250,11 @@ msgstr "Портативна ігрова консоль"
 
 #: blueman/DeviceClass.py:447
 msgid "Generic Signage"
-msgstr "Типовий вказівник"
+msgstr "Типове табло"
 
 #: blueman/DeviceClass.py:448
 msgid "Digital Signage"
-msgstr "Цифровий вказівник"
+msgstr "Цифрове табло"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
@@ -2290,11 +2290,11 @@ msgstr "Мобільний скутер"
 
 #: blueman/DeviceClass.py:457
 msgid "Generic Continuous Glucose Monitor"
-msgstr "Універсальний безперервний монітор глюкози"
+msgstr "Типовий безперервний монітор глюкози"
 
 #: blueman/DeviceClass.py:458
 msgid "Generic Insulin Pump"
-msgstr "Універсальний інсуліновий насос"
+msgstr "Типовий інсуліновий насос"
 
 #: blueman/DeviceClass.py:459
 msgid "Insulin Pump, durable pump"
@@ -2310,29 +2310,23 @@ msgstr "Інсулінова ручка"
 
 #: blueman/DeviceClass.py:462
 msgid "Generic Medication Delivery"
-msgstr "Універсальна медична доставка"
+msgstr "Типова медична доставка"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
-#| msgid "Generic Thermometer"
 msgid "Generic Spirometer"
-msgstr "Універсальний термометр"
+msgstr "Типовий спірометр"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "Наручний спірометр"
 
 #: blueman/DeviceClass.py:465
-#, fuzzy
-#| msgid "Generic: Outdoor Sports Activity"
 msgid "Generic Outdoor Sports Activity"
-msgstr "Універсальне: Діяльність на свіжому повітрі"
+msgstr "Загальні активності на свіжому повітрі"
 
 #: blueman/DeviceClass.py:466
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Location Display"
-msgstr "Пристрій відображення розташування"
+msgstr "Відображення розташування"
 
 #: blueman/DeviceClass.py:467
 msgid "Location and Navigation Display"
@@ -2696,19 +2690,19 @@ msgstr "Відомості про PnP"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr "Універсальна мережа"
+msgstr "Типова мережа"
 
 #: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
-msgstr "Універсальна передача файлів"
+msgstr "Типова передача файлів"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr "Універсальний звук"
+msgstr "Типовій звук"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr "Універсальна телефонія"
+msgstr "Типова телефонія"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
