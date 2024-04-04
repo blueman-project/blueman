@@ -1,5 +1,6 @@
 import logging
 from gettext import gettext as _
+from html import escape
 from typing import TYPE_CHECKING, Any, Dict, List, Mapping, Callable
 
 from blueman.main.PulseAudioUtils import EventType, PulseAudioUtils
@@ -62,7 +63,7 @@ class AudioProfiles(AppletPlugin):
             if not info:
                 return items
             for profile in info["profiles"]:
-                profile_name = profile["description"]
+                profile_name = escape(profile["description"])
                 profile_icon = "bluetooth-symbolic"
                 if profile["name"] == info["active_profile"]:
                     profile_name = f"<b>{profile_name}</b>"
