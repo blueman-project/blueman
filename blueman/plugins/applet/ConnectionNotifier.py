@@ -25,15 +25,16 @@ class ConnectionNotifier(AppletPlugin):
     def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
+            icon_name = device["Icon"] + "-symbolic"
             if value:
                 self._notifications[path] = notification = Notification(
                     device.display_name,
                     _('Connected'),
-                    icon_name=device["Icon"]
+                    icon_name=icon_name,
                 )
                 notification.show()
             else:
-                Notification(device.display_name, _('Disconnected'), icon_name=device["Icon"]).show()
+                Notification(device.display_name, _('Disconnected'), icon_name=icon_name).show()
 
     def _on_battery_update(self, path: str, value: int) -> None:
         notification = self._notifications[path]

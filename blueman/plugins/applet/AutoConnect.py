@@ -49,7 +49,7 @@ class AutoConnect(AppletPlugin):
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},
-                             icon_name=dev["Icon"]).show()
+                             icon_name=dev["Icon"] + "-symbolic").show()
 
             def err(_reason: Union[Exception, str]) -> None:
                 pass

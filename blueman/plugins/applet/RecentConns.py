@@ -153,7 +153,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         def reply() -> None:
             assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
             Notification(_("Connected"), _("Connected to %s") % item["mitem"]["text"],
-                         icon_name=item["icon"]).show()
+                         icon_name=item["icon"] + "-symbolic").show()
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
@@ -170,7 +170,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         mitem: "SubmenuItemDict" = {
             "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]},
             "markup": True,
-            "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
+            "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"] + "symbolic",
             "sensitive": item["device"] is not None,
             "tooltip": None if item["device"] is None else _("Adapter for this connection is not available"),
             "callback": (item["mitem"]["callback"] if item["mitem"] is not None

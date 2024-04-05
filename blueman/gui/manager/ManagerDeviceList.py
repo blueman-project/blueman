@@ -280,7 +280,7 @@ class ManagerDeviceList(DeviceList):
     def _make_device_icon(self, icon_name: str, is_paired: bool, is_connected: bool, is_trusted: bool,
                           is_blocked: bool) -> cairo.ImageSurface:
         scale = self.get_scale_factor()
-        target = self._load_surface(icon_name, 48)
+        target = self._load_surface(icon_name + "-symbolic", 48)
         ctx = cairo.Context(target)
 
         if is_connected or is_paired:

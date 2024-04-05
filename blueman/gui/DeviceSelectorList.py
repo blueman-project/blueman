@@ -59,4 +59,4 @@ class DeviceSelectorList(DeviceList):
             self.set(tree_iter, caption=escape(value))
 
         elif key == "Icon":
-            self.set(tree_iter, device_icon=value)
+            self.set(tree_iter, device_icon=value + "-symbolic")
