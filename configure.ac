@@ -318,6 +318,24 @@ data/configs/org.blueman.Mechanism.service
 module/Makefile
 po/Makefile.in
 sendto/Makefile
+test/Makefile
+test/apps/Makefile
+test/bluez/Makefile
+test/bluez/obex/Makefile
+test/gui/Makefile
+test/gui/applet/Makefile
+test/gui/manager/Makefile
+test/main/Makefile
+test/main/applet/Makefile
+test/main/indicators/Makefile
+test/module/Makefile
+test/plugins/Makefile
+test/plugins/applet/Makefile
+test/plugins/manager/Makefile
+test/plugins/mechanism/Makefile
+test/plugins/services/Makefile
+test/services/Makefile
+test/services/meta/Makefile
 ])
 
 
