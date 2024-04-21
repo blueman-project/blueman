@@ -78,7 +78,7 @@ class ManagerService(ProxyBase):
 
         param = GLib.Variant('(sava{sv})', (name, [], {}))
         self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
-    
+
     def startstop(self) -> None:
         if Gio.Settings(schema_id='org.blueman.general')['toggle-manager-onclick']:
             if self.get_name_owner() is None:
