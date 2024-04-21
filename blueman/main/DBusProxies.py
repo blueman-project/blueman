@@ -51,7 +51,7 @@ class ManagerService(ProxyBase):
                          object_path="/org/blueman/Manager",
                          flags=Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION)
 
-    def activate(self) -> None:
+    def _activate(self) -> None:
         try:
             param = GLib.Variant('(a{sv})', ({},))
             self.call_sync("Activate", param, Gio.DBusCallFlags.NONE, -1, None)
@@ -78,3 +78,12 @@ class ManagerService(ProxyBase):
 
         param = GLib.Variant('(sava{sv})', (name, [], {}))
         self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
+    
+    def startstop(self) -> None:
+        if Gio.Settings(schema_id='org.blueman.general')['toggle-manager-onclick']:
+            if self.get_name_owner() is None:
+                self._activate()
+            else:
+                self._call_action("Quit")
+        else:
+            self._activate()
