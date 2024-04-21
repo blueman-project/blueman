@@ -81,6 +81,11 @@
       <summary>Use symbolic icons in the status tray</summary>
       <description>If this is set to true blueman uses symbolic icon in the status tray, otherwise it uses fullcolor icons.</description>
     </key>
+    <key type="b" name="toggle-manager-onclick">
+      <default>false</default>
+      <summary>Toggle the manager on clicking the system tray icon</summary>
+      <description>If this is set to true clicking the system tray icon will toggle the manager instead of focusing on it.</description>
+    </key>
   </schema>
   <schema id="org.blueman.gsmsettings" path="/org/blueman/gsmsettings/">
   </schema>
