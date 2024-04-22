@@ -80,7 +80,7 @@ class ManagerService(ProxyBase):
         self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
 
     def startstop(self) -> None:
-        if Gio.Settings(schema_id='org.blueman.general')['toggle-manager-onclick']:
+        if Gio.Settings(schema_id='org.blueman.plugins.standarditems')['toggle-manager-onclick']:
             if self.get_name_owner() is None:
                 self._activate()
             else:

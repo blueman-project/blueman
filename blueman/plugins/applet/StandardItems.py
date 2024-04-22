@@ -22,6 +22,20 @@ class StandardItems(AppletPlugin, PowerStateListener):
     __description__ = _("Adds standard menu items to the status icon menu")
     __author__ = "walmis"
 
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.standarditems",
+        "path": None
+    }
+
+    __options__ = {
+        "toggle-manager-onclick": {
+            "type": bool,
+            "default": False,
+            "name": _("Toggle the manager on clicking the system tray icon"),
+            "desc": _("Clicking the system tray icon will toggle the manager instead of focusing on it.")
+        }
+    }
+
     def on_load(self) -> None:
         self._plugin_window: Optional[Gtk.ApplicationWindow] = None
 
