@@ -90,7 +90,10 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
     def on_devices(self) -> None:
         m = ManagerService()
-        m.startstop()
+        if m.get_name_owner() and self.get_option("toggle-manager-onclick"):
+            m.quit()
+        else:
+            m.activate()
 
     def on_adapters(self) -> None:
         launch("blueman-adapters", name=_("Adapter Preferences"))
