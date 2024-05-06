@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
 "PO-Revision-Date: 2024-05-07 05:19+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/2-4/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -106,7 +106,7 @@ msgstr "_שם"
 
 #: data/ui/manager-main.ui:190
 msgid "_Added"
-msgstr "_נוסף"
+msgstr "_מועד הוספה"
 
 #: data/ui/manager-main.ui:206
 msgid "_Descending"
@@ -155,7 +155,7 @@ msgstr "סימון/ביטול־סימון התקן זה כמהימן"
 #: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
-msgstr "מהימן"
+msgstr "אמון"
 
 #: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
@@ -177,7 +177,7 @@ msgstr "שליחת קובץ"
 
 #: data/ui/manager-main.ui:491
 msgid "Total data sent and rate of transmission"
-msgstr "סך־כל הנתונים שנשלחו ומהירות השליחה"
+msgstr "סך־כל נתונים שנשלחו ומהירות השליחה"
 
 #: data/ui/manager-main.ui:533
 msgid "Total data received and rate of transmission"
@@ -197,7 +197,7 @@ msgstr "שינוי שם התקן"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr "_איפוס"
+msgstr "_שיצוב"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -215,7 +215,7 @@ msgstr "סוג שרת DHCP:"
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr "מומלץ"
+msgstr "המלצה"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
@@ -239,11 +239,11 @@ msgstr "<b>תמיכה ברשת אישית</b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr "חיבור אינטרנט בחיוג"
+msgstr "חיבור מרשתת בחיוג"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr "<b>תמיכה בחיוג</b>"
+msgstr "<b>תמיכה בחיבור למרשתת בחיוג</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
@@ -251,7 +251,7 @@ msgstr "נקודת גישה לרשת (NAP)"
 
 #: data/ui/services-network.ui:348
 msgid "<b>NAP Support</b>"
-msgstr "<b>תמיכה ברשת אישית</b>"
+msgstr "<b>תמיכה בנקודת גישה לרשת (NAP)</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -376,7 +376,7 @@ msgstr "תמיד"
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "דקה"
+msgstr[0] "דקה %(minutes)d"
 msgstr[1] "%(minutes)d דקות"
 msgstr[2] "%(minutes)d דקות"
 msgstr[3] "%(minutes)d דקות"
@@ -397,10 +397,9 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
-"נראה שההפעלה של blueman-manager דרך D-Bus נכשלה. אחת הסיבות האופייניות לכך "
-"היא הגדרה גרפית שגויה בסביבת ההפעלה של D-Bus שניתן לפתוח עם קריאה ל־dbus-"
-"update-activation-environment, בדרך כלל מופעל מ־xinitrc (בהתאמה הגדרות Sway "
-"וכדומה)."
+"נראה שהפעלת blueman-manager באמצעות D-Bus כשלה. סיבה אופייניות לכך היא הגדרה "
+"גרפית שגויה בסביבת הפעלת D-Bus אותה ניתן לפתור על ישי קריאה ל־dbus-update-"
+"activation-environment, בדרך כלל מופעל מ־xinitrc (הגדרות Swayאו דומיו בהתאם)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -1064,7 +1063,7 @@ msgstr "מצלמת וידאו"
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr "מצלמה מקליטה"
+msgstr "מצלמה חוזי"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
@@ -1639,7 +1638,7 @@ msgstr "תאורת מדפים"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "זרקור"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
@@ -3259,8 +3258,8 @@ msgstr "פתיחת מיקום"
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "התקבל קובץ נוסף ברקע"
-msgstr[1] "התקבלו שני קבצים נוספים ברקע"
+msgstr[0] "התקבל קובץ %(files)d נוסף ברקע"
+msgstr[1] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[2] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[3] "התקבלו %(files)d קבצים נוספים ברקע"
 
