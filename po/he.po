@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-05-07 05:19+0000\n"
-"Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
+"PO-Revision-Date: 2024-05-08 00:45+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/2-4/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.5.4-dev\n"
+"X-Generator: Weblate 5.5.4-rc\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -177,7 +177,7 @@ msgstr "שליחת קובץ"
 
 #: data/ui/manager-main.ui:491
 msgid "Total data sent and rate of transmission"
-msgstr "סך־כל נתונים שנשלחו ומהירות השליחה"
+msgstr "סך־כל הנתונים שנשלחו ומהירות השליחה"
 
 #: data/ui/manager-main.ui:533
 msgid "Total data received and rate of transmission"
@@ -197,7 +197,7 @@ msgstr "שינוי שם התקן"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr "_שיצוב"
+msgstr "_איפוס"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -239,11 +239,11 @@ msgstr "<b>תמיכה ברשת אישית</b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr "חיבור מרשתת בחיוג"
+msgstr "חיבור בחיוג"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr "<b>תמיכה בחיבור למרשתת בחיוג</b>"
+msgstr "<b>תמיכה בחיבור בחיוג</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
@@ -376,7 +376,7 @@ msgstr "תמיד"
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "דקה %(minutes)d"
+msgstr[0] "דקה"
 msgstr[1] "%(minutes)d דקות"
 msgstr[2] "%(minutes)d דקות"
 msgstr[3] "%(minutes)d דקות"
@@ -397,13 +397,14 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
-"נראה שהפעלת blueman-manager באמצעות D-Bus כשלה. סיבה אופייניות לכך היא הגדרה "
-"גרפית שגויה בסביבת הפעלת D-Bus אותה ניתן לפתור על ישי קריאה ל־dbus-update-"
-"activation-environment, בדרך כלל מופעל מ־xinitrc (הגדרות Swayאו דומיו בהתאם)."
+"נראה שהפעלת blueman-manager באמצעות D-Bus נכשלה. סיבה נפוצה לכך היא הגדרה "
+"גרפית שגויה בסביבת הפעלת D-Bus אותה ניתן לפתור על ידי קריאה ל־dbus-update-"
+"activation-environment, בדרך כלל מופעל מ־xinitrc (הגדרות Sway או דומיו "
+"בהתאם)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
-msgstr "חיבור ל־BlueZ כשל"
+msgstr "חיבור ל־BlueZ נכשל"
 
 #: blueman/main/Manager.py:105
 msgid ""
@@ -412,7 +413,7 @@ msgid ""
 "Bluetooth daemon was not started."
 msgstr ""
 "שרת BlueZ לא פעיל, blueman-manager לא יכול להמשיך.\n"
-"המשמעות, ככל הנראה היא, שלא זוהו מתאמי בלוטות׳, או ששרות הבלוטות׳ לא הופעל."
+"המשמעות, ככל הנראה היא, שלא זוהו מתאמי בלוטות׳, או ששירות הבלוטות׳ לא הופעל."
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
@@ -1638,7 +1639,7 @@ msgstr "תאורת מדפים"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr "זרקור"
+msgstr "תאורת מחסנים"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
@@ -2244,7 +2245,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:448
 msgid "Digital Signage"
-msgstr ""
+msgstr "שילוט דיגיטלי"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
@@ -2252,7 +2253,7 @@ msgstr "תווית אלקטרונית"
 
 #: blueman/DeviceClass.py:450
 msgid "Generic Pulse Oximeter"
-msgstr "אוקסימטר דופק גנרי"
+msgstr "אוקסימטר דופק כללי"
 
 #: blueman/DeviceClass.py:451
 msgid "Fingertip Pulse Oximeter"
@@ -3258,7 +3259,7 @@ msgstr "פתיחת מיקום"
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "התקבל קובץ %(files)d נוסף ברקע"
+msgstr[0] "התקבל קובץ נוסף ברקע"
 msgstr[1] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[2] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[3] "התקבלו %(files)d קבצים נוספים ברקע"
@@ -3270,7 +3271,7 @@ msgid ""
 "isn't unplugged by the system, or physically."
 msgstr ""
 "החלפת מצב מתג השבתת הבלוטות׳ והתאמתו למצב צריכת החשמל שלו. מאפשר הפעלת "
-"הבלוטות׳ שוב דרך סמל המצב שלו, בהנתן שהמתאם לא נותק על־ידי המערכת, או באופן "
+"הבלוטות׳ שוב דרך סמל המצב שלו, בהינתן שהמתאם לא נותק על־ידי המערכת, או באופן "
 "פיזי."
 
 #: blueman/plugins/applet/StandardItems.py:22
