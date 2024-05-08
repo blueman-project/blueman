@@ -5,16 +5,16 @@
 # Edward Sawyer <saoded@gmail.com>, 2016
 # haxoc c11 <haxoc112@disroot.org>, 2018
 # shy tzedaka <shaytzedaka123@gmail.com>, 2016
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2017, 2020, 2021, 2022, 2023.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2017, 2020, 2021, 2022, 2023, 2024.
 # Omeritzics Games <omeritzicschwartz@gmail.com>
-# Avi Markovitz <avi.markovitz@gmail.com>, 2022.
+# Avi Markovitz <avi.markovitz@gmail.com>, 2022, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2023-12-12 10:14+0000\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"PO-Revision-Date: 2024-05-08 00:45+0000\n"
+"Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/blueman/blueman/"
 "he/>\n"
 "Language: he\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.3-dev\n"
+"X-Generator: Weblate 5.5.4-rc\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -31,7 +31,7 @@ msgstr "<b>הגדרות חשיפה</b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
 msgid "Hidden"
-msgstr "מוסתר"
+msgstr "נסתר"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
@@ -107,7 +107,7 @@ msgstr "_שם"
 
 #: data/ui/manager-main.ui:190
 msgid "_Added"
-msgstr "_נוסף"
+msgstr "_מועד הוספה"
 
 #: data/ui/manager-main.ui:206
 msgid "_Descending"
@@ -156,7 +156,7 @@ msgstr "סימון/ביטול־סימון התקן זה כמהימן"
 #: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
-msgstr "מהימן"
+msgstr "אמון"
 
 #: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
@@ -216,7 +216,7 @@ msgstr "סוג שרת DHCP:"
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr "מומלץ"
+msgstr "המלצה"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
@@ -240,11 +240,11 @@ msgstr "<b>תמיכה ברשת אישית</b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr "חיבור אינטרנט בחיוג"
+msgstr "חיבור בחיוג"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr "<b>תמיכה בחיוג</b>"
+msgstr "<b>תמיכה בחיבור בחיוג</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
@@ -252,7 +252,7 @@ msgstr "נקודת גישה לרשת (NAP)"
 
 #: data/ui/services-network.ui:348
 msgid "<b>NAP Support</b>"
-msgstr "<b>תמיכה ברשת אישית</b>"
+msgstr "<b>תמיכה בנקודת גישה לרשת (NAP)</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -398,14 +398,14 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
-"נראה שההפעלה של blueman-manager דרך D-Bus נכשלה. אחת הסיבות האופייניות לכך "
-"היא הגדרה גרפית שגויה בסביבת ההפעלה של D-Bus שניתן לפתוח עם קריאה ל־dbus-"
-"update-activation-environment, בדרך כלל מופעל מ־xinitrc (בהתאמה הגדרות Sway "
-"וכדומה)."
+"נראה שהפעלת blueman-manager באמצעות D-Bus נכשלה. סיבה נפוצה לכך היא הגדרה "
+"גרפית שגויה בסביבת הפעלת D-Bus אותה ניתן לפתור על ידי קריאה ל־dbus-update-"
+"activation-environment, בדרך כלל מופעל מ־xinitrc (הגדרות Sway או דומיו "
+"בהתאם)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
-msgstr "חיבור ל־BlueZ כשל"
+msgstr "חיבור ל־BlueZ נכשל"
 
 #: blueman/main/Manager.py:105
 msgid ""
@@ -414,15 +414,15 @@ msgid ""
 "Bluetooth daemon was not started."
 msgstr ""
 "שרת BlueZ לא פעיל, blueman-manager לא יכול להמשיך.\n"
-"המשמעות, ככל הנראה היא, שלא זוהו מתאמי בלוטות׳, או ששרות הבלוטות׳ לא הופעל."
+"המשמעות, ככל הנראה היא, שלא זוהו מתאמי בלוטות׳, או ששירות הבלוטות׳ לא הופעל."
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "לחיצה להשבתה."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "לחיצה להפעלה."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -1065,7 +1065,7 @@ msgstr "מצלמת וידאו"
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr "מצלמה מקליטה"
+msgstr "מצלמה חוזי"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
@@ -1163,10 +1163,8 @@ msgid "Game"
 msgstr "משחק"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "טלפון גנרי"
+msgstr "לא ידוע כללי"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1178,81 +1176,71 @@ msgstr "מחשב גנרי"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "עמדת מחשב שולחני"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "מחשב גנרי"
+msgstr "מחשב ברמת שרת"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "מחשב (כף יד - צדפה)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "מחשב כף יד"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "מחשב לביש (בגודל שעון)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "מחשב לוח (טאבלט)"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "תחנת עגינה"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "מחשב אחוד"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "שרת"
+msgstr "שרת להב"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "בר המרה"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "לביש"
+msgstr "נתיק"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "שער גישה להתקני IoT"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "מחשב מזערי"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "מחשב אצבע"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
 msgstr "שעון גנרי"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Watch: Sports Watch"
 msgid "Sports Watch"
-msgstr "שעון: שעון ספורט"
+msgstr "שעון ספורט"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
-#| msgid "Wrist watch"
 msgid "Smartwatch"
-msgstr "שעון יד"
+msgstr "שעון חכם"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
@@ -1291,44 +1279,32 @@ msgid "Generic Thermometer"
 msgstr "מד־חום גנרי"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Ear Thermometer"
-msgstr "מד־חום רפואי"
+msgstr "מד־חום לאוזן"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Heart Rate Sensor"
-msgstr "מד דופק גנרי"
+msgstr "מד דופק כללי"
 
 #: blueman/DeviceClass.py:200
-#, fuzzy
-#| msgid "Heart Rate"
 msgid "Heart Rate Belt"
-msgstr "דופק"
+msgstr "חגורת דופק"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
 msgstr "מד לחץ דם גנרי"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Arm Blood Pressure"
-msgstr "לחץ דם"
+msgstr "לחץ דם זרועי"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Wrist Blood Pressure"
-msgstr "לחץ דם"
+msgstr "לחץ דם בשורש כף היד"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "התקן מנשק אנוש"
+msgstr "התקן מנשק אנוש כללי"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1360,123 +1336,99 @@ msgstr "סורק ברקודים"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "משטח מגע"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "שלט מצגות"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
 msgstr "מד סוכר בדם"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "Generic Running Walking Sensor"
-msgstr "גנרי: חיישן הליכה ריצה"
+msgstr "חיישן הליכה ריצה כללי"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "In-Shoe Running Walking Sensor"
-msgstr "גנרי: חיישן הליכה ריצה"
+msgstr "חיישן הליכה ריצה בתוך הנעל"
 
 #: blueman/DeviceClass.py:218
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Shoe Running Walking Sensor"
-msgstr "גנרי: חיישן הליכה ריצה"
+msgstr "חיישן הליכה ריצה על הנעל"
 
 #: blueman/DeviceClass.py:219
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Hip Running Walking Sensor"
-msgstr "גנרי: חיישן הליכה ריצה"
+msgstr "חיישן הליכה ריצה על המותן"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "גנרי: רכיבה"
+msgstr "ספורט אופניים כללי"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "רכיבה: מחשב רכיבה"
+msgstr "מחשב רכיבה"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "רכיבה: חיישן מהירות"
+msgstr "חיישן מהירות"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "רכיבה: חיישן קצב"
+msgstr "חיישן קצב"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "רכיבה: חיישן כוח"
+msgstr "חיישן כוח"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "רכיבה: חיישן מהירות וקצב"
+msgstr "חיישן מהירות וקצב"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Control Device"
-msgstr "התקן התניידות אישי גנרי"
+msgstr "התקן בקרה כללי"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "מתג"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "רכזת"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "כפתור"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "מחלק"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "בורר"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "לוח מגע"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "מתג בודד"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "מתג כפול"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "מתג משולש"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "שירות סוללה"
+msgstr "מתג סוללה"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
@@ -1484,239 +1436,219 @@ msgstr ""
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "מפסק לחיצה"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "חוגה"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Network Device"
-msgstr "ציוד רשת גנרי"
+msgstr "התקן רשת כללי"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Point"
 msgstr "נקודת גישה"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "מכשיר"
+msgstr "התקן עינה"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
 msgstr ""
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "מד דופק גנרי"
+msgstr "חיישן גנרי"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "חיישן תנועה"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "חיישן איכות אוויר"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "מד דופק גנרי"
+msgstr "חיישן טמפרטורה"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "חיישן לחות"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "חיישן דליפות"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "גלאי עשן"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "גלאי נפח"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "חיישן מגע"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "חיישן פחמן חד־חמצני"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "חיישן פחמן דו־חמצני"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "חיישן אור סובב"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "חיישן אנרגיה"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "חיישן אור צבע"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "חיישן גשם"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "מְשַׁגֵר קבצים"
+msgstr "גלאי אש"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "רכיבה: חיישן מהירות"
+msgstr "חיישן רוח"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "חיישן קרבה"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "רב־חיישן"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "חיישן בהתקנה שטוחה"
 
 #: blueman/DeviceClass.py:264
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Ceiling Mounted Sensor"
-msgstr "רכיבה: חיישן מהירות"
+msgstr "חיישן צמוד תקרה"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "חיישן צמוד קיר"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "רב־חיישן"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "מונה חשמל"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "גלאי להבה"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "חיישן לחץ צמיג של כלי רכב"
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "גנרי: משקל אדם"
+msgstr "גופי תאורה כלליים"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "תאורת קיר"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "תאורת תקרה"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "תאורת רצפה"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "תאורת ארונית"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "תאורת שולחן"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "פאנל תאורה"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "תאורה תלויה"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "תאורה שקועת רצפה"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "תאורת אצטדיונים"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "תאורה תת־מימית"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "בולרד מואר"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "תאורת שביל גישה"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "תאורת גינה"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "עמוד תאורה"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "זרקור"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "פרופיל תאורה"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "תאורת רחוב"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "תאורת מדפים"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "תאורת מחסנים"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "תאורת חירום"
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "בקר"
+msgstr "בקר תאורה"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
@@ -1724,7 +1656,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "נורה"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
@@ -1735,14 +1667,12 @@ msgid "High-bay Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "תג גנרי"
+msgstr "מאוורר כללי"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "מאוורר תקרה"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
@@ -1758,11 +1688,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "מאוורר שולחני"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "מאוורר קיר"
 
 #: blueman/DeviceClass.py:303
 #, fuzzy
@@ -1771,38 +1701,36 @@ msgid "Generic HVAC"
 msgstr "שעון קיר גנרי"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "מד־חום: אוזן"
+msgstr "תרמוסטט"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "מאייד"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "יבשן"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "מחמם"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "מחמם"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "דוד"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "משאבת חום"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "מחמם אינפרא־אדום"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
@@ -1810,77 +1738,63 @@ msgstr ""
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "מאורר חימום"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "מסך אוויר"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "שמע גנרי"
+msgstr "שמע כללי"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "שמע גנרי"
+msgstr "אידוי כללי"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Heating"
-msgstr "מחזיק מפתחות גנרי"
+msgstr "חימום כללי"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
-#| msgid "Generic Access"
 msgid "Generic Access Control"
-msgstr "גישה גנרית"
+msgstr "בקרה כללית"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Door"
-msgstr "נקודת גישה"
+msgstr "דלת גישה"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "שער חניה"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "דלת יציאת חרום"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Lock"
-msgstr "נקודת גישה"
+msgstr "מנעול גישה"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "מעלית"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "חלון"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "שער כניסה"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "מנעול חשמלי"
 
 #: blueman/DeviceClass.py:334
-#, fuzzy
-#| msgid "Blocked"
 msgid "Locker"
-msgstr "חסום"
+msgstr "ארונית ננעלת"
 
 #: blueman/DeviceClass.py:335
 #, fuzzy
@@ -1890,7 +1804,7 @@ msgstr "התקן התניידות אישי גנרי"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "שער ממונע"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
@@ -1898,21 +1812,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "תריסים או מצלים"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "וילונות"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "מסך"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Power Device"
-msgstr "התקן התניידות אישי גנרי"
+msgstr "התקן חשמלי כללי"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
@@ -1930,7 +1842,7 @@ msgstr "תוספים"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "מקור חשמל"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
@@ -1953,10 +1865,8 @@ msgid "Power Bank"
 msgstr ""
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Source"
-msgstr "גנרי: משקל אדם"
+msgstr "מקור תאורה כללי"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
@@ -1972,7 +1882,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "מנורת פלורסנט"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
@@ -2014,25 +1924,23 @@ msgstr ""
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "צמצם חיצוני"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "מסך חיצוני"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Sink"
-msgstr "שמע גנרי"
+msgstr "התקן פלט שמע כללי"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "רמקול עצמאי"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "מקרן קול"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
@@ -2043,54 +1951,44 @@ msgid "Standmounted Speaker"
 msgstr ""
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
-#| msgid "Smartphone"
 msgid "Speakerphone"
-msgstr "טלפון חכם"
+msgstr "רמקול"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Source"
-msgstr "שמע גנרי"
+msgstr "מקור שמע כללי"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "אזעקה"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "פעמון"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "צופר"
 
 #: blueman/DeviceClass.py:378
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Broadcasting Device"
-msgstr "התקן צג מיקום"
+msgstr "התקן שידור"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "שירות:"
+msgstr "דלפק שירות"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "קיוסק"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "חדר שידור"
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "פרופיל שמע"
+msgstr "אודיטוריום"
 
 #: blueman/DeviceClass.py:383
 #, fuzzy
@@ -2099,10 +1997,8 @@ msgid "Generic Motorized Vehicle"
 msgstr "נגן מדיה גנרי"
 
 #: blueman/DeviceClass.py:384
-#, fuzzy
-#| msgid "Camera"
 msgid "Car"
-msgstr "מצלמה"
+msgstr "מכונית"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
@@ -2110,17 +2006,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "דו־גלגלי"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "אופנוע"
 
 #: blueman/DeviceClass.py:388
-#, fuzzy
-#| msgid "Mobility Scooter"
 msgid "Scooter"
-msgstr "קורקינט חשמלי"
+msgstr "גלגיליים"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
@@ -2128,13 +2022,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "רכב תלת גלגלי"
 
 #: blueman/DeviceClass.py:391
-#, fuzzy
-#| msgid "Vehicle"
 msgid "Light Vehicle"
-msgstr "כלי רכב"
+msgstr "רכב קל"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
@@ -2142,19 +2034,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "מיניבוס"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "אוטובוס"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "טרוליבוס"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "רכב חקלאי"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
@@ -2162,81 +2054,75 @@ msgstr ""
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "רכב פנאי / בית על גלגלים"
 
 #: blueman/DeviceClass.py:399
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Domestic Appliance"
-msgstr "תצוגה גנרית"
+msgstr "מכשיר ביתי כללי"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "מקרר"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "מקפיא"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "תנור"
 
 #: blueman/DeviceClass.py:403
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microwave"
-msgstr "מיקרופון"
+msgstr "מיקרוגל"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "מצנם"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "מכונת כביסה"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "מייבש"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "מכונת קפה"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "מגהץ"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "מסלסל שיער"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "מייבש שיער"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "שואב אבק"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "שואב אבק רובוטי"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "סיר לאידוי אורז"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "מגהץ קיטור אנכי"
 
 #: blueman/DeviceClass.py:415
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Wearable Audio Device"
-msgstr "התקן התניידות אישי גנרי"
+msgstr "התקן כללי"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
@@ -2244,175 +2130,143 @@ msgstr ""
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "רצועת צוואר"
 
 #: blueman/DeviceClass.py:420
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Aircraft"
-msgstr "שמע גנרי"
+msgstr ""
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
 msgstr ""
 
 #: blueman/DeviceClass.py:422
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microlight"
-msgstr "מיקרופון"
+msgstr "אווירון זעיר"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "מצנח רחיפה"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
 msgstr ""
 
 #: blueman/DeviceClass.py:425
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic AV Equipment"
-msgstr "שמע גנרי"
+msgstr ""
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "מגבר"
 
 #: blueman/DeviceClass.py:427
-#, fuzzy
-#| msgid "Receiving file"
 msgid "Receiver"
-msgstr "קובץ מתקבל"
+msgstr "מקלט"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "רדיו"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "מכוון"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "פטיפון"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "נגן תקליטורים"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "נגן DVD"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "נגן Bluray"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "נגן תקליטים אופטיים"
 
 #: blueman/DeviceClass.py:435
-#, fuzzy
-#| msgid "Set-top box"
 msgid "Set-Top Box"
-msgstr "קופסת מולטימדיה"
+msgstr ""
 
 #: blueman/DeviceClass.py:436
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Display Equipment"
-msgstr "תצוגה גנרית"
+msgstr "ציוד תצוגה גנרי"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "טלוויזיה"
 
 #: blueman/DeviceClass.py:438
-#, fuzzy
-#| msgid "Video monitor"
 msgid "Monitor"
-msgstr "צג וידאו"
+msgstr "צג"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "מקרן"
 
 #: blueman/DeviceClass.py:440
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Hearing aid"
-msgstr "מחזיק מפתחות גנרי"
+msgstr "עזר שמע כללי"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "עזר שמע תוך אוזני"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "עזר שמע מאחורי האוזן"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "שתל שבלולי (קוכליארי)"
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Gaming"
-msgstr "תג גנרי"
+msgstr "משחקנות כללי"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
 msgstr ""
 
 #: blueman/DeviceClass.py:446
-#, fuzzy
-#| msgid "Portable audio"
 msgid "Portable handheld console"
-msgstr "התקן שמע נייד"
+msgstr "התקן משחקים נייד"
 
 #: blueman/DeviceClass.py:447
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Signage"
-msgstr "תג גנרי"
+msgstr ""
 
 #: blueman/DeviceClass.py:448
-#, fuzzy
-#| msgid "Digital Pen"
 msgid "Digital Signage"
-msgstr "עט דיגיטלי"
+msgstr "שילוט דיגיטלי"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "תווית אלקטרונית"
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Generic Pulse Oximeter"
-msgstr "גנרי: אוקסימטר"
+msgstr "אוקסימטר דופק כללי"
 
 #: blueman/DeviceClass.py:451
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Fingertip Pulse Oximeter"
-msgstr "גנרי: אוקסימטר"
+msgstr "אוקסימטר דופק לקצה האצבע"
 
 #: blueman/DeviceClass.py:452
-#, fuzzy
-#| msgid "Pulse Oximeter"
 msgid "Wrist Worn Pulse Oximeter"
-msgstr "אוקסימטר"
+msgstr "צמיד אוקסימטר דופק"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Weight Scale"
-msgstr "גנרי: משקל אדם"
+msgstr "משקל אדם כללי"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
@@ -2451,32 +2305,24 @@ msgid "Generic Medication Delivery"
 msgstr "העברת ריפוי גנרית"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
-#| msgid "Generic Thermometer"
 msgid "Generic Spirometer"
-msgstr "מד־חום גנרי"
+msgstr "מד נשימה כללי"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "מד נשימה נייד"
 
 #: blueman/DeviceClass.py:465
-#, fuzzy
-#| msgid "Generic: Outdoor Sports Activity"
 msgid "Generic Outdoor Sports Activity"
-msgstr "גנרי: פעילות ספורט מחוץ לבית"
+msgstr "פעילות ספורט חוץ כללית"
 
 #: blueman/DeviceClass.py:466
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Location Display"
-msgstr "התקן צג מיקום"
+msgstr "צג מיקום"
 
 #: blueman/DeviceClass.py:467
-#, fuzzy
-#| msgid "Location and Navigation Display Device"
 msgid "Location and Navigation Display"
-msgstr "התקן תצוגת מיקום וניווט"
+msgstr "תצוגת מיקום וניווט"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
@@ -3162,7 +3008,7 @@ msgstr "שליחת _פתק"
 
 #: blueman/plugins/manager/Notes.py:60
 msgid "Send a text note"
-msgstr "שליחת פתק טקסט"
+msgstr "שליחת הערה מילולית"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:86
 #, python-format
@@ -3415,7 +3261,7 @@ msgstr "פתיחת מיקום"
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
 msgstr[0] "התקבל קובץ נוסף ברקע"
-msgstr[1] "התקבלו שני קבצים נוספים ברקע"
+msgstr[1] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[2] "התקבלו %(files)d קבצים נוספים ברקע"
 msgstr[3] "התקבלו %(files)d קבצים נוספים ברקע"
 
@@ -3426,7 +3272,7 @@ msgid ""
 "isn't unplugged by the system, or physically."
 msgstr ""
 "החלפת מצב מתג השבתת הבלוטות׳ והתאמתו למצב צריכת החשמל שלו. מאפשר הפעלת "
-"הבלוטות׳ שוב דרך סמל המצב שלו, בהנתן שהמתאם לא נותק על־ידי המערכת, או באופן "
+"הבלוטות׳ שוב דרך סמל המצב שלו, בהינתן שהמתאם לא נותק על־ידי המערכת, או באופן "
 "פיזי."
 
 #: blueman/plugins/applet/StandardItems.py:22
@@ -3515,7 +3361,8 @@ msgstr "ניתוק %s"
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
-msgstr "מספק פריט תפריט לחשיפת מתאם בררת המחדל, כשהוא מוגדר 'מוסתר' כבררת מחדל"
+msgstr ""
+"פריט תפריט לחשיפת מתאם ברירת המחדל באופן זמני, כשהוא מוגדר ‚נסתר’ כברירת מחדל"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"

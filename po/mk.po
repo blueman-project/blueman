@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-02-24 04:21+0000\n"
+"PO-Revision-Date: 2024-05-07 05:19+0000\n"
 "Last-Translator: \"Kristijan \\\"Fremen\\\" Velkovski\" <me@krisfremen.com>\n"
 "Language-Team: Macedonian <https://hosted.weblate.org/projects/blueman/"
 "blueman/mk/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.5.4-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -109,7 +109,7 @@ msgstr "_Додаден"
 
 #: data/ui/manager-main.ui:206
 msgid "_Descending"
-msgstr ""
+msgstr "_Опаѓачки"
 
 #: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
 msgid "_Plugins"
@@ -395,6 +395,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Се чини дека blueman-manager не може да се активира преку D-Bus. Типична "
+"причина за ова е скршено графичко поставување во околината за активирање D-"
+"Bus што може да се реши со повик до dbus-update-activation-environment, "
+"обично издаден од xinitrc (односно Sway конфигурацијата или слично)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -412,11 +416,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Кликнете за да се исклучи."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Кликнете за да се вклучи."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -450,6 +454,8 @@ msgstr "obexd е недостапен"
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Не успеа автоматското стартување на услугата obex. Проверете дали работи "
+"демонот obex"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -551,6 +557,10 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Се појави грешка при вчитување на приклучокот. Ве молиме известете ги "
+"програмерите со содржината на оваа порака на нашата </b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">веб-страница.</"
+"a>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -558,7 +568,7 @@ msgstr "Блутутот е исклучен"
 
 #: blueman/Functions.py:71
 msgid "Exit"
-msgstr ""
+msgstr "Излез"
 
 #: blueman/Functions.py:72
 msgid "Enable Bluetooth"
@@ -601,10 +611,8 @@ msgid "Combo"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceList.py:333
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Преименувај уред"
+msgstr "Неименуван уред"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:340
@@ -842,10 +850,8 @@ msgstr ""
 "Да продолжам?"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "За меѓузависностите"
+msgstr "Нема зависности"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
@@ -1155,10 +1161,8 @@ msgid "Game"
 msgstr "Игра"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Обичен Телефон"
+msgstr "Обичен Непознато"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1173,10 +1177,8 @@ msgid "Desktop Workstation"
 msgstr ""
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Обичен Компјутер"
+msgstr "Сервер Компјутер"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"

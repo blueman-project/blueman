@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-01-05 13:26+0000\n"
+"PO-Revision-Date: 2024-05-06 11:23+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/blueman/"
 "blueman/is/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.5.3\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -404,11 +404,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Smelltu til að gera óvirkt."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Smelltu til að gera virkt."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -1145,10 +1145,8 @@ msgid "Game"
 msgstr "Leikja"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Algengur sími"
+msgstr "Algengt óþekkt"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1160,7 +1158,7 @@ msgstr "Algeng tölva"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Vinnutölva á borð"
 
 #: blueman/DeviceClass.py:172
 #, fuzzy
@@ -1170,11 +1168,11 @@ msgstr "Algeng tölva"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Handtölva PC/PDA (samanbrotin)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Lófatölva PC/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
@@ -1182,15 +1180,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Spjaldtölva"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Tengikví"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Ein með öllu"
 
 #: blueman/DeviceClass.py:180
 #, fuzzy
@@ -1210,15 +1208,15 @@ msgstr "Klæðanlegt"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT-gátt"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Smátölva"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Staftölva (stick)"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
@@ -1307,8 +1305,6 @@ msgid "Wrist Blood Pressure"
 msgstr "Blóðþrýstingur"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
 msgstr "HID-viðmótstæki (Human Interface Device)"
 
@@ -1342,7 +1338,7 @@ msgstr "Strikamerkjaskanni"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Snertiplatti"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
@@ -1383,28 +1379,20 @@ msgid "Generic Cycling"
 msgstr "Almennt: Hjólreiðar"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "Hjólreiðar: Hjólreiðatölva"
+msgstr "Hjólreiðatölva"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Hjólreiðar: Hraðaskynjari"
+msgstr "Hraðaskynjari"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Hjólreiðar: Taktskynjari"
+msgstr "Taktskynjari"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Hjólreiðar: Aflskynjari"
+msgstr "Aflskynjari"
 
 #: blueman/DeviceClass.py:225
 #, fuzzy
@@ -1428,15 +1416,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Hnappur"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Sleði"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Snúningsrofi"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
@@ -1466,11 +1454,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Ýtihnappur"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Skífurofi"
 
 #: blueman/DeviceClass.py:240
 #, fuzzy
@@ -1495,28 +1483,24 @@ msgid "Mesh Network Proxy"
 msgstr ""
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "Almennur hjartsláttarskynjari"
+msgstr "Algengur skynjari"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Hreyfiskynjari"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Loftgæðaskynjari"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Almennur hjartsláttarskynjari"
+msgstr "Hitaskynjari"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Rakaskynjari"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
@@ -1524,7 +1508,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Reykskynjari"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
@@ -1532,19 +1516,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Snertiskynjari"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Kolmónoxíðskynjari"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Koltvísýringsskynjari"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Umhverfislýsingarskynjari"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
@@ -1552,11 +1536,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Ljóslitarskynjari"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Regnskynjari"
 
 #: blueman/DeviceClass.py:259
 #, fuzzy
@@ -1572,7 +1556,7 @@ msgstr "Hjólreiðar: Hraðaskynjari"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Nálægðarskynjari"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
@@ -1598,7 +1582,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Aflmælir"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
@@ -1616,23 +1600,23 @@ msgstr "Almenn vigt"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Veggljós"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Loftljós"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Gólfljós"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Skápaljós"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Borðljós"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
@@ -1648,7 +1632,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Flóðljós"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
@@ -1695,10 +1679,8 @@ msgid "Emergency Exit Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Stýring"
+msgstr "Ljósastýring"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
@@ -1706,7 +1688,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Pera"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
@@ -1717,10 +1699,8 @@ msgid "High-bay Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Algengt merki"
+msgstr "Algeng vifta"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
@@ -1753,14 +1733,12 @@ msgid "Generic HVAC"
 msgstr "Algeng klukka"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Hitamælir: Eyra"
+msgstr "Hitastillir"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Rakatæki"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
@@ -1768,23 +1746,23 @@ msgstr ""
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Hitari"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Ofn"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Ketill"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Varmadæla"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Innrauður hitari"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
@@ -1830,7 +1808,7 @@ msgstr "Aðgangspunktur"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Bílskúrshurð"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
@@ -1844,11 +1822,11 @@ msgstr "Aðgangspunktur"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Lyfta"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Gluggi"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
@@ -1888,7 +1866,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Skjár"
 
 #: blueman/DeviceClass.py:341
 #, fuzzy
@@ -1905,10 +1883,8 @@ msgid "Power Strip"
 msgstr ""
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Viðbætur"
+msgstr "Tengi"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
@@ -2031,10 +2007,8 @@ msgid "Speakerphone"
 msgstr "Snjallsími"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Source"
-msgstr "Almennt hljóð"
+msgstr "Almenn hljóðuppspretta"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
@@ -2042,7 +2016,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Bjalla"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
@@ -2053,10 +2027,8 @@ msgid "Broadcasting Device"
 msgstr ""
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Þjónusta:"
+msgstr "Þjónustuborð"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
@@ -2067,10 +2039,8 @@ msgid "Broadcasting Room"
 msgstr ""
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Hljóðsnið"
+msgstr "Fyrirlestrasalur"
 
 #: blueman/DeviceClass.py:383
 #, fuzzy
@@ -2079,10 +2049,8 @@ msgid "Generic Motorized Vehicle"
 msgstr "Algengur tónlistarspilari"
 
 #: blueman/DeviceClass.py:384
-#, fuzzy
-#| msgid "Camera"
 msgid "Car"
-msgstr "Myndavél"
+msgstr "Bíll"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
@@ -2094,41 +2062,39 @@ msgstr ""
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Vélhjól"
 
 #: blueman/DeviceClass.py:388
 msgid "Scooter"
-msgstr ""
+msgstr "Skellinaðra"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Skellinaðra"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "Þríhjóla farartæki"
 
 #: blueman/DeviceClass.py:391
-#, fuzzy
-#| msgid "Vehicle"
 msgid "Light Vehicle"
-msgstr "Farartæki"
+msgstr "Létt farartæki"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "Fjórhjól"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Smárúta"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Strætisvagn"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Sporvagn"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
@@ -2150,15 +2116,15 @@ msgstr "Algengur skjár"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Kælir"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Frystir"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Bakarofn"
 
 #: blueman/DeviceClass.py:403
 #, fuzzy
@@ -2168,39 +2134,39 @@ msgstr "Hljóðnemi"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Brauðrist"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Þvottavél"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Þurrkari"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Kaffivél"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "Straujárn"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "Krullujárn"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Hárþurrka"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Ryksuga"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "Ryksuguróbót"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
@@ -2232,7 +2198,7 @@ msgstr "Almennt hljóð"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "Létt flugfar"
 
 #: blueman/DeviceClass.py:422
 #, fuzzy
@@ -2242,11 +2208,11 @@ msgstr "Hljóðnemi"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Svifdreki"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "Stór farþegaflugvél"
 
 #: blueman/DeviceClass.py:425
 #, fuzzy
@@ -2256,45 +2222,41 @@ msgstr "Almennt hljóð"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Magnari"
 
 #: blueman/DeviceClass.py:427
-#, fuzzy
-#| msgid "Receiving file"
 msgid "Receiver"
-msgstr "Tek á móti skrá"
+msgstr "Móttakandi"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Útvarp"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "Móttakari"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Plötuspilari"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "CD-spilari"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "DVD-spilari"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Bluray-spilari"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Geisladiskaspilari"
 
 #: blueman/DeviceClass.py:435
-#, fuzzy
-#| msgid "Set-top box"
 msgid "Set-Top Box"
 msgstr "Sjónvarpsbox"
 
@@ -2306,17 +2268,15 @@ msgstr "Algengur skjár"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Sjónvarp"
 
 #: blueman/DeviceClass.py:438
-#, fuzzy
-#| msgid "Video monitor"
 msgid "Monitor"
 msgstr "Skjár"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Skjávarpi"
 
 #: blueman/DeviceClass.py:440
 #, fuzzy
@@ -2369,28 +2329,20 @@ msgid "Electronic Label"
 msgstr ""
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Generic Pulse Oximeter"
-msgstr "Almennt: Púls- og súrefnismælir"
+msgstr "Algengur púls- og súrefnismælir"
 
 #: blueman/DeviceClass.py:451
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Fingertip Pulse Oximeter"
-msgstr "Almennt: Púls- og súrefnismælir"
+msgstr "Púls- og súrefnismælir á á fingur"
 
 #: blueman/DeviceClass.py:452
-#, fuzzy
-#| msgid "Pulse Oximeter"
 msgid "Wrist Worn Pulse Oximeter"
-msgstr "Púls- og súrefnismælir"
+msgstr "Púls- og súrefnismælir á úlnlið"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Weight Scale"
-msgstr "Almenn vigt"
+msgstr "Algeng vigt"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
@@ -2414,11 +2366,11 @@ msgstr "Algeng insúlíndæla"
 
 #: blueman/DeviceClass.py:459
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Insúlíndæla, varanleg"
 
 #: blueman/DeviceClass.py:460
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Insúlíndæla, plásturdæla"
 
 #: blueman/DeviceClass.py:461
 msgid "Insulin Pen"
@@ -2443,16 +2395,12 @@ msgid "Generic Outdoor Sports Activity"
 msgstr ""
 
 #: blueman/DeviceClass.py:466
-#, fuzzy
-#| msgid "3D Display"
 msgid "Location Display"
-msgstr "Þrívíddarskjár"
+msgstr "Birting á staðsetningu"
 
 #: blueman/DeviceClass.py:467
-#, fuzzy
-#| msgid "Location and Navigation"
 msgid "Location and Navigation Display"
-msgstr "Staðsetning og leiðsögn"
+msgstr "Birting á staðsetningu og leiðsögn"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
@@ -3048,15 +2996,15 @@ msgstr "Strengur með raðnúmeri"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr "Strengur með  útgáfu grunnhugbúnaðar"
+msgstr "Strengur með útgáfu grunnhugbúnaðar"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr "Strengur með  útgáfu vélbúnaðar"
+msgstr "Strengur með útgáfu vélbúnaðar"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr "Strengur með  útgáfu hugbúnaðar"
+msgstr "Strengur með útgáfu hugbúnaðar"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
@@ -3064,7 +3012,7 @@ msgstr "Strengur með nafni framleiðanda"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr "PnP ID"
+msgstr "PnP-auðkenni"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
