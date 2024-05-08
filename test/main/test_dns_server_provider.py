@@ -1,6 +1,5 @@
 from ipaddress import IPv4Address
 from typing import Callable
-from unittest import TestCase
 from unittest.mock import patch, Mock
 
 from dbusmock import DBusTestCase
@@ -18,10 +17,10 @@ from test.testhelpers.DBusMock import DBusMock
         Gio.DBusConnectionFlags.MESSAGE_BUS_CONNECTION | Gio.DBusConnectionFlags.AUTHENTICATION_CLIENT,
     )
 )
-class TestDNSServerProvider(TestCase):
+class TestDNSServerProvider(DBusTestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        DBusTestCase.start_system_bus()
+        cls.start_system_bus()
 
     def test_resolver(self):
         with open("/tmp/resolv.conf", "w") as f:
