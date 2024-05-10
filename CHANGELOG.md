@@ -1,5 +1,23 @@
 # Changelog
 
+## 2.4.2
+
+### New features
+
+* An option to toggle the manager window with the tray icon (the 2.3 behavior useful when there are no window decorations for closing it)
+
+### Changes
+
+* Only a single battery notification
+* Renamed recent connections header in applet menu
+* Translation updates
+
+### Bugs fixed
+
+* Broken audio profile applet menu items
+* Missing manager window title
+* Teardown of DBus mock server in tests
+
 ## 2.4.1
 
 ### Changes
