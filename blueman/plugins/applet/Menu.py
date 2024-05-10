@@ -133,6 +133,9 @@ class Menu(AppletPlugin):
         if isinstance(priority, int):
             priority = (priority, 0)
 
+        assert priority[0] < 256
+        assert priority[1] < 256
+
         item = MenuItem(self, owner, priority, text, markup, icon_name, tooltip, callback, submenu_function, visible,
                         sensitive)
         self.__menuitems[item.priority] = item
