@@ -188,7 +188,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
         menu: "Menu" = self.parent.Plugins.Menu
         self._mitems: List[MenuItem] = []
         menu.unregister(self)
-        menu.add(self, 52, text=_("Recent _Connections"), icon_name="document-open-recent-symbolic",
+        menu.add(self, 52, text=_("Reconnect to…"), icon_name="document-open-recent-symbolic",
                  sensitive=False, callback=lambda: None)
         for (idx, item) in enumerate(self.__menuitems):
             self._mitems.append(menu.add(self, (53, idx), **item))
