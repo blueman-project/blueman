@@ -16,6 +16,7 @@ DIST_DOCS =			\
 EXTRA_DIST = 			\
 	${DIST_DOCS}		\
 	meson.build		\
+	meson_options.txt	\
 	po/meson.build
 
 MAINTAINERCLEANFILES = 	\
