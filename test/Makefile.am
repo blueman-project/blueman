@@ -5,7 +5,8 @@ SUBDIRS =   \
     main    \
     module  \
     plugins \
-    services
+    services	\
+    testhelpers
 
 EXTRA_DIST =    \
     __init__.py \
