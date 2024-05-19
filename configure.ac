@@ -336,6 +336,7 @@ test/plugins/mechanism/Makefile
 test/plugins/services/Makefile
 test/services/Makefile
 test/services/meta/Makefile
+test/testhelpers/Makefile
 ])
 
 
