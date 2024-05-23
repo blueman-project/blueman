@@ -32,6 +32,16 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
         except GLib.Error as e:
             raise DBusProxyFailed(e.message)
 
+    def call_method(self, name: str, params: GLib.Variant) -> None:
+        def call_finish(proxy: ProxyBase, response: Gio.AsyncResult) -> None:
+            try:
+                proxy.call_finish(response)
+            except GLib.Error:
+                logging.error(f"Failed to execute method {name}", exc_info=True)
+                raise
+
+        self.call(name, params, Gio.DBusCallFlags.NONE, -1, None, call_finish)
+
 
 class Mechanism(ProxyBase):
     def __init__(self) -> None:
@@ -54,12 +64,11 @@ class ManagerService(ProxyBase):
     def activate(self) -> None:
         try:
             param = GLib.Variant('(a{sv})', ({},))
-            self.call_sync("Activate", param, Gio.DBusCallFlags.NONE, -1, None)
+            self.call_method("Activate", param)
         except GLib.Error:
             # This can different errors, depending on the system configuration, typically:
             # * org.freedesktop.DBus.Error.Spawn.ChildExited if dbus-daemon tries to launch the service itself.
             # * org.freedesktop.DBus.Error.NoReply if the systemd integration is used.
-            logging.error("Call to %s failed", self.get_name(), exc_info=True)
             Notification(
                 _("Failed to reach blueman-manager"),
                 _("It seems like blueman-manager could no get activated via D-Bus. "
@@ -70,14 +79,8 @@ class ManagerService(ProxyBase):
             ).show()
 
     def _call_action(self, name: str) -> None:
-        def call_finish(proxy: "ManagerService", resp: Gio.AsyncResult) -> None:
-            try:
-                proxy.call_finish(resp)
-            except GLib.Error:
-                logging.error("Call to %s failed", self.get_name(), exc_info=True)
-
         param = GLib.Variant('(sava{sv})', (name, [], {}))
-        self.call('ActivateAction', param, Gio.DBusCallFlags.NONE, -1, None, call_finish)
+        self.call_method('ActivateAction', param)
 
     def quit(self) -> None:
         self._call_action("Quit")
