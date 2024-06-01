@@ -134,6 +134,10 @@ AC_SUBST([dhconfig])
 
 dnl ---------------------------------
 
+AC_ARG_WITH([bluetoothd_path],
+  AS_HELP_STRING([--with-bluetoothd-path=PATH], [Set bluetooth daemon path]),
+  [bluetoothd_path="$withval"], [bluetoothd_path='/usr/libexec/bluetoothd'])
+AC_SUBST([bluetoothd_path])
 
 AC_ARG_ENABLE([polkit],
   AS_HELP_STRING([--enable-polkit], [Enable policykit support]),
@@ -354,6 +358,7 @@ echo Nemo sendto: $have_nemo_python
 echo Nautilus sendto: $have_nautilus_python
 echo Settings menu integration enabled: $have_settings
 echo Dhcpd 3 configuration file: $dhconfig
+echo Bluetooth daemon path: $bluetoothd_path
 echo PulseAudio support: $use_pulseaudio
 echo Systemd system unit dir: ${systemd_system_unit_dir}
 echo Systemd user unit dir: ${systemd_user_unit_dir}
