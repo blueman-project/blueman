@@ -4,55 +4,58 @@
 # Translators:
 # Valmantas Palikša https://launchpad.net/~walmis
 # maiatoday https://launchpad.net/~maiatoday
+# Eddie Hyde <maerman@protonmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Afrikaans (http://www.transifex.com/mate/MATE/language/af/)\n"
+"PO-Revision-Date: 2024-07-01 22:57+0000\n"
+"Last-Translator: Eddie Hyde <maerman@protonmail.com>\n"
+"Language-Team: Afrikaans <https://hosted.weblate.org/projects/blueman/2-4/af/"
+">\n"
 "Language: af\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>Sigbaarheidsinstellings<b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
 msgid "Hidden"
-msgstr ""
+msgstr "Versteek"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
-msgstr ""
+msgstr "Altyd sigbaar"
 
 #: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
-msgstr ""
+msgstr "Tydelik sigbaar"
 
 #: data/ui/adapters-tab.ui:110
 msgid "<b>Name</b>"
-msgstr ""
+msgstr "<b>Naam</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
-msgstr ""
+msgstr "Paringsversoek"
 
 #: data/ui/applet-passkey.ui:94
 msgid "Pairing request for device:"
-msgstr ""
+msgstr "Paringsversoek vir toestel:"
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
-msgstr ""
+msgstr "Dit behoort oorskryf te word"
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
-msgstr ""
+msgstr "Wys inset"
 
 #: data/ui/manager-main.ui:48
 #, fuzzy
@@ -62,7 +65,7 @@ msgstr "Toestel"
 
 #: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr ""
+msgstr "_Aanpasser"
 
 #: data/ui/manager-main.ui:71
 msgid "_Search"
@@ -70,15 +73,15 @@ msgstr "_Soek"
 
 #: data/ui/manager-main.ui:92
 msgid "_Preferences"
-msgstr ""
+msgstr "_Voorkeure"
 
 #: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr ""
+msgstr "_Gaan uit"
 
 #: data/ui/manager-main.ui:124
 msgid "_Device"
-msgstr ""
+msgstr "_Toestel"
 
 #: data/ui/manager-main.ui:132
 msgid "_View"
@@ -86,39 +89,39 @@ msgstr "_Bekyk"
 
 #: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "Wys_Nutsbalk"
 
 #: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "Wys_Statusbalk"
 
 #: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
-msgstr ""
+msgstr "Versteek_naamlose toestelle"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr ""
+msgstr "S_orteer Volgens"
 
 #: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr ""
+msgstr "_Naam"
 
 #: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr ""
+msgstr "_Bygevoeg"
 
 #: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr ""
+msgstr "_Afnemend"
 
 #: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
-msgstr ""
+msgstr "_Inproppe"
 
 #: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
-msgstr ""
+msgstr "_Plaaslike Dienste"
 
 #: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
 #: blueman/plugins/applet/StandardItems.py:65
@@ -127,11 +130,11 @@ msgstr "_Hulp"
 
 #: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
-msgstr ""
+msgstr "_Rapporteer 'n Probleem"
 
 #: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr ""
+msgstr "Soek vir nabye toestelle"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:296
@@ -140,26 +143,26 @@ msgstr "Soek"
 
 #: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "Skep paring met die toestel"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:320
 msgid "Pair"
-msgstr ""
+msgstr "Paring"
 
 #: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Merk/Ontmerk hierdie toestel as betroubaar"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
-msgstr ""
+msgstr "Betrou"
 
 #: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "Verwyder die toestel van die lys van bekende toestelle"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:348
@@ -168,134 +171,134 @@ msgstr "Verwyder"
 
 #: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
-msgstr ""
+msgstr "Stuur lêer(s) na die toestel"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:372
 msgid "Send File"
-msgstr ""
+msgstr "Stuur lêer"
 
 #: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "Totale data gestuur en koers van oordrag"
 
 #: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "Totale data ontvang en koers van oordrag"
 
 #: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
-msgstr ""
+msgstr "Data aktiwiteit aanduiding"
 
 #: data/ui/manager-main.ui:636
 msgid "More"
-msgstr ""
+msgstr "Meer"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "Herbenoem toestel"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr ""
+msgstr "_Herstel"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_Cancel"
-msgstr ""
+msgstr "_Kanselleer"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
-msgstr ""
+msgstr "DHCP bedienertipe:"
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr ""
+msgstr "Aanbeveel"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b>Geen DHCP-bedieners geïnstalleer</b>"
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
-msgstr ""
+msgstr "IP-adres:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
-msgstr ""
+msgstr "<b>NAP-instellings</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Persoonlike Area Netwerk"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b>PAN-ondersteuning</b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr ""
+msgstr "Inbelnetwerk"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr ""
+msgstr "<b>DUN-ondersteuning</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "Netwerktoegangspunt (NAP)"
 
 #: data/ui/services-network.ui:348
 msgid "<b>NAP Support</b>"
-msgstr ""
+msgstr "<b>NAP-ondersteuning</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b>Lêerontvangs (Voorwerpdruk)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
-msgstr ""
+msgstr "Inkomende Vouer:"
 
 #: data/ui/services-transfer.ui:45
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "Kies vouer vir inkomende lêeroordragte"
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
-msgstr ""
+msgstr "Aanvaar lêers van betroubare toestelle"
 
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
-msgstr ""
+msgstr "<span weight=\"bold\" size=\"large\">Stuur lêers met Bluetooth</span>"
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
-msgstr ""
+msgstr "<b>Aan:</b>"
 
 #: data/ui/send-dialog.ui:109
 msgid "<b>File:</b>"
-msgstr ""
+msgstr "<b>Lêer</b>"
 
 #: data/ui/applet-plugins-widget.ui:79
 msgid "Configuration"
-msgstr ""
+msgstr "Konfigurasie"
 
 #: data/ui/applet-plugins-widget.ui:83
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Stel verkose inprop se voorkeure"
 
 #: data/ui/applet-plugins-widget.ui:129
 msgid "Not specified"
-msgstr ""
+msgstr "Ongespesifiseer"
 
 #: data/ui/applet-plugins-widget.ui:151
 msgid "<b>Author:</b>"
-msgstr ""
+msgstr "<b>Outeur:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
@@ -310,7 +313,7 @@ msgstr "Onbekend"
 
 #: data/ui/applet-plugins-widget.ui:193
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>Afhangend van:</b>"
 
 #: data/ui/applet-plugins-widget.ui:235
 msgid "<b>Conflicts with:</b>"
