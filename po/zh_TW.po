@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-05-30 04:19+0000\n"
+"PO-Revision-Date: 2024-06-26 07:09+0000\n"
 "Last-Translator: Peter Dave Hello <hsu@peterdavehello.org>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "blueman/2-4/zh_Hant/>\n"
@@ -28,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.6-rc\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -404,10 +404,9 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
-"blueman-manager 似乎無法從 D-Bus 啟動，常見的原因是啟動 D-Bus 的 GUI "
-"環境中的設定有問題。這個問題可以透過執行 dbus-update-activation-environment "
-"來修正，通常會把這個指令放在 xinitrc 當中（或是 Sway "
-"設定檔和其他類似的檔案）。"
+"blueman-manager 似乎無法從 D-Bus 啟動，常見的原因是啟動 D-Bus 的 GUI 環境中的"
+"設定有問題。這個問題可以透過執行 dbus-update-activation-environment 來修正，"
+"通常會把這個指令放在 xinitrc 當中（或是 Sway 設定檔和其他類似的檔案）。"
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -563,8 +562,8 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 "<b>載入外掛程式時發生錯誤。請將此訊息內容透過</b>\n"
-"<a href=\"http://github.com/blueman-project/blueman/issues\""
-">網站連結</a>通知開發者。"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">網站連結</a>通知"
+"開發者。"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -838,8 +837,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"套件 <b>「%(0)s」</b> 依存於 <b>%(1)s</b>。解除安裝 <b>%(1)s</b> "
-"也會解除安裝 <b>「%(0)s」</b>。\n"
+"套件 <b>「%(0)s」</b> 依存於 <b>%(1)s</b>。解除安裝 <b>%(1)s</b> 也會解除安"
+"裝 <b>「%(0)s」</b>。\n"
 "是否繼續？"
 
 #: blueman/gui/applet/PluginDialog.py:241
@@ -3141,9 +3140,8 @@ msgid "Adapter for this connection is not available"
 msgstr "此連線的接收器無法使用"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "斷線中..."
+msgstr "重新連線到…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3243,7 +3241,8 @@ msgid ""
 "Switches Bluetooth killswitch status to match Bluetooth power state. Allows "
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
-msgstr "配合藍牙電源狀態，切換藍牙緊急開關狀態。讓您可以在裝置沒有被系統或物理性拔除"
+msgstr ""
+"配合藍牙電源狀態，切換藍牙緊急開關狀態。讓您可以在裝置沒有被系統或物理性拔除"
 "的情況下，可以透過顯示其狀態的圖示，將藍牙重新打開。"
 
 #: blueman/plugins/applet/StandardItems.py:22
