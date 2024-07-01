@@ -16,13 +16,15 @@
 # Luiz Carlos Lucasv <csversut@gmail.com>, 2022, 2024.
 # gallegonovato <fran-carro@hotmail.es>, 2022, 2023, 2024.
 # Josman Goncalves Bravo <josmangoncalvesbravo@hotmail.com>, 2024.
+# Sander Sweers <infirit@gmail.com>, 2024.
+# Franco Castillo <castillofrancodamian@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-05-08 00:45+0000\n"
-"Last-Translator: gallegonovato <fran-carro@hotmail.es>\n"
+"PO-Revision-Date: 2024-05-22 08:15+0000\n"
+"Last-Translator: Josman Goncalves Bravo <josmangoncalvesbravo@hotmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/blueman/blueman/"
 "es/>\n"
 "Language: es\n"
@@ -30,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.6-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -1373,10 +1375,8 @@ msgid "On-Hip Running Walking Sensor"
 msgstr "Sensor de marcha en la cadera"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "Genérico: ciclismo"
+msgstr "Ciclismo genérico"
 
 #: blueman/DeviceClass.py:221
 #, fuzzy
@@ -1632,7 +1632,7 @@ msgstr "Luz de escritorio"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr "Luz Troffer"
+msgstr "luminaria empotrada"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
@@ -1652,7 +1652,7 @@ msgstr "Luz subacuática"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "Baliza con Luz"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
@@ -1664,7 +1664,7 @@ msgstr "Luz de jardín"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "Luz superior del poste"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
@@ -1691,108 +1691,100 @@ msgid "Emergency Exit Light"
 msgstr "Luz de salida de emergencia"
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Mando"
+msgstr "Controlador de luz"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "Conductor de Luz"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Bombilla"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Luz de bahía baja"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Luz de alta bahía"
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Tag genérico"
+msgstr "Ventilador genérico"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Ventilador de techo"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "Ventilador axial"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "Ventilador de extracción"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "Ventilador de pedestal"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "Ventilador de mesa"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "Ventilador de pared"
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
-#| msgid "Generic Clock"
 msgid "Generic HVAC"
-msgstr "Reloj genérico"
+msgstr "Climatización genérica"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Termómetro: oído"
+msgstr "Termostato"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Humidificador"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Deshumidificador"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Calefactor"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Radiador"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Caldera"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Bomba de calor"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Calefactor infrarrojo"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "Calefactor de panel radiante"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "Calentador de ventilador"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Cortina de aire"
 
 #: blueman/DeviceClass.py:315
 #, fuzzy
@@ -2256,7 +2248,7 @@ msgstr "Audio genérico"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Amplificador"
 
 #: blueman/DeviceClass.py:427
 #, fuzzy
@@ -2278,19 +2270,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "Reproductor de CD"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "Reproductor de DVD"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Reproductor de Blu-ray"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Reproductor de discos ópticos"
 
 #: blueman/DeviceClass.py:435
 #, fuzzy
@@ -2306,7 +2298,7 @@ msgstr "Pantalla genérica"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Televisión"
 
 #: blueman/DeviceClass.py:438
 #, fuzzy
@@ -2316,7 +2308,7 @@ msgstr "Monitor de vídeo"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Proyector"
 
 #: blueman/DeviceClass.py:440
 #, fuzzy
