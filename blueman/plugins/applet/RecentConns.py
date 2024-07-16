@@ -1,5 +1,6 @@
 from gettext import gettext as _
 from operator import itemgetter
+import html
 import time
 import logging
 from typing import List, TYPE_CHECKING, Optional, Callable, cast, Union
@@ -167,8 +168,9 @@ class RecentConns(AppletPlugin, PowerStateListener):
         self.parent.Plugins.DBusService.connect_service(item["device"], item["uuid"], reply, err)
 
     def _build_menu_item(self, item: "Item") -> "SubmenuItemDict":
+        alias = html.escape(item["alias"])
         mitem: "SubmenuItemDict" = {
-            "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": item["alias"]},
+            "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": alias},
             "markup": True,
             "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
             "sensitive": item["device"] is not None,
