@@ -1,10 +1,8 @@
 cython = find_program('cython', 'cython3' ,required: true)
 
-blueman_c = custom_target(
+blueman_c = pyinstall.extension_module(
     'blueman_c',
-    output: '_blueman.c',
-    input: '_blueman.pyx',
-    command: [cython, '--output-file', '@OUTPUT@', '@INPUT@'])
+    '_blueman.pyx')
 
 sources = [
     blueman_c,

@@ -1,8 +1,8 @@
 project(
-    'blueman', 'c',
+    'blueman', 'c', 'cython',
     version: '2.4',
     license: 'GPL3',
-    meson_version: '>=0.56.0',
+    meson_version: '>=0.63.0',
     default_options: 'b_lundef=false'
 )
 
