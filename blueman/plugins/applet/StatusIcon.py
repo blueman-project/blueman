@@ -106,7 +106,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         if state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    def _on_plugins_changed(self, _plugins: PluginManager, _name: str) -> None:
+    def _on_plugins_changed(self, _plugins: PluginManager[AppletPlugin], _name: str) -> None:
         implementations = self._get_status_icon_implementations()
         if not self._implementations or self._implementations != implementations:
             self._implementations = implementations
