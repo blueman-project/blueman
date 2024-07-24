@@ -4,7 +4,7 @@ import logging
 import traceback
 import importlib
 from types import ModuleType
-from typing import Dict, List, Type, TypeVar, Iterable, Optional
+from typing import Dict, List, Type, TypeVar, Iterable, Optional, Generic
 
 from gi.repository import GObject, Gio
 
@@ -22,7 +22,7 @@ class LoadException(Exception):
 _T = TypeVar("_T", bound=BasePlugin)
 
 
-class PluginManager(GObject.GObject):
+class PluginManager(GObject.GObject, Generic[_T]):
     __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
@@ -211,7 +211,7 @@ class PluginManager(GObject.GObject):
                 yield plugin
 
 
-class PersistentPluginManager(PluginManager):
+class PersistentPluginManager(PluginManager[_T]):
     def __init__(self, plugin_class: Type[_T], module_path: ModuleType, parent: object) -> None:
         super().__init__(plugin_class, module_path, parent)
 

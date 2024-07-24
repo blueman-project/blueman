@@ -1,11 +1,11 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, Type, Dict, cast, Optional
+from typing import TYPE_CHECKING, Type, Dict, cast, Optional, TypeVar
 
 from blueman.main.Builder import Builder
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.BasePlugin import Option
+from blueman.plugins.BasePlugin import Option, BasePlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -329,7 +329,9 @@ class PluginDialog(Gtk.ApplicationWindow):
             self.model.insert_sorted(plugin_item, self._model_sort_func)
         self.listbox.select_row(self.listbox.get_row_at_index(0))
 
-    def plugin_state_changed(self, _plugins: PluginManager, name: str, loaded: bool) -> None:
+    _T = TypeVar("_T", bound="BasePlugin")
+
+    def plugin_state_changed(self, _plugins: PluginManager[_T], name: str, loaded: bool) -> None:
         logging.debug(f"{name} {loaded}")
         action = self.lookup_action(name)
         assert isinstance(action, Gio.SimpleAction)
