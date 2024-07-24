@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: blueman 2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-02-12 00:12+0000\n"
+"PO-Revision-Date: 2024-07-10 05:09+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/blueman/"
-"oc/>\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/2-4/oc/"
+">\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -420,11 +420,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Clicar per desactivar."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Clicar per activar."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -1190,7 +1190,7 @@ msgstr "Tipe de servidor generic"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "PC/PDA portable (clapet)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
@@ -1198,7 +1198,7 @@ msgstr "Assistent personal tipe Palm"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Ordenador portable (talha relòtge)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
@@ -1218,7 +1218,7 @@ msgstr "Servidor Blade"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Convertible"
 
 #: blueman/DeviceClass.py:182
 #, fuzzy
@@ -1236,17 +1236,15 @@ msgstr "Mini PC"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Ordenador de pòcha"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
 msgstr "Mòstra generica"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Watch: Sports Watch"
 msgid "Sports Watch"
-msgstr "Mòstra : mòstra d’espòrt"
+msgstr "Relòtge d’espòrt"
 
 #: blueman/DeviceClass.py:188
 #, fuzzy
@@ -1295,16 +1293,12 @@ msgid "Ear Thermometer"
 msgstr "Termomètre d’aurelha"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Heart Rate Sensor"
 msgstr "Captor de frequéncia cardiaca generic"
 
 #: blueman/DeviceClass.py:200
-#, fuzzy
-#| msgid "Heart Rate"
 msgid "Heart Rate Belt"
-msgstr "Ritme cardiac"
+msgstr "Cinta de ritme cardiac"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
@@ -1323,10 +1317,8 @@ msgid "Wrist Blood Pressure"
 msgstr "Pression sanguina"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device (HID)"
 msgid "Generic Human Interface Device"
-msgstr "Periferic d’interfàcia umana (HID)"
+msgstr "Periferic d’interfàcia umana"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1369,10 +1361,8 @@ msgid "Generic Glucose Meter"
 msgstr "Glucomètre generic"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Running Walking Sensor"
-msgstr "Captor de frequéncia cardiaca generic"
+msgstr "Captor de corsa passejada generic"
 
 #: blueman/DeviceClass.py:217
 msgid "In-Shoe Running Walking Sensor"
@@ -1387,46 +1377,32 @@ msgid "On-Hip Running Walking Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "Generic : bicicleta"
+msgstr "Bicicleta generica"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling Power"
 msgid "Cycling Computer"
-msgstr "Poténcia a bicicleta"
+msgstr "Ordenador de bicicleta"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Bicicleta : captor de velocitat"
+msgstr "Captor de velocitat"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Bicicleta : captor de cadéncia"
+msgstr "Captor de cadéncia"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Bicicleta : captor d’energia"
+msgstr "Captor d’energia"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "Bicicleta : captor de velocitat e cadéncia"
+msgstr "Captor de velocitat e cadéncia"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Control Device"
-msgstr "Aparelh de mobilitat personala generic"
+msgstr "Aparelh de contraròtla generic"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
@@ -1434,7 +1410,7 @@ msgstr "Mòstra"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Interruptor multiple"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
@@ -1442,37 +1418,35 @@ msgstr "Buton"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Guida"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Interruptor giratòri"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Ecran tactil"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Interruptor unic"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Interruptor doble"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Interruptor triple"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "Servici de batariá"
+msgstr "Interruptor de batariá"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Interruptor de captura d’energia"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
@@ -1480,111 +1454,99 @@ msgstr ""
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Compausar"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
-#| msgid "Generic Networking"
 msgid "Generic Network Device"
-msgstr "Ret generica"
+msgstr "Periferic de ret generic"
 
 #: blueman/DeviceClass.py:241
 msgid "Access Point"
 msgstr "Punt d’accès"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Periferic"
+msgstr "Periferic de ret malhat"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Proxy de ret malhat"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Sensor"
-msgstr "Captor de frequéncia cardiaca generic"
+msgstr "Captor generic"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Captor de movement"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Captor de qualitat d’aire"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Captor de frequéncia cardiaca generic"
+msgstr "Captor de temperatura"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Captor d’umiditat"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Captor de pèrda"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Captor de fum"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Captor d’ocupacion"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Captor de contacte"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Captor de monoxid de carbòni"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Captor de dioxid de carbòni"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Captor de lutz ambienta"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Captor d’energia"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Captor de lutz de color"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Captor de pluèja"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Expeditor de fichièrs"
+msgstr "Captor de fuòc"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "Bicicleta : captor de velocitat"
+msgstr "Captor de vent"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Captor de proximitat"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Multicaptor"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"

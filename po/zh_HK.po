@@ -6,20 +6,22 @@
 # yanq.wang https://launchpad.net/~nile-wangyq
 # Janfy Tan <janfytan@gmail.com>, 2016
 # Walter Cheuk <wwycheuk@gmail.com>, 2016
+# Ricky From Hong Kong <lamricky11@hotmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Chinese (Hong Kong) (http://www.transifex.com/mate/MATE/"
-"language/zh_HK/)\n"
+"PO-Revision-Date: 2024-07-24 10:24+0000\n"
+"Last-Translator: Ricky From Hong Kong <lamricky11@hotmail.com>\n"
+"Language-Team: Chinese (Traditional, Hong Kong) <https://hosted.weblate.org/"
+"projects/blueman/2-4/zh_Hant_HK/>\n"
 "Language: zh_HK\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -48,7 +50,7 @@ msgstr "配對請求"
 
 #: data/ui/applet-passkey.ui:94
 msgid "Pairing request for device:"
-msgstr "對裝置的配對請求"
+msgstr "對裝置的配對請求："
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
@@ -636,9 +638,8 @@ msgid "Blocked"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "連線"
+msgstr "<b>已連線</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Poor"
@@ -703,9 +704,8 @@ msgid "Failed"
 msgstr "失敗"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:148
-#, fuzzy
 msgid "Connecting…"
-msgstr "連線中"
+msgstr "連線中…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:171
 msgid "Disconnection Failed: "
@@ -734,18 +734,16 @@ msgid "Connection Failed: "
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:295
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "連線"
+msgstr "<b>連線（_C）</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:301
-#, fuzzy
 msgid "<b>_Disconnect</b>"
-msgstr "連線"
+msgstr "<b>斷線（_D）</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:302
 msgid "Forcefully disconnect the device"
@@ -760,14 +758,12 @@ msgid "<b>Disconnect:</b>"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:333
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "連線"
+msgstr "<b>自動連線：</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
-#, fuzzy
 msgid "Send a _File…"
-msgstr "傳送文件"
+msgstr "傳送文件（_F）…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Pair"
@@ -798,9 +794,8 @@ msgid "R_ename device…"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:426
-#, fuzzy
 msgid "_Remove…"
-msgstr "移除"
+msgstr "移除（_R）…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -861,9 +856,8 @@ msgid "Adapter selection"
 msgstr ""
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "正在中斷..."
+msgstr "搜尋中…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -3185,9 +3179,8 @@ msgid "Adapter for this connection is not available"
 msgstr ""
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "正在中斷..."
+msgstr "重新連線到…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3405,9 +3398,8 @@ msgid "Discoverable… %ss"
 msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
 msgid "Discoverable…"
-msgstr "正在中斷..."
+msgstr "可被搜尋…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
