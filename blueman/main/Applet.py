@@ -115,7 +115,7 @@ class BluemanApplet(Gtk.Application):
             plugin.on_device_removed(path)
 
 
-class Plugins(PersistentPluginManager):
+class Plugins(PersistentPluginManager[AppletPlugin]):
     def __init__(self, applet: BluemanApplet):
         super().__init__(AppletPlugin, blueman.plugins.applet, applet)
 

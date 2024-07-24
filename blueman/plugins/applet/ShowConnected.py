@@ -111,6 +111,6 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     def on_adapter_removed(self, _path: str) -> None:
         self.enumerate_connections()
 
-    def _on_plugins_changed(self, _pluginmngr: PluginManager, name: str) -> None:
+    def _on_plugins_changed(self, _pluginmngr: PluginManager[AppletPlugin], name: str) -> None:
         if name == "PowerManager":
             self.update_statusicon()
