@@ -6,6 +6,17 @@
 
 * Terminate applet on manager termination if it was started by manager
 
+## 2.4.3
+
+### Bugs fixed
+
+* Issues with specific device names
+* Deadlock between applet and manager when double-clicking the tray icon
+
+### Changes
+
+* Translation updates
+
 ## 2.4.2
 
 ### New features
