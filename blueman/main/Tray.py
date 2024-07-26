@@ -3,6 +3,7 @@ import logging
 import os
 import signal
 import sys
+from blueman.Functions import log_system_info
 from blueman.main.DBusProxies import AppletService
 from gi.repository import Gio, GLib
 
@@ -17,6 +18,8 @@ class BluemanTray(Gio.Application):
         def do_quit(_: object) -> bool:
             self.quit()
             return False
+
+        log_system_info()
 
         s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
