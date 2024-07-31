@@ -2,7 +2,7 @@ project(
     'blueman', 'c',
     version: '2.4',
     license: 'GPL3',
-    meson_version: '>=0.56.0',
+    meson_version: '>=0.58.0',
     default_options: 'b_lundef=false'
 )
 
@@ -52,6 +52,15 @@ conf_data.set('dhconfig', get_option('dhcp-config-path'))
 conf_data.set('POLKIT', have_polkit)
 conf_data.set('GETTEXT_PACKAGE', package_name)
 conf_data.set('PYTHON', pyinstall.full_path())
+
+#Setup devenv
+PYTHON_PATHS=[join_paths(meson.current_source_dir(), 'blueman'), join_paths(meson.current_build_dir(), 'module')]
+meson.add_devenv({'BLUEMAN_SOURCE': '1'})
+meson.add_devenv({'PYTHONPATH': ':'.join(PYTHON_PATHS)})
+meson.add_devenv({'BINDIR': meson.current_build_dir()})
+meson.add_devenv({'ICON_PATH': join_paths(meson.current_source_dir(), 'data', 'icons')})
+meson.add_devenv({'PIXMAP_PATH': join_paths(meson.current_source_dir(), 'data', 'icons', 'pixmaps')})
+meson.add_devenv({'UI_PATH': join_paths(meson.current_source_dir(), 'data', 'ui')})
 
 # Check for build dependencies
 pythonlib = pyinstall.dependency()
