@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Set, Dict
+from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Dict
 import html
 import logging
 import cairo
@@ -17,12 +17,10 @@ from blueman.Constants import PIXMAP_PATH
 from blueman.Functions import launch
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 from blueman.gui.GtkAnimation import TreeRowFade, CellFade, AnimBase
-from _blueman import ConnInfoReadError, conn_info
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gio
 from gi.repository import Gdk
@@ -79,8 +77,6 @@ class ManagerDeviceList(DeviceList):
         self.set_headers_visible(False)
         self.props.has_tooltip = True
         self.Blueman = inst
-
-        self._monitored_devices: Set[str] = set()
 
         self.manager.connect_signal("battery-created", self.on_battery_created)
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
@@ -406,48 +402,6 @@ class ManagerDeviceList(DeviceList):
         except Exception as e:
             logging.exception(e)
 
-        if device["Connected"]:
-            self._monitor_power_levels(tree_iter, device)
-
-    def _monitor_power_levels(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
-        if device["Address"] in self._monitored_devices:
-            return
-
-        assert self.Adapter is not None
-        cinfo = conn_info(device["Address"], os.path.basename(self.Adapter.get_object_path()))
-        try:
-            cinfo.init()
-        except ConnInfoReadError:
-            logging.warning("Failed to get power levels, probably a LE device.")
-
-        model = self.liststore
-        assert isinstance(model, Gtk.TreeModel)
-        r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
-        self._update_power_levels(tree_iter, device, cinfo)
-        GLib.timeout_add(1000, self._check_power_levels, r, cinfo, device["Address"])
-        self._monitored_devices.add(device["Address"])
-
-    def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: str) -> bool:
-        if not row_ref.valid():
-            logging.warning("stopping monitor (row does not exist)")
-            cinfo.deinit()
-            self._monitored_devices.remove(address)
-            return False
-
-        tree_iter = self.get_iter(row_ref.get_path())
-        assert tree_iter is not None
-
-        device = self.get(tree_iter, "device")["device"]
-
-        if device["Connected"]:
-            self._update_power_levels(tree_iter, device, cinfo)
-            return True
-        else:
-            cinfo.deinit()
-            self._disable_power_levels(tree_iter)
-            self._monitored_devices.remove(address)
-            return False
-
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         logging.info(f"{key} {value}")
 
@@ -482,9 +436,7 @@ class ManagerDeviceList(DeviceList):
         elif key == "Connected":
             self.set(tree_iter, connected=value)
 
-            if value:
-                self._monitor_power_levels(tree_iter, device)
-            else:
+            if not value:
                 self._disable_power_levels(tree_iter)
         elif key == "Name":
             self.set(tree_iter, no_name=False)
@@ -493,28 +445,14 @@ class ManagerDeviceList(DeviceList):
         elif key == "Blocked":
             self.set(tree_iter, blocked=value)
 
-    def _update_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, cinfo: conn_info) -> None:
-        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
+        elif key == "RSSI":
+            self._update_bar(tree_iter, "rssi", 50 if value is None else max(50 + float(value) / 127 * 50, 10))
 
-        bars = {}
+        elif key == "TxPower":
+            self._update_bar(tree_iter, "tpl", 0 if value is None else max(float(value) / 127 * 100, 10))
 
-        obj_path = device.get_object_path()
-        if obj_path in self._batteries:
-            bars["battery"] = self._batteries[obj_path]["Percentage"]
-
-        # cinfo init may fail for bluetooth devices version 4 and up
-        # FIXME Workaround is horrible and we should show something better
-        if cinfo.failed:
-            bars.update({"rssi": 100.0, "tpl": 100.0})
-        else:
-            try:
-                bars["rssi"] = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10)
-            except ConnInfoReadError:
-                bars["rssi"] = 50
-            try:
-                bars["tpl"] = max(50 + float(cinfo.get_tpl()) / 127 * 50, 10)
-            except ConnInfoReadError:
-                bars["tpl"] = 50
+    def _update_bar(self, tree_iter: Gtk.TreeIter, name: str, perc: float) -> None:
+        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "tpl")
 
         if row["battery"] == row["rssi"] == row["tpl"] == 0:
             self._prepare_fader(row["cell_fader"]).animate(start=0.0, end=1.0, duration=400)
@@ -522,11 +460,10 @@ class ManagerDeviceList(DeviceList):
         w = 14 * self.get_scale_factor()
         h = 48 * self.get_scale_factor()
 
-        for (name, perc) in bars.items():
-            if round(row[name], -1) != round(perc, -1):
-                icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
-                self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
+        if round(row[name], -1) != round(perc, -1):
+            icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
+            icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
+            self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
         row = self.get(tree_iter, "cell_fader", "battery", "rssi", "tpl")
