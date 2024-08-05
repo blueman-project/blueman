@@ -32,7 +32,6 @@ class ManagerToolbar:
 
         self.b_trust = blueman.builder.get_widget("b_trust", Gtk.ToolButton)
         self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
-        self.b_trust.set_homogeneous(False)
 
         self.b_trust.props.label = _("Untrust")
         (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
@@ -47,7 +46,6 @@ class ManagerToolbar:
         self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
         self.b_send.props.sensitive = False
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
-        self.b_send.set_homogeneous(False)
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
