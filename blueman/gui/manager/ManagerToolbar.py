@@ -80,20 +80,24 @@ class ManagerToolbar:
         self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
 
         tree_iter = self.blueman.List.selected()
+        opacity = 0.5
         if tree_iter is None:
             self.b_bond.props.sensitive = False
+            self.b_bond.props.opacity = opacity
             self.b_trust.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_send.props.sensitive = False
             self.b_bluetooth_status.props.sensitive = False
+            self.b_send.props.opacity = opacity
         else:
             row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
             self.b_bond.props.sensitive = powered and not row["paired"]
+            self.b_bond.props.opacity = 1.0 if powered and not row["paired"] else opacity
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
             self.b_send.props.sensitive = powered and row["objpush"]
             self.b_bluetooth_status.props.sensitive = True
-
+            self.b_send.props.opacity = 1.0 if powered and row["objpush"] else opacity
             self.b_trust.props.icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.label = _("Untrust") if row["trusted"] else _("Trust")
 
