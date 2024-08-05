@@ -94,8 +94,7 @@ class ManagerToolbar:
             self.b_send.props.sensitive = powered and row["objpush"]
             self.b_bluetooth_status.props.sensitive = True
 
-            icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
-            self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)
+            self.b_trust.props.icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.label = _("Untrust") if row["trusted"] else _("Trust")
 
     def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
