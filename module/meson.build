@@ -4,7 +4,7 @@ blueman_c = custom_target(
     'blueman_c',
     output: '_blueman.c',
     input: '_blueman.pyx',
-    command: [cython, '--output-file', '@OUTPUT@', '@INPUT@'])
+    command: [cython, '-w', meson.source_root(), '--output-file', join_paths(meson.build_root(), '@OUTPUT@'), join_paths(meson.build_root(), '@INPUT@')])
 
 sources = [
     blueman_c,
