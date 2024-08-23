@@ -5,6 +5,7 @@ from gi.repository import Gio, GLib, Gtk
 import logging
 import signal
 from typing import Any, cast
+from blueman.bluemantyping import ObjectPath
 
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
@@ -86,30 +87,30 @@ class BluemanApplet(Gtk.Application):
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_manager_state_changed(self.manager_state)
 
-    def _on_adapter_property_changed(self, _adapter: AnyAdapter, key: str, value: Any, path: str) -> None:
+    def _on_adapter_property_changed(self, _adapter: AnyAdapter, key: str, value: Any, path: ObjectPath) -> None:
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_adapter_property_changed(path, key, value)
 
-    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: Any, path: str) -> None:
+    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: Any, path: ObjectPath) -> None:
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_device_property_changed(path, key, value)
 
-    def on_adapter_added(self, _manager: Manager, path: str) -> None:
+    def on_adapter_added(self, _manager: Manager, path: ObjectPath) -> None:
         logging.info(f"Adapter added {path}")
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_adapter_added(path)
 
-    def on_adapter_removed(self, _manager: Manager, path: str) -> None:
+    def on_adapter_removed(self, _manager: Manager, path: ObjectPath) -> None:
         logging.info(f"Adapter removed {path}")
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_adapter_removed(path)
 
-    def on_device_created(self, _manager: Manager, path: str) -> None:
+    def on_device_created(self, _manager: Manager, path: ObjectPath) -> None:
         logging.info(f"Device created {path}")
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_device_created(path)
 
-    def on_device_removed(self, _manager: Manager, path: str) -> None:
+    def on_device_removed(self, _manager: Manager, path: ObjectPath) -> None:
         logging.info(f"Device removed {path}")
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_device_removed(path)

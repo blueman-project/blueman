@@ -1,6 +1,7 @@
 import logging
 import weakref
 from typing import Dict, Callable, List, Tuple
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GObject, Gio
 
@@ -48,7 +49,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         if transfer_proxy:
             logging.info(object_path)
-            transfer = Transfer(obj_path=object_path)
+            transfer = Transfer(obj_path=ObjectPath(object_path))
             chandlerid = transfer.connect_signal('completed', self._on_transfer_completed, True)
             ehandlerid = transfer.connect_signal('error', self._on_transfer_completed, False)
             self.__transfers[object_path] = (transfer, (chandlerid, ehandlerid))

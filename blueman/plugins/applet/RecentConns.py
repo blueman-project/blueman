@@ -4,6 +4,7 @@ import html
 import time
 import logging
 from typing import List, TYPE_CHECKING, Optional, Callable, cast, Union
+from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
@@ -108,7 +109,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
     def on_adapter_removed(self, path: str) -> None:
         self._rebuild()
 
-    def notify(self, object_path: str, uuid: str) -> None:
+    def notify(self, object_path: ObjectPath, uuid: str) -> None:
         device = Device(obj_path=object_path)
         logging.info(f"{device} {uuid}")
         try:
@@ -119,7 +120,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         item = {
             "adapter": adapter["Address"],
-            "address": device['Address'],
+            "address": BtAddress(device['Address']),
             "alias": device.display_name,
             "icon": device['Icon'],
             "name": ServiceUUID(uuid).name,
@@ -165,7 +166,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
-        self.parent.Plugins.DBusService.connect_service(item["device"], item["uuid"], reply, err)
+        self.parent.Plugins.DBusService.connect_service(ObjectPath(item["device"]), item["uuid"], reply, err)
 
     def _build_menu_item(self, item: "Item") -> "SubmenuItemDict":
         alias = html.escape(item["alias"])
@@ -193,7 +194,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
             self._mitems.append(menu.add(self, (53, idx), **item))
         menu.add(self, 59)
 
-    def _get_device_path(self, adapter_path: str, address: str) -> Optional[str]:
+    def _get_device_path(self, adapter_path: ObjectPath, address: BtAddress) -> Optional[str]:
         try:
             adapter = self.parent.Manager.get_adapter(adapter_path)
         except DBusNoSuchAdapterError:

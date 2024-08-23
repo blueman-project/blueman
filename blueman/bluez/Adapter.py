@@ -1,4 +1,5 @@
 from typing import Optional, Callable
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
 
@@ -11,7 +12,7 @@ from blueman.bluez.errors import BluezDBusException
 class Adapter(Base):
     _interface_name = 'org.bluez.Adapter1'
 
-    def __init__(self, obj_path: str):
+    def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
     def start_discovery(self, error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:

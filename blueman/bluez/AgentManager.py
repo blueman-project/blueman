@@ -1,10 +1,12 @@
+from blueman.bluemantyping import ObjectPath
+
 from blueman.bluez.Base import Base
 from gi.repository import GLib
 
 
 class AgentManager(Base):
     _interface_name = 'org.bluez.AgentManager1'
-    _obj_path = '/org/bluez'
+    _obj_path = ObjectPath('/org/bluez')
 
     def __init__(self) -> None:
         super().__init__(obj_path=self._obj_path)

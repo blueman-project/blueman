@@ -5,6 +5,7 @@ import shutil
 import logging
 from html import escape
 from typing import List, Dict, TYPE_CHECKING, Callable, Tuple, Optional, Union
+from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.obex.AgentManager import AgentManager
 from blueman.bluez.obex.Manager import Manager
@@ -28,7 +29,7 @@ if TYPE_CHECKING:
 
     class PendingTransferDict(TypedDict):
         transfer_path: str
-        address: str
+        address: BtAddress
         root: str
         filename: str
         size: Optional[int]
@@ -46,7 +47,7 @@ class ObexErrorCanceled(DbusError):
 
 
 class Agent(DbusService):
-    __agent_path = '/org/bluez/obex/agent/blueman'
+    __agent_path = ObjectPath('/org/bluez/obex/agent/blueman')
 
     def __init__(self, applet: BluemanApplet):
         super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
@@ -73,7 +74,7 @@ class Agent(DbusService):
     def _release(self) -> None:
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _authorize_push(self, transfer_path: str, ok: Callable[[str], None],
+    def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[str], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
         def on_action(action: str) -> None:
             logging.info(f"Action {action}")

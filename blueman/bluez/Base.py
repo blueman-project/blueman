@@ -1,11 +1,10 @@
 from typing import List, Callable, Optional, Any, Union, Dict
+from blueman.bluemantyping import GSignals, ObjectPath
 
 from gi.repository import Gio, GLib, GObject
 from gi.types import GObjectMeta
 from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
-
-from blueman.bluemantyping import GSignals
 
 
 class BaseMeta(GObjectMeta):
@@ -41,7 +40,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
 
-    def __init__(self, *, obj_path: str):
+    def __init__(self, *, obj_path: ObjectPath):
         super().__init__()
 
         self.__proxy = Gio.DBusProxy.new_for_bus_sync(
@@ -122,8 +121,8 @@ class Base(GObject.Object, metaclass=BaseMeta):
                           GLib.MAXINT,
                           None)
 
-    def get_object_path(self) -> str:
-        return self.__proxy.get_object_path()
+    def get_object_path(self) -> ObjectPath:
+        return ObjectPath(self.__proxy.get_object_path())
 
     def get_properties(self) -> Dict[str, Any]:
         param = GLib.Variant('(s)', (self._interface_name,))

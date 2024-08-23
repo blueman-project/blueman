@@ -1,5 +1,6 @@
 import logging
 from typing import Dict
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.errors import BluezDBusException
 from blueman.bluez.obex.Base import Base
@@ -16,11 +17,11 @@ class ObjectPush(Base):
 
     _interface_name = 'org.bluez.obex.ObjectPush1'
 
-    def __init__(self, obj_path: str):
+    def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
     def send_file(self, file_path: str) -> None:
-        def on_transfer_started(transfer_path: str, props: Dict[str, str]) -> None:
+        def on_transfer_started(transfer_path: ObjectPath, props: Dict[str, str]) -> None:
             logging.info(" ".join((self.get_object_path(), file_path, transfer_path)))
             self.emit('transfer-started', transfer_path, props['Filename'])
 
@@ -31,6 +32,6 @@ class ObjectPush(Base):
         param = GLib.Variant('(s)', (file_path,))
         self._call('SendFile', param, reply_handler=on_transfer_started, error_handler=on_transfer_error)
 
-    def get_session_path(self) -> str:
-        path: str = self.get_object_path()
+    def get_session_path(self) -> ObjectPath:
+        path: ObjectPath = self.get_object_path()
         return path

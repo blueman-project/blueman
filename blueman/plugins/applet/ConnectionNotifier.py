@@ -1,6 +1,7 @@
 import logging
 from gettext import gettext as _
 from typing import Any, Dict, Union
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
@@ -14,7 +15,7 @@ class ConnectionNotifier(AppletPlugin):
     __icon__ = "bluetooth-symbolic"
     __description__ = _("Shows desktop notifications when devices get connected or disconnected.")
 
-    _notifications: Dict[str, Union[_NotificationBubble, _NotificationDialog]] = {}
+    _notifications: Dict[ObjectPath, Union[_NotificationBubble, _NotificationDialog]] = {}
 
     def on_load(self) -> None:
         self._battery_watcher = BatteryWatcher(self._on_battery_update)
@@ -22,7 +23,7 @@ class ConnectionNotifier(AppletPlugin):
     def on_unload(self) -> None:
         del self._battery_watcher
 
-    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
             if value:
@@ -35,7 +36,7 @@ class ConnectionNotifier(AppletPlugin):
             else:
                 Notification(device.display_name, _('Disconnected'), icon_name=device["Icon"]).show()
 
-    def _on_battery_update(self, path: str, value: int) -> None:
+    def _on_battery_update(self, path: ObjectPath, value: int) -> None:
         notification = self._notifications.pop(path, None)
         if notification:
             try:

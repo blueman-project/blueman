@@ -4,6 +4,7 @@ from gettext import gettext as _
 from operator import attrgetter
 from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
 
+from blueman.bluemantyping import ObjectPath
 from blueman.Functions import create_menuitem, e_
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Network import AnyNetwork
@@ -58,7 +59,7 @@ class MenuItemsProvider:
 
 
 class ManagerDeviceMenu(Gtk.Menu):
-    __ops__: Dict[str, str] = {}
+    __ops__: Dict[ObjectPath, str] = {}
     __instances__: List["ManagerDeviceMenu"] = []
 
     SelectedDevice: Device
@@ -334,7 +335,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             if row["connected"] or generic_autoconnect:
                 item = Gtk.CheckMenuItem(label=generic_service.name)
-                config.bind_to_menuitem(item, (object_path, str(generic_service)))
+                config.bind_to_menuitem(item, (str(object_path), str(generic_service)))
                 item.show()
                 self.append(item)
 

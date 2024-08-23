@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
 from typing import TYPE_CHECKING, Callable, Tuple, Optional
+from blueman.bluemantyping import ObjectPath
 
 import gi
 
@@ -62,7 +63,7 @@ class ManagerToolbar:
         if key == "Discovering" or key == "Powered":
             self._update_buttons(adapter)
 
-    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
+    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[ObjectPath]) -> None:
         logging.debug(f"toolbar adapter {adapter_path}")
         self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
 

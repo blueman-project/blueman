@@ -15,7 +15,7 @@ from gi.repository import GLib
 
 import gi
 
-from blueman.bluemantyping import GSignals
+from blueman.bluemantyping import GSignals, ObjectPath
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -64,7 +64,7 @@ class DeviceList(GenericList):
         self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time: float = 0
-        self.__adapter_path: Optional[str] = None
+        self.__adapter_path: Optional[ObjectPath] = None
         self.Adapter: Optional[Adapter] = None
         self.discovering = False
 
@@ -97,7 +97,7 @@ class DeviceList(GenericList):
             self.manager.disconnect(handler)
         super().destroy()
 
-    def __on_manager_signal(self, _manager: Manager, path: str, signal_name: str) -> None:
+    def __on_manager_signal(self, _manager: Manager, path: ObjectPath, signal_name: str) -> None:
         if signal_name == 'adapter-removed':
             self.emit("adapter-removed", path)
             if path == self.__adapter_path:
@@ -125,7 +125,7 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
 
-    def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: str) -> None:
+    def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: ObjectPath) -> None:
         if not self.Adapter or self.Adapter.get_object_path() != path:
             return
 
@@ -134,7 +134,7 @@ class DeviceList(GenericList):
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, path: str) -> None:
+    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, path: ObjectPath) -> None:
         tree_iter = self.find_device_by_path(path)
 
         if tree_iter is not None:
@@ -158,10 +158,10 @@ class DeviceList(GenericList):
         pass
 
     # called when device needs to be added to the list
-    def device_add_event(self, object_path: str) -> None:
+    def device_add_event(self, object_path: ObjectPath) -> None:
         self.add_device(object_path)
 
-    def device_remove_event(self, object_path: str) -> None:
+    def device_remove_event(self, object_path: ObjectPath) -> None:
         logging.debug(object_path)
         tree_iter = self.find_device_by_path(object_path)
         if tree_iter is None:
@@ -220,7 +220,7 @@ class DeviceList(GenericList):
         self.emit("discovery-progress", progress)
         return True
 
-    def add_device(self, object_path: str) -> None:
+    def add_device(self, object_path: ObjectPath) -> None:
         device = Device(obj_path=object_path)
         # device belongs to another adapter
         if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
@@ -261,7 +261,7 @@ class DeviceList(GenericList):
         else:
             return True
 
-    def get_adapter_path(self) -> Optional[str]:
+    def get_adapter_path(self) -> Optional[ObjectPath]:
         return self.__adapter_path if self.is_valid_adapter() else None
 
     def stop_discovery(self) -> None:
@@ -288,7 +288,7 @@ class DeviceList(GenericList):
 
         self.path_to_row = {}
 
-    def find_device_by_path(self, object_path: str) -> Optional[Gtk.TreeIter]:
+    def find_device_by_path(self, object_path: ObjectPath) -> Optional[Gtk.TreeIter]:
         row = self.path_to_row.get(object_path, None)
         if row is None:
             return row

@@ -7,7 +7,7 @@ from typing import List, Iterable, Optional
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
 from blueman.main.Builder import Builder
-from blueman.bluemantyping import GSignals
+from blueman.bluemantyping import GSignals, ObjectPath
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager
@@ -28,7 +28,7 @@ class Sender(Gtk.Dialog):
         'result': (GObject.SignalFlags.RUN_FIRST, None, (GObject.TYPE_BOOLEAN,)),
     }
 
-    def __init__(self, device: Device, adapter_path: str, files: Iterable[str]) -> None:
+    def __init__(self, device: Device, adapter_path: ObjectPath, files: Iterable[str]) -> None:
         super().__init__(
             title=_("Bluetooth File Transfer"),
             name="BluemanSendTo",
@@ -154,7 +154,7 @@ class Sender(Gtk.Dialog):
         text = "%s %d/%d %.2f (%s/s) %s %s" % (_("Sending File"), num, self.num_files, speed, unit, _("ETA:"), eta)
         self.pb.set_text(text)
 
-    def on_transfer_started(self, _object_push: ObjectPush, transfer_path: str, filename: str) -> None:
+    def on_transfer_started(self, _object_push: ObjectPush, transfer_path: ObjectPath, filename: str) -> None:
         if self.total_transferred == 0:
             self._update_pb_text(0.0, "B")
 
@@ -262,13 +262,13 @@ class Sender(Gtk.Dialog):
             d.show()
             self.error_dialog = d
 
-    def on_session_added(self, _manager: Manager, session_path: str) -> None:
+    def on_session_added(self, _manager: Manager, session_path: ObjectPath) -> None:
         self.object_push = ObjectPush(obj_path=session_path)
         self.object_push_handlers.append(self.object_push.connect("transfer-started", self.on_transfer_started))
         self.object_push_handlers.append(self.object_push.connect("transfer-failed", self.on_transfer_failed))
         self.process_queue()
 
-    def on_session_removed(self, _manager: Manager, session_path: str) -> None:
+    def on_session_removed(self, _manager: Manager, session_path: ObjectPath) -> None:
         logging.debug(f"Session removed: {session_path}")
         if self.object_push:
             for handlerid in self.object_push_handlers:

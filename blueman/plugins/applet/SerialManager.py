@@ -1,5 +1,6 @@
 from gettext import gettext as _
 from typing import Dict, Any, Callable, Tuple  # noqa: F401
+from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.gui.Notification import Notification
@@ -37,7 +38,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                              "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 
-    scripts: Dict[str, Dict[str, "Popen[Any]"]] = {}
+    scripts: Dict[BtAddress, Dict[str, "Popen[Any]"]] = {}
 
     def on_load(self) -> None:
         self.scripts = {}
@@ -51,7 +52,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
         for bdaddr in self.scripts:
             self.terminate_all_scripts(bdaddr)
 
-    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected" and not value:
             device = Device(obj_path=path)
             self.terminate_all_scripts(device["Address"])
@@ -71,7 +72,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                              service.short_uuid,
                              port)
 
-    def terminate_all_scripts(self, address: str) -> None:
+    def terminate_all_scripts(self, address: BtAddress) -> None:
         if address not in self.scripts:
             # Script already terminated or failed to start
             return
@@ -83,12 +84,12 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
             except ProcessLookupError:
                 logging.debug(f"No process found for pid {p.pid}")
 
-    def on_script_closed(self, pid: int, _cond: int, address_node: Tuple[str, str]) -> None:
+    def on_script_closed(self, pid: int, _cond: int, address_node: Tuple[BtAddress, str]) -> None:
         address, node = address_node
         del self.scripts[address][node]
         logging.info(f"Script with PID {pid} closed")
 
-    def manage_script(self, address: str, node: str, process: "Popen[Any]") -> None:
+    def manage_script(self, address: BtAddress, node: str, process: "Popen[Any]") -> None:
         if address not in self.scripts:
             self.scripts[address] = {}
 
@@ -98,7 +99,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
         self.scripts[address][node] = process
         GLib.child_watch_add(process.pid, self.on_script_closed, (address, node))
 
-    def call_script(self, address: str, name: str, sv_name: str, uuid16: int, node: str) -> None:
+    def call_script(self, address: BtAddress, name: str, sv_name: str, uuid16: int, node: str) -> None:
         c = self.get_option("script")
         if c and c != "":
             args = c.split(" ")

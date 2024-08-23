@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
 from typing import Any
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Device import Device
 from blueman.Functions import launch
@@ -40,7 +41,7 @@ class GameControllerWakelock(AppletPlugin):
             self.wake_lock = 1
             self.xdg_screensaver("resume")
 
-    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             klass = Device(obj_path=path)["Class"] & 0x1fff
 

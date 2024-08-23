@@ -3,6 +3,7 @@ import logging
 import uuid
 from typing import Optional, Callable, Union
 
+from blueman.bluemantyping import BtAddress
 from blueman.Service import Service
 
 try:
@@ -27,7 +28,7 @@ class NMConnectionBase:
                 NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
             )
         self.device = service.device
-        self.bdaddr = self.device['Address']
+        self.bdaddr: BtAddress = self.device['Address']
         self.error_handler = error_handler
         self.reply_handler = reply_handler
         self.connection = None

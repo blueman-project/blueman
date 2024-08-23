@@ -1,4 +1,5 @@
 from typing import Tuple, Callable, Set, Any, TYPE_CHECKING
+from blueman.bluemantyping import ObjectPath
 
 from blueman.plugins.BasePlugin import BasePlugin
 
@@ -59,27 +60,27 @@ class AppletPlugin(BasePlugin):
         """Run when the dbus service appears and disappears. Should only be used to setup, register agents etc"""
         pass
 
-    def on_adapter_added(self, path: str) -> None:
+    def on_adapter_added(self, path: ObjectPath) -> None:
         """Run when a new adapter is added to the system"""
         pass
 
-    def on_adapter_removed(self, path: str) -> None:
+    def on_adapter_removed(self, path: ObjectPath) -> None:
         """Run when an adapter is removed from the system"""
         pass
 
-    def on_device_created(self, path: str) -> None:
+    def on_device_created(self, path: ObjectPath) -> None:
         """Run when a new device is found"""
         pass
 
-    def on_device_removed(self, path: str) -> None:
+    def on_device_removed(self, path: ObjectPath) -> None:
         """Run when a device is removed"""
         pass
 
-    def on_adapter_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_adapter_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         """Run when a property changes of any adapters. Make sure to distinguish your actions by path"""
         pass
 
-    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         """Run when a property changes of any devices. Make sure to distinguish your actions by path"""
         pass
 

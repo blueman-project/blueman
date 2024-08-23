@@ -1,5 +1,6 @@
 from gettext import gettext as _
 from typing import Dict, Optional
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
 from gi.repository import Gio
@@ -21,7 +22,7 @@ class Networking(AppletPlugin):
     _dns_server_provider: Optional[DNSServerProvider] = None
 
     def on_load(self) -> None:
-        self._registered: Dict[str, bool] = {}
+        self._registered: Dict[ObjectPath, bool] = {}
 
         self.Config = Gio.Settings(schema_id="org.blueman.network")
         self.Config.connect("changed", self.on_config_changed)
