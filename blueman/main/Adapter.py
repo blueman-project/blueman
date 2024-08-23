@@ -4,6 +4,7 @@ import logging
 import gettext
 import signal
 from typing import Dict, TypedDict, Optional, Any
+from blueman.bluemantyping import ObjectPath
 
 from blueman.Functions import *
 from blueman.bluez.Manager import Manager
@@ -105,7 +106,7 @@ class BluemanAdapters(Gtk.Application):
         Gtk.Application.do_startup(self)
         self.set_accels_for_action("app.quit", ["<Ctrl>w", "<Ctrl>q", "Escape"])
 
-    def on_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
+    def on_property_changed(self, _adapter: Adapter, name: str, value: Any, path: ObjectPath) -> None:
         hci_dev = os.path.basename(path)
         if name == "Discoverable" and value == 0:
             self.tabs[hci_dev]["hidden_radio"].set_active(True)
@@ -113,7 +114,7 @@ class BluemanAdapters(Gtk.Application):
             self.tabs[hci_dev]["label"].set_text(f"{value} ({hci_dev})")
             self.tabs[hci_dev]["name_entry"].set_text(value)
 
-    def on_adapter_added(self, _manager: Manager, adapter_path: str) -> None:
+    def on_adapter_added(self, _manager: Manager, adapter_path: ObjectPath) -> None:
         hci_dev = os.path.basename(adapter_path)
         if hci_dev not in self._adapters:
             self._adapters[hci_dev] = Adapter(obj_path=adapter_path)

@@ -5,6 +5,7 @@ import logging
 import cairo
 import os
 
+from blueman.bluemantyping import ObjectPath, BtAddress
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
@@ -80,7 +81,7 @@ class ManagerDeviceList(DeviceList):
         self.props.has_tooltip = True
         self.Blueman = inst
 
-        self._monitored_devices: Set[str] = set()
+        self._monitored_devices: Set[BtAddress] = set()
 
         self.manager.connect_signal("battery-created", self.on_battery_created)
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
@@ -132,7 +133,7 @@ class ManagerDeviceList(DeviceList):
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
 
-    def on_battery_created(self, _manager: Manager, obj_path: str) -> None:
+    def on_battery_created(self, _manager: Manager, obj_path: ObjectPath) -> None:
         if obj_path not in self._batteries:
             battery_proxy = Battery(obj_path=obj_path)
             self._batteries[obj_path] = battery_proxy
@@ -317,7 +318,7 @@ class ManagerDeviceList(DeviceList):
 
         return target
 
-    def device_remove_event(self, object_path: str) -> None:
+    def device_remove_event(self, object_path: ObjectPath) -> None:
         tree_iter = self.find_device_by_path(object_path)
         assert tree_iter is not None
 
@@ -327,16 +328,16 @@ class ManagerDeviceList(DeviceList):
             self._prepare_fader(row_fader, lambda: self.__fader_finished(object_path))
             row_fader.animate(start=row_fader.get_state(), end=0.0, duration=400)
 
-    def __fader_finished(self, object_path: str) -> None:
+    def __fader_finished(self, object_path: ObjectPath) -> None:
         super().device_remove_event(object_path)
 
     @staticmethod
-    def make_caption(name: str, klass: str, address: str) -> str:
+    def make_caption(name: str, klass: str, address: BtAddress) -> str:
         return "<span size='x-large'>%(0)s</span>\n<span size='small'>%(1)s</span>\n<i>%(2)s</i>" \
                % {"0": html.escape(name), "1": klass, "2": address}
 
     @staticmethod
-    def make_display_name(alias: str, klass: int, address: str) -> str:
+    def make_display_name(alias: str, klass: int, address: BtAddress) -> str:
         if alias.replace("-", ":") == address:
             return _("Unnamed device")
         else:
@@ -427,7 +428,7 @@ class ManagerDeviceList(DeviceList):
         GLib.timeout_add(1000, self._check_power_levels, r, cinfo, device["Address"])
         self._monitored_devices.add(device["Address"])
 
-    def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: str) -> bool:
+    def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: BtAddress) -> bool:
         if not row_ref.valid():
             logging.warning("stopping monitor (row does not exist)")
             cinfo.deinit()

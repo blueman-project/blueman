@@ -1,5 +1,6 @@
 from gettext import gettext as _
 from typing import Callable, Union, TYPE_CHECKING
+from blueman.bluemantyping import ObjectPath
 
 from _blueman import RFCOMMError
 from gi.repository import GLib
@@ -61,7 +62,7 @@ class DBusService(AppletPlugin):
     def _plugins_changed(self) -> None:
         self._emit_dbus_signal("PluginsChanged")
 
-    def connect_service(self, object_path: str, uuid: str, ok: Callable[[], None],
+    def connect_service(self, object_path: ObjectPath, uuid: str, ok: Callable[[], None],
                         err: Callable[[Union[BluezDBusException, "NMConnectionError",
                                              RFCOMMError, GLib.Error, str]], None]) -> None:
         try:
@@ -97,7 +98,7 @@ class DBusService(AppletPlugin):
                 logging.info("No handler registered")
                 err("Service not supported\nPossibly the plugin that handles this service is not loaded")
 
-    def _disconnect_service(self, object_path: str, uuid: str, port: int, ok: Callable[[], None],
+    def _disconnect_service(self, object_path: ObjectPath, uuid: str, port: int, ok: Callable[[], None],
                             err: Callable[[Union[BluezDBusException, "NMConnectionError",
                                                  GLib.Error, str]], None]) -> None:
         if uuid == '00000000-0000-0000-0000-000000000000':

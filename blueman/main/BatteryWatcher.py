@@ -1,12 +1,13 @@
 import weakref
 from typing import Callable
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Battery import Battery, AnyBattery
 from blueman.bluez.Manager import Manager
 
 
 class BatteryWatcher:
-    def __init__(self, callback: Callable[[str, int], None]) -> None:
+    def __init__(self, callback: Callable[[ObjectPath, int], None]) -> None:
         super().__init__()
         manager = Manager()
         weakref.finalize(

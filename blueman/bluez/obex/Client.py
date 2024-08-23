@@ -4,7 +4,7 @@ from blueman.bluez.errors import BluezDBusException
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, GLib
 
-from blueman.bluemantyping import GSignals
+from blueman.bluemantyping import GSignals, ObjectPath, BtAddress
 
 
 class Client(Base):
@@ -13,13 +13,14 @@ class Client(Base):
     }
 
     _interface_name = 'org.bluez.obex.Client1'
-    _obj_path = '/org/bluez/obex'
+    _obj_path: ObjectPath = ObjectPath('/org/bluez/obex')
 
     def __init__(self) -> None:
         super().__init__(obj_path=self._obj_path)
 
-    def create_session(self, dest_addr: str, source_addr: str = "00:00:00:00:00:00", pattern: str = "opp") -> None:
-        def on_session_created(session_path: str) -> None:
+    def create_session(self, dest_addr: BtAddress, source_addr: BtAddress = BtAddress("00:00:00:00:00:00"),
+                       pattern: str = "opp") -> None:
+        def on_session_created(session_path: ObjectPath) -> None:
             logging.info(f"{dest_addr} {source_addr} {pattern} {session_path}")
 
         def on_session_failed(error: BluezDBusException) -> None:
@@ -31,7 +32,7 @@ class Client(Base):
         param = GLib.Variant('(sa{sv})', (dest_addr, {"Source": v_source_addr, "Target": v_pattern}))
         self._call('CreateSession', param, reply_handler=on_session_created, error_handler=on_session_failed)
 
-    def remove_session(self, session_path: str) -> None:
+    def remove_session(self, session_path: ObjectPath) -> None:
         def on_session_removed() -> None:
             logging.info(session_path)
 

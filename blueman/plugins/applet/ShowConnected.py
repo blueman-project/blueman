@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
 from typing import Optional, Any, List, Set
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
 
@@ -22,7 +23,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
                         "connections in the tooltip.")
 
     def on_load(self) -> None:
-        self._connections: Set[str] = set()
+        self._connections: Set[ObjectPath] = set()
         self.active = False
         self.initialized = False
         self._handlers: List[int] = []
@@ -62,7 +63,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
 
     def update_statusicon(self) -> None:
         if self._connections:
-            def build_line(obj_path: str) -> str:
+            def build_line(obj_path: ObjectPath) -> str:
                 line: str = Device(obj_path=obj_path)["Alias"]
                 try:
                     return f"{line} 🔋{Battery(obj_path=obj_path)['Percentage']}%"
@@ -93,7 +94,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             self._connections = set()
             self.update_statusicon()
 
-    def on_device_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             if value:
                 self._connections.add(path)

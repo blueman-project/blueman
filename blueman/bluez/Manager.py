@@ -7,7 +7,7 @@ from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import DBusNoSuchAdapterError
 from blueman.gobject import SingletonGObjectMeta
-from blueman.bluemantyping import GSignals
+from blueman.bluemantyping import GSignals, BtAddress, ObjectPath
 
 
 class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
@@ -95,13 +95,13 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             self.emit('battery-removed', object_path)
 
     def get_adapters(self) -> List[Adapter]:
-        paths = []
+        paths: List[ObjectPath] = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
             if proxy:
                 assert isinstance(proxy, Gio.DBusProxy)
-                paths.append(proxy.get_object_path())
+                paths.append(ObjectPath(proxy.get_object_path()))
 
         return [Adapter(obj_path=path) for path in paths]
 
@@ -119,20 +119,20 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
                     return adapter
             raise DBusNoSuchAdapterError(f"No adapters found with pattern: {pattern}")
 
-    def get_devices(self, adapter_path: str = "/") -> List[Device]:
-        paths = []
+    def get_devices(self, adapter_path: ObjectPath = ObjectPath("/")) -> List[Device]:
+        paths: List[ObjectPath] = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Device1')
 
             if proxy:
                 assert isinstance(proxy, Gio.DBusProxy)
-                object_path = proxy.get_object_path()
+                object_path = ObjectPath(proxy.get_object_path())
                 if object_path.startswith(adapter_path):
                     paths.append(object_path)
 
         return [Device(obj_path=path) for path in paths]
 
-    def populate_devices(self, adapter_path: str = "/") -> None:
+    def populate_devices(self, adapter_path: ObjectPath = ObjectPath("/")) -> None:
         for obj_proxy in self._object_manager.get_objects():
             # We handle adapters differently so skip them.
             if obj_proxy.get_interface("org.bluez.Adapter1") is not None:
@@ -141,7 +141,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             if object_path.startswith(adapter_path):
                 self._on_object_added(self._object_manager, obj_proxy)
 
-    def find_device(self, address: str, adapter_path: str = "/") -> Optional[Device]:
+    def find_device(self, address: BtAddress, adapter_path: ObjectPath = ObjectPath("/")) -> Optional[Device]:
         for device in self.get_devices(adapter_path):
             if device['Address'] == address:
                 return device

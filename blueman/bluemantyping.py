@@ -1,4 +1,4 @@
-from typing import Dict, Tuple, Union, TYPE_CHECKING
+from typing import Dict, Tuple, Union, TYPE_CHECKING, NewType
 from gi.repository import GObject
 
 if TYPE_CHECKING:
@@ -11,3 +11,6 @@ if TYPE_CHECKING:
 # https://github.com/GNOME/pygobject/blob/ac576400ecd554879c906791e6638d64bb8bcc2a/gi/pygi-type.c#L498
 # (We shield the possibility to provide a str to avoid errors)
 GSignals = Dict[str, Tuple[GObject.SignalFlags, None, Tuple[Union[None, type, GObject.GType, "_HasGType"], ...]]]
+
+ObjectPath = NewType("ObjectPath", str)
+BtAddress = NewType("BtAddress", str)

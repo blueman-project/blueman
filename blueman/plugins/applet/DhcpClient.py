@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
 from typing import List, Any
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
 
@@ -28,12 +29,12 @@ class DhcpClient(AppletPlugin):
     def on_unload(self) -> None:
         del self._any_network
 
-    def _on_network_prop_changed(self, _network: AnyNetwork, key: str, value: Any, object_path: str) -> None:
+    def _on_network_prop_changed(self, _network: AnyNetwork, key: str, value: Any, object_path: ObjectPath) -> None:
         if key == "Interface":
             if value != "":
                 self.dhcp_acquire(object_path)
 
-    def dhcp_acquire(self, object_path: str) -> None:
+    def dhcp_acquire(self, object_path: ObjectPath) -> None:
         device = Network(obj_path=object_path)["Interface"]
 
         if device not in self.querying:

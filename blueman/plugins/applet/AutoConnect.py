@@ -1,5 +1,6 @@
 from gettext import gettext as _
 from typing import TYPE_CHECKING, Union, Optional, Any
+from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
 
@@ -35,7 +36,7 @@ class AutoConnect(AppletPlugin):
         if state:
             self._run()
 
-    def on_adapter_property_changed(self, path: str, key: str, value: Any) -> None:
+    def on_adapter_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Powered" and value:
             self._run()
 

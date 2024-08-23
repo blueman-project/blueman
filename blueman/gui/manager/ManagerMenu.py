@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
 from typing import Dict, Tuple, TYPE_CHECKING, Any, Optional, Sequence
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -172,7 +173,7 @@ class ManagerMenu:
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 
-    def on_adapter_added(self, _manager: Optional[Manager], adapter_path: str) -> None:
+    def on_adapter_added(self, _manager: Optional[Manager], adapter_path: ObjectPath) -> None:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)

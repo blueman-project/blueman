@@ -17,7 +17,7 @@ from gi.repository import Gio
 import gi
 
 from blueman.plugins.applet.PPPSupport import PPPConnectedListener
-from blueman.bluemantyping import GSignals
+from blueman.bluemantyping import GSignals, ObjectPath
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -309,7 +309,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
         self.parent.Plugins.Menu.add(self, 84, text=_("Network _Usage"), icon_name="network-wireless-symbolic",
                                      tooltip=_("Shows network traffic usage"), callback=self.activate_ui)
 
-    def _on_network_property_changed(self, _network: AnyNetwork, key: str, value: Any, path: str) -> None:
+    def _on_network_property_changed(self, _network: AnyNetwork, key: str, value: Any, path: ObjectPath) -> None:
         if key == "Interface" and value != "":
             d = Device(obj_path=path)
             self.monitor_interface(d, value)

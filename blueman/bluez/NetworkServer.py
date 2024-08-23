@@ -1,3 +1,5 @@
+from blueman.bluemantyping import ObjectPath
+
 from blueman.bluez.Base import Base
 from gi.repository import GLib
 
@@ -5,7 +7,7 @@ from gi.repository import GLib
 class NetworkServer(Base):
     _interface_name = 'org.bluez.NetworkServer1'
 
-    def __init__(self, obj_path: str):
+    def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
     def register(self, uuid: str, bridge: str) -> None:

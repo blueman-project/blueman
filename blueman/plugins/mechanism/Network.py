@@ -1,4 +1,5 @@
 from typing import Callable, Union, Dict, Type, TYPE_CHECKING
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Network import Network as BluezNetwork
 from blueman.plugins.MechanismPlugin import MechanismPlugin
@@ -20,7 +21,7 @@ class Network(MechanismPlugin):
         self.parent.add_method("EnableNetwork", ("s", "s", "s", "b"), "", self._enable_network, pass_sender=True)
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
-    def _run_dhcp_client(self, object_path: str, caller: str, ok: Callable[[str], None],
+    def _run_dhcp_client(self, object_path: ObjectPath, caller: str, ok: Callable[[str], None],
                          err: Callable[[Union[Exception, int]], None]) -> None:
         self.timer.stop()
 

@@ -1,5 +1,6 @@
 import logging
 from typing import List, Optional
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.obex.Base import Base
 from gi.repository import GObject, Gio, GLib
@@ -16,7 +17,7 @@ class Transfer(Base):
 
     _interface_name = 'org.bluez.obex.Transfer1'
 
-    def __init__(self, obj_path: str):
+    def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
     @property
@@ -30,8 +31,8 @@ class Transfer(Base):
         return name
 
     @property
-    def session(self) -> str:
-        session: str = self.get("Session")
+    def session(self) -> ObjectPath:
+        session: ObjectPath = self.get("Session")
         return session
 
     @property

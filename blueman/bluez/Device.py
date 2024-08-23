@@ -1,4 +1,5 @@
 from typing import Optional, Callable
+from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Base import Base
 from blueman.bluez.AnyBase import AnyBase
@@ -8,7 +9,7 @@ from blueman.bluez.errors import BluezDBusException
 class Device(Base):
     _interface_name = 'org.bluez.Device1'
 
-    def __init__(self, obj_path: str):
+    def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
     def pair(
