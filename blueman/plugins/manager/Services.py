@@ -73,14 +73,14 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
 
-        object_path = device.get_object_path()
+        btaddress = device["Address"]
         if services:
             config = AutoConnectConfig()
             autoconnect_services = set(config["services"])
             for service in services:
-                if service.connected_instances or (object_path, service.uuid) in autoconnect_services:
+                if service.connected_instances or (btaddress, service.uuid) in autoconnect_services:
                     item = Gtk.CheckMenuItem(label=service.name)
-                    config.bind_to_menuitem(item, (object_path, service.uuid))
+                    config.bind_to_menuitem(item, (btaddress, service.uuid))
                     item.show()
                     items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 

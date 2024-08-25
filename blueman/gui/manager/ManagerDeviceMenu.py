@@ -327,6 +327,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         config = AutoConnectConfig()
         generic_service = ServiceUUID("00000000-0000-0000-0000-000000000000")
         object_path = self.SelectedDevice.get_object_path()
+        btaddress = self.SelectedDevice["Address"]
         generic_autoconnect = (object_path, str(generic_service)) in set(config["services"])
 
         if row["connected"] or generic_autoconnect or autoconnect_items:
@@ -334,7 +335,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             if row["connected"] or generic_autoconnect:
                 item = Gtk.CheckMenuItem(label=generic_service.name)
-                config.bind_to_menuitem(item, (object_path, str(generic_service)))
+                config.bind_to_menuitem(item, (btaddress, str(generic_service)))
                 item.show()
                 self.append(item)
 
