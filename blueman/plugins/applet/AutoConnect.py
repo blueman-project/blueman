@@ -40,8 +40,8 @@ class AutoConnect(AppletPlugin):
             self._run()
 
     def _run(self) -> bool:
-        for address, uuid in self.get_option('services'):
-            device = self.parent.Manager.find_device(address)
+        for btaddress, uuid in self.get_option('services'):
+            device = self.parent.Manager.find_device(btaddress)
             if device is None or device.get("Connected"):
                 continue
 
