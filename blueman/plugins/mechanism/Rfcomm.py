@@ -7,8 +7,8 @@ from blueman.plugins.MechanismPlugin import MechanismPlugin
 
 class Rfcomm(MechanismPlugin):
     def on_load(self) -> None:
-        self.parent.add_method("OpenRFCOMM", ("d",), "", self._open_rfcomm)
-        self.parent.add_method("CloseRFCOMM", ("d",), "", self._close_rfcomm)
+        self.parent.add_method("OpenRFCOMM", ("n",), "", self._open_rfcomm)
+        self.parent.add_method("CloseRFCOMM", ("n",), "", self._close_rfcomm)
 
     def _open_rfcomm(self, port_id: int) -> None:
         subprocess.Popen([RFCOMM_WATCHER_PATH, f"/dev/rfcomm{port_id:d}"])
