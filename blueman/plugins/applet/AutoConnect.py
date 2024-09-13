@@ -5,6 +5,7 @@ from gi.repository import GLib
 
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
+from blueman.config.AutoConnectConfig import AutoConnectConfig
 from blueman.gui.Notification import Notification
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -39,8 +40,24 @@ class AutoConnect(AppletPlugin):
         if key == "Powered" and value:
             self._run()
 
+    @staticmethod
+    def __fix_settings(path: str, uuid: str) -> str:
+        config = AutoConnectConfig()
+        address = path.replace("_", ":")[-17:]
+
+        data = set(config["services"])
+        data.remove((path, uuid))
+        data.add((address, uuid))
+        config["services"] = data
+
+        return address
+
     def _run(self) -> bool:
         for btaddress, uuid in self.get_option('services'):
+            # We accidentally stored the dbus object path in 2.4
+            if btaddress.startswith("/org/bluez"):
+                btaddress = self.__fix_settings(btaddress, uuid)
+
             device = self.parent.Manager.find_device(btaddress)
             if device is None or device.get("Connected"):
                 continue
