@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.4
+
+* Fix Rfcom plugin dbus signature
+
 ## 2.4.3
 
 ### Bugs fixed
