@@ -11,6 +11,8 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorDialog(Gtk.Dialog):
+    selection: Optional[Tuple[str, Optional[Device]]]
+
     def __init__(self, title: str = _("Select Device"), parent: Optional[Gtk.Container] = None, discover: bool = True,
                  adapter_name: Optional[str] = None) -> None:
         super().__init__(title=title, name="DeviceSelectorDialog", parent=parent, icon_name="blueman", resizable=False)
@@ -25,7 +27,11 @@ class DeviceSelectorDialog(Gtk.Dialog):
         self.selector = DeviceSelectorWidget(adapter_name=adapter_name, visible=True)
         self.vbox.pack_start(self.selector, True, True, 0)
 
-        self.selection: Optional[Tuple[str, Optional[Device]]] = None
+        selected_device = self.selector.List.get_selected_device()
+        if selected_device is not None:
+            self.selection = selected_device["Adapter"], selected_device
+        else:
+            self.selection = None
 
         self.selector.List.connect("device-selected", self.on_device_selected)
         self.selector.List.connect("adapter-changed", self.on_adapter_changed)
