@@ -2,7 +2,14 @@
 
 ## 2.4.4
 
+### Bugs fixed
 * Fix Rfcom plugin dbus signature
+* Set an initial selected device in blueman-sendto
+* AutoConnect: Store bluetooth address instead of object path
+
+### Changes
+* Add Galic and Esperanto translations
+* AutoConnect: Automatically convert path to address
 
 ## 2.4.3
 
