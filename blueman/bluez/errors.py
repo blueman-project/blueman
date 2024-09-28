@@ -85,6 +85,10 @@ class DBusUnsupportedMajorClassError(BluezDBusException):
     pass
 
 
+class DBusUnknownObjectError(BluezDBusException):
+    pass
+
+
 class DBusServiceUnknownError(BluezDBusException):
     pass
 
@@ -121,6 +125,7 @@ __DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
                   'org.bluez.Error.AuthenticationCanceled': DBusAuthenticationCanceledError,
                   'org.bluez.serial.Error.NotSupported': DBusNotSupportedError,
                   'org.bluez.Error.UnsupportedMajorClass': DBusUnsupportedMajorClassError,
+                  'org.freedesktop.DBus.Error.UnknownObject': DBusUnknownObjectError,
                   'org.freedesktop.DBus.Error.ServiceUnknown': DBusServiceUnknownError}
 
 
