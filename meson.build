@@ -366,6 +366,12 @@ foreach name: get_option('sendto-plugins')
     )
 endforeach
 
+# Install AppStream metadata
+install_data(
+    'data/io.github.blueman_project.blueman.metainfo.xml',
+    install_dir: join_paths(datadir, 'metainfo')
+)
+
 # Add data as custom_target does not work in subdirectory
 subdir('data')
 subdir('po')
