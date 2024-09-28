@@ -33,7 +33,6 @@ class ManagerToolbar:
 
         self.b_trust = blueman.builder.get_widget("b_trust", Gtk.ToolButton)
         self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
-        self.b_trust.set_homogeneous(False)
 
         self.b_trust.props.label = _("Untrust")
         (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
@@ -48,7 +47,6 @@ class ManagerToolbar:
         self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
         self.b_send.props.sensitive = False
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
-        self.b_send.set_homogeneous(False)
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
@@ -80,20 +78,24 @@ class ManagerToolbar:
         self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
 
         tree_iter = self.blueman.List.selected()
+        opacity = 0.5
         if tree_iter is None:
             self.b_bond.props.sensitive = False
+            self.b_bond.props.opacity = opacity
             self.b_trust.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_send.props.sensitive = False
+            self.b_send.props.opacity = opacity
         else:
             row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
             self.b_bond.props.sensitive = powered and not row["paired"]
+            self.b_bond.props.opacity = 1.0 if powered and not row["paired"] else opacity
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
             self.b_send.props.sensitive = powered and row["objpush"]
+            self.b_send.props.opacity = 1.0 if powered and row["objpush"] else opacity
 
-            icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
-            self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)
+            self.b_trust.props.icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.label = _("Untrust") if row["trusted"] else _("Trust")
 
     def on_device_propery_changed(self, dev_list: ManagerDeviceList, device: Device, tree_iter: Gtk.TreeIter,
