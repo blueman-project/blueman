@@ -45,7 +45,7 @@ class BasePlugin:
 
     def __init__(self, *_args: object) -> None:
         if self.__options__:
-            self.__config = Gio.Settings(
+            self._config = Gio.Settings(
                 schema_id=self.__class__.__gsettings__["schema"],
                 path=self.__class__.__gsettings__["path"]
             )
@@ -99,7 +99,7 @@ class BasePlugin:
     def get_option(self, key: str) -> Any:
         if key not in self.__class__.__options__:
             raise KeyError("No such option")
-        return self.__config[key]
+        return self._config[key]
 
     def set_option(self, key: str, value: Any) -> None:
         if key not in self.__class__.__options__:
@@ -107,7 +107,7 @@ class BasePlugin:
         opt = self.__class__.__options__[key]
 
         if type(value) is opt["type"]:
-            self.__config[key] = value
+            self._config[key] = value
             self.option_changed(key, value)
         else:
             raise TypeError(f"Wrong type, must be {repr(opt['type'])}")
