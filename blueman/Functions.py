@@ -17,6 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from time import sleep
+from pathlib import Path
 from typing import Optional, Dict, Tuple, List, Callable, Iterable, Union, Any
 import re
 import os
@@ -33,11 +34,11 @@ import struct
 import socket
 import array
 import time
-
+import subprocess
 import cairo
 
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
-from blueman.Constants import BIN_DIR, ICON_PATH
+from blueman.Constants import BIN_DIR, ICON_PATH, BLUETOOTHD_PATH
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -49,7 +50,7 @@ from gi.repository import Gio
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
-           "get_local_interfaces"]
+           "get_local_interfaces", "log_system_info"]
 
 
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
@@ -334,3 +335,52 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
 
 def bmexit(msg: Optional[Union[str, int]] = None) -> None:
     raise SystemExit(msg)
+
+
+def log_system_info() -> None:
+    def parse_os_release(path: Path) -> Dict[str, str]:
+        release_dict = {}
+        try:
+            with path.open() as f:
+                for line in f:
+                    try:
+                        key, val = line.strip().split("=")
+                        release_dict[key] = val.strip("\"")
+                    except ValueError:
+                        logging.error(f"Unable to parse line: {line}")
+        except OSError:
+            logging.error(f"Could not read {path.as_uri()}")
+        return release_dict
+
+    try:
+        complete = subprocess.run(
+            [BLUETOOTHD_PATH, "-v"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=2
+        )
+    except OSError as err:
+        complete = None
+        logging.info(f"Failed to run bluetoothd {err.strerror}")
+    except subprocess.TimeoutExpired:
+        complete = None
+        logging.info("Timeout running bluetoothd")
+    bluez_version = complete.stdout.strip() if complete else "Unknown"
+    logging.info(f"BlueZ version: {bluez_version}")
+
+    etc_os_release = Path("/etc/os-release")
+    lib_os_release = Path("/usr/lib/os-release")
+    if etc_os_release.exists():
+        os_release = parse_os_release(etc_os_release)
+    elif lib_os_release.exists():
+        os_release = parse_os_release(lib_os_release)
+    else:
+        os_release = {}
+
+    version = os_release.get("VERSION", "version not provided")
+    logging.info(f"Distribution: {os_release['NAME']} - {version}")
+
+    desktop = os.environ.get("XDG_CURRENT_DESKTOP", "Unknown")
+    session_type = os.environ.get("XDG_SESSION_TYPE", "Unknown")
+    logging.info(f"Running: {desktop} on {session_type}")
