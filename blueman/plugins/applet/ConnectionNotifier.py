@@ -19,21 +19,35 @@ class ConnectionNotifier(AppletPlugin):
 
     def on_load(self) -> None:
         self._battery_watcher = BatteryWatcher(self._on_battery_update)
+        self.connected = {}
+        self.paring_state = {}
+        self._add_dbus_method("SetParingState", ("s", "b"), "", self.set_paring_state)
 
     def on_unload(self) -> None:
         del self._battery_watcher
+        del self.connected
+        del self.paring_state
 
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
+        if self.get_paring_state(path):
+            self.set_paring_state(path, False)
+            return
+        
+        if path not in self.connected:
+            self.connected[path] = False
+        
         if key == "Connected":
             device = Device(obj_path=path)
             if value:
+                self.connected[path] = True
                 self._notifications[path] = notification = Notification(
                     device.display_name,
                     _('Connected'),
                     icon_name=device["Icon"]
                 )
                 notification.show()
-            else:
+            elif self.connected[path]:
+                self.connected[path] = False
                 Notification(device.display_name, _('Disconnected'), icon_name=device["Icon"]).show()
 
     def _on_battery_update(self, path: ObjectPath, value: int) -> None:
@@ -44,3 +58,11 @@ class ConnectionNotifier(AppletPlugin):
                 notification.set_notification_icon("battery")
             except GLib.Error:
                 logging.error("Failed to update notification", exc_info=True)
+
+    def get_paring_state(self, path: str) -> bool:
+        if path not in self.paring_state:
+            self.paring_state[path] = False
+        return self.paring_state[path]
+    
+    def set_paring_state(self, path: str, new_paring_state: bool) -> None:
+        self.paring_state[path] = new_paring_state
