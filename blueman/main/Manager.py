@@ -254,13 +254,13 @@ class Blueman(Gtk.Application):
             dialog.connect("close", lambda d: d.destroy())
             dialog.show()
 
-    @staticmethod
-    def bond(device: Device) -> None:
+    def bond(self, device: Device) -> None:
         def error_handler(e: Exception) -> None:
             logging.exception(e)
             message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
             Notification('Bluetooth', message, icon_name="blueman").show()
-
+        path = device.get_object_path()
+        self.Applet.SetParingState("(sb)", path, True)
         device.pair(error_handler=error_handler)
 
     @staticmethod
