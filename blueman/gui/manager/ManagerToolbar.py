@@ -73,7 +73,7 @@ class ManagerToolbar:
         device: Optional[Device],
         _tree_iter: Gtk.TreeIter,
     ) -> None:
-        self._update_buttons(None if device is None else Adapter(obj_path=device["Adapter"]))
+        self._update_buttons(dev_list.Adapter)
 
     def _update_buttons(self, adapter: Optional[Adapter]) -> None:
         powered = adapter is not None and adapter["Powered"]
