@@ -6,11 +6,14 @@
 * Fix Rfcom plugin dbus signature
 * Set an initial selected device in blueman-sendto
 * AutoConnect: Store bluetooth address instead of object path
+* Applet: Handle UnknownObject DBus error (@tommie)
+* Make search button available after device list becomes empty (@astcri)
 
 ### Changes
 * Terminate applet on manager termination if it was started by manager
 * Add Galic and Esperanto translations
 * AutoConnect: Automatically convert path to address
+* Add toggle to force symbolic statusicon
 
 ## 2.4.3
 
