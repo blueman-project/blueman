@@ -9572,6 +9572,7 @@ class ToolButton(ToolItem, Actionable):
     parent: ToolItem
 
     class _Props(ToolItem._Props):
+        icon_name: typing.Optional[str]
         icon_widget: typing.Optional[Widget]
         label: typing.Optional[str]
 
@@ -9579,6 +9580,7 @@ class ToolButton(ToolItem, Actionable):
 
     def __init__(self,
         *,
+        icon_name: typing.Optional[str],
         icon_widget: typing.Optional[Widget],
         label: typing.Optional[str] = None,
         # Container
