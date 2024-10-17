@@ -50,6 +50,8 @@ class ManagerToolbar:
         self.b_send.connect("clicked", self.on_action, self.blueman.send)
         self.b_send.set_homogeneous(False)
 
+        self.b_bluetooth_status = blueman.builder.get_widget("sw_bluetooth_status", Gtk.Switch)
+
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
     def on_action(self, _button: Gtk.ToolButton, func: Callable[[Device], None]) -> None:
@@ -85,12 +87,14 @@ class ManagerToolbar:
             self.b_trust.props.sensitive = False
             self.b_remove.props.sensitive = False
             self.b_send.props.sensitive = False
+            self.b_bluetooth_status.props.sensitive = False
         else:
             row = self.blueman.List.get(tree_iter, "paired", "trusted", "objpush")
             self.b_bond.props.sensitive = powered and not row["paired"]
             self.b_trust.props.sensitive = True
             self.b_remove.props.sensitive = True
             self.b_send.props.sensitive = powered and row["objpush"]
+            self.b_bluetooth_status.props.sensitive = True
 
             icon_name = "blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic"
             self.b_trust.props.icon_widget = Gtk.Image(icon_name=icon_name, pixel_size=24, visible=True)
