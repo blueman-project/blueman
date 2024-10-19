@@ -27,6 +27,19 @@ class StatusIcon(AppletPlugin, GObject.GObject):
     __icon__ = "bluetooth-symbolic"
     __depends__ = ["StandardItems", "Menu"]
 
+    __gsettings__ = {
+        "schema": "org.blueman.general",
+        "path": None
+    }
+    __options__ = {
+        "symbolic-status-icons": {
+            "type": bool,
+            "default": False,
+            "name": _("Force symbolic status icons"),
+            "desc": _("When enabled this will force the use of a symbolic version of the blueman statusicon"),
+        }
+    }
+
     visible = None
 
     visibility_timeout: Optional[int] = None
@@ -38,9 +51,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._tooltip_title = _("Bluetooth Enabled")
         self._tooltip_text = ""
 
-        self.general_config = Gio.Settings(schema_id="org.blueman.general")
-        self.general_config.connect("changed::symbolic-status-icons", self.on_symbolic_config_change)
-
+        self._config.connect("changed::symbolic-status-icons", self.on_symbolic_config_change)
         self.query_visibility(emit=False)
 
         self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed)
@@ -133,7 +144,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
         # depending on configuration, ensure fullcolor icons..
         name = name.replace("-symbolic", "")
-        if self.general_config.get_boolean("symbolic-status-icons"):
+        if self.get_option("symbolic-status-icons"):
             # or symbolic
             name = f"{name}-symbolic"
 

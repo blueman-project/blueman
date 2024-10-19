@@ -43,6 +43,12 @@ class ProxyBase(Gio.DBusProxy, metaclass=SingletonGObjectMeta):
         self.call(name, params, Gio.DBusCallFlags.NONE, -1, None, call_finish)
 
 
+class DBus(ProxyBase):
+    def __init__(self) -> None:
+        super().__init__(name="org.freedesktop.DBus", interface_name="org.freedesktop.DBus",
+                         object_path="/org/freedesktop/DBus")
+
+
 class Mechanism(ProxyBase):
     def __init__(self) -> None:
         super().__init__(name='org.blueman.Mechanism', interface_name='org.blueman.Mechanism',
@@ -50,9 +56,20 @@ class Mechanism(ProxyBase):
 
 
 class AppletService(ProxyBase):
+    NAME = "org.blueman.Applet"
+
     def __init__(self) -> None:
-        super().__init__(name='org.blueman.Applet', interface_name='org.blueman.Applet',
+        super().__init__(name=self.NAME, interface_name='org.blueman.Applet',
                          object_path="/org/blueman/Applet")
+
+
+class AppletServiceApplication(ProxyBase):
+    def __init__(self) -> None:
+        super().__init__(name=AppletService.NAME, interface_name="org.freedesktop.Application",
+                         object_path="/org/blueman/Applet")
+
+    def stop(self) -> None:
+        self.ActivateAction('(sava{sv})', "Quit", [], {})
 
 
 class ManagerService(ProxyBase):

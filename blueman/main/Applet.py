@@ -65,6 +65,11 @@ class BluemanApplet(Gtk.Application):
 
     def do_startup(self) -> None:
         Gtk.Application.do_startup(self)
+
+        quit_action = Gio.SimpleAction.new("Quit", None)
+        quit_action.connect("activate", lambda _action, _param: self.quit())
+        self.add_action(quit_action)
+
         self.set_accels_for_action("win.close", ["<Ctrl>w", "Escape"])
 
     def do_activate(self) -> None:

@@ -6,7 +6,7 @@ import logging
 from typing import List, TYPE_CHECKING, Optional, Callable, cast, Union
 
 from blueman.bluez.Device import Device
-from blueman.bluez.errors import DBusNoSuchAdapterError
+from blueman.bluez.errors import DBusNoSuchAdapterError, DBusUnknownObjectError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -199,7 +199,11 @@ class RecentConns(AppletPlugin, PowerStateListener):
         except DBusNoSuchAdapterError:
             return None
 
-        device = self.parent.Manager.find_device(address, adapter.get_object_path())
+        try:
+            device = self.parent.Manager.find_device(address, adapter.get_object_path())
+        except DBusUnknownObjectError:
+            return None
+
         return device.get_object_path() if device is not None else None
 
     def _get_items(self) -> List["Item"]:
