@@ -6,21 +6,24 @@ import logging
 from argparse import Namespace
 from gettext import ngettext
 from collections.abc import Iterable, Sequence
+from typing import Any
 
-from blueman.bluez.Device import Device
+from blueman.bluez.Device import Device, AnyDevice
 from blueman.bluez.errors import BluezDBusException, DBusNoSuchAdapterError
 from blueman.main.Builder import Builder
 from blueman.bluemantyping import GSignals, ObjectPath
-from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Adapter import Adapter, AnyAdapter
 from blueman.bluez.Manager import Manager
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager as ObexManager
 from blueman.bluez.obex.Client import Client
 from blueman.bluez.obex.Transfer import Transfer
-from blueman.Functions import format_bytes, log_system_info, bmexit, check_bluetooth_status, setup_icon_path
+from blueman.Functions import format_bytes, log_system_info, bmexit, check_bluetooth_status, setup_icon_path, \
+    adapter_path_to_name
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
-from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
+from blueman.gui.DeviceSelectorDialog import DeviceSelector
+from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -39,11 +42,21 @@ class SendTo:
         else:
             self.files = [os.path.abspath(f) for f in parsed_args.files]
 
-        self.device = None
-        manager = Manager()
-        adapter = None
+        self.device: Device | None = None
+        self._manager = manager = Manager()
+        self._manager.connect_signal("adapter-added", self.__on_manager_signal, "adapter-added")
+        self._manager.connect_signal("adapter-removed", self.__on_manager_signal, "adapter-removed")
+        self._manager.connect_signal("device-created", self.__on_manager_signal, "device-added")
+        self._manager.connect_signal("device-removed", self.__on_manager_signal, "device-removed")
+
+        self.__any_adapter = AnyAdapter()
+        self.__any_adapter.connect_signal("property-changed", self.__on_adapter_property_changed)
+        self.__any_device = AnyDevice()
+        self.__any_device.connect_signal("property-changed", self.__on_device_property_changed)
+
+        adapter: Adapter | None = None
         adapters = manager.get_adapters()
-        last_adapter_name = Gio.Settings(schema_id="org.blueman.general")["last-adapter"]
+        last_adapter_name: str | None = Gio.Settings(schema_id="org.blueman.general")["last-adapter"]
 
         if len(adapters) == 0:
             logging.error("Error: No Adapters present")
@@ -62,6 +75,14 @@ class SendTo:
                 adapter = manager.get_adapter()
 
         self.adapter_path = adapter.get_object_path()
+        adapter_name = adapter_path_to_name(self.adapter_path)
+        assert adapter_name is not None
+
+        self._device_selector = DeviceSelector(adapter_name=adapter_name)
+
+        for adapter in adapters:
+            self._device_selector.add_adapter(adapter.get_object_path())
+        manager.populate_devices()
 
         if parsed_args.delete:
             def delete_files() -> None:
@@ -74,6 +95,7 @@ class SendTo:
                 bmexit()
 
             self.do_send()
+            self.__cleanup()
 
         else:
             d = manager.find_device(parsed_args.device, self.adapter_path)
@@ -82,6 +104,52 @@ class SendTo:
 
             self.device = d
             self.do_send()
+            self.__cleanup()
+
+    def __on_manager_signal(self, _manager: Manager, object_path: ObjectPath, signal_name: str) -> None:
+        logging.debug(f"{object_path} {signal_name}")
+        match signal_name:
+            case "adapter-added":
+                self._device_selector.add_adapter(object_path)
+            case "adapter-removed":
+                self._device_selector.remove_adapter(object_path)
+            case "device-added":
+                show_warning = not self._has_objpush(object_path)
+                self._device_selector.add_device(object_path, show_warning)
+            case "device-removed":
+                self._device_selector.remove_device(object_path)
+            case _:
+                raise ValueError(f"Unhandled signal {signal_name}")
+
+    def __on_adapter_property_changed(self, _: AnyAdapter, key: str, value: Any, _object_path: ObjectPath) -> None:
+        if key == "Discovering":
+            self._device_selector.set_discovering(value)
+
+    def __on_device_property_changed(self, _: AnyDevice, key: str, value: Any, object_path: ObjectPath) -> None:
+        match key:
+            case "Alias":
+                self._device_selector.update_row(object_path, "description", value)
+            case "UUIDs":
+                show_warning = not self._has_objpush(object_path)
+                self._device_selector.update_row(object_path, "warning", show_warning)
+
+    def _has_objpush(self, object_path: ObjectPath) -> bool:
+        device = Device(obj_path=object_path)
+        for uuid in device["UUIDs"]:
+            if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
+                return True
+        return False
+
+    def _start_discovery(self) -> None:
+        for adapter in self._manager.get_adapters():
+            adapter.start_discovery()
+
+    def __cleanup(self) -> None:
+        self._manager.destroy()
+
+        del self.__any_device
+        del self.__any_adapter
+        del self._manager
 
     def do_send(self) -> None:
         if not self.files:
@@ -112,13 +180,12 @@ class SendTo:
             quit()
 
     def select_device(self) -> bool:
-        adapter_name = os.path.split(self.adapter_path)[-1]
-        d = DeviceSelectorDialog(discover=True, adapter_name=adapter_name)
-        resp = d.run()
-        d.close()
+        self._start_discovery()
+        resp = self._device_selector.run()
+        self._device_selector.close()
         if resp == Gtk.ResponseType.ACCEPT:
-            if d.selection:
-                self.adapter_path, self.device = d.selection
+            if self._device_selector.selection:
+                self.adapter_path, self.device = self._device_selector.selection
                 return True
             else:
                 return False
