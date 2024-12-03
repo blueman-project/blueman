@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.4.3\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-09-27 20:31+0000\n"
+"POT-Creation-Date: 2024-12-03 18:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "<b>Visibility Setting</b>"
 msgstr ""
 
-#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:163
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
 msgstr ""
 
@@ -150,8 +150,8 @@ msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:40
-#: blueman/gui/manager/ManagerToolbar.py:97
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Trust"
 msgstr ""
 
@@ -197,7 +197,7 @@ msgstr ""
 msgid "_Reset"
 msgstr ""
 
-#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
+#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
 #: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_Cancel"
 msgstr ""
@@ -265,6 +265,14 @@ msgstr ""
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
+msgstr ""
+
+#: data/ui/services-window.ui:9
+msgid "Local Services"
+msgstr ""
+
+#: data/ui/services-window.ui:49
+msgid "_Apply"
 msgstr ""
 
 #: data/ui/send-dialog.ui:33
@@ -358,26 +366,26 @@ msgstr ""
 msgid "Send note"
 msgstr ""
 
-#: blueman/main/Adapter.py:58
+#: blueman/main/Adapter.py:60
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
 
-#: blueman/main/Adapter.py:98 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:100 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr ""
 
-#: blueman/main/Adapter.py:161
+#: blueman/main/Adapter.py:163
 msgid "Always"
 msgstr ""
 
-#: blueman/main/Adapter.py:165 blueman/main/Sendto.py:190
+#: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/main/Adapter.py:231
+#: blueman/main/Adapter.py:233
 msgid "Adapter"
 msgstr ""
 
@@ -394,34 +402,34 @@ msgid ""
 "similar)."
 msgstr ""
 
-#: blueman/main/Manager.py:111
+#: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
 msgstr ""
 
-#: blueman/main/Manager.py:112
+#: blueman/main/Manager.py:114
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
 
-#: blueman/main/Manager.py:170
+#: blueman/main/Manager.py:172
 msgid "Click to disable."
 msgstr ""
 
-#: blueman/main/Manager.py:173
+#: blueman/main/Manager.py:175
 msgid "Click to enable."
 msgstr ""
 
-#: blueman/main/Manager.py:206
+#: blueman/main/Manager.py:208
 msgid "Searching"
 msgstr ""
 
-#: blueman/main/Manager.py:268 blueman/plugins/applet/StandardItems.py:99
+#: blueman/main/Manager.py:270 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
 msgstr ""
 
-#: blueman/main/Manager.py:284 blueman/gui/manager/ManagerDeviceList.py:179
+#: blueman/main/Manager.py:286 blueman/gui/manager/ManagerDeviceList.py:179
 #: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
 msgstr ""
@@ -430,55 +438,55 @@ msgstr ""
 msgid "Bluetooth File Transfer"
 msgstr ""
 
-#: blueman/main/Sendto.py:42
+#: blueman/main/Sendto.py:44
 msgid "_Stop"
 msgstr ""
 
-#: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
+#: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
 msgstr ""
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "obexd not available"
 msgstr ""
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 
-#: blueman/main/Sendto.py:142
+#: blueman/main/Sendto.py:144
 msgid "Cancelling"
 msgstr ""
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "Sending File"
 msgstr ""
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "ETA:"
 msgstr ""
 
-#: blueman/main/Sendto.py:192
+#: blueman/main/Sendto.py:194
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/main/Sendto.py:225
+#: blueman/main/Sendto.py:227
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr ""
 
-#: blueman/main/Sendto.py:229
+#: blueman/main/Sendto.py:231
 msgid "Skip"
 msgstr ""
 
-#: blueman/main/Sendto.py:230
+#: blueman/main/Sendto.py:232
 msgid "Retry"
 msgstr ""
 
-#: blueman/main/Sendto.py:281
+#: blueman/main/Sendto.py:283
 msgid "Error occurred"
 msgstr ""
 
@@ -547,31 +555,31 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 
-#: blueman/Functions.py:70
+#: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
 msgstr ""
 
-#: blueman/Functions.py:71
+#: blueman/Functions.py:72
 msgid "Exit"
 msgstr ""
 
-#: blueman/Functions.py:72
+#: blueman/Functions.py:73
 msgid "Enable Bluetooth"
 msgstr ""
 
-#: blueman/Functions.py:166
+#: blueman/Functions.py:167
 msgid "B"
 msgstr ""
 
-#: blueman/Functions.py:169
+#: blueman/Functions.py:170
 msgid "KB"
 msgstr ""
 
-#: blueman/Functions.py:172
+#: blueman/Functions.py:173
 msgid "MB"
 msgstr ""
 
-#: blueman/Functions.py:175
+#: blueman/Functions.py:176
 msgid "GB"
 msgstr ""
 
@@ -790,8 +798,8 @@ msgstr ""
 msgid "Cancel Operation"
 msgstr ""
 
-#: blueman/gui/manager/ManagerToolbar.py:38
-#: blueman/gui/manager/ManagerToolbar.py:97
+#: blueman/gui/manager/ManagerToolbar.py:37
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Untrust"
 msgstr ""
 
@@ -3069,6 +3077,16 @@ msgid "Shows network traffic usage"
 msgstr ""
 
 #: blueman/plugins/applet/StatusIcon.py:38
+msgid "Force symbolic status icons"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:39
+msgid ""
+"When enabled this will force the use of a symbolic version of the blueman "
+"statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:51
 #: blueman/plugins/applet/ShowConnected.py:80
 #: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Enabled"
@@ -3428,6 +3446,15 @@ msgstr ""
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
 msgid "Provides a StatusNotifierItem to show a statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/PulseAudioProfile.py:19
+msgid "Adds audio profile selector to the status icon menu"
+msgstr ""
+
+#: blueman/plugins/applet/PulseAudioProfile.py:83
+#, python-format
+msgid "Audio Profiles for %s"
 msgstr ""
 
 #: blueman/plugins/services/Network.py:23
