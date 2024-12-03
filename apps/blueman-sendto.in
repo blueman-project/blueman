@@ -30,7 +30,7 @@ from blueman.Functions import (
 from blueman.main.Sendto import Sender
 from blueman.bluez.Manager import Manager
 from blueman.bluez.errors import DBusNoSuchAdapterError
-from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
+from blueman.gui.DeviceSelectorDialog import DeviceSelector
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
@@ -120,7 +120,7 @@ class SendTo:
 
     def select_device(self):
         adapter_name = os.path.split(self.adapter_path)[-1]
-        d = DeviceSelectorDialog(discover=True, adapter_name=adapter_name)
+        d = DeviceSelector(discover=True, adapter_name=adapter_name)
         resp = d.run()
         d.close()
         if resp == Gtk.ResponseType.ACCEPT:

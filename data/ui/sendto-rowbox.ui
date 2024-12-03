@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkBox" id="row_box">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="spacing">5</property>
+    <child>
+      <object class="GtkImage" id="row_icon">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="icon-name">blueman</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="row_label">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="halign">start</property>
+        <property name="label">bluetooth device alias</property>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRevealer" id="revealer_paired">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="transition-type">crossfade</property>
+        <child>
+          <object class="GtkImage" id="row_paired">
+            <property name="can-focus">False</property>
+            <property name="icon-name">blueman-pair-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRevealer" id="revealer_trusted">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="transition-type">crossfade</property>
+        <child>
+          <object class="GtkImage" id="row_trusted">
+            <property name="can-focus">False</property>
+            <property name="icon-name">blueman-trust-symbolic</property>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+  </object>
+</interface>
