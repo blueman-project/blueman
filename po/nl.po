@@ -12,20 +12,21 @@
 # Pjotr Vertaalt <pjotrvertaalt@gmail.com>, 2022.
 # A <volluta@protonmail.com>, 2022.
 # Ranforingus <ranforingus@hotmail.com>, 2023.
+# Remco Schrijver <remcoschrijv3r@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-05-08 20:24+0000\n"
-"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"PO-Revision-Date: 2024-09-19 14:40+0000\n"
+"Last-Translator: Remco Schrijver <remcoschrijv3r@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/blueman/2-4/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -245,10 +246,8 @@ msgid "<b>PAN Support</b>"
 msgstr "<b>PAN Ondersteuning</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Inbelnetwerk (DUN)"
+msgstr "Inbelnetwerk"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -259,10 +258,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Netwerktoegangspunt (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>PAN Ondersteuning</b>"
+msgstr "<b>NAP Ondersteuning</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -566,18 +563,13 @@ msgid "Accept"
 msgstr "Aanvaarden"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-"<b>Er is een fout opgetreden bij het laden van een invoegsel. Meld dit a.u."
-"b. aan de ontwikkelaars met de inhoud van deze boodschap op onze </b>\n"
+"<b>Er is een fout opgetreden bij het laden van een plugin. Meld dit a.u.b. "
+"aan de ontwikkelaars met de inhoud van deze boodschap op onze </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 
 #: blueman/Functions.py:70
@@ -629,10 +621,8 @@ msgid "Combo"
 msgstr "Combo"
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Hernoem apparaat"
+msgstr "Naamloos apparaat"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
@@ -750,10 +740,8 @@ msgid "Device did not respond"
 msgstr "Apparaat reageerde niet"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Onbekend"
+msgstr "Onbekende fout"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
@@ -874,10 +862,8 @@ msgstr ""
 "Verdergaan?"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Afhankelijkheidsprobleem"
+msgstr "Geen afhankelijkheden"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
@@ -1187,10 +1173,8 @@ msgid "Game"
 msgstr "Spel"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Generieke telefoon"
+msgstr "Generiek Onbekend"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1202,37 +1186,35 @@ msgstr "Generieke computer"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Desktop Werkstation"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Generieke computer"
+msgstr "Server-klasse Computer"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Draagbare PC/PDA (clamshell)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Palmgrootte PC/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Draagbare computer (Grootte van een Horloge)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Dock"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Alles in Een"
 
 #: blueman/DeviceClass.py:180
 #, fuzzy
@@ -1470,7 +1452,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Knop"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
@@ -1482,7 +1464,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Aanraak paneel"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
