@@ -3,6 +3,7 @@ from gettext import gettext as _
 from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
 from blueman.gui.DeviceSelectorWidget import DeviceSelectorWidget
+from blueman.bluemantyping import ObjectPath
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -10,7 +11,7 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorDialog(Gtk.Dialog):
-    selection: tuple[str, Device | None] | None
+    selection: tuple[ObjectPath, Device | None] | None
 
     def __init__(self, title: str = _("Select Device"), parent: Gtk.Container | None = None, discover: bool = True,
                  adapter_name: str | None = None) -> None:
