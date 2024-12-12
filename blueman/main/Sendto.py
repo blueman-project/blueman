@@ -1,26 +1,127 @@
 from gettext import gettext as _
+import atexit
+import os
 import time
 import logging
 from gettext import ngettext
 from collections.abc import Iterable
 
 from blueman.bluez.Device import Device
-from blueman.bluez.errors import BluezDBusException
+from blueman.bluez.errors import BluezDBusException, DBusNoSuchAdapterError
 from blueman.main.Builder import Builder
 from blueman.bluemantyping import GSignals, ObjectPath
 from blueman.bluez.Adapter import Adapter
+from blueman.bluez.Manager import Manager
 from blueman.bluez.obex.ObjectPush import ObjectPush
-from blueman.bluez.obex.Manager import Manager
+from blueman.bluez.obex.Manager import Manager as ObexManager
 from blueman.bluez.obex.Client import Client
 from blueman.bluez.obex.Transfer import Transfer
-from blueman.Functions import format_bytes, log_system_info
+from blueman.Functions import format_bytes, log_system_info, bmexit, check_bluetooth_status, setup_icon_path
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
+from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
 
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk, Gtk, GObject, GLib, Gio
+
+
+class SendTo:
+    def __init__(self, parsed_args):
+        setup_icon_path()
+
+        check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), bmexit)
+
+        if not parsed_args.files:
+            self.files = self.select_files()
+        else:
+            self.files = [os.path.abspath(f) for f in parsed_args.files]
+
+        self.device = None
+        manager = Manager()
+        adapter = None
+        adapters = manager.get_adapters()
+        last_adapter_name = Gio.Settings(schema_id="org.blueman.general")["last-adapter"]
+
+        if len(adapters) == 0:
+            logging.error("Error: No Adapters present")
+            bmexit()
+
+        if parsed_args.source is not None:
+            try:
+                adapter = manager.get_adapter(parsed_args.source)
+            except DBusNoSuchAdapterError:
+                logging.error("Unknown adapter, trying first available")
+                pass
+
+        if adapter is None:
+            try:
+                adapter = manager.get_adapter(last_adapter_name)
+            except DBusNoSuchAdapterError:
+                adapter = manager.get_adapter()
+
+        self.adapter_path = adapter.get_object_path()
+
+        if parsed_args.delete:
+            def delete_files():
+                for file in self.files:
+                    os.unlink(file)
+            atexit.register(delete_files)
+
+        if parsed_args.device is None:
+            if not self.select_device():
+                bmexit()
+
+            self.do_send()
+
+        else:
+            d = manager.find_device(parsed_args.device, self.adapter_path)
+            if d is None:
+                bmexit("Unknown bluetooth device")
+
+            self.device = d
+            self.do_send()
+
+    def do_send(self):
+        if not self.files:
+            logging.warning("No files to send")
+            bmexit()
+
+        sender = Sender(self.device, self.adapter_path, self.files)
+
+        def on_result(sender, res):
+            Gtk.main_quit()
+
+        sender.connect("result", on_result)
+
+    @staticmethod
+    def select_files():
+        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-symbolic', select_multiple=True)
+        d.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
+        resp = d.run()
+
+        if resp == Gtk.ResponseType.ACCEPT:
+            files = d.get_filenames()
+            d.destroy()
+            return files
+        else:
+            d.destroy()
+            quit()
+
+    def select_device(self):
+        adapter_name = os.path.split(self.adapter_path)[-1]
+        d = DeviceSelectorDialog(discover=True, adapter_name=adapter_name)
+        resp = d.run()
+        d.close()
+        if resp == Gtk.ResponseType.ACCEPT:
+            if d.selection:
+                self.adapter_path, self.device = d.selection
+                return True
+            else:
+                return False
+        else:
+            return False
 
 
 class Sender(Gtk.Dialog):
@@ -60,7 +161,7 @@ class Sender(Gtk.Dialog):
 
         self.device = device
         self.adapter = Adapter(obj_path=adapter_path)
-        self.manager = Manager()
+        self.obex_manager = ObexManager()
         self.files: list[Gio.File] = []
         self.num_files = 0
         self.object_push: ObjectPush | None = None
@@ -103,8 +204,8 @@ class Sender(Gtk.Dialog):
 
         try:
             self.client = Client()
-            self.manager.connect_signal('session-added', self.on_session_added)
-            self.manager.connect_signal('session-removed', self.on_session_removed)
+            self.obex_manager.connect_signal('session-added', self.on_session_added)
+            self.obex_manager.connect_signal('session-removed', self.on_session_removed)
         except GLib.Error as e:
             if 'StartServiceByName' in e.message:
                 logging.debug(e.message)
@@ -264,13 +365,13 @@ class Sender(Gtk.Dialog):
             d.show()
             self.error_dialog = d
 
-    def on_session_added(self, _manager: Manager, session_path: ObjectPath) -> None:
+    def on_session_added(self, _manager: ObexManager, session_path: ObjectPath) -> None:
         self.object_push = ObjectPush(obj_path=session_path)
         self.object_push_handlers.append(self.object_push.connect("transfer-started", self.on_transfer_started))
         self.object_push_handlers.append(self.object_push.connect("transfer-failed", self.on_transfer_failed))
         self.process_queue()
 
-    def on_session_removed(self, _manager: Manager, session_path: ObjectPath) -> None:
+    def on_session_removed(self, _manager: ObexManager, session_path: ObjectPath) -> None:
         logging.debug(f"Session removed: {session_path}")
         if self.object_push:
             for handlerid in self.object_push_handlers:

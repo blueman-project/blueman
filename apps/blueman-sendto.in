@@ -2,7 +2,6 @@
 import os
 import sys
 import signal
-import atexit
 import logging
 import gettext
 
@@ -19,118 +18,11 @@ if 'BLUEMAN_SOURCE' in os.environ:
 _ = gettext.gettext
 gettext.textdomain("@GETTEXT_PACKAGE@")
 
-from blueman.Functions import (
-    setup_icon_path,
-    check_bluetooth_status,
-    set_proc_title,
-    create_parser,
-    create_logger,
-    bmexit
-)
-from blueman.main.Sendto import Sender
-from blueman.bluez.Manager import Manager
-from blueman.bluez.errors import DBusNoSuchAdapterError
-from blueman.gui.DeviceSelectorDialog import DeviceSelectorDialog
+from blueman.Functions import set_proc_title, create_parser, create_logger
+from blueman.main.Sendto import SendTo
 
 # Workaround introspection bug, gnome bug 622084
 signal.signal(signal.SIGINT, signal.SIG_DFL)
-
-
-class SendTo:
-    def __init__(self, parsed_args):
-        setup_icon_path()
-
-        check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), bmexit)
-
-        if not parsed_args.files:
-            self.files = self.select_files()
-        else:
-            self.files = [os.path.abspath(f) for f in parsed_args.files]
-
-        self.device = None
-        manager = Manager()
-        adapter = None
-        adapters = manager.get_adapters()
-        last_adapter_name = Gio.Settings(schema_id="org.blueman.general")["last-adapter"]
-
-        if len(adapters) == 0:
-            logging.error("Error: No Adapters present")
-            bmexit()
-
-        if parsed_args.source is not None:
-            try:
-                adapter = manager.get_adapter(parsed_args.source)
-            except DBusNoSuchAdapterError:
-                logging.error("Unknown adapter, trying first available")
-                pass
-
-        if adapter is None:
-            try:
-                adapter = manager.get_adapter(last_adapter_name)
-            except DBusNoSuchAdapterError:
-                adapter = manager.get_adapter()
-
-        self.adapter_path = adapter.get_object_path()
-
-        if parsed_args.delete:
-            def delete_files():
-                for file in self.files:
-                    os.unlink(file)
-            atexit.register(delete_files)
-
-        if parsed_args.device is None:
-            if not self.select_device():
-                bmexit()
-
-            self.do_send()
-
-        else:
-            d = manager.find_device(parsed_args.device, self.adapter_path)
-            if d is None:
-                bmexit("Unknown bluetooth device")
-
-            self.device = d
-            self.do_send()
-
-    def do_send(self):
-        if not self.files:
-            logging.warning("No files to send")
-            bmexit()
-
-        sender = Sender(self.device, self.adapter_path, self.files)
-
-        def on_result(sender, res):
-            Gtk.main_quit()
-
-        sender.connect("result", on_result)
-
-    @staticmethod
-    def select_files():
-        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-symbolic', select_multiple=True)
-        d.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
-        resp = d.run()
-
-        if resp == Gtk.ResponseType.ACCEPT:
-            files = d.get_filenames()
-            d.destroy()
-            return files
-        else:
-            d.destroy()
-            quit()
-
-    def select_device(self):
-        adapter_name = os.path.split(self.adapter_path)[-1]
-        d = DeviceSelectorDialog(discover=True, adapter_name=adapter_name)
-        resp = d.run()
-        d.close()
-        if resp == Gtk.ResponseType.ACCEPT:
-            if d.selection:
-                self.adapter_path, self.device = d.selection
-                return True
-            else:
-                return False
-        else:
-            return False
 
 
 if __name__ == '__main__':
