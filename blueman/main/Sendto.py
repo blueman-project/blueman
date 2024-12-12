@@ -54,7 +54,6 @@ class SendTo:
                 adapter = manager.get_adapter(parsed_args.source)
             except DBusNoSuchAdapterError:
                 logging.error("Unknown adapter, trying first available")
-                pass
 
         if adapter is None:
             try:
