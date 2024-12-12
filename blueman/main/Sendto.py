@@ -3,8 +3,9 @@ import atexit
 import os
 import time
 import logging
+from argparse import Namespace
 from gettext import ngettext
-from collections.abc import Iterable
+from collections.abc import Iterable, Sequence
 
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException, DBusNoSuchAdapterError
@@ -28,7 +29,7 @@ from gi.repository import Gdk, Gtk, GObject, GLib, Gio
 
 
 class SendTo:
-    def __init__(self, parsed_args):
+    def __init__(self, parsed_args: Namespace) -> None:
         setup_icon_path()
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), bmexit)
@@ -64,7 +65,7 @@ class SendTo:
         self.adapter_path = adapter.get_object_path()
 
         if parsed_args.delete:
-            def delete_files():
+            def delete_files() -> None:
                 for file in self.files:
                     os.unlink(file)
             atexit.register(delete_files)
@@ -83,21 +84,23 @@ class SendTo:
             self.device = d
             self.do_send()
 
-    def do_send(self):
+    def do_send(self) -> None:
         if not self.files:
             logging.warning("No files to send")
             bmexit()
 
+        assert self.device is not None
         sender = Sender(self.device, self.adapter_path, self.files)
 
-        def on_result(sender, res):
+        def on_result(_sender: Sender, _res: bool) -> None:
             Gtk.main_quit()
 
         sender.connect("result", on_result)
 
     @staticmethod
-    def select_files():
-        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-symbolic', select_multiple=True)
+    def select_files() -> Sequence[str]:
+        d = Gtk.FileChooserDialog(title=_("Select files to send"), icon_name='blueman-send-symbolic')
+        d.set_select_multiple(True)  # this avoids type error when using keyword arg above
         d.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
         resp = d.run()
 
@@ -109,7 +112,7 @@ class SendTo:
             d.destroy()
             quit()
 
-    def select_device(self):
+    def select_device(self) -> bool:
         adapter_name = os.path.split(self.adapter_path)[-1]
         d = DeviceSelectorDialog(discover=True, adapter_name=adapter_name)
         resp = d.run()
