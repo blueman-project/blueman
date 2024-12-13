@@ -1,6 +1,5 @@
 from gettext import gettext as _
 from operator import itemgetter
-from typing import Optional, Tuple, List
 
 from gi.repository import GObject, GLib, Gio
 from blueman.Functions import launch
@@ -9,7 +8,7 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 
 class StatusIconImplementationProvider:
-    def on_query_status_icon_implementation(self) -> Tuple[str, int]:
+    def on_query_status_icon_implementation(self) -> tuple[str, int]:
         return "GtkStatusIcon", 0
 
 
@@ -19,7 +18,7 @@ class StatusIconVisibilityHandler:
 
 
 class StatusIconProvider:
-    def on_status_icon_query_icon(self) -> Optional[str]:
+    def on_status_icon_query_icon(self) -> str | None:
         return None
 
 
@@ -42,7 +41,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
 
     visible = None
 
-    visibility_timeout: Optional[int] = None
+    visibility_timeout: int | None = None
 
     _implementations = None
 
@@ -95,7 +94,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         self._tooltip_title = title
         self._emit_dbus_signal("ToolTipTitleChanged", title)
 
-    def set_tooltip_text(self, text: Optional[str]) -> None:
+    def set_tooltip_text(self, text: str | None) -> None:
         self._tooltip_text = "" if text is None else text
         self._emit_dbus_signal("ToolTipTextChanged", self._tooltip_text)
 
@@ -125,7 +124,7 @@ class StatusIcon(AppletPlugin, GObject.GObject):
         if self.parent.manager_state:
             launch('blueman-tray', icon_name='blueman', sn=False)
 
-    def _get_status_icon_implementations(self) -> List[str]:
+    def _get_status_icon_implementations(self) -> list[str]:
         return [implementation for implementation, _ in sorted(
             (plugin.on_query_status_icon_implementation()
              for plugin in self.parent.Plugins.get_loaded_plugins(StatusIconImplementationProvider)),

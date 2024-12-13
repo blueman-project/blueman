@@ -1,5 +1,4 @@
 from gettext import gettext as _
-from typing import Optional
 
 from blueman.Functions import launch
 from blueman.main.DBusProxies import ManagerService
@@ -37,7 +36,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
     }
 
     def on_load(self) -> None:
-        self._plugin_window: Optional[Gtk.ApplicationWindow] = None
+        self._plugin_window: Gtk.ApplicationWindow | None = None
 
         self.parent.Plugins.Menu.add(self, 21)
 

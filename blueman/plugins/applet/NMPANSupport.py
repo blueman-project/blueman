@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Callable, Union
+from collections.abc import Callable
 
 from gi.repository import GLib
 
@@ -19,7 +19,7 @@ class NMPANSupport(AppletPlugin, ServiceConnectHandler):
     __priority__ = 2
 
     def service_connect_handler(self, service: Service, ok: Callable[[], None],
-                                err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+                                err: Callable[[NMConnectionError | GLib.Error], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False
 
@@ -29,7 +29,7 @@ class NMPANSupport(AppletPlugin, ServiceConnectHandler):
         return True
 
     def service_disconnect_handler(self, service: Service, ok: Callable[[], None],
-                                   err: Callable[[Union[NMConnectionError, GLib.Error]], None]) -> bool:
+                                   err: Callable[[NMConnectionError | GLib.Error], None]) -> bool:
         if not isinstance(service, NetworkService):
             return False
 

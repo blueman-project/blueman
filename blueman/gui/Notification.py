@@ -1,4 +1,4 @@
-from typing import Dict, List, Callable, Optional, Iterable, Tuple, Union, Type
+from collections.abc import Callable, Iterable
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -25,16 +25,16 @@ class Fade(AnimBase):
 
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary: str, message: str, _timeout: int = -1,
-                 actions: Optional[Iterable[Tuple[str, str]]] = None,
-                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
-                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> None:
+                 actions: Iterable[tuple[str, str]] | None = None,
+                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
+                 image_data: GdkPixbuf.Pixbuf | None = None) -> None:
         super().__init__(parent=None, type=Gtk.MessageType.QUESTION,
                          buttons=Gtk.ButtonsType.NONE, text=None)
 
         self.set_name("NotificationDialog")
         i = 100
         self.actions_supported = True
-        self.actions: Dict[int, str] = {}
+        self.actions: dict[int, str] = {}
         self.callback = actions_cb
         if actions:
             for a in actions:
@@ -104,7 +104,7 @@ class _NotificationDialog(Gtk.MessageDialog):
     def close(self) -> None:
         self.hide()
 
-    def add_action(self, _action_id: str, _label: str, _callback: Optional[Callable[[str], None]] = None) -> None:
+    def add_action(self, _action_id: str, _label: str, _callback: Callable[[str], None] | None = None) -> None:
         logging.warning("stub")
 
     def set_icon_from_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> None:
@@ -120,9 +120,9 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary: str, message: str, timeout: int = -1,
-                 actions: Optional[Iterable[Tuple[str, str]]] = None,
-                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
-                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> None:
+                 actions: Iterable[tuple[str, str]] | None = None,
+                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
+                 image_data: GdkPixbuf.Pixbuf | None = None) -> None:
         super().__init__(
             g_name='org.freedesktop.Notifications',
             g_interface_name='org.freedesktop.Notifications',
@@ -134,9 +134,9 @@ class _NotificationBubble(Gio.DBusProxy):
 
         self._app_name = 'blueman'
         self._app_icon = ''
-        self._actions: List[str] = []
-        self._callbacks: Dict[str, Callable[[str], None]] = {}
-        self._hints: Dict[str, GLib.Variant] = {}
+        self._actions: list[str] = []
+        self._callbacks: dict[str, Callable[[str], None]] = {}
+        self._hints: dict[str, GLib.Variant] = {}
 
         # hint : (variant format, spec version)
         self._supported_hints = {
@@ -201,8 +201,8 @@ class _NotificationBubble(Gio.DBusProxy):
             self.show()
 
     @property
-    def server_information(self) -> Tuple[str, str, str, str]:
-        info: Tuple[str, str, str, str] = self.GetServerInformation()
+    def server_information(self) -> tuple[str, str, str, str]:
+        info: tuple[str, str, str, str] = self.GetServerInformation()
         return info
 
     @property
@@ -225,7 +225,7 @@ class _NotificationBubble(Gio.DBusProxy):
     def clear_hints(self) -> None:
         self._hints = {}
 
-    def add_action(self, action_id: str, label: str, callback: Optional[Callable[[str], None]] = None) -> None:
+    def add_action(self, action_id: str, label: str, callback: Callable[[str], None] | None = None) -> None:
         self._actions.extend([action_id, label])
         if callback:
             self._callbacks[action_id] = callback
@@ -267,9 +267,9 @@ class _NotificationBubble(Gio.DBusProxy):
         self._return_id = None
 
 
-def Notification(summary: str, message: str, timeout: int = -1, actions: Optional[Iterable[Tuple[str, str]]] = None,
-                 actions_cb: Optional[Callable[[str], None]] = None, icon_name: Optional[str] = None,
-                 image_data: Optional[GdkPixbuf.Pixbuf] = None) -> Union[_NotificationBubble, _NotificationDialog]:
+def Notification(summary: str, message: str, timeout: int = -1, actions: Iterable[tuple[str, str]] | None = None,
+                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
+                 image_data: GdkPixbuf.Pixbuf | None = None) -> _NotificationBubble | _NotificationDialog:
 
     forced_fallback = not Gio.Settings(schema_id='org.blueman.general')['notification-daemon']
     try:
@@ -285,7 +285,7 @@ def Notification(summary: str, message: str, timeout: int = -1, actions: Optiona
         # * user does not want to use a notification daemon
         # * the notification daemon is not available
         # * we have to show actions and the notification daemon does not provide them
-        klass: Type[Union[_NotificationBubble, _NotificationDialog]] = _NotificationDialog
+        klass: type[_NotificationBubble | _NotificationDialog] = _NotificationDialog
     else:
         klass = _NotificationBubble
 

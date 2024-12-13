@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import Optional, Any, List, Set
+from typing import Any
 from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
@@ -23,10 +23,10 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
                         "connections in the tooltip.")
 
     def on_load(self) -> None:
-        self._connections: Set[ObjectPath] = set()
+        self._connections: set[ObjectPath] = set()
         self.active = False
         self.initialized = False
-        self._handlers: List[int] = []
+        self._handlers: list[int] = []
         self._handlers.append(self.parent.Plugins.connect('plugin-loaded', self._on_plugins_changed))
         self._handlers.append(self.parent.Plugins.connect('plugin-unloaded', self._on_plugins_changed))
         self._battery_watcher = BatteryWatcher(lambda *args: self.update_statusicon())
@@ -40,7 +40,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
         self._handlers = []
         del self._battery_watcher
 
-    def on_status_icon_query_icon(self) -> Optional[str]:
+    def on_status_icon_query_icon(self) -> str | None:
         if self._connections:
             self.active = True
             return "blueman-active"

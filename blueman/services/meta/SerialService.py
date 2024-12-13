@@ -2,7 +2,7 @@ from gettext import gettext as _
 import logging
 import os
 import subprocess
-from typing import Callable, Dict, Optional, List
+from collections.abc import Callable
 
 from gi.repository import Gio, GLib
 
@@ -17,7 +17,7 @@ from blueman.Constants import RFCOMM_WATCHER_PATH
 class SerialService(Service):
     def __init__(self, device: Device, uuid: str) -> None:
         super().__init__(device, uuid)
-        self._handlerids: Dict[int, int] = {}
+        self._handlerids: dict[int, int] = {}
 
     @property
     def available(self) -> bool:
@@ -35,7 +35,7 @@ class SerialService(Service):
         return True
 
     @property
-    def connected_instances(self) -> List[Instance]:
+    def connected_instances(self) -> list[Instance]:
         try:
             lst = rfcomm_list()
         except RFCOMMError as e:
@@ -81,8 +81,8 @@ class SerialService(Service):
 
     def connect(
         self,
-        reply_handler: Optional[Callable[[int], None]] = None,
-        error_handler: Optional[Callable[[RFCOMMError], None]] = None
+        reply_handler: Callable[[int], None] | None = None,
+        error_handler: Callable[[RFCOMMError], None] | None = None
     ) -> bool:
         # We expect this service to have a reserved UUID
         uuid = self.short_uuid
@@ -118,8 +118,8 @@ class SerialService(Service):
     def disconnect(
         self,
         port_id: int,
-        reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[str], None]] = None
+        reply_handler: Callable[[], None] | None = None,
+        error_handler: Callable[[str], None] | None = None
     ) -> None:
         try:
             Mechanism().CloseRFCOMM('(n)', port_id)

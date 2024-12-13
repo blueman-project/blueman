@@ -1,5 +1,6 @@
 from gettext import gettext as _
-from typing import Optional, TYPE_CHECKING, List, Any, cast, Callable, Set, Dict
+from typing import TYPE_CHECKING, Any, cast
+from collections.abc import Callable
 import html
 import logging
 import cairo
@@ -43,10 +44,10 @@ class SurfaceObject(GObject.Object):
 
 
 class ManagerDeviceList(DeviceList):
-    def __init__(self, inst: "Blueman", adapter: Optional[str] = None) -> None:
+    def __init__(self, inst: "Blueman", adapter: str | None = None) -> None:
         cr = Gtk.CellRendererText()
         cr.props.ellipsize = Pango.EllipsizeMode.END
-        tabledata: List[ListDataDict] = [
+        tabledata: list[ListDataDict] = [
             # device picture
             {"id": "device_surface", "type": SurfaceObject, "renderer": Gtk.CellRendererPixbuf(),
              "render_attrs": {}, "celldata_func": (self._set_cell_data, None)},
@@ -81,11 +82,11 @@ class ManagerDeviceList(DeviceList):
         self.props.has_tooltip = True
         self.Blueman = inst
 
-        self._monitored_devices: Set[BtAddress] = set()
+        self._monitored_devices: set[BtAddress] = set()
 
         self.manager.connect_signal("battery-created", self.on_battery_created)
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
-        self._batteries: Dict[str, Battery] = {}
+        self._batteries: dict[str, Battery] = {}
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
@@ -94,15 +95,15 @@ class ManagerDeviceList(DeviceList):
         self._on_settings_changed(self.Config, "sort-type")
 
         self.connect("query-tooltip", self.tooltip_query)
-        self.tooltip_row: Optional[Gtk.TreePath] = None
-        self.tooltip_col: Optional[Gtk.TreeViewColumn] = None
+        self.tooltip_row: Gtk.TreePath | None = None
+        self.tooltip_col: Gtk.TreeViewColumn | None = None
 
         self.connect("popup-menu", self._on_popup_menu)
         self.connect("button-press-event", self._on_event_clicked)
         self.connect("button-release-event", self._on_event_clicked)
         self.connect("key-press-event", self._on_key_pressed)
 
-        self.menu: Optional[ManagerDeviceMenu] = None
+        self.menu: ManagerDeviceMenu | None = None
 
         self.connect("drag_data_received", self.drag_recv)
         self.connect("drag-motion", self.drag_motion)
@@ -538,7 +539,7 @@ class ManagerDeviceList(DeviceList):
         self._prepare_fader(row["cell_fader"], lambda: self.set(tree_iter, battery_pb=None, rssi_pb=None,
                                                                 tpl_pb=None)).animate(start=1.0, end=0.0, duration=400)
 
-    def _prepare_fader(self, fader: AnimBase, callback: Optional[Callable[[], None]] = None) -> AnimBase:
+    def _prepare_fader(self, fader: AnimBase, callback: Callable[[], None] | None = None) -> AnimBase:
         def on_finished(finished_fader: AnimBase) -> None:
             finished_fader.disconnect(handler)
             finished_fader.freeze()
@@ -660,7 +661,7 @@ class ManagerDeviceList(DeviceList):
         return False
 
     def _set_cell_data(self, _col: Gtk.TreeViewColumn, cell: Gtk.CellRenderer, model: Gtk.TreeModelFilter,
-                       tree_iter: Gtk.TreeIter, data: Optional[str]) -> None:
+                       tree_iter: Gtk.TreeIter, data: str | None) -> None:
         tree_iter = model.convert_iter_to_child_iter(tree_iter)
         if data is None:
             row = self.get(tree_iter, "device_surface")

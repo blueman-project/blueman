@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Dict, Any, Callable, Tuple  # noqa: F401
+from typing import Dict, Any, Tuple  # noqa: F401
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -38,7 +38,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                              "Upon device disconnection the script will be sent a HUP signal</span>")},
     }
 
-    scripts: Dict[BtAddress, Dict[str, "Popen[Any]"]] = {}
+    scripts: dict[BtAddress, dict[str, "Popen[Any]"]] = {}
 
     def on_load(self) -> None:
         self.scripts = {}
@@ -84,7 +84,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
             except ProcessLookupError:
                 logging.debug(f"No process found for pid {p.pid}")
 
-    def on_script_closed(self, pid: int, _cond: int, address_node: Tuple[BtAddress, str]) -> None:
+    def on_script_closed(self, pid: int, _cond: int, address_node: tuple[BtAddress, str]) -> None:
         address, node = address_node
         del self.scripts[address][node]
         logging.info(f"Script with PID {pid} closed")

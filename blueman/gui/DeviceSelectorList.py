@@ -1,5 +1,5 @@
 from html import escape
-from typing import Optional, Any, List
+from typing import Any
 
 from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
@@ -14,8 +14,8 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorList(DeviceList):
-    def __init__(self, adapter_name: Optional[str] = None) -> None:
-        tabledata: List[ListDataDict] = [
+    def __init__(self, adapter_name: str | None = None) -> None:
+        tabledata: list[ListDataDict] = [
             # device picture
             {"id": "device_icon", "type": str, "renderer": Gtk.CellRendererPixbuf(stock_size=Gtk.IconSize.MENU),
              "render_attrs": {"icon_name": 0}},

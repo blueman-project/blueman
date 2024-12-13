@@ -2,7 +2,8 @@ import logging
 from gettext import gettext as _
 from html import escape
 from xml.etree import ElementTree
-from typing import Dict, Optional, overload, Callable, Union, TYPE_CHECKING, Tuple, Any, List
+from typing import overload, TYPE_CHECKING, Any
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Device import Device
@@ -20,7 +21,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal
+    from typing import Literal
 
 
 class BluezErrorCanceled(DbusError):
@@ -47,11 +48,11 @@ class BluezAgent(DbusService):
         self.add_method("AuthorizeService", ("o", "s"), "", self._on_authorize_service, is_async=True)
         self.add_method("Cancel", (), "", self._on_cancel)
 
-        self.dialog: Optional[Gtk.Dialog] = None
-        self._db: Optional[ElementTree.ElementTree] = None
-        self._devhandlerids: Dict[str, int] = {}
-        self._notification: Optional[Union[_NotificationBubble, _NotificationDialog]] = None
-        self._service_notifications: List[Union[_NotificationBubble, _NotificationDialog]] = []
+        self.dialog: Gtk.Dialog | None = None
+        self._db: ElementTree.ElementTree | None = None
+        self._devhandlerids: dict[str, int] = {}
+        self._notification: _NotificationBubble | _NotificationDialog | None = None
+        self._service_notifications: list[_NotificationBubble | _NotificationDialog] = []
 
     def register_agent(self) -> None:
         logging.info("Register Agent")
@@ -64,7 +65,7 @@ class BluezAgent(DbusService):
         AgentManager().unregister_agent(self.__agent_path)
 
     def build_passkey_dialog(self, device_alias: str, dialog_msg: str, is_numeric: bool
-                             ) -> Tuple[Gtk.Dialog, Gtk.Entry]:
+                             ) -> tuple[Gtk.Dialog, Gtk.Entry]:
         def on_insert_text(editable: Gtk.Entry, new_text: str, _new_text_length: int, _position: int) -> None:
             if not new_text.isdigit():
                 editable.stop_emission("insert-text")
@@ -106,7 +107,7 @@ class BluezAgent(DbusService):
             is_numeric: "Literal[True]",
             object_path: ObjectPath,
             ok: Callable[[int], None],
-            err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]
+            err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]
     ) -> None:
         ...
 
@@ -117,7 +118,7 @@ class BluezAgent(DbusService):
             is_numeric: "Literal[False]",
             object_path: ObjectPath,
             ok: Callable[[str], None],
-            err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]
+            err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]
     ) -> None:
         ...
 
@@ -127,7 +128,7 @@ class BluezAgent(DbusService):
             is_numeric: bool,
             object_path: ObjectPath,
             ok: Callable[[Any], None],
-            err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]
+            err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]
     ) -> None:
         def passkey_dialog_cb(dialog: Gtk.Dialog, response_id: int) -> None:
             if response_id == Gtk.ResponseType.ACCEPT:
@@ -179,7 +180,7 @@ class BluezAgent(DbusService):
             self._notification = None
 
     def _on_request_pin_code(self, object_path: ObjectPath, ok: Callable[[str], None],
-                             err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
+                             err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]) -> None:
         logging.info("Agent.RequestPinCode")
         dialog_msg = _("Enter PIN code for authentication:")
 
@@ -188,7 +189,7 @@ class BluezAgent(DbusService):
             self.dialog.present()
 
     def _on_request_passkey(self, object_path: ObjectPath, ok: Callable[[int], None],
-                            err: Callable[[Union[BluezErrorCanceled, BluezErrorRejected]], None]) -> None:
+                            err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]) -> None:
         logging.info("Agent.RequestPasskey")
         dialog_msg = _("Enter passkey for authentication:")
         self.ask_passkey(dialog_msg, True, object_path, ok, err)
@@ -216,7 +217,7 @@ class BluezAgent(DbusService):
         self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
         self._notification.show()
 
-    def _on_request_confirmation(self, object_path: ObjectPath, passkey: Optional[int], ok: Callable[[], None],
+    def _on_request_confirmation(self, object_path: ObjectPath, passkey: int | None, ok: Callable[[], None],
                                  err: Callable[[BluezErrorCanceled], None]) -> None:
         def on_confirm_action(action: str) -> None:
             if action == "confirm":

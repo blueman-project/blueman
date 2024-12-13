@@ -1,4 +1,5 @@
-from typing import List, Optional, Collection, Iterable, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from collections.abc import Collection, Iterable
 
 import cairo
 import gi
@@ -25,7 +26,7 @@ class AnimBase(GObject.GObject):
 
     def __init__(self, state: float = 1.0) -> None:
         super().__init__()
-        self._source: Optional[int] = None
+        self._source: int | None = None
         self._state = state
         self.frozen = False
         self.fps = 24.0
@@ -103,12 +104,12 @@ class AnimBase(GObject.GObject):
 class TreeRowFade(AnimBase):
     def __init__(self, tw: "ManagerDeviceList",
                  path: Gtk.TreePath,
-                 columns: Optional[Collection[Gtk.TreeViewColumn]] = None) -> None:
+                 columns: Collection[Gtk.TreeViewColumn] | None = None) -> None:
         super().__init__(1.0)
         self.tw = tw
         assert self.tw.liststore is not None
 
-        self.sig: Optional[int] = self.tw.connect_after("draw", self.on_draw)
+        self.sig: int | None = self.tw.connect_after("draw", self.on_draw)
 
         self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
         self.stylecontext = tw.get_style_context()
@@ -166,10 +167,10 @@ class CellFade(AnimBase):
         assert self.tw.liststore is not None
 
         self.frozen = False
-        self.sig: Optional[int] = tw.connect_after("draw", self.on_draw)
+        self.sig: int | None = tw.connect_after("draw", self.on_draw)
         self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
         self.selection = tw.get_selection()
-        self.columns: List[Optional[Gtk.TreeViewColumn]] = []
+        self.columns: list[Gtk.TreeViewColumn | None] = []
         for i in columns:
             self.columns.append(self.tw.get_column(i))
 

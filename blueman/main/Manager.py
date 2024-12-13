@@ -1,7 +1,7 @@
 import logging
 import signal
 from gettext import gettext as _
-from typing import Optional, Any, Tuple
+from typing import Any
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -41,7 +41,7 @@ class Blueman(Gtk.Application):
         s.set_callback(do_quit)
         s.attach()
 
-    window: Optional[Gtk.ApplicationWindow]
+    window: Gtk.ApplicationWindow | None
 
     def do_startup(self) -> None:
         def doquit(_a: Gio.SimpleAction, _param: None) -> None:
@@ -190,7 +190,7 @@ class Blueman(Gtk.Application):
             self.List.populate_devices()
 
     def inquiry(self) -> None:
-        def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: Tuple[str, Any]) -> None:
+        def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]) -> None:
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
@@ -217,7 +217,7 @@ class Blueman(Gtk.Application):
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
-    def infobar_update(self, message: str, bt: Optional[str] = None, icon_name: str = "dialog-warning") -> None:
+    def infobar_update(self, message: str, bt: str | None = None, icon_name: str = "dialog-warning") -> None:
         if icon_name == "dialog-warning":
             self._infobar.set_message_type(Gtk.MessageType.WARNING)
         else:

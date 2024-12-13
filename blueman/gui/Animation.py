@@ -1,4 +1,4 @@
-from typing import Iterable, Optional
+from collections.abc import Iterable
 
 from gi import require_version
 require_version("Gtk", "3.0")
@@ -8,7 +8,7 @@ from gi.repository import GLib, Gtk
 class Animation:
     def __init__(self, icon: Gtk.Image, icons: Iterable[str], rate: int = 1) -> None:
         self.icon_names = list(icons)
-        self.timer: Optional[int] = None
+        self.timer: int | None = None
         self.current = 0
         self.icon = icon
         self.rate = int(1000 / rate)

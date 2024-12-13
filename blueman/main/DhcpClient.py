@@ -1,5 +1,3 @@
-from typing import List
-
 from gi.repository import GObject
 from gi.repository import GLib
 import socket
@@ -22,7 +20,7 @@ class DhcpClient(GObject.GObject):
         ["udhcpc", "-t", "20", "-x", "hostname", socket.gethostname(), "-n", "-i"]
     ]
 
-    querying: List[str] = []
+    querying: list[str] = []
 
     def __init__(self, interface: str, timeout: int = 30) -> None:
         """The interface name has to be trusted / sanitized!"""

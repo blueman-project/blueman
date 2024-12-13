@@ -1,5 +1,4 @@
 from gettext import gettext as _
-from typing import Optional
 from uuid import UUID
 
 # https://www.bluetooth.com/specifications/assigned-numbers/service-discovery
@@ -361,7 +360,7 @@ class ServiceUUID(UUID):
         super().__init__(uuid)
 
     @property
-    def short_uuid(self) -> Optional[int]:
+    def short_uuid(self) -> int | None:
         if self.reserved:
             return self.int >> 96 & 0xFFFF
         else:

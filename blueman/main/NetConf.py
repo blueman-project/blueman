@@ -6,7 +6,6 @@ from tempfile import mkstemp
 from time import sleep
 import logging
 import signal
-from typing import List, Tuple, Optional, Type
 
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
@@ -28,7 +27,7 @@ def _is_running(name: str, pid: int) -> bool:
         return name in f.readline().replace("\0", " ")
 
 
-def _read_pid_file(fname: str) -> Optional[int]:
+def _read_pid_file(fname: str) -> int | None:
     try:
         with open(fname) as f:
             return int(f.read())
@@ -45,17 +44,17 @@ def _get_binary(*names: str) -> str:
 
 
 class DHCPHandler:
-    _BINARIES: List[str]
+    _BINARIES: list[str]
 
     @property
     def _key(self) -> str:
         return self._BINARIES[-1]
 
     def __init__(self) -> None:
-        self._pid: Optional[int] = None
+        self._pid: int | None = None
 
     @staticmethod
-    def _get_arguments(ip4_address: str) -> List[str]:
+    def _get_arguments(ip4_address: str) -> list[str]:
         return []
 
     @property
@@ -77,7 +76,7 @@ class DHCPHandler:
             logging.info(error_msg)
             raise NetworkSetupError(f"{self._key} failed to start: {error_msg}")
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> bytes | None:
         ...
 
     def clean_up(self) -> None:
@@ -90,7 +89,7 @@ class DHCPHandler:
                 pid = self._pid
 
             if pid is not None:
-                running_binary: Optional[str] = next(binary for binary in self._BINARIES if _is_running(binary, pid))
+                running_binary: str | None = next(binary for binary in self._BINARIES if _is_running(binary, pid))
                 if running_binary is not None:
                     print('Terminating ' + running_binary)
                     os.kill(pid, signal.SIGTERM)
@@ -109,7 +108,7 @@ class DHCPHandler:
 class DnsMasqHandler(DHCPHandler):
     _BINARIES = ["dnsmasq"]
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> bytes | None:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
         cmd = [binary, f"--pid-file={self._pid_path}", "--except-interface=lo",
                "--interface=pan1", "--bind-interfaces",
@@ -143,7 +142,7 @@ class DhcpdHandler(DHCPHandler):
     _BINARIES = ["dhcpd3", "dhcpd"]
 
     @staticmethod
-    def _read_dhcp_config() -> Tuple[str, str]:
+    def _read_dhcp_config() -> tuple[str, str]:
         dhcp_config = ''
         existing_subnet = ''
         start = end = False
@@ -169,7 +168,7 @@ class DhcpdHandler(DHCPHandler):
         return dhcp_config, existing_subnet
 
     @staticmethod
-    def _generate_subnet_config(ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
+    def _generate_subnet_config(ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> str:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
 
         return DHCPDSUBNET % {"ip_mask": ipiface.network.network_address,
@@ -179,7 +178,7 @@ class DhcpdHandler(DHCPHandler):
                               "start": ipiface.network[2],
                               "end": ipiface.network[-2]}
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> bytes | None:
         dhcp_config, existing_subnet = self._read_dhcp_config()
 
         subnet = self._generate_subnet_config(ip4_address, ip4_mask, dns_servers)
@@ -214,7 +213,7 @@ option router %(rtr)s
 class UdhcpdHandler(DHCPHandler):
     _BINARIES = ["udhcpd"]
 
-    def _generate_config(self, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> str:
+    def _generate_config(self, ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> str:
         ipiface = ipaddress.ip_interface('/'.join((ip4_address, ip4_mask)))
 
         return UDHCP_CONF_TEMPLATE % {"ip_mask": ipiface.network.network_address,
@@ -224,7 +223,7 @@ class UdhcpdHandler(DHCPHandler):
                                       "end": ipiface.network[-2],
                                       "pid_path": self._pid_path}
 
-    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: List[str]) -> Optional[bytes]:
+    def _start(self, binary: str, ip4_address: str, ip4_mask: str, dns_servers: list[str]) -> bytes | None:
         config_file, self._config_path = mkstemp(prefix="udhcpd-")
         with open(config_file, "w", encoding="utf8") as f:
             f.write(self._generate_config(ip4_address, ip4_mask, dns_servers))
@@ -247,8 +246,8 @@ class UdhcpdHandler(DHCPHandler):
 
 
 class NetConf:
-    _dhcp_handler: Optional[DHCPHandler] = None
-    _ipt_rules: List[Tuple[str, str, str]] = []
+    _dhcp_handler: DHCPHandler | None = None
+    _ipt_rules: list[tuple[str, str, str]] = []
 
     _IPV4_SYS_PATH = "/proc/sys/net/ipv4"
     _RUN_PATH = "/var/run"
@@ -278,7 +277,7 @@ class NetConf:
         cls.unlock("iptables")
 
     @classmethod
-    def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: Type["DHCPHandler"],
+    def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
                        address_changed: bool) -> None:
         if not isinstance(cls._dhcp_handler, handler):
             if cls._dhcp_handler is not None:

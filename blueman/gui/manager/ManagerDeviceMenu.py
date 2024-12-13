@@ -2,7 +2,8 @@ import logging
 from enum import Enum, auto
 from gettext import gettext as _
 from operator import attrgetter
-from typing import Dict, List, Tuple, Optional, TYPE_CHECKING, Union, Iterable
+from typing import TYPE_CHECKING
+from collections.abc import Iterable
 from blueman.bluemantyping import BtAddress
 
 from blueman.bluemantyping import ObjectPath
@@ -55,13 +56,13 @@ class MenuItemsProvider:
         "ManagerDeviceMenu",
         _device: Device,
         _powered: bool,
-    ) -> List[DeviceMenuItem]:
+    ) -> list[DeviceMenuItem]:
         return []
 
 
 class ManagerDeviceMenu(Gtk.Menu):
-    __ops__: Dict[ObjectPath, str] = {}
-    __instances__: List["ManagerDeviceMenu"] = []
+    __ops__: dict[ObjectPath, str] = {}
+    __instances__: list["ManagerDeviceMenu"] = []
 
     SelectedDevice: Device
 
@@ -83,7 +84,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._any_device.connect_signal('property-changed', self._on_service_property_changed)
 
         try:
-            self._appl: Optional[AppletService] = AppletService()
+            self._appl: AppletService | None = AppletService()
         except DBusProxyFailed:
             logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
@@ -93,7 +94,7 @@ class ManagerDeviceMenu(Gtk.Menu):
     def __del__(self) -> None:
         logging.debug("deleting devicemenu")
 
-    def popup_at_pointer(self, event: Optional[Gdk.Event]) -> None:
+    def popup_at_pointer(self, event: Gdk.Event | None) -> None:
         self.is_popup = True
         self.generate()
 
@@ -113,7 +114,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
-    def get_op(self, device: Device) -> Optional[str]:
+    def get_op(self, device: Device) -> str | None:
         try:
             return ManagerDeviceMenu.__ops__[device.get_object_path()]
         except KeyError:
@@ -126,7 +127,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
 
-    def _on_service_property_changed(self, _service: Union[AnyNetwork, AnyDevice], key: str, _value: object,
+    def _on_service_property_changed(self, _service: AnyNetwork | AnyDevice, key: str, _value: object,
                                      _path: str) -> None:
         if key == "Connected":
             self.generate()
@@ -140,7 +141,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             self.unset_op(device)
 
-        def fail(_obj: Optional[AppletService], result: GLib.Error, _user_data: None) -> None:
+        def fail(_obj: AppletService | None, result: GLib.Error, _user_data: None) -> None:
             prog.message(_("Failed"))
 
             self.unset_op(device)
@@ -167,7 +168,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             logging.info("disconnect success")
             self.generate()
 
-        def err(_obj: Optional[AppletService], result: GLib.Error, _user_date: None) -> None:
+        def err(_obj: AppletService | None, result: GLib.Error, _user_date: None) -> None:
             logging.warning(f"disconnect failed {result}")
             msg, tb = e_(result.message)
             self.Blueman.infobar_update(_("Disconnection Failed: ") + msg, bt=tb)
@@ -181,7 +182,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                                      result_handler=ok, error_handler=err, timeout=GLib.MAXINT)
 
     def on_device_property_changed(self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter,
-                                   key_value: Tuple[str, object]) -> None:
+                                   key_value: tuple[str, object]) -> None:
         key, value = key_value
         # print "menu:", key, value
         if lst.compare(tree_iter, lst.selected()):

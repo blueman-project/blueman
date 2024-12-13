@@ -1,5 +1,6 @@
 from gettext import gettext as _
-from typing import Callable, Union, TYPE_CHECKING
+from typing import Union, TYPE_CHECKING
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from _blueman import RFCOMMError
@@ -28,7 +29,7 @@ class RFCOMMConnectedListener:
 
 class RFCOMMConnectHandler:
     def rfcomm_connect_handler(self, _service: SerialService, _reply: Callable[[str], None],
-                               _err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
+                               _err: Callable[[RFCOMMError | GLib.Error], None]) -> bool:
         return False
 
 

@@ -1,12 +1,13 @@
 import logging
 import sys
 import traceback
-from typing import Dict, Tuple, Callable, Set, Optional, Any, Collection, Mapping, Union, overload, TYPE_CHECKING
+from typing import Any, overload, TYPE_CHECKING
+from collections.abc import Callable, Collection, Mapping
 
 from gi.repository import Gio, GLib
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal
+    from typing import Literal
 
 
 class DbusError(Exception):
@@ -25,30 +26,30 @@ class DbusError(Exception):
 
 
 class DbusService:
-    def __init__(self, bus_name: Optional[str], interface_name: str, path: str, bus_type: Gio.BusType,
-                 properties: Optional[Mapping[str, str]] = None) -> None:
+    def __init__(self, bus_name: str | None, interface_name: str, path: str, bus_type: Gio.BusType,
+                 properties: Mapping[str, str] | None = None) -> None:
         self._bus = Gio.bus_get_sync(bus_type)
         if bus_name:
             Gio.bus_own_name(bus_type, bus_name, Gio.BusNameOwnerFlags.NONE, None, None, None)
-        self._methods: Dict[str, Tuple[Tuple[str, ...], Tuple[str, ...], Callable[..., None], Set[str]]] = {}
-        self._signals: Dict[str, Tuple[str, ...]] = {}
+        self._methods: dict[str, tuple[tuple[str, ...], tuple[str, ...], Callable[..., None], set[str]]] = {}
+        self._signals: dict[str, tuple[str, ...]] = {}
         self._properties = {} if properties is None else properties
         self._interface_name = interface_name
         self._path = path
-        self._regid: Optional[int] = None
+        self._regid: int | None = None
 
     @overload
-    def add_method(self, name: str, arguments: Tuple[str, ...], return_values: Union[str, Tuple[str, ...]],
+    def add_method(self, name: str, arguments: tuple[str, ...], return_values: str | tuple[str, ...],
                    method: Callable[..., None], pass_sender: bool = False, is_async: bool = False) -> None:
         ...
 
     @overload
-    def add_method(self, name: str, arguments: Tuple[str, ...], return_values: Tuple[str, ...],
+    def add_method(self, name: str, arguments: tuple[str, ...], return_values: tuple[str, ...],
                    method: Callable[..., Any], pass_sender: bool = False,
                    is_async: "Literal[False]" = False) -> None:
         ...
 
-    def add_method(self, name: str, arguments: Tuple[str, ...], return_values: Union[str, Tuple[str, ...]],
+    def add_method(self, name: str, arguments: tuple[str, ...], return_values: str | tuple[str, ...],
                    method: Callable[..., Any], pass_sender: bool = False, is_async: bool = False) -> None:
         if name in self._signals:
             raise Exception(f"{name} already defined")
@@ -65,14 +66,14 @@ class DbusService:
         del self._methods[name]
         self._reregister()
 
-    def add_signal(self, name: str, types: Union[str, Tuple[str, ...]]) -> None:
+    def add_signal(self, name: str, types: str | tuple[str, ...]) -> None:
         if name in self._signals:
             raise Exception(f"{name} already defined")
 
         self._signals[name] = self._handle_return_type(types)
         self._reregister()
 
-    def _handle_return_type(self, types: Union[str, Tuple[str, ...]]) -> Tuple[str, ...]:
+    def _handle_return_type(self, types: str | tuple[str, ...]) -> tuple[str, ...]:
         if isinstance(types, str):
             if types:
                 # A non-empty string is a single return type
@@ -178,5 +179,5 @@ class DbusService:
             invocation.return_error_literal(Gio.dbus_error_quark(), Gio.DBusError.FAILED, message)
 
     @staticmethod
-    def _prepare_arguments(types: Tuple[str, ...], args: Collection[Any]) -> Optional[GLib.Variant]:
+    def _prepare_arguments(types: tuple[str, ...], args: Collection[Any]) -> GLib.Variant | None:
         return GLib.Variant(f"({''.join(types)})", args) if types else None

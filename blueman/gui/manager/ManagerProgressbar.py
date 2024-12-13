@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
-from typing import List, TYPE_CHECKING, Callable
+from typing import TYPE_CHECKING
+from collections.abc import Callable
 
 import gi
 
@@ -22,7 +23,7 @@ class ManagerProgressbar(GObject.GObject):
     __gsignals__: GSignals = {
         'cancelled': (GObject.SignalFlags.RUN_LAST, None, ()),
     }
-    __instances__: List["ManagerProgressbar"] = []
+    __instances__: list["ManagerProgressbar"] = []
 
     def __init__(self, blueman: "Blueman", cancellable: bool = True, text: str = _("Connecting")) -> None:
         super().__init__()
@@ -35,7 +36,7 @@ class ManagerProgressbar(GObject.GObject):
         self.progressbar = Gtk.ProgressBar()
         self.progressbar.set_name("ManagerProgressbar")
 
-        self._signals: List[int] = []
+        self._signals: list[int] = []
 
         self.button = Gtk.Image(icon_name="process-stop", pixel_size=16)
 

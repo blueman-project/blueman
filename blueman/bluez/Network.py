@@ -1,4 +1,4 @@
-from typing import Optional, Callable
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Base import Base
@@ -17,16 +17,16 @@ class Network(Base):
     def connect(  # type: ignore
         self,
         uuid: str,
-        reply_handler: Optional[Callable[[str], None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        reply_handler: Callable[[str], None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         param = GLib.Variant('(s)', (uuid,))
         self._call('Connect', param, reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(  # type: ignore
         self,
-        reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        reply_handler: Callable[[], None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
 

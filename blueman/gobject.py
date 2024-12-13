@@ -1,10 +1,10 @@
-from typing import Any, Optional
+from typing import Any
 
 from gi.types import GObjectMeta
 
 
 class SingletonGObjectMeta(GObjectMeta):
-    _instance: Optional[Any] = None
+    _instance: Any | None = None
 
     def __call__(cls, *args: Any, **kwargs: Any) -> Any:
         if not cls._instance:

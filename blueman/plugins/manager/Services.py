@@ -1,4 +1,4 @@
-from typing import List, Callable
+from collections.abc import Callable
 from blueman.bluemantyping import BtAddress
 
 import cairo
@@ -45,8 +45,8 @@ class Services(ManagerPlugin, MenuItemsProvider):
         manager_menu: ManagerDeviceMenu,
         device: Device,
         powered: bool,
-    ) -> List[DeviceMenuItem]:
-        items: List[DeviceMenuItem] = []
+    ) -> list[DeviceMenuItem]:
+        items: list[DeviceMenuItem] = []
         appl = AppletService()
 
         services = get_services(device)
@@ -85,9 +85,9 @@ class Services(ManagerPlugin, MenuItemsProvider):
                     item.show()
                     items.append(DeviceMenuItem(item, DeviceMenuItem.Group.AUTOCONNECT, service.priority))
 
-        for action, priority in set((action, service.priority)
-                                    for service in services for action in service.common_actions
-                                    if any(plugin in appl.QueryPlugins() for plugin in action.plugins)):
+        for action, priority in {(action, service.priority)
+                                 for service in services for action in service.common_actions
+                                 if any(plugin in appl.QueryPlugins() for plugin in action.plugins)}:
             item = create_menuitem(action.title, action.icon)
             items.append(DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, priority + 200))
             item.show()

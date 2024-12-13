@@ -4,7 +4,8 @@ import os
 import shutil
 import logging
 from html import escape
-from typing import List, Dict, TYPE_CHECKING, Callable, Tuple, Optional, Union
+from typing import TYPE_CHECKING, Optional, Union
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.obex.AgentManager import AgentManager
@@ -24,7 +25,7 @@ if TYPE_CHECKING:
 
     class TransferDict(TypedDict):
         path: str
-        size: Optional[int]
+        size: int | None
         name: str
 
     class PendingTransferDict(TypedDict):
@@ -32,7 +33,7 @@ if TYPE_CHECKING:
         address: BtAddress
         root: str
         filename: str
-        size: Optional[int]
+        size: int | None
         name: str
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
@@ -60,10 +61,10 @@ class Agent(DbusService):
         self._applet = applet
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
-        self._allowed_devices: List[str] = []
-        self._notification: Optional[NotificationType] = None
+        self._allowed_devices: list[str] = []
+        self._notification: NotificationType | None = None
         self._pending_transfer: Optional["PendingTransferDict"] = None
-        self.transfers: Dict[str, "TransferDict"] = {}
+        self.transfers: dict[str, "TransferDict"] = {}
 
     def register_at_manager(self) -> None:
         AgentManager().register_agent(self.__agent_path)
@@ -164,7 +165,7 @@ class TransferService(AppletPlugin):
     _agent = None
     _watch = None
     _notification = None
-    _handlerids: List[int] = []
+    _handlerids: list[int] = []
 
     def on_load(self) -> None:
         def on_reset(_action: str) -> None:
@@ -193,7 +194,7 @@ class TransferService(AppletPlugin):
 
         self._unregister_agent()
 
-    def _make_share_path(self) -> Tuple[str, bool]:
+    def _make_share_path(self) -> tuple[str, bool]:
         config_path = self._config["shared-path"]
         default_path = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
         path = None

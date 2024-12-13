@@ -1,4 +1,4 @@
-from typing import Optional, Callable
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
@@ -15,7 +15,7 @@ class Adapter(Base):
     def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)
 
-    def start_discovery(self, error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
+    def start_discovery(self, error_handler: Callable[[BluezDBusException], None] | None = None) -> None:
         self._call('StartDiscovery', error_handler=error_handler)
 
     def stop_discovery(self) -> None:

@@ -1,4 +1,4 @@
-from typing import Callable
+from collections.abc import Callable
 
 from blueman.main.PPPConnection import PPPConnection
 from blueman.plugins.MechanismPlugin import MechanismPlugin

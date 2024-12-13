@@ -1,4 +1,5 @@
-from typing import Tuple, Callable, Set, Any, TYPE_CHECKING
+from typing import Any, TYPE_CHECKING
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.plugins.BasePlugin import BasePlugin
@@ -22,10 +23,10 @@ class AppletPlugin(BasePlugin):
             self.__class__.__icon__ = "application-x-addon-symbolic"
 
         self._dbus_service = parent.DbusSvc
-        self._dbus_methods: Set[str] = set()
-        self._dbus_signals: Set[str] = set()
+        self._dbus_methods: set[str] = set()
+        self._dbus_signals: set[str] = set()
 
-    def _add_dbus_method(self, name: str, arguments: Tuple[str, ...], return_value: str, method: Callable[..., Any],
+    def _add_dbus_method(self, name: str, arguments: tuple[str, ...], return_value: str, method: Callable[..., Any],
                          is_async: bool = False) -> None:
         self._dbus_methods.add(name)
         self._dbus_service.add_method(name, arguments, return_value, method, is_async=is_async)

@@ -1,7 +1,6 @@
 import datetime
 from gettext import gettext as _
 from tempfile import NamedTemporaryFile
-from typing import List
 
 from blueman.Functions import create_menuitem, launch
 from blueman.bluez.Device import Device
@@ -52,7 +51,7 @@ class Notes(ManagerPlugin, MenuItemsProvider):
         manager_menu: ManagerDeviceMenu,
         device: Device,
         powered: bool,
-    ) -> List[DeviceMenuItem]:
+    ) -> list[DeviceMenuItem]:
         if not powered:
             return []
 

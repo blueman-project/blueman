@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from typing import Iterable, TYPE_CHECKING, Callable, List, Tuple, Dict, Union, TypeVar, Any
+from typing import TYPE_CHECKING, Union, TypeVar, Any
+from collections.abc import Iterable, Callable
 
 from gi.repository import Gio, GLib, Pango
 
@@ -42,8 +43,8 @@ class MenuService(DbusService):
             self._revision_advertised = self._revision
         return True
 
-    def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
-                    ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
+    def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: list[str]
+                    ) -> tuple[int, tuple[int, dict[str, GLib.Variant], list[GLib.Variant]]]:
         if parent_id == 0:
             return self._revision, (0, {}, self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
                                                              self._render_submenu))
@@ -53,7 +54,7 @@ class MenuService(DbusService):
                 return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id))
             return self._revision, (parent_id, self._render_item(item), [])
 
-    def _render_submenu(self, item: "MenuItemDict", idx: int) -> List[GLib.Variant]:
+    def _render_submenu(self, item: "MenuItemDict", idx: int) -> list[GLib.Variant]:
         if "submenu" in item:
             return self._render_menu(enumerate(item["submenu"], idx + 1), lambda _item, _isx: [])
         else:
@@ -61,18 +62,18 @@ class MenuService(DbusService):
 
     _T = TypeVar("_T", bound="SubmenuItemDict")
 
-    def _render_menu(self, items: Iterable[Tuple[int, _T]], submenu_callback: Callable[[_T, int], List[GLib.Variant]]
-                     ) -> List[GLib.Variant]:
+    def _render_menu(self, items: Iterable[tuple[int, _T]], submenu_callback: Callable[[_T, int], list[GLib.Variant]]
+                     ) -> list[GLib.Variant]:
         return [GLib.Variant("(ia{sv}av)", (idx, self._render_item(item), submenu_callback(item, idx)))
                 for (idx, item) in items]
 
-    def _iterate_items(self) -> Iterable[Tuple[int, "SubmenuItemDict"]]:
+    def _iterate_items(self) -> Iterable[tuple[int, "SubmenuItemDict"]]:
         for item in self._items.values():
             yield item["id"] << 8, item
             if "submenu" in item:
                 yield from enumerate(item["submenu"], (item["id"] << 8) + 1)
 
-    def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> Dict[str, GLib.Variant]:
+    def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> dict[str, GLib.Variant]:
         if "text" in item and "icon_name" in item:
             label = Pango.parse_markup(item["text"], -1, "\0")[2] if item.get("markup", False) else item["text"]
             props = {
@@ -110,7 +111,7 @@ class StatusNotifierItemService(DbusService):
 
         self.IconName = icon_name
         self.Status = "Active"
-        self.ToolTip: Tuple[str, List[Tuple[int, int, List[int]]], str, str] = ("", [], "", "")
+        self.ToolTip: tuple[str, list[tuple[int, int, list[int]]], str, str] = ("", [], "", "")
         self.Menu = "/org/blueman/sni/menu"
 
         self.add_signal("NewIcon", "")

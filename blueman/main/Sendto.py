@@ -2,7 +2,7 @@ from gettext import gettext as _
 import time
 import logging
 from gettext import ngettext
-from typing import List, Iterable, Optional
+from collections.abc import Iterable
 
 from blueman.bluez.Device import Device
 from blueman.bluez.errors import BluezDBusException
@@ -61,11 +61,11 @@ class Sender(Gtk.Dialog):
         self.device = device
         self.adapter = Adapter(obj_path=adapter_path)
         self.manager = Manager()
-        self.files: List[Gio.File] = []
+        self.files: list[Gio.File] = []
         self.num_files = 0
-        self.object_push: Optional[ObjectPush] = None
-        self.object_push_handlers: List[int] = []
-        self.transfer: Optional[Transfer] = None
+        self.object_push: ObjectPush | None = None
+        self.object_push_handlers: list[int] = []
+        self.transfer: Transfer | None = None
 
         self.total_bytes = 0
         self.total_transferred = 0
@@ -73,7 +73,7 @@ class Sender(Gtk.Dialog):
         self._last_bytes = 0
         self._last_update = 0.0
 
-        self.error_dialog: Optional[ErrorDialog] = None
+        self.error_dialog: ErrorDialog | None = None
         self.cancelling = False
 
         # bytes transferred on a current transfer
@@ -140,7 +140,7 @@ class Sender(Gtk.Dialog):
     def create_session(self) -> None:
         self.client.create_session(self.device['Address'], self.adapter["Address"])
 
-    def on_cancel(self, button: Optional[Gtk.Button]) -> None:
+    def on_cancel(self, button: Gtk.Button | None) -> None:
         self.pb.props.text = _("Cancelling")
         if button:
             button.props.sensitive = False
@@ -150,7 +150,7 @@ class Sender(Gtk.Dialog):
 
         self.emit("result", False)
 
-    def _update_pb_text(self, speed: float = 0.0, unit: str = "B", eta: Optional[str] = None) -> None:
+    def _update_pb_text(self, speed: float = 0.0, unit: str = "B", eta: str | None = None) -> None:
         num = self.num_files - len(self.files) + 1
         eta = "∞" if eta is None else eta
         text = "%s %d/%d %.2f (%s/s) %s %s" % (_("Sending File"), num, self.num_files, speed, unit, _("ETA:"), eta)
@@ -219,7 +219,7 @@ class Sender(Gtk.Dialog):
         if self.object_push:
             self.object_push.send_file(file_path)
 
-    def on_transfer_error(self, _transfer: Optional[Transfer], msg: str = "") -> None:
+    def on_transfer_error(self, _transfer: Transfer | None, msg: str = "") -> None:
         if not self.error_dialog:
             self.speed.reset()
             parent = self.get_toplevel()

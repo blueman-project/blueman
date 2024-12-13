@@ -3,7 +3,8 @@ from operator import itemgetter
 import html
 import time
 import logging
-from typing import List, TYPE_CHECKING, Optional, Callable, cast, Union
+from typing import TYPE_CHECKING, cast
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.Device import Device
@@ -30,7 +31,7 @@ if TYPE_CHECKING:
     class Item(_ItemBase):
         time: float
         device: str
-        mitem: Optional[SubmenuItemDict]
+        mitem: SubmenuItemDict | None
 
     class StoredIcon(_ItemBase):
         time: str
@@ -59,7 +60,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
     }
 
     def on_load(self) -> None:
-        self.__menuitems: List["SubmenuItemDict"] = []
+        self.__menuitems: list["SubmenuItemDict"] = []
 
         self._rebuild_menu()
 
@@ -159,7 +160,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
             item["mitem"]["sensitive"] = True
             self.parent.Plugins.Menu.on_menu_changed()
 
-        def err(reason: Union[Exception, str]) -> None:
+        def err(reason: Exception | str) -> None:
             Notification(_("Failed to connect"), str(reason).split(": ")[-1],
                          icon_name="dialog-error").show()
             assert item["mitem"] is not None  # https://github.com/python/mypy/issues/2608
@@ -186,7 +187,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
     def _rebuild_menu(self) -> None:
         menu: "Menu" = self.parent.Plugins.Menu
-        self._mitems: List[MenuItem] = []
+        self._mitems: list[MenuItem] = []
         menu.unregister(self)
         menu.add(self, 52, text=_("Reconnect to…"), icon_name="document-open-recent-symbolic",
                  sensitive=False, callback=lambda: None)
@@ -194,7 +195,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
             self._mitems.append(menu.add(self, (53, idx), **item))
         menu.add(self, 59)
 
-    def _get_device_path(self, adapter_path: ObjectPath, address: BtAddress) -> Optional[str]:
+    def _get_device_path(self, adapter_path: ObjectPath, address: BtAddress) -> str | None:
         try:
             adapter = self.parent.Manager.get_adapter(adapter_path)
         except DBusNoSuchAdapterError:
@@ -207,7 +208,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         return device.get_object_path() if device is not None else None
 
-    def _get_items(self) -> List["Item"]:
+    def _get_items(self) -> list["Item"]:
         return sorted(
             ({
                 "adapter": i["adapter"],

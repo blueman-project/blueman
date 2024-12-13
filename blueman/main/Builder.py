@@ -1,4 +1,4 @@
-from typing import TypeVar, Type
+from typing import TypeVar
 
 import gi
 from blueman.Constants import UI_PATH
@@ -14,7 +14,7 @@ class Builder(Gtk.Builder):
 
     T = TypeVar("T", bound=Gtk.Widget)
 
-    def get_widget(self, name: str, widget_type: Type[T]) -> T:
+    def get_widget(self, name: str, widget_type: type[T]) -> T:
         widget = self.get_object(name)
         assert isinstance(widget, widget_type)
         return widget

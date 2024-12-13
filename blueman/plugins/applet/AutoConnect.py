@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import TYPE_CHECKING, Union, Optional, Any
+from typing import TYPE_CHECKING, Any
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from gi.repository import GLib
@@ -63,13 +63,13 @@ class AutoConnect(AppletPlugin):
             if device is None or device.get("Connected"):
                 continue
 
-            def reply(dev: Optional[Device] = device, service_name: str = ServiceUUID(uuid).name) -> None:
+            def reply(dev: Device | None = device, service_name: str = ServiceUUID(uuid).name) -> None:
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
-            def err(_reason: Union[Exception, str]) -> None:
+            def err(_reason: Exception | str) -> None:
                 pass
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)
