@@ -1,9 +1,7 @@
 from abc import abstractmethod, ABCMeta
-from typing import TYPE_CHECKING
 from collections.abc import Iterable
 
-if TYPE_CHECKING:
-    from blueman.plugins.applet.Menu import MenuItemDict
+from blueman.plugins.applet.Menu import MenuItemDict
 
 
 class IndicatorNotAvailable(RuntimeError):
@@ -28,5 +26,5 @@ class IndicatorInterface(metaclass=ABCMeta):
         ...
 
     @abstractmethod
-    def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
+    def set_menu(self, menu: Iterable[MenuItemDict]) -> None:
         ...

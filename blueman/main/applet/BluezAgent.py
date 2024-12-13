@@ -2,7 +2,7 @@ import logging
 from gettext import gettext as _
 from html import escape
 from xml.etree import ElementTree
-from typing import overload, TYPE_CHECKING, Any
+from typing import overload, Any, Literal
 from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
@@ -19,9 +19,6 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
-if TYPE_CHECKING:
-    from typing import Literal
 
 
 class BluezErrorCanceled(DbusError):
@@ -104,7 +101,7 @@ class BluezAgent(DbusService):
     def ask_passkey(
             self,
             dialog_msg: str,
-            is_numeric: "Literal[True]",
+            is_numeric: Literal[True],
             object_path: ObjectPath,
             ok: Callable[[int], None],
             err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]
@@ -115,7 +112,7 @@ class BluezAgent(DbusService):
     def ask_passkey(
             self,
             dialog_msg: str,
-            is_numeric: "Literal[False]",
+            is_numeric: Literal[False],
             object_path: ObjectPath,
             ok: Callable[[str], None],
             err: Callable[[BluezErrorCanceled | BluezErrorRejected], None]

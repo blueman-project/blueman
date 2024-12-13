@@ -1,13 +1,10 @@
 import logging
 import sys
 import traceback
-from typing import Any, overload, TYPE_CHECKING
+from typing import Any, overload, Literal
 from collections.abc import Callable, Collection, Mapping
 
 from gi.repository import Gio, GLib
-
-if TYPE_CHECKING:
-    from typing import Literal
 
 
 class DbusError(Exception):
@@ -46,7 +43,7 @@ class DbusService:
     @overload
     def add_method(self, name: str, arguments: tuple[str, ...], return_values: tuple[str, ...],
                    method: Callable[..., Any], pass_sender: bool = False,
-                   is_async: "Literal[False]" = False) -> None:
+                   is_async: Literal[False] = False) -> None:
         ...
 
     def add_method(self, name: str, arguments: tuple[str, ...], return_values: str | tuple[str, ...],

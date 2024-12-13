@@ -1,5 +1,4 @@
-from typing import List, Dict, Optional
-from typing_extensions import TypedDict
+from typing import List, Dict, Optional, TypedDict
 
 ERR: Dict[int, str]
 RFCOMM_HANGUP_NOW: int

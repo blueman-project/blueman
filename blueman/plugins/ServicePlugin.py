@@ -1,4 +1,4 @@
-from typing import Union, TYPE_CHECKING
+from typing import Literal, Union, TYPE_CHECKING
 
 
 import gi
@@ -6,8 +6,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 if TYPE_CHECKING:
-    from typing import Literal
-
     from blueman.main.Services import BluemanServices
 
 
@@ -48,7 +46,7 @@ class ServicePlugin:
         pass
 
     # return true if apply button should be sensitive or false if not. -1 to force disabled
-    def on_query_apply_state(self) -> Union[bool, "Literal[-1]"]:
+    def on_query_apply_state(self) -> Union[bool, Literal[-1]]:
         return False
 
     def on_apply(self) -> None:

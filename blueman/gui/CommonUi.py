@@ -1,15 +1,12 @@
 from datetime import datetime
 from gettext import gettext as _
-from typing import overload, TYPE_CHECKING
+from typing import overload, Literal
 
 from blueman.Constants import WEBSITE, VERSION
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
-if TYPE_CHECKING:
-    from typing import Literal
 
 
 class ErrorDialog(Gtk.MessageDialog):
@@ -40,12 +37,12 @@ class ErrorDialog(Gtk.MessageDialog):
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Gtk.Window | None = None) -> None:
+def show_about_dialog(app_name: str, run: Literal[True] = True, parent: Gtk.Window | None = None) -> None:
     ...
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[False]", parent: Gtk.Window | None = None) -> Gtk.AboutDialog:
+def show_about_dialog(app_name: str, run: Literal[False], parent: Gtk.Window | None = None) -> Gtk.AboutDialog:
     ...
 
 

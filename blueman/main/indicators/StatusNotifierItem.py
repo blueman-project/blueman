@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import TYPE_CHECKING, Union, TypeVar, Any
+from typing import Union, TypeVar, Any
 from collections.abc import Iterable, Callable
 
 from gi.repository import Gio, GLib, Pango
@@ -7,16 +7,14 @@ from gi.repository import Gio, GLib, Pango
 from blueman.main.DbusService import DbusService
 from blueman.main.Tray import BluemanTray
 from blueman.main.indicators.IndicatorInterface import IndicatorInterface, IndicatorNotAvailable
-
-if TYPE_CHECKING:
-    from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
-    from blueman.main.indicators.GtkStatusIcon import MenuItemActivator
+from blueman.main.indicators.GtkStatusIcon import MenuItemActivator
+from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
 
 
 class MenuService(DbusService):
-    def __init__(self, on_activate_menu_item: "MenuItemActivator") -> None:
+    def __init__(self, on_activate_menu_item: MenuItemActivator) -> None:
         super().__init__(None, "com.canonical.dbusmenu", "/org/blueman/sni/menu", Gio.BusType.SESSION)
-        self._items: OrderedDict[int, "MenuItemDict"] = OrderedDict()
+        self._items: OrderedDict[int, MenuItemDict] = OrderedDict()
         self._revision = 0
         self._revision_advertised = -1
         self._on_activate = on_activate_menu_item
@@ -33,7 +31,7 @@ class MenuService(DbusService):
 
         GLib.timeout_add(100, self._advertise_revision)
 
-    def set_items(self, items: Iterable["MenuItemDict"]) -> None:
+    def set_items(self, items: Iterable[MenuItemDict]) -> None:
         self._items = OrderedDict((item["id"], item) for item in items)
         self._revision += 1
 
@@ -54,26 +52,26 @@ class MenuService(DbusService):
                 return self._revision, (parent_id, self._render_item(item), self._render_submenu(item, parent_id))
             return self._revision, (parent_id, self._render_item(item), [])
 
-    def _render_submenu(self, item: "MenuItemDict", idx: int) -> list[GLib.Variant]:
+    def _render_submenu(self, item: MenuItemDict, idx: int) -> list[GLib.Variant]:
         if "submenu" in item:
             return self._render_menu(enumerate(item["submenu"], idx + 1), lambda _item, _isx: [])
         else:
             return []
 
-    _T = TypeVar("_T", bound="SubmenuItemDict")
+    _T = TypeVar("_T", bound=SubmenuItemDict)
 
     def _render_menu(self, items: Iterable[tuple[int, _T]], submenu_callback: Callable[[_T, int], list[GLib.Variant]]
                      ) -> list[GLib.Variant]:
         return [GLib.Variant("(ia{sv}av)", (idx, self._render_item(item), submenu_callback(item, idx)))
                 for (idx, item) in items]
 
-    def _iterate_items(self) -> Iterable[tuple[int, "SubmenuItemDict"]]:
+    def _iterate_items(self) -> Iterable[tuple[int, SubmenuItemDict]]:
         for item in self._items.values():
             yield item["id"] << 8, item
             if "submenu" in item:
                 yield from enumerate(item["submenu"], (item["id"] << 8) + 1)
 
-    def _render_item(self, item: Union["MenuItemDict", "SubmenuItemDict"]) -> dict[str, GLib.Variant]:
+    def _render_item(self, item: Union[MenuItemDict, SubmenuItemDict]) -> dict[str, GLib.Variant]:
         if "text" in item and "icon_name" in item:
             label = Pango.parse_markup(item["text"], -1, "\0")[2] if item.get("markup", False) else item["text"]
             props = {
@@ -175,5 +173,5 @@ class StatusNotifierItem(IndicatorInterface):
         self._sni.Status = status = "Active" if visible else "Passive"
         self._sni.emit_signal("NewStatus", status)
 
-    def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
+    def set_menu(self, menu: Iterable[MenuItemDict]) -> None:
         self._sni.menu.set_items(menu)

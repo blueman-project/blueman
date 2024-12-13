@@ -1,33 +1,33 @@
 from gettext import gettext as _
-from typing import TYPE_CHECKING
 from collections.abc import Iterable, Callable, Iterator, Mapping, Sequence
+from typing import TypedDict
 
 from gi.repository import GLib
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 
-if TYPE_CHECKING:
-    from typing_extensions import TypedDict
 
-    class SubmenuItemDict(TypedDict):
-        text: str
-        markup: bool
-        icon_name: str
-        sensitive: bool
-        tooltip: str | None
-        callback: Callable[[], None]
+class SubmenuItemDict(TypedDict):
+    text: str
+    markup: bool
+    icon_name: str
+    sensitive: bool
+    tooltip: str | None
+    callback: Callable[[], None]
 
-    class MenuItemDictBase(SubmenuItemDict):
-        id: int
 
-    class MenuItemDict(MenuItemDictBase, total=False):
-        submenu: Iterable["SubmenuItemDict"]
+class MenuItemDictBase(SubmenuItemDict):
+    id: int
+
+
+class MenuItemDict(MenuItemDictBase, total=False):
+    submenu: Iterable[SubmenuItemDict]
 
 
 class MenuItem:
     def __init__(self, menu_plugin: "Menu", owner: AppletPlugin, priority: tuple[int, int], text: str | None,
                  markup: bool, icon_name: str | None, tooltip: str | None, callback: Callable[[], None] | None,
-                 submenu_function: Callable[[], Iterable["SubmenuItemDict"]] | None, visible: bool, sensitive: bool):
+                 submenu_function: Callable[[], Iterable[SubmenuItemDict]] | None, visible: bool, sensitive: bool):
         self._menu_plugin = menu_plugin
         self._owner = owner
         self._priority = priority
@@ -127,7 +127,7 @@ class Menu(AppletPlugin):
     def add(self, owner: AppletPlugin, priority: int | tuple[int, int], text: str | None = None,
             markup: bool = False, icon_name: str | None = None, tooltip: str | None = None,
             callback: Callable[[], None] | None = None,
-            submenu_function: Callable[[], Iterable["SubmenuItemDict"]] | None = None,
+            submenu_function: Callable[[], Iterable[SubmenuItemDict]] | None = None,
             visible: bool = True, sensitive: bool = True) -> MenuItem:
 
         if isinstance(priority, int):

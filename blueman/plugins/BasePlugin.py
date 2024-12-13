@@ -1,29 +1,26 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import Any, TypeVar, TypedDict
 
 from gi.repository import Gio
 
 
-if TYPE_CHECKING:
-    from typing_extensions import TypedDict
+# type is actually Type[T] and default is T but this is not supported by Python 3.10's typing.TypedDict
+class OptionBase(TypedDict):
+    type: type
+    default: Any
 
-    # type is actually Type[T] and default is T but this is not supported https://github.com/python/mypy/issues/3863
-    class OptionBase(TypedDict):
-        type: type
-        default: Any
 
-    class Option(OptionBase, total=False):
-        name: str
-        desc: str
-        range: tuple[int, int]
+class Option(OptionBase, total=False):
+    name: str
+    desc: str
+    range: tuple[int, int]
 
-    class GSettings(TypedDict):
-        schema: str
-        path: None
-else:
-    Option = dict
+
+class GSettings(TypedDict):
+    schema: str
+    path: None
 
 
 class BasePlugin:
@@ -39,9 +36,9 @@ class BasePlugin:
 
     __instance__ = None
 
-    __gsettings__: "GSettings"
+    __gsettings__: GSettings
 
-    __options__: dict[str, "Option"] = {}
+    __options__: dict[str, Option] = {}
 
     def __init__(self, *_args: object) -> None:
         if self.__options__:

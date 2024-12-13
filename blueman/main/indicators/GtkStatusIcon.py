@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, overload, cast
+from typing import overload, cast, Protocol
 from collections.abc import Callable, Iterable
 
 import gi
@@ -9,28 +9,25 @@ from blueman.main.indicators.IndicatorInterface import IndicatorInterface
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from blueman.Functions import create_menuitem
+from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
 
-if TYPE_CHECKING:
-    from typing_extensions import Protocol
 
-    from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
-
-    class MenuItemActivator(Protocol):
-        def __call__(self, *idx: int) -> None:
-            ...
+class MenuItemActivator(Protocol):
+    def __call__(self, *idx: int) -> None:
+        ...
 
 
 @overload
-def build_menu(items: Iterable[tuple[int, "MenuItemDict"]], activate: "MenuItemActivator") -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, MenuItemDict]], activate: MenuItemActivator) -> Gtk.Menu:
     ...
 
 
 @overload
-def build_menu(items: Iterable[tuple[int, "SubmenuItemDict"]], activate: Callable[[int], None]) -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, SubmenuItemDict]], activate: Callable[[int], None]) -> Gtk.Menu:
     ...
 
 
-def build_menu(items: Iterable[tuple[int, "SubmenuItemDict"]], activate: Callable[..., None]) -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, SubmenuItemDict]], activate: Callable[..., None]) -> Gtk.Menu:
     menu = Gtk.Menu()
     for index, item in items:
         if 'text' in item and 'icon_name' in item:
@@ -91,5 +88,5 @@ class GtkStatusIcon(IndicatorInterface):
     def set_visibility(self, visible: bool) -> None:
         self.indicator.props.visible = visible
 
-    def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
+    def set_menu(self, menu: Iterable[MenuItemDict]) -> None:
         self._menu = build_menu(((item["id"], item) for item in menu), self._on_activate)
