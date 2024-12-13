@@ -18,7 +18,8 @@
 #
 from time import sleep
 from pathlib import Path
-from typing import Optional, Dict, Tuple, List, Callable, Iterable, Union, Any
+from typing import Any
+from collections.abc import Callable, Iterable
 import re
 import os
 import sys
@@ -87,9 +88,9 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
 def launch(
     cmd: str,
-    paths: Optional[Iterable[str]] = None,
+    paths: Iterable[str] | None = None,
     system: bool = False,
-    icon_name: Optional[str] = None,
+    icon_name: str | None = None,
     name: str = "blueman",
     sn: bool = True,
 ) -> bool:
@@ -120,7 +121,7 @@ def launch(
         cmd = os.path.expanduser(cmd)
 
     if paths:
-        files: Optional[List[Gio.File]] = [Gio.File.new_for_commandline_arg(p) for p in paths]
+        files: list[Gio.File] | None = [Gio.File.new_for_commandline_arg(p) for p in paths]
     else:
         files = None
 
@@ -141,7 +142,7 @@ def setup_icon_path() -> None:
     ic.prepend_search_path(ICON_PATH)
 
 
-def adapter_path_to_name(path: Optional[str]) -> Optional[str]:
+def adapter_path_to_name(path: str | None) -> str | None:
     if path is None or path == '':
         return None
 
@@ -152,7 +153,7 @@ def adapter_path_to_name(path: Optional[str]) -> Optional[str]:
 
 
 # format error
-def e_(msg: Union[str, Exception]) -> Tuple[str, Optional[str]]:
+def e_(msg: str | Exception) -> tuple[str, str | None]:
     if isinstance(msg, Exception):
         return str(msg), traceback.format_exc()
     else:
@@ -160,7 +161,7 @@ def e_(msg: Union[str, Exception]) -> Tuple[str, Optional[str]]:
         return s, None
 
 
-def format_bytes(size: float) -> Tuple[float, str]:
+def format_bytes(size: float) -> tuple[float, str]:
     size = float(size)
     if size < 1024:
         ret = size
@@ -180,9 +181,9 @@ def format_bytes(size: float) -> Tuple[float, str]:
 
 def create_menuitem(
     text: str,
-    icon_name: Optional[str] = None,
-    pixbuf: Optional[GdkPixbuf.Pixbuf] = None,
-    surface: Optional[cairo.Surface] = None,
+    icon_name: str | None = None,
+    pixbuf: GdkPixbuf.Pixbuf | None = None,
+    surface: cairo.Surface | None = None,
 ) -> Gtk.ImageMenuItem:
     image = Gtk.Image(pixel_size=16)
     if icon_name:
@@ -203,7 +204,7 @@ def create_menuitem(
     return item
 
 
-def have(t: str) -> Optional[str]:
+def have(t: str) -> str | None:
     paths = os.environ['PATH'] + ':/sbin:/usr/sbin'
     for path in paths.split(os.pathsep):
         exec_path = os.path.join(path, t)
@@ -214,7 +215,7 @@ def have(t: str) -> Optional[str]:
     return None
 
 
-def set_proc_title(name: Optional[str] = None) -> int:
+def set_proc_title(name: str | None = None) -> int:
     """Set the process title"""
 
     if not name:
@@ -239,8 +240,8 @@ logger_date_fmt = '%H.%M.%S'
 def create_logger(
     log_level: int,
     name: str,
-    log_format: Optional[str] = None,
-    date_fmt: Optional[str] = None,
+    log_format: str | None = None,
+    date_fmt: str | None = None,
     syslog: bool = False,
 ) -> logging.Logger:
     if log_format is None:
@@ -262,7 +263,7 @@ def create_logger(
 
 
 def create_parser(
-    parser: Optional[argparse.ArgumentParser] = None,
+    parser: argparse.ArgumentParser | None = None,
     syslog: bool = True,
     loglevel: bool = True,
 ) -> argparse.ArgumentParser:
@@ -290,7 +291,7 @@ def open_rfcomm(file: str, mode: int) -> int:
             raise
 
 
-def _netmask_for_ifacename(name: str, sock: socket.socket) -> Optional[str]:
+def _netmask_for_ifacename(name: str, sock: socket.socket) -> str | None:
     siocgifnetmask = 0x891b
     bytebuf = struct.pack('256s', name.encode('utf-8'))
     try:
@@ -302,7 +303,7 @@ def _netmask_for_ifacename(name: str, sock: socket.socket) -> Optional[str]:
     return socket.inet_ntoa(ret[20:24])
 
 
-def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
+def get_local_interfaces() -> dict[str, tuple[str, str | None]]:
     """ Returns a dictionary of name:ip, mask key value pairs. """
     siocgifconf = 0x8912
     names = array.array('B', 4096 * b'\0')
@@ -333,12 +334,12 @@ def get_local_interfaces() -> Dict[str, Tuple[str, Optional[str]]]:
     return ip_dict
 
 
-def bmexit(msg: Optional[Union[str, int]] = None) -> None:
+def bmexit(msg: str | int | None = None) -> None:
     raise SystemExit(msg)
 
 
 def log_system_info() -> None:
-    def parse_os_release(path: Path) -> Dict[str, str]:
+    def parse_os_release(path: Path) -> dict[str, str]:
         release_dict = {}
         try:
             with path.open() as f:

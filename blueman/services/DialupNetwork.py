@@ -1,5 +1,4 @@
 from gettext import gettext as _
-from typing import Set
 
 from blueman.Service import Action
 from blueman.services.meta import SerialService
@@ -13,7 +12,7 @@ class DialupNetwork(SerialService):
     __priority__ = 50
 
     @property
-    def common_actions(self) -> Set[Action]:
+    def common_actions(self) -> set[Action]:
         def open_settings() -> None:
             d = GsmSettings(self.device['Address'])
             d.run()

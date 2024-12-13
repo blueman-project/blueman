@@ -1,6 +1,7 @@
 from datetime import datetime
 import logging
-from typing import Dict, List, Optional, Any, Callable
+from typing import Any
+from collections.abc import Callable
 
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList, ListDataDict
@@ -41,16 +42,16 @@ class DeviceList(GenericList):
         'adapter-removed': (GObject.SignalFlags.RUN_LAST, None, (str,)),
     }
 
-    def __init__(self, adapter_name: Optional[str] = None, tabledata: Optional[List[ListDataDict]] = None,
+    def __init__(self, adapter_name: str | None = None, tabledata: list[ListDataDict] | None = None,
                  headers_visible: bool = True) -> None:
         if not tabledata:
             tabledata = []
 
         # cache for fast lookup in the list
-        self.path_to_row: Dict[str, Gtk.TreeRowReference] = {}
+        self.path_to_row: dict[str, Gtk.TreeRowReference] = {}
 
         self.manager = Manager()
-        self._managerhandlers: List[int] = []
+        self._managerhandlers: list[int] = []
         self._managerhandlers.append(self.manager.connect_signal('adapter-removed', self.__on_manager_signal,
                                                                  'adapter-removed'))
         self._managerhandlers.append(self.manager.connect_signal('adapter-added', self.__on_manager_signal,
@@ -64,8 +65,8 @@ class DeviceList(GenericList):
         self._anydevhandler = self.any_device.connect_signal("property-changed", self._on_device_property_changed)
 
         self.__discovery_time: float = 0
-        self.__adapter_path: Optional[ObjectPath] = None
-        self.Adapter: Optional[Adapter] = None
+        self.__adapter_path: ObjectPath | None = None
+        self.Adapter: Adapter | None = None
         self.discovering = False
 
         data = tabledata + [
@@ -175,7 +176,7 @@ class DeviceList(GenericList):
 
     #########################
 
-    def set_adapter(self, adapter: Optional[str] = None) -> None:
+    def set_adapter(self, adapter: str | None = None) -> None:
         self.clear()
         if self.discovering:
             self.stop_discovery()
@@ -246,7 +247,7 @@ class DeviceList(GenericList):
         self.manager.populate_devices()
 
     def discover_devices(self, time: float = 60.0,
-                         error_handler: Optional[Callable[[BluezDBusException], None]] = None) -> None:
+                         error_handler: Callable[[BluezDBusException], None] | None = None) -> None:
         if not self.discovering:
             self.__discovery_time = 0
             if self.Adapter is not None:
@@ -261,7 +262,7 @@ class DeviceList(GenericList):
         else:
             return True
 
-    def get_adapter_path(self) -> Optional[ObjectPath]:
+    def get_adapter_path(self) -> ObjectPath | None:
         return self.__adapter_path if self.is_valid_adapter() else None
 
     def stop_discovery(self) -> None:
@@ -269,7 +270,7 @@ class DeviceList(GenericList):
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
-    def get_selected_device(self) -> Optional[Device]:
+    def get_selected_device(self) -> Device | None:
         selected = self.selected()
         if selected is not None:
             row = self.get(selected, "device")
@@ -288,7 +289,7 @@ class DeviceList(GenericList):
 
         self.path_to_row = {}
 
-    def find_device_by_path(self, object_path: ObjectPath) -> Optional[Gtk.TreeIter]:
+    def find_device_by_path(self, object_path: ObjectPath) -> Gtk.TreeIter | None:
         row = self.path_to_row.get(object_path, None)
         if row is None:
             return row
@@ -302,7 +303,7 @@ class DeviceList(GenericList):
             del self.path_to_row[object_path]
             return None
 
-    def do_cache(self, tree_iter: Gtk.TreeIter, kwargs: Dict[str, Any]) -> None:
+    def do_cache(self, tree_iter: Gtk.TreeIter, kwargs: dict[str, Any]) -> None:
         object_path = None
 
         if "device" in kwargs:

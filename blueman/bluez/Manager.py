@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Callable
+from collections.abc import Callable
 
 from gi.repository import GObject, Gio
 
@@ -94,8 +94,8 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             logging.debug(f"Battery1 removed from {object_path}")
             self.emit('battery-removed', object_path)
 
-    def get_adapters(self) -> List[Adapter]:
-        paths: List[ObjectPath] = []
+    def get_adapters(self) -> list[Adapter]:
+        paths: list[ObjectPath] = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
 
@@ -105,7 +105,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         return [Adapter(obj_path=path) for path in paths]
 
-    def get_adapter(self, pattern: Optional[str] = None) -> Adapter:
+    def get_adapter(self, pattern: str | None = None) -> Adapter:
         adapters = self.get_adapters()
         if pattern is None:
             if len(adapters):
@@ -119,8 +119,8 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
                     return adapter
             raise DBusNoSuchAdapterError(f"No adapters found with pattern: {pattern}")
 
-    def get_devices(self, adapter_path: ObjectPath = ObjectPath("/")) -> List[Device]:
-        paths: List[ObjectPath] = []
+    def get_devices(self, adapter_path: ObjectPath = ObjectPath("/")) -> list[Device]:
+        paths: list[ObjectPath] = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Device1')
 
@@ -141,7 +141,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             if object_path.startswith(adapter_path):
                 self._on_object_added(self._object_manager, obj_proxy)
 
-    def find_device(self, address: BtAddress, adapter_path: ObjectPath = ObjectPath("/")) -> Optional[Device]:
+    def find_device(self, address: BtAddress, adapter_path: ObjectPath = ObjectPath("/")) -> Device | None:
         for device in self.get_devices(adapter_path):
             if device['Address'] == address:
                 return device

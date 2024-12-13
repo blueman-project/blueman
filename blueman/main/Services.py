@@ -2,7 +2,6 @@ import os
 import logging
 import importlib
 import signal
-from typing import Optional
 
 from blueman.main.Builder import Builder
 from blueman.Functions import log_system_info
@@ -19,7 +18,7 @@ from gi.repository import Gio
 class BluemanServices(Gtk.Application):
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Services")
-        self.window: Optional[Gtk.Window] = None
+        self.window: Gtk.Window | None = None
         self.builder = Builder("services-window.ui")
         self.Config = Gio.Settings(schema_id="org.blueman.general")
 

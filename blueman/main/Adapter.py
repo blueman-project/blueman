@@ -3,7 +3,7 @@ import os.path
 import logging
 import gettext
 import signal
-from typing import Dict, TypedDict, Optional, Any
+from typing import TypedDict, Any
 from blueman.bluemantyping import ObjectPath
 
 from blueman.Functions import *
@@ -30,7 +30,7 @@ class Tab(TypedDict):
 
 
 class BluemanAdapters(Gtk.Application):
-    def __init__(self, selected_hci_dev: Optional[str], socket_id: Optional[int]) -> None:
+    def __init__(self, selected_hci_dev: str | None, socket_id: int | None) -> None:
         super().__init__(application_id="org.blueman.Adapters")
 
         def do_quit(_: object) -> bool:
@@ -48,10 +48,10 @@ class BluemanAdapters(Gtk.Application):
 
         self.notebook = Gtk.Notebook(visible=True)
 
-        self.window: Optional[Gtk.ApplicationWindow] = None
+        self.window: Gtk.ApplicationWindow | None = None
 
-        self.tabs: Dict[str, "Tab"] = {}
-        self._adapters: Dict[str, Adapter] = {}
+        self.tabs: dict[str, "Tab"] = {}
+        self._adapters: dict[str, Adapter] = {}
 
         setup_icon_path()
         Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)

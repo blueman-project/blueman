@@ -1,7 +1,8 @@
 import logging
 from gettext import gettext as _
 from html import escape
-from typing import TYPE_CHECKING, Any, Dict, List, Mapping, Callable
+from typing import TYPE_CHECKING, Any
+from collections.abc import Mapping, Callable
 
 from blueman.main.PulseAudioUtils import EventType, PulseAudioUtils
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -20,8 +21,8 @@ class AudioProfiles(AppletPlugin):
     __author__ = "Abhijeet Viswa"
 
     def on_load(self) -> None:
-        self._devices: Dict[str, "CardInfo"] = {}
-        self._device_menus: Dict[str, "MenuItem"] = {}
+        self._devices: dict[str, "CardInfo"] = {}
+        self._device_menus: dict[str, "MenuItem"] = {}
 
         self._menu = self.parent.Plugins.Menu
 
@@ -58,8 +59,8 @@ class AudioProfiles(AppletPlugin):
                 self.on_activate_profile(device, profile)
             return _wrapper
 
-        def _generate_profiles_menu(info: "CardInfo") -> List["SubmenuItemDict"]:
-            items: List["SubmenuItemDict"] = []
+        def _generate_profiles_menu(info: "CardInfo") -> list["SubmenuItemDict"]:
+            items: list["SubmenuItemDict"] = []
             if not info:
                 return items
             for profile in info["profiles"]:

@@ -3,7 +3,7 @@ import time
 import datetime
 from gettext import gettext as _, ngettext
 import logging
-from typing import List, Any, Optional
+from typing import Any
 
 from blueman.Functions import *
 from blueman.main.Builder import Builder
@@ -113,7 +113,7 @@ class Dialog:
         cr1 = Gtk.CellRendererText()
         cr1.props.ellipsize = Pango.EllipsizeMode.END
 
-        self._handlerids: List[int] = []
+        self._handlerids: list[int] = []
         self._handlerids.append(plugin.connect("monitor-added", self.monitor_added))
         self._handlerids.append(plugin.connect("monitor-removed", self.monitor_removed))
         self._handlerids.append(plugin.connect("stats", self.on_stats))
@@ -184,7 +184,7 @@ class Dialog:
 
         self.dialog.show()
 
-    def on_response(self, _dialog: Optional[Gtk.Dialog], _response: Optional[int]) -> None:
+    def on_response(self, _dialog: Gtk.Dialog | None, _response: int | None) -> None:
         for sigid in self._handlerids:
             self.plugin.disconnect(sigid)
         self._handlerids = []
@@ -301,7 +301,7 @@ class NetUsage(AppletPlugin, GObject.GObject, PPPConnectedListener):
 
     def on_load(self) -> None:
         GObject.GObject.__init__(self)
-        self.monitors: List[Monitor] = []
+        self.monitors: list[Monitor] = []
 
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_property_changed)

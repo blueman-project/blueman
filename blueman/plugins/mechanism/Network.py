@@ -1,4 +1,5 @@
-from typing import Callable, Union, Dict, Type, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Network import Network as BluezNetwork
@@ -8,7 +9,7 @@ from blueman.main.NetConf import NetConf, DnsMasqHandler, DhcpdHandler, UdhcpdHa
 if TYPE_CHECKING:
     from blueman.main.NetConf import DHCPHandler
 
-DHCPDHANDLERS: Dict[str, Type["DHCPHandler"]] = {
+DHCPDHANDLERS: dict[str, type["DHCPHandler"]] = {
     "DnsMasqHandler": DnsMasqHandler,
     "DhcpdHandler": DhcpdHandler,
     "UdhcpdHandler": UdhcpdHandler
@@ -22,7 +23,7 @@ class Network(MechanismPlugin):
         self.parent.add_method("DisableNetwork", (), "", self._disable_network, pass_sender=True)
 
     def _run_dhcp_client(self, object_path: ObjectPath, caller: str, ok: Callable[[str], None],
-                         err: Callable[[Union[Exception, int]], None]) -> None:
+                         err: Callable[[Exception | int], None]) -> None:
         self.timer.stop()
 
         self.confirm_authorization(caller, "org.blueman.dhcp.client")

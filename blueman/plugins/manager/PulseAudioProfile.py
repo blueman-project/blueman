@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, List, TYPE_CHECKING, Mapping, Sequence
+from typing import TYPE_CHECKING
+from collections.abc import Mapping, Sequence
 
 from blueman.bluez.Device import Device
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -20,9 +21,9 @@ if TYPE_CHECKING:
 
 class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_load(self) -> None:
-        self.devices: Dict[str, "CardInfo"] = {}
+        self.devices: dict[str, "CardInfo"] = {}
 
-        self.deferred: List[Device] = []
+        self.deferred: list[Device] = []
 
         pa = PulseAudioUtils()
         pa.connect("event", self.on_pa_event)
@@ -115,7 +116,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         manager_menu: ManagerDeviceMenu,
         device: Device,
         _powered: bool,
-    ) -> List[DeviceMenuItem]:
+    ) -> list[DeviceMenuItem]:
         audio_source = False
         for uuid in device['UUIDs']:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):

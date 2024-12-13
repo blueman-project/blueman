@@ -1,5 +1,6 @@
 from gettext import gettext as _
-from typing import List, Tuple, Iterable, Callable, Any, Optional
+from typing import Any
+from collections.abc import Iterable, Callable
 
 from gi.repository import Gtk, Gdk
 
@@ -76,7 +77,7 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
     dialog_content_area.pack_start(view, True, False, 0)
     view.show_all()
 
-    properties: Iterable[Tuple[str, Optional[Callable[[Any], str]]]] = (
+    properties: Iterable[tuple[str, Callable[[Any], str] | None]] = (
         ('Address', None),
         ('AddressType', None),
         ('Name', None),
@@ -121,7 +122,7 @@ class Info(ManagerPlugin, MenuItemsProvider):
         manager_menu: ManagerDeviceMenu,
         device: Device,
         _powered: bool,
-    ) -> List[DeviceMenuItem]:
+    ) -> list[DeviceMenuItem]:
         item = create_menuitem(_("_Info"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Show device information")
         _window = manager_menu.get_toplevel()

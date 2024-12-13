@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from _blueman import device_info
 from gi.repository import GLib
@@ -50,7 +50,7 @@ class ManagerStats:
 
         self.start_update()
 
-    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: Optional[str]) -> None:
+    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: str | None) -> None:
         self.hci = adapter_path_to_name(adapter_path)
         if self.hci is None:
             self.hbox.props.sensitive = False

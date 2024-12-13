@@ -1,7 +1,7 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import List, TYPE_CHECKING, Dict, Tuple, Any, TypeVar, Type, Optional
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from gi.repository import Gio
 
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
     class Option(OptionBase, total=False):
         name: str
         desc: str
-        range: Tuple[int, int]
+        range: tuple[int, int]
 
     class GSettings(TypedDict):
         schema: str
@@ -27,8 +27,8 @@ else:
 
 
 class BasePlugin:
-    __depends__: List[str] = []
-    __conflicts__: List[str] = []
+    __depends__: list[str] = []
+    __conflicts__: list[str] = []
     __priority__ = 0
 
     __description__: str = _("Unspecified")
@@ -41,7 +41,7 @@ class BasePlugin:
 
     __gsettings__: "GSettings"
 
-    __options__: Dict[str, "Option"] = {}
+    __options__: dict[str, "Option"] = {}
 
     def __init__(self, *_args: object) -> None:
         if self.__options__:
@@ -55,7 +55,7 @@ class BasePlugin:
     _T = TypeVar("_T", bound="BasePlugin")
 
     @classmethod
-    def get_instance(cls: Type[_T]) -> Optional[_T]:
+    def get_instance(cls: type[_T]) -> _T | None:
         return cls.__instance__
 
     def _on_plugin_delete(self) -> None:

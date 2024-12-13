@@ -1,5 +1,6 @@
 from gettext import gettext as _
-from typing import Any, TYPE_CHECKING, cast, Callable
+from typing import Any, TYPE_CHECKING, cast
+from collections.abc import Callable
 
 from blueman.plugins.AppletPlugin import AppletPlugin
 

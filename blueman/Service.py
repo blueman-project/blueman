@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Callable, List, Set, Collection
+from collections.abc import Callable, Collection
 
 from blueman.Sdp import ServiceUUID
 from blueman.bluez.Device import Device
@@ -48,11 +48,11 @@ class Service(ABC):
         return self.__uuid
 
     @property
-    def short_uuid(self) -> Optional[int]:
+    def short_uuid(self) -> int | None:
         return ServiceUUID(self.__uuid).short_uuid
 
     @property
-    def description(self) -> Optional[str]:
+    def description(self) -> str | None:
         return self.__description__
 
     @property
@@ -75,9 +75,9 @@ class Service(ABC):
 
     @property
     @abstractmethod
-    def connected_instances(self) -> List[Instance]:
+    def connected_instances(self) -> list[Instance]:
         ...
 
     @property
-    def common_actions(self) -> Set[Action]:
+    def common_actions(self) -> set[Action]:
         return set()

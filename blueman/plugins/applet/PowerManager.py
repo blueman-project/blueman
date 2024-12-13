@@ -1,7 +1,8 @@
 from enum import Enum
 from gettext import gettext as _
 import logging
-from typing import Callable, Any, Optional
+from typing import Any
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -193,7 +194,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     def on_bluetooth_toggled(self) -> None:
         self.request_power_state(not self.current_state)
 
-    def on_status_icon_query_icon(self) -> Optional[str]:
+    def on_status_icon_query_icon(self) -> str | None:
         return "blueman-disabled" if not self.get_bluetooth_status() else None
 
     def on_adapter_added(self, path: ObjectPath) -> None:

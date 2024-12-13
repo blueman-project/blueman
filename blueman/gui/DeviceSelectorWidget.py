@@ -1,7 +1,6 @@
 from gettext import gettext as _
 import os
 import logging
-from typing import Optional, Tuple
 
 from blueman.bluez.Adapter import Adapter
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
@@ -12,7 +11,7 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorWidget(Gtk.Box):
-    def __init__(self, adapter_name: Optional[str] = None, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
+    def __init__(self, adapter_name: str | None = None, orientation: Gtk.Orientation = Gtk.Orientation.VERTICAL,
                  visible: bool = False) -> None:
 
         super().__init__(orientation=orientation, spacing=1, vexpand=True,
@@ -62,7 +61,7 @@ class DeviceSelectorWidget(Gtk.Box):
         self.List.destroy()
         logging.debug("Deleting widget")
 
-    def on_adapter_prop_changed(self, _devlist: DeviceSelectorList, adapter: Adapter, key_value: Tuple[str, object]
+    def on_adapter_prop_changed(self, _devlist: DeviceSelectorList, adapter: Adapter, key_value: tuple[str, object]
                                 ) -> None:
         key, value = key_value
         if key == "Name" or key == "Alias":

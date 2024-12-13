@@ -1,4 +1,4 @@
-from typing import Optional, Callable
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Base import Base
@@ -14,22 +14,22 @@ class Device(Base):
 
     def pair(
         self,
-        reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        reply_handler: Callable[[], None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         self._call('Pair', reply_handler=reply_handler, error_handler=error_handler)
 
     def connect(  # type: ignore
         self,
-        reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        reply_handler: Callable[[], None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         self._call('Connect', reply_handler=reply_handler, error_handler=error_handler)
 
     def disconnect(  # type: ignore
         self,
-        reply_handler: Optional[Callable[[], None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        reply_handler: Callable[[], None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
 

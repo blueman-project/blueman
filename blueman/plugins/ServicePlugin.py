@@ -1,4 +1,4 @@
-from typing import List, Tuple, Union, TYPE_CHECKING
+from typing import Union, TYPE_CHECKING
 
 
 import gi
@@ -6,15 +6,15 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal
+    from typing import Literal
 
     from blueman.main.Services import BluemanServices
 
 
 class ServicePlugin:
-    _options: List[str]
-    instances: List["ServicePlugin"] = []
-    __plugin_info__: Tuple[str, str]
+    _options: list[str]
+    instances: list["ServicePlugin"] = []
+    __plugin_info__: tuple[str, str]
 
     def __init__(self, parent: "BluemanServices"):
         ServicePlugin.instances.append(self)
@@ -35,7 +35,7 @@ class ServicePlugin:
 
         self.parent.option_changed()
 
-    def get_options(self) -> List[str]:
+    def get_options(self) -> list[str]:
         return self._options
 
     def clear_options(self) -> None:

@@ -2,7 +2,7 @@ from gettext import gettext as _
 from random import randint
 import logging
 import ipaddress
-from typing import List, Tuple, cast, Union, TYPE_CHECKING
+from typing import cast, Union, TYPE_CHECKING
 
 from blueman.Functions import have, get_local_interfaces
 from blueman.main.Builder import Builder
@@ -16,7 +16,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, Gtk, GObject
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal
+    from typing import Literal
 
 
 class Network(ServicePlugin):
@@ -27,12 +27,12 @@ class Network(ServicePlugin):
         self._builder = Builder("services-network.ui")
         self.widget = self._builder.get_widget("network", Gtk.Grid)
 
-        self.interfaces: List[Tuple[str, Union[ipaddress.IPv4Interface, ipaddress.IPv6Interface]]] = []
+        self.interfaces: list[tuple[str, ipaddress.IPv4Interface | ipaddress.IPv6Interface]] = []
         netifs = get_local_interfaces()
         for iface in netifs:
             if iface != "lo" and iface != "pan1":
                 logging.info(iface)
-                ipiface = ipaddress.ip_interface('/'.join(cast(Tuple[str, str], netifs[iface])))
+                ipiface = ipaddress.ip_interface('/'.join(cast(tuple[str, str], netifs[iface])))
                 self.interfaces.append((iface, ipiface))
 
         self.setup_network()

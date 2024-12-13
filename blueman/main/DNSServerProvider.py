@@ -1,7 +1,7 @@
 import re
 import socket
 from ipaddress import IPv4Address, ip_address
-from typing import List, Generator
+from collections.abc import Generator
 
 from gi.repository import GObject, Gio, GLib
 
@@ -21,7 +21,7 @@ class DNSServerProvider(GObject.GObject):
         self._subscribe_resolver()
 
     @classmethod
-    def get_servers(cls) -> List[IPv4Address]:
+    def get_servers(cls) -> list[IPv4Address]:
         return list(set(cls._get_servers_from_systemd_resolved()) or cls._get_servers_from_resolver())
 
     @classmethod

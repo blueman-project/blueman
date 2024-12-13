@@ -1,5 +1,5 @@
 from gettext import gettext as _
-from typing import Any, Optional
+from typing import Any
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.errors import DBusNoSuchAdapterError
@@ -29,7 +29,7 @@ class DiscvManager(AppletPlugin):
         }
     }
 
-    adapter: Optional[Adapter]
+    adapter: Adapter | None
 
     def on_load(self) -> None:
         self.item = self.parent.Plugins.Menu.add(self, 20, text=_("_Make Discoverable"), icon_name="edit-find-symbolic",
@@ -38,7 +38,7 @@ class DiscvManager(AppletPlugin):
         self.adapter = None
         self.time_left = -1
 
-        self.timeout: Optional[int] = None
+        self.timeout: int | None = None
 
     def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)

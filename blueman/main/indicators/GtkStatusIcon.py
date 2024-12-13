@@ -1,4 +1,5 @@
-from typing import Callable, Iterable, TYPE_CHECKING, overload, cast, Optional, Tuple
+from typing import TYPE_CHECKING, overload, cast
+from collections.abc import Callable, Iterable
 
 import gi
 
@@ -20,16 +21,16 @@ if TYPE_CHECKING:
 
 
 @overload
-def build_menu(items: Iterable[Tuple[int, "MenuItemDict"]], activate: "MenuItemActivator") -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, "MenuItemDict"]], activate: "MenuItemActivator") -> Gtk.Menu:
     ...
 
 
 @overload
-def build_menu(items: Iterable[Tuple[int, "SubmenuItemDict"]], activate: Callable[[int], None]) -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, "SubmenuItemDict"]], activate: Callable[[int], None]) -> Gtk.Menu:
     ...
 
 
-def build_menu(items: Iterable[Tuple[int, "SubmenuItemDict"]], activate: Callable[..., None]) -> Gtk.Menu:
+def build_menu(items: Iterable[tuple[int, "SubmenuItemDict"]], activate: Callable[..., None]) -> Gtk.Menu:
     menu = Gtk.Menu()
     for index, item in items:
         if 'text' in item and 'icon_name' in item:
@@ -64,7 +65,7 @@ class GtkStatusIcon(IndicatorInterface):
         self.indicator.connect('activate', lambda _status_icon: tray.activate_status_icon())
         self._tooltip_title = ""
         self._tooltip_text = ""
-        self._menu: Optional[Gtk.Menu] = None
+        self._menu: Gtk.Menu | None = None
 
     def on_popup_menu(self, _status_icon: Gtk.StatusIcon, _button: int, _activate_time: int) -> None:
         if self._menu:

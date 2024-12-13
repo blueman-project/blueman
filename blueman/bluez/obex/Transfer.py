@@ -1,5 +1,4 @@
 import logging
-from typing import List, Optional
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.obex.Base import Base
@@ -21,8 +20,8 @@ class Transfer(Base):
         super().__init__(obj_path=obj_path)
 
     @property
-    def filename(self) -> Optional[str]:
-        name: Optional[str] = self.get("Filename")
+    def filename(self) -> str | None:
+        name: str | None = self.get("Filename")
         return name
 
     @property
@@ -36,12 +35,12 @@ class Transfer(Base):
         return session
 
     @property
-    def size(self) -> Optional[int]:
-        size: Optional[int] = self.get("Size")
+    def size(self) -> int | None:
+        size: int | None = self.get("Size")
         return size
 
     def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
-                            _invalidated_properties: List[str]) -> None:
+                            _invalidated_properties: list[str]) -> None:
         logging.debug(f"{changed_properties}")
         for name, value in changed_properties.unpack().items():
             logging.debug(f"{self.get_object_path()} {name} {value}")

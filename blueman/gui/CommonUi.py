@@ -1,6 +1,6 @@
 from datetime import datetime
 from gettext import gettext as _
-from typing import Optional, overload, TYPE_CHECKING
+from typing import overload, TYPE_CHECKING
 
 from blueman.Constants import WEBSITE, VERSION
 
@@ -9,13 +9,13 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 if TYPE_CHECKING:
-    from typing_extensions import Literal
+    from typing import Literal
 
 
 class ErrorDialog(Gtk.MessageDialog):
-    def __init__(self, markup: str, secondary_markup: Optional[str] = None, excp: Optional[object] = None,
+    def __init__(self, markup: str, secondary_markup: str | None = None, excp: object | None = None,
                  icon_name: str = "dialog-error", buttons: Gtk.ButtonsType = Gtk.ButtonsType.CLOSE,
-                 title: Optional[str] = None, parent: Optional[Gtk.Container] = None, modal: bool = False,
+                 title: str | None = None, parent: Gtk.Container | None = None, modal: bool = False,
                  margin_left: int = 0,
                  ) -> None:
         super().__init__(name="ErrorDialog", icon_name=icon_name, buttons=buttons,
@@ -40,17 +40,17 @@ class ErrorDialog(Gtk.MessageDialog):
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Optional[Gtk.Window] = None) -> None:
+def show_about_dialog(app_name: str, run: "Literal[True]" = True, parent: Gtk.Window | None = None) -> None:
     ...
 
 
 @overload
-def show_about_dialog(app_name: str, run: "Literal[False]", parent: Optional[Gtk.Window] = None) -> Gtk.AboutDialog:
+def show_about_dialog(app_name: str, run: "Literal[False]", parent: Gtk.Window | None = None) -> Gtk.AboutDialog:
     ...
 
 
-def show_about_dialog(app_name: str, run: bool = True, parent: Optional[Gtk.Window] = None
-                      ) -> Optional[Gtk.AboutDialog]:
+def show_about_dialog(app_name: str, run: bool = True, parent: Gtk.Window | None = None
+                      ) -> Gtk.AboutDialog | None:
     about = Gtk.AboutDialog()
     about.set_transient_for(parent)
     about.set_modal(True)

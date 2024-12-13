@@ -1,5 +1,5 @@
 import weakref
-from typing import Callable
+from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Battery import Battery, AnyBattery

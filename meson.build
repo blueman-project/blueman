@@ -15,8 +15,8 @@ i18n = import('i18n')
 
 pyinstall = python.find_installation('python3', required: true)
 
-if not pyinstall.language_version().version_compare('>=3.8')
-    error('Python 3.8 or higher not found which is required.')
+if not pyinstall.language_version().version_compare('>=3.10')
+    error('Python 3.10 or higher not found which is required.')
 endif
 
 # Setup all directories we install in

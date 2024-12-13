@@ -1,4 +1,5 @@
-from typing import List, Callable, Optional, Any, Union, Dict
+from typing import Any
+from collections.abc import Callable
 from blueman.bluemantyping import GSignals, ObjectPath
 
 from gi.repository import Gio, GLib, GObject
@@ -10,7 +11,7 @@ import logging
 class BaseMeta(GObjectMeta):
     def __call__(cls, *args: object, **kwargs: str) -> "Base":
         if not hasattr(cls, "__instances__"):
-            cls.__instances__: Dict[str, "Base"] = {}
+            cls.__instances__: dict[str, "Base"] = {}
 
         path = kwargs.get('obj_path')
         if path is None:
@@ -33,7 +34,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     __gsignals__: GSignals = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
-    __instances__: Dict[str, "Base"]
+    __instances__: dict[str, "Base"]
 
     _interface_name: str
 
@@ -60,7 +61,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
     def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
-                            invalidated_properties: List[str]) -> None:
+                            invalidated_properties: list[str]) -> None:
         changed = changed_properties.unpack()
         object_path = self.get_object_path()
         logging.debug(f"{object_path} {changed} {invalidated_properties} {self}")
@@ -71,15 +72,15 @@ class Base(GObject.Object, metaclass=BaseMeta):
     def _call(
         self,
         method: str,
-        param: Optional[GLib.Variant] = None,
-        reply_handler: Optional[Callable[..., None]] = None,
-        error_handler: Optional[Callable[[BluezDBusException], None]] = None,
+        param: GLib.Variant | None = None,
+        reply_handler: Callable[..., None] | None = None,
+        error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         def callback(
             proxy: Gio.DBusProxy,
             result: Gio.AsyncResult,
-            reply: Optional[Callable[..., None]],
-            error: Optional[Callable[[BluezDBusException], None]],
+            reply: Callable[..., None] | None,
+            error: Callable[[BluezDBusException], None] | None,
         ) -> None:
             try:
                 value = proxy.call_finish(result).unpack()
@@ -112,7 +113,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
             else:
                 raise parse_dbus_error(e)
 
-    def set(self, name: str, value: Union[str, int, bool]) -> None:
+    def set(self, name: str, value: str | int | bool) -> None:
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
         self.__proxy.call('org.freedesktop.DBus.Properties.Set',
@@ -124,7 +125,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     def get_object_path(self) -> ObjectPath:
         return ObjectPath(self.__proxy.get_object_path())
 
-    def get_properties(self) -> Dict[str, Any]:
+    def get_properties(self) -> dict[str, Any]:
         param = GLib.Variant('(s)', (self._interface_name,))
         res = self.__proxy.call_sync('org.freedesktop.DBus.Properties.GetAll',
                                      param,
@@ -132,7 +133,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
                                      GLib.MAXINT,
                                      None)
 
-        props: Dict[str, Any] = res.unpack()[0]
+        props: dict[str, Any] = res.unpack()[0]
         for k, v in self.__fallback.items():
             if k in props:
                 continue
@@ -148,7 +149,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     def __getitem__(self, key: str) -> Any:
         return self.get(key)
 
-    def __setitem__(self, key: str, value: Union[str, int, bool]) -> None:
+    def __setitem__(self, key: str, value: str | int | bool) -> None:
         self.set(key, value)
 
     def __contains__(self, key: str) -> bool:

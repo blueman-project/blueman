@@ -1,6 +1,6 @@
 from gettext import gettext as _
 import logging
-from typing import List, Any
+from typing import Any
 from blueman.bluemantyping import ObjectPath
 
 from gi.repository import GLib
@@ -22,7 +22,7 @@ class DhcpClient(AppletPlugin):
         self._any_network = AnyNetwork()
         self._any_network.connect_signal('property-changed', self._on_network_prop_changed)
 
-        self.querying: List[str] = []
+        self.querying: list[str] = []
 
         self._add_dbus_method("DhcpClient", ("s",), "", self.dhcp_acquire)
 

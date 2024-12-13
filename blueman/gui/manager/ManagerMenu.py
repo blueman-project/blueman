@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import logging
-from typing import Dict, Tuple, TYPE_CHECKING, Any, Optional, Sequence
+from typing import TYPE_CHECKING, Any
+from collections.abc import Sequence
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Adapter import Adapter
@@ -27,7 +28,7 @@ class ManagerMenu:
         self.blueman = blueman
         self.Config = Gio.Settings(schema_id="org.blueman.general")
 
-        self.adapter_items: Dict[str, Tuple[Gtk.RadioMenuItem, Adapter]] = {}
+        self.adapter_items: dict[str, tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
 
@@ -56,7 +57,7 @@ class ManagerMenu:
         item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        self.device_menu: Optional[ManagerDeviceMenu] = None
+        self.device_menu: ManagerDeviceMenu | None = None
 
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
         self._sort_timestamp_item = blueman.builder.get_widget("sort_added_item", Gtk.CheckMenuItem)
@@ -135,7 +136,7 @@ class ManagerMenu:
             logging.debug("refilter")
             self.blueman.List.filter.refilter()
 
-    def on_device_selected(self, _lst: ManagerDeviceList, device: Optional[Device], tree_iter: Gtk.TreeIter) -> None:
+    def on_device_selected(self, _lst: ManagerDeviceList, device: Device | None, tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
             self.item_device.props.sensitive = True
 
@@ -173,7 +174,7 @@ class ManagerMenu:
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 
-    def on_adapter_added(self, _manager: Optional[Manager], adapter_path: ObjectPath) -> None:
+    def on_adapter_added(self, _manager: Manager | None, adapter_path: ObjectPath) -> None:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)

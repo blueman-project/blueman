@@ -1,5 +1,6 @@
 from gettext import gettext as _
-from typing import TYPE_CHECKING, Callable, Union
+from typing import TYPE_CHECKING
+from collections.abc import Callable
 
 from _blueman import RFCOMMError
 from blueman.services.meta.SerialService import SerialService
@@ -85,7 +86,7 @@ class PPPSupport(AppletPlugin, RFCOMMConnectHandler):
     __priority__ = 0
 
     def rfcomm_connect_handler(self, service: SerialService, reply: Callable[[str], None],
-                               err: Callable[[Union[RFCOMMError, GLib.Error]], None]) -> bool:
+                               err: Callable[[RFCOMMError | GLib.Error], None]) -> bool:
         if isinstance(service, DialupNetwork):
             def local_reply(port: int) -> None:
                 assert isinstance(service, DialupNetwork)  # https://github.com/python/mypy/issues/2608

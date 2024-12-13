@@ -1,6 +1,7 @@
 from ctypes import *
 from enum import IntEnum
-from typing import Dict, TYPE_CHECKING, List, Callable, Mapping, Optional, Any
+from typing import TYPE_CHECKING, Optional, Any
+from collections.abc import Callable, Mapping
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -29,11 +30,11 @@ if TYPE_CHECKING:
 
     class CardInfo(TypedDict):
         name: str
-        proplist: Dict[str, str]
+        proplist: dict[str, str]
         owner_module: int
         driver: str
         index: int
-        profiles: List[CardProfileInfo]
+        profiles: list[CardProfileInfo]
         active_profile: str
 
 pa_glib_mainloop_new = libpulse_glib.pa_glib_mainloop_new
@@ -224,7 +225,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
 
         self.prev_state = state
 
-    def __get_proplist(self, proplist: c_void_p) -> Dict[str, str]:
+    def __get_proplist(self, proplist: c_void_p) -> dict[str, str]:
         if proplist:
             pla = pa_proplist_to_string_sep(proplist, b"|")
             pl = cast(pla, c_char_p)
@@ -303,7 +304,7 @@ class PulseAudioUtils(GObject.GObject, metaclass=SingletonGObjectMeta):
     def list_cards(self, callback: Callable[[Mapping[str, "CardInfo"]], None]) -> None:
         self.check_connected()
 
-        data: Dict[str, "CardInfo"] = {}
+        data: dict[str, "CardInfo"] = {}
 
         def handler(entry_info: Optional["_Pointer[PaCardInfo]"], end: bool) -> None:
             if end:

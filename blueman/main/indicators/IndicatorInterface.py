@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABCMeta
-from typing import Iterable, TYPE_CHECKING
+from typing import TYPE_CHECKING
+from collections.abc import Iterable
 
 if TYPE_CHECKING:
     from blueman.plugins.applet.Menu import MenuItemDict

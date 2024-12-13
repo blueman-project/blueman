@@ -1,7 +1,7 @@
 import gi
 import logging
 import uuid
-from typing import Optional, Callable, Union
+from collections.abc import Callable
 
 from blueman.bluemantyping import BtAddress
 from blueman.Service import Service
@@ -22,7 +22,7 @@ class NMConnectionBase:
     conntype: str
 
     def __init__(self, service: Service, reply_handler: Callable[[], None],
-                 error_handler: Callable[[Union[NMConnectionError, GLib.Error]], None]):
+                 error_handler: Callable[[NMConnectionError | GLib.Error], None]):
         if self.conntype not in ('dun', 'panu'):
             error_handler(
                 NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
@@ -35,7 +35,7 @@ class NMConnectionBase:
         self.active_connection = None
         self.client = NM.Client.new()
         self.Config = Gio.Settings(schema_id="org.blueman.gsmsetting", path=f"/org/blueman/gsmsettings/{self.bdaddr}/")
-        self._statehandler: Optional[int] = None
+        self._statehandler: int | None = None
 
         self.find_or_create_connection()
 

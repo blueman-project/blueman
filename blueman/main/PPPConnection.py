@@ -5,7 +5,8 @@ import re
 import subprocess
 import termios
 import tty
-from typing import Any, List, Iterable, Callable, Optional, Tuple, Union, MutableSequence, IO
+from typing import Any, IO
+from collections.abc import Iterable, Callable, MutableSequence
 
 from gi.repository import GObject
 from gi.repository import GLib
@@ -57,9 +58,9 @@ class PPPConnection(GObject.GObject):
         self.user = user
         self.pwd = pwd
         self.port = port
-        self.interface: Optional[str] = None
+        self.interface: str | None = None
 
-        self.commands: MutableSequence[Union[str, Tuple[str, Callable[[List[str]], None], Iterable[str]]]] = [
+        self.commands: MutableSequence[str | tuple[str, Callable[[list[str]], None], Iterable[str]]] = [
             "ATZ E0 V1 X4 &C1 +FCLASS=0",
             "ATE0",
             "AT+GCAP",
@@ -75,7 +76,7 @@ class PPPConnection(GObject.GObject):
     def cleanup(self) -> None:
         os.close(self.file)
 
-    def connect_callback(self, response: List[str]) -> None:
+    def connect_callback(self, response: list[str]) -> None:
         if "CONNECT" in response:
             logging.info("Starting pppd")
             self.pppd = subprocess.Popen(
@@ -90,7 +91,7 @@ class PPPConnection(GObject.GObject):
             self.cleanup()
             raise PPPException(f"Bad modem response {response[0]}, expected CONNECT")
 
-    def __cmd_response_cb(self, response: Optional[List[str]], exception: Optional[PPPException],
+    def __cmd_response_cb(self, response: list[str] | None, exception: PPPException | None,
                           command_id: int) -> None:
         if exception:
             self.emit("error-occurred", str(exception))
@@ -121,7 +122,7 @@ class PPPConnection(GObject.GObject):
 
         tty.setraw(self.file)
 
-        attrs: List[Any] = termios.tcgetattr(self.file)
+        attrs: list[Any] = termios.tcgetattr(self.file)
 
         attrs[0] &= ~(termios.IGNCR | termios.ICRNL | termios.IUCLC | termios.INPCK | termios.IXON | termios.IXANY |
                       termios.IGNPAR)

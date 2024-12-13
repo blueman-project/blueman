@@ -1,6 +1,6 @@
 import logging
 from gettext import gettext as _
-from typing import Any, Dict, Union
+from typing import Any
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Device import Device
@@ -15,7 +15,7 @@ class ConnectionNotifier(AppletPlugin):
     __icon__ = "bluetooth-symbolic"
     __description__ = _("Shows desktop notifications when devices get connected or disconnected.")
 
-    _notifications: Dict[ObjectPath, Union[_NotificationBubble, _NotificationDialog]] = {}
+    _notifications: dict[ObjectPath, _NotificationBubble | _NotificationDialog] = {}
 
     def on_load(self) -> None:
         self._battery_watcher = BatteryWatcher(self._on_battery_update)

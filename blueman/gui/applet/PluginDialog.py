@@ -1,11 +1,10 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING, Type, Dict, cast, Optional, TypeVar
+from typing import TYPE_CHECKING, cast, TypeVar
 
 from blueman.main.Builder import Builder
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.BasePlugin import Option, BasePlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -13,6 +12,7 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gdk, Gio, GLib, GObject
 
 if TYPE_CHECKING:
+    from blueman.plugins.BasePlugin import Option, BasePlugin
     from blueman.main.Applet import BluemanApplet
 
 
@@ -183,7 +183,7 @@ class PluginDialog(Gtk.ApplicationWindow):
         self.add_action(action)
         action.connect("change-state", self._on_plugin_toggle)
 
-    def _widget_factory(self, item: GObject.Object, _data: Optional[object] = None) -> Gtk.Widget:
+    def _widget_factory(self, item: GObject.Object, _data: object | None = None) -> Gtk.Widget:
         assert isinstance(item, PluginItem)
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5, visible=True)
 
@@ -202,7 +202,7 @@ class PluginDialog(Gtk.ApplicationWindow):
         box.add(label)
         return box
 
-    def _model_sort_func(self, item1: Optional[object], item2: Optional[object], _data: Optional[object] = None) -> int:
+    def _model_sort_func(self, item1: object | None, item2: object | None, _data: object | None = None) -> int:
         assert isinstance(item1, PluginItem)
         assert isinstance(item2, PluginItem)
 
@@ -255,7 +255,7 @@ class PluginDialog(Gtk.ApplicationWindow):
         item = self.model.get_item(pos)
         assert isinstance(item, PluginItem)
 
-        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
+        cls: type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
         self.plugin_name.props.label = "<b>" + item.props.plugin_name + "</b>"
         self.icon.props.icon_name = cls.__icon__
         self.author_txt.props.label = cls.__author__
@@ -287,11 +287,11 @@ class PluginDialog(Gtk.ApplicationWindow):
         row = self.listbox.get_selected_row()
         pos = row.get_index()
         item = cast(PluginItem, self.model.get_item(pos))
-        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
+        cls: type[AppletPlugin] = self.applet.Plugins.get_classes()[item.props.plugin_name]
 
         self.update_config_widget(cls)
 
-    def update_config_widget(self, cls: Type[AppletPlugin]) -> None:
+    def update_config_widget(self, cls: type[AppletPlugin]) -> None:
         if self.b_prefs.props.active:
             if not cls.is_configurable():
                 self.b_prefs.props.active = False
@@ -318,7 +318,7 @@ class PluginDialog(Gtk.ApplicationWindow):
             self.main_container.add(self.content_grid)
 
     def populate(self) -> None:
-        classes: Dict[str, Type[AppletPlugin]] = self.applet.Plugins.get_classes()
+        classes: dict[str, type[AppletPlugin]] = self.applet.Plugins.get_classes()
         loaded = self.applet.Plugins.get_loaded()
         for name, cls in classes.items():
             if cls.is_configurable():
@@ -337,7 +337,7 @@ class PluginDialog(Gtk.ApplicationWindow):
         assert isinstance(action, Gio.SimpleAction)
         action.set_state(GLib.Variant.new_boolean(loaded))
 
-        cls: Type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
+        cls: type[AppletPlugin] = self.applet.Plugins.get_classes()[name]
         if not loaded:
             self.update_config_widget(cls)
             self.b_prefs.props.sensitive = False

@@ -1,5 +1,4 @@
 from gettext import gettext as _
-from typing import Optional, Tuple
 
 from blueman.bluez.Device import Device
 from blueman.gui.DeviceList import DeviceList
@@ -11,10 +10,10 @@ from gi.repository import Gtk
 
 
 class DeviceSelectorDialog(Gtk.Dialog):
-    selection: Optional[Tuple[str, Optional[Device]]]
+    selection: tuple[str, Device | None] | None
 
-    def __init__(self, title: str = _("Select Device"), parent: Optional[Gtk.Container] = None, discover: bool = True,
-                 adapter_name: Optional[str] = None) -> None:
+    def __init__(self, title: str = _("Select Device"), parent: Gtk.Container | None = None, discover: bool = True,
+                 adapter_name: str | None = None) -> None:
         super().__init__(title=title, name="DeviceSelectorDialog", parent=parent, icon_name="blueman", resizable=False)
         self.add_buttons(_("_Cancel"), Gtk.ResponseType.REJECT, _("_OK"), Gtk.ResponseType.ACCEPT)
 
@@ -51,6 +50,6 @@ class DeviceSelectorDialog(Gtk.Dialog):
     def on_adapter_changed(self, _devlist: DeviceList, _adapter: str) -> None:
         self.selection = None
 
-    def on_device_selected(self, devlist: DeviceList, device: Optional[Device], _tree_iter: Gtk.TreeIter) -> None:
+    def on_device_selected(self, devlist: DeviceList, device: Device | None, _tree_iter: Gtk.TreeIter) -> None:
         assert devlist.Adapter is not None
         self.selection = (devlist.Adapter.get_object_path(), device)
