@@ -1,6 +1,5 @@
 from gettext import gettext as _
 import logging
-from typing import TYPE_CHECKING
 from collections.abc import Mapping, Sequence
 
 from blueman.bluez.Device import Device
@@ -14,14 +13,12 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-
-if TYPE_CHECKING:
-    from blueman.main.PulseAudioUtils import CardInfo  # noqa: F401
+from blueman.main.PulseAudioUtils import CardInfo
 
 
 class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_load(self) -> None:
-        self.devices: dict[str, "CardInfo"] = {}
+        self.devices: dict[str, CardInfo] = {}
 
         self.deferred: list[Device] = []
 
@@ -45,7 +42,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_pa_event(self, utils: PulseAudioUtils, event: int, idx: int) -> None:
         logging.debug(f"{event} {idx}")
 
-        def get_card_cb(card: "CardInfo") -> None:
+        def get_card_cb(card: CardInfo) -> None:
             drivers = ("module-bluetooth-device.c",
                        "module-bluez4-device.c",
                        "module-bluez5-device.c")
@@ -66,7 +63,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
                 utils.get_card(idx, get_card_cb)
 
     def query_pa(self, device: Device, item: Gtk.MenuItem) -> None:
-        def list_cb(cards: Mapping[str, "CardInfo"]) -> None:
+        def list_cb(cards: Mapping[str, CardInfo]) -> None:
             for c in cards.values():
                 if c["proplist"]["device.string"] == device['Address']:
                     self.devices[device['Address']] = c

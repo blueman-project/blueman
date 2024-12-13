@@ -5,14 +5,15 @@ from typing import TYPE_CHECKING, cast, TypeVar
 from blueman.main.Builder import Builder
 from blueman.main.PluginManager import PluginManager
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.BasePlugin import Option, BasePlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gdk, Gio, GLib, GObject
 
+
 if TYPE_CHECKING:
-    from blueman.plugins.BasePlugin import Option, BasePlugin
     from blueman.main.Applet import BluemanApplet
 
 
@@ -69,13 +70,13 @@ class SettingsWidget(Gtk.Box):
                 label = Gtk.Label(label="<i >" + v["desc"] + "</i>", wrap=True, use_markup=True, xalign=0.0)
                 self.pack_start(label, False, False, 0)
 
-    def handle_change(self, widget: Gtk.Widget, opt: str, params: "Option", prop: str) -> None:
+    def handle_change(self, widget: Gtk.Widget, opt: str, params: Option, prop: str) -> None:
         val = params["type"](getattr(widget.props, prop))
         logging.debug(f"changed {opt} {val}")
 
         self.inst.set_option(opt, val)
 
-    def get_control_widget(self, opt: str, params: "Option") -> Gtk.Widget:
+    def get_control_widget(self, opt: str, params: Option) -> Gtk.Widget:
         if params["type"] == bool:
             c = Gtk.CheckButton(label=params["name"])
 
@@ -329,7 +330,7 @@ class PluginDialog(Gtk.ApplicationWindow):
             self.model.insert_sorted(plugin_item, self._model_sort_func)
         self.listbox.select_row(self.listbox.get_row_at_index(0))
 
-    _T = TypeVar("_T", bound="BasePlugin")
+    _T = TypeVar("_T", bound=BasePlugin)
 
     def plugin_state_changed(self, _plugins: PluginManager[_T], name: str, loaded: bool) -> None:
         logging.debug(f"{name} {loaded}")

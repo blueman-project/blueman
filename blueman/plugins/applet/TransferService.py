@@ -4,7 +4,7 @@ import os
 import shutil
 import logging
 from html import escape
-from typing import TYPE_CHECKING, Optional, Union
+from typing import Optional, TypedDict, Union
 from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath, BtAddress
 
@@ -20,21 +20,21 @@ from blueman.plugins.AppletPlugin import AppletPlugin
 
 from gi.repository import GLib, Gio
 
-if TYPE_CHECKING:
-    from typing_extensions import TypedDict
 
-    class TransferDict(TypedDict):
-        path: str
-        size: int | None
-        name: str
+class TransferDict(TypedDict):
+    path: str
+    size: int | None
+    name: str
 
-    class PendingTransferDict(TypedDict):
-        transfer_path: str
-        address: BtAddress
-        root: str
-        filename: str
-        size: int | None
-        name: str
+
+class PendingTransferDict(TypedDict):
+    transfer_path: str
+    address: BtAddress
+    root: str
+    filename: str
+    size: int | None
+    name: str
+
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
 
@@ -63,8 +63,8 @@ class Agent(DbusService):
 
         self._allowed_devices: list[str] = []
         self._notification: NotificationType | None = None
-        self._pending_transfer: Optional["PendingTransferDict"] = None
-        self.transfers: dict[str, "TransferDict"] = {}
+        self._pending_transfer: Optional[PendingTransferDict] = None
+        self.transfers: dict[str, TransferDict] = {}
 
     def register_at_manager(self) -> None:
         AgentManager().register_agent(self.__agent_path)

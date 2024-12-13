@@ -1,18 +1,15 @@
 import logging
 from gettext import gettext as _
 from html import escape
-from typing import TYPE_CHECKING, Any
+from typing import Any
 from collections.abc import Mapping, Callable
 
-from blueman.main.PulseAudioUtils import EventType, PulseAudioUtils
+from blueman.bluez.Device import Device
+from blueman.main.PulseAudioUtils import CardInfo, CardProfileInfo, EventType, PulseAudioUtils
 from blueman.plugins.AppletPlugin import AppletPlugin
+from blueman.plugins.applet.Menu import MenuItem, SubmenuItemDict
 from blueman.Sdp import (AUDIO_SINK_SVCLASS_ID, AUDIO_SOURCE_SVCLASS_ID,
                          ServiceUUID)
-
-if TYPE_CHECKING:
-    from blueman.bluez.Device import Device
-    from blueman.main.PulseAudioUtils import CardInfo, CardProfileInfo
-    from blueman.plugins.applet.Menu import MenuItem, SubmenuItemDict
 
 
 class AudioProfiles(AppletPlugin):
@@ -21,8 +18,8 @@ class AudioProfiles(AppletPlugin):
     __author__ = "Abhijeet Viswa"
 
     def on_load(self) -> None:
-        self._devices: dict[str, "CardInfo"] = {}
-        self._device_menus: dict[str, "MenuItem"] = {}
+        self._devices: dict[str, CardInfo] = {}
+        self._device_menus: dict[str, MenuItem] = {}
 
         self._menu = self.parent.Plugins.Menu
 
@@ -36,7 +33,7 @@ class AudioProfiles(AppletPlugin):
             if device['Connected']:
                 self.request_device_profile_menu(device)
 
-    def request_device_profile_menu(self, device: "Device") -> None:
+    def request_device_profile_menu(self, device: Device) -> None:
         audio_source = False
         for uuid in device['UUIDs']:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
@@ -53,14 +50,14 @@ class AudioProfiles(AppletPlugin):
             else:
                 self.add_device_profile_menu(device)
 
-    def add_device_profile_menu(self, device: "Device") -> None:
-        def _activate_profile_wrapper(device: "Device", profile: "CardProfileInfo") -> Callable[[], None]:
+    def add_device_profile_menu(self, device: Device) -> None:
+        def _activate_profile_wrapper(device: Device, profile: CardProfileInfo) -> Callable[[], None]:
             def _wrapper() -> None:
                 self.on_activate_profile(device, profile)
             return _wrapper
 
-        def _generate_profiles_menu(info: "CardInfo") -> list["SubmenuItemDict"]:
-            items: list["SubmenuItemDict"] = []
+        def _generate_profiles_menu(info: CardInfo) -> list[SubmenuItemDict]:
+            items: list[SubmenuItemDict] = []
             if not info:
                 return items
             for profile in info["profiles"]:
@@ -86,8 +83,8 @@ class AudioProfiles(AppletPlugin):
                               submenu_function=lambda: _generate_profiles_menu(info))
         self._device_menus[device['Address']] = menu
 
-    def query_pa(self, device: "Device") -> None:
-        def list_cb(cards: Mapping[str, "CardInfo"]) -> None:
+    def query_pa(self, device: Device) -> None:
+        def list_cb(cards: Mapping[str, CardInfo]) -> None:
             for c in cards.values():
                 if c["proplist"]["device.string"] == device['Address']:
                     self._devices[device['Address']] = c
@@ -97,7 +94,7 @@ class AudioProfiles(AppletPlugin):
         pa = PulseAudioUtils()
         pa.list_cards(list_cb)
 
-    def on_activate_profile(self, device: "Device", profile: "CardProfileInfo") -> None:
+    def on_activate_profile(self, device: Device, profile: CardProfileInfo) -> None:
         pa = PulseAudioUtils()
 
         c = self._devices[device['Address']]
@@ -111,7 +108,7 @@ class AudioProfiles(AppletPlugin):
     def on_pa_event(self, utils: PulseAudioUtils, event: int, idx: int) -> None:
         logging.debug(f"{event} {idx}")
 
-        def get_card_cb(card: "CardInfo") -> None:
+        def get_card_cb(card: CardInfo) -> None:
             drivers = ("module-bluetooth-device.c",
                        "module-bluez4-device.c",
                        "module-bluez5-device.c")

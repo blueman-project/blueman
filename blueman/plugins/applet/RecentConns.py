@@ -3,7 +3,7 @@ from operator import itemgetter
 import html
 import time
 import logging
-from typing import TYPE_CHECKING, cast
+from typing import cast, TypedDict
 from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath, BtAddress
 
@@ -12,29 +12,24 @@ from blueman.bluez.errors import DBusNoSuchAdapterError, DBusUnknownObjectError
 from blueman.gui.Notification import Notification
 from blueman.Sdp import ServiceUUID
 from blueman.plugins.AppletPlugin import AppletPlugin
-from blueman.plugins.applet.Menu import MenuItem
+from blueman.plugins.applet.Menu import Menu, MenuItem, SubmenuItemDict
 from blueman.plugins.applet.PowerManager import PowerManager, PowerStateListener
 
-if TYPE_CHECKING:
-    from blueman.plugins.applet.Menu import Menu, SubmenuItemDict
 
-    from typing_extensions import TypedDict
+class _ItemBase(TypedDict):
+    adapter: str
+    address: str
+    alias: str
+    icon: str
+    name: str
+    uuid: str
 
-    class _ItemBase(TypedDict):
-        adapter: str
-        address: str
-        alias: str
-        icon: str
-        name: str
-        uuid: str
 
-    class Item(_ItemBase):
-        time: float
-        device: str
-        mitem: SubmenuItemDict | None
+class Item(_ItemBase):
+    time: float
+    device: str
+    mitem: SubmenuItemDict | None
 
-    class StoredIcon(_ItemBase):
-        time: str
 
 REGISTRY_VERSION = 0
 
@@ -60,7 +55,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
     }
 
     def on_load(self) -> None:
-        self.__menuitems: list["SubmenuItemDict"] = []
+        self.__menuitems: list[SubmenuItemDict] = []
 
         self._rebuild_menu()
 
@@ -145,7 +140,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         self._rebuild()
 
-    def on_item_activated(self, item: "Item") -> None:
+    def on_item_activated(self, item: Item) -> None:
         logging.info(f"Connect {item['address']} {item['uuid']}")
 
         assert item["mitem"] is not None
@@ -169,9 +164,9 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.DBusService.connect_service(ObjectPath(item["device"]), item["uuid"], reply, err)
 
-    def _build_menu_item(self, item: "Item") -> "SubmenuItemDict":
+    def _build_menu_item(self, item: Item) -> SubmenuItemDict:
         alias = html.escape(item["alias"])
-        mitem: "SubmenuItemDict" = {
+        mitem: SubmenuItemDict = {
             "text": _("%(service)s on %(device)s") % {"service": item["name"], "device": alias},
             "markup": True,
             "icon_name": item["mitem"]["icon_name"] if item["mitem"] is not None else item["icon"],
@@ -208,7 +203,7 @@ class RecentConns(AppletPlugin, PowerStateListener):
 
         return device.get_object_path() if device is not None else None
 
-    def _get_items(self) -> list["Item"]:
+    def _get_items(self) -> list[Item]:
         return sorted(
             ({
                 "adapter": i["adapter"],

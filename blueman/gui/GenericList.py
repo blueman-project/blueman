@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any
+from typing import Any, TypedDict
 from collections.abc import Iterable, Mapping, Callable, Collection
 
 import gi
@@ -6,21 +6,17 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 
-if TYPE_CHECKING:
-    from typing_extensions import TypedDict
+class _ListDataDictBase(TypedDict):
+    id: str
+    type: type
 
-    class _ListDataDictBase(TypedDict):
-        id: str
-        type: type
 
-    class ListDataDict(_ListDataDictBase, total=False):
-        renderer: Gtk.CellRenderer
-        render_attrs: Mapping[str, int]
-        view_props: Mapping[str, object]
-        celldata_func: tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModelFilter, Gtk.TreeIter, Any],
-                                      None], Any]
-else:
-    ListDataDict = dict
+class ListDataDict(_ListDataDictBase, total=False):
+    renderer: Gtk.CellRenderer
+    render_attrs: Mapping[str, int]
+    view_props: Mapping[str, object]
+    celldata_func: tuple[Callable[[Gtk.TreeViewColumn, Gtk.CellRenderer, Gtk.TreeModelFilter, Gtk.TreeIter, Any],
+                                  None], Any]
 
 
 # noinspection PyAttributeOutsideInit
