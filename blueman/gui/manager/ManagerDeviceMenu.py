@@ -189,7 +189,8 @@ class ManagerDeviceMenu(Gtk.Menu):
                 self.generate()
 
     def _handle_error_message(self, error: GLib.Error) -> None:
-        err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
+        bt_error_code = error.message.split(":", 3)[-1].strip()
+        err = self._BLUEZ_ERROR_MAP.get(bt_error_code)
 
         if err == self._BluezError.PROFILE_UNAVAILABLE:
             logging.warning("No audio endpoints registered to bluetoothd. "
@@ -205,7 +206,7 @@ class ManagerDeviceMenu(Gtk.Menu):
                             "Retry or check its logs for context.")
             msg = _("Unknown error")
         else:
-            msg = error.message.split(":", 3)[-1].strip()
+            msg = bt_error_code
 
         if err != self._BluezError.CANCELED:
             self.Blueman.infobar_update(_("Connection Failed: ") + msg)
