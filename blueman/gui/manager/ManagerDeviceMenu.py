@@ -195,19 +195,20 @@ class ManagerDeviceMenu(Gtk.Menu):
             logging.info("bluetoothd: " + "Canceled.")
             return
         if err == self._BluezError.PROFILE_UNAVAILABLE:
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+            logging.warning("bluetoothd: " + "No audio endpoints registered." + " " +
+                            "PulseAudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
             msg = _("No audio endpoints registered.")
         elif err == self._BluezError.CREATE_SOCKET:
-            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
+            logging.warning("bluetoothd: " + "Input/output error." + " " + "Check bluetoothd logs.")
             msg = _("Input/output error.")
         elif err == self._BluezError.PAGE_TIMEOUT:
+            logging.info("bluetoothd: " + "Device did not respond")
             msg = _("Device did not respond")
         elif err == self._BluezError.UNKNOWN:
-            logging.warning("bluetoothd reported an unknown error. "
-                            "Retry or check its logs for context.")
+            logging.warning("bluetoothd: " + "Unknown error." + " " + "Check bluetoothd logs.")
             msg = _("Unknown error.")
         else:
+            logging.warning("bluetoothd: " + bt_error_code + " " + "Check bluetoothd logs.")
             msg = bt_error_code
         self.Blueman.infobar_update(_("Connection Failed: ") + msg)
 
