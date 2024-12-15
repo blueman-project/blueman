@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.4.3\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-12-03 18:48+0000\n"
+"POT-Creation-Date: 2024-12-15 11:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,7 +136,7 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
-#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:370
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:373
 msgid "Create pairing with the device"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgstr ""
 msgid "Pair"
 msgstr ""
 
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:388
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Trust"
 msgstr ""
 
-#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:433
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:436
 msgid "Remove this device from the known devices list"
 msgstr ""
 
@@ -710,87 +710,99 @@ msgstr ""
 msgid "Disconnection Failed: "
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:197
+#: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "No audio endpoints registered."
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:200
+#: blueman/gui/manager/ManagerDeviceMenu.py:201
+msgid ""
+"PulseAudio Bluetooth module, bluez-alsa, PipeWire or other audio support "
+"missing."
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "Input/output error."
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:202
+#: blueman/gui/manager/ManagerDeviceMenu.py:204
+#: blueman/gui/manager/ManagerDeviceMenu.py:210
+#: blueman/gui/manager/ManagerDeviceMenu.py:213
+msgid "Check bluetoothd logs."
+msgstr ""
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:207
 msgid "Device did not respond"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:206
+#: blueman/gui/manager/ManagerDeviceMenu.py:210
 msgid "Unknown error."
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:211
+#: blueman/gui/manager/ManagerDeviceMenu.py:214
 msgid "Connection Failed: "
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:300
 msgid "<b>_Connect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:299
+#: blueman/gui/manager/ManagerDeviceMenu.py:302
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:303
+#: blueman/gui/manager/ManagerDeviceMenu.py:306
 msgid "<b>_Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:304
+#: blueman/gui/manager/ManagerDeviceMenu.py:307
 msgid "Forcefully disconnect the device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:320
+#: blueman/gui/manager/ManagerDeviceMenu.py:323
 msgid "<b>Connect To:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:325
+#: blueman/gui/manager/ManagerDeviceMenu.py:328
 msgid "<b>Disconnect:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:336
+#: blueman/gui/manager/ManagerDeviceMenu.py:339
 msgid "<b>Auto-connect:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:356
+#: blueman/gui/manager/ManagerDeviceMenu.py:359
 msgid "Send a _File…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:369
+#: blueman/gui/manager/ManagerDeviceMenu.py:372
 msgid "_Pair"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:379
+#: blueman/gui/manager/ManagerDeviceMenu.py:382
 msgid "_Trust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:384
+#: blueman/gui/manager/ManagerDeviceMenu.py:387
 msgid "_Untrust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:391
+#: blueman/gui/manager/ManagerDeviceMenu.py:394
 msgid "_Block"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:396
+#: blueman/gui/manager/ManagerDeviceMenu.py:399
 msgid "_Unblock"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:400
+#: blueman/gui/manager/ManagerDeviceMenu.py:403
 msgid "Block/Unblock this device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:420
+#: blueman/gui/manager/ManagerDeviceMenu.py:423
 msgid "R_ename device…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:429
+#: blueman/gui/manager/ManagerDeviceMenu.py:432
 msgid "_Remove…"
 msgstr ""
 

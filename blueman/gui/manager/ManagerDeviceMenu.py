@@ -201,16 +201,16 @@ class ManagerDeviceMenu(Gtk.Menu):
                    _("PulseAudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing."))
         elif err == self._BluezError.CREATE_SOCKET:
             logging.warning("bluetoothd: " + "Input/output error." + " " + "Check bluetoothd logs.")
-            msg = _("Input/output error.")
+            msg = _("Input/output error.") + " " + _("Check bluetoothd logs.")
         elif err == self._BluezError.PAGE_TIMEOUT:
             logging.info("bluetoothd: " + "Device did not respond")
             msg = _("Device did not respond")
         elif err == self._BluezError.UNKNOWN:
             logging.warning("bluetoothd: " + "Unknown error." + " " + "Check bluetoothd logs.")
-            msg = _("Unknown error.")
+            msg = _("Unknown error.") + " " + _("Check bluetoothd logs.")
         else:
             logging.warning("bluetoothd: " + bt_error_code + " " + "Check bluetoothd logs.")
-            msg = bt_error_code
+            msg = bt_error_code + " " + _("Check bluetoothd logs.")
         self.Blueman.infobar_update(_("Connection Failed: ") + msg)
 
     class _BluezError(Enum):
