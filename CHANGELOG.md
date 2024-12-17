@@ -8,6 +8,7 @@
 * AutoConnect: Store bluetooth address instead of object path
 * Applet: Handle UnknownObject DBus error (@tommie)
 * Make search button available after device list becomes empty (@astcri)
+* Fatal LoadException
 
 ### Changes
 * Terminate applet on manager termination if it was started by manager
