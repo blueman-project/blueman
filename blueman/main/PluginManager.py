@@ -122,7 +122,10 @@ class PluginManager(GObject.GObject, Generic[_T]):
 
             if (cls.__autoload__ or (cl and cls.__name__ in cl)) and \
                     not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
-                self.__load_plugin(cls)
+                try:
+                    self.__load_plugin(cls)
+                except LoadException:
+                    pass
 
     def disable_plugin(self, plugin: str) -> bool:
         return False
