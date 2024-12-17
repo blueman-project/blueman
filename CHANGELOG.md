@@ -2,6 +2,10 @@
 
 ## main
 
+### Bugs fixed
+
+* Fatal LoadException
+
 ### Changes
 
 * Terminate applet on manager termination if it was started by manager
