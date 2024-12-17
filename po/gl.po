@@ -5,19 +5,22 @@
 # Proxecto Trasno <proxecto@trasno.gal>
 # André Rivero Castillo <hab130@gmail.com>, 2016
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2014,2018-2019
+# Sander Sweers <infirit@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Galician (http://www.transifex.com/mate/MATE/language/gl/)\n"
+"PO-Revision-Date: 2024-10-17 19:55+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/blueman/2-4/gl/"
+">\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -101,11 +104,11 @@ msgstr "Renomear dispositivo"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr "_Ordenar por.."
+msgstr "_Ordenar por"
 
 #: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr "_Nome:"
+msgstr "_Nome"
 
 #: data/ui/manager-main.ui:191
 msgid "_Added"
@@ -384,11 +387,11 @@ msgid "Always"
 msgstr "Sempre"
 
 #: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Minuto"
-msgstr[1] "%d minutos"
+msgstr[0] "%(minutes)d Minuto"
+msgstr[1] "%(minutes)d minutos"
 
 #: blueman/main/Adapter.py:230
 msgid "Adapter"
@@ -462,7 +465,7 @@ msgstr "«obexd» non está dispoñíbel"
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 "Produciuse un fallo no inicio automático do servizo obex. Asegúrese de que o "
-"servizo obex está a executarse."
+"servizo obex está a executarse"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -519,7 +522,7 @@ msgstr "Escriba a clave para autenticarse:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr "Clave de de emparellamento para"
+msgstr "Clave de emparellamento para"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
@@ -730,13 +733,12 @@ msgid "Failed"
 msgstr "Produciuse un fallo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:148
-#, fuzzy
 msgid "Connecting…"
-msgstr "Conectando"
+msgstr "Conectando…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:171
 msgid "Disconnection Failed: "
-msgstr "Produciuse un fallo na desconexión"
+msgstr "Produciuse un fallo na desconexión: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:195
 msgid "No audio endpoints registered"
@@ -797,7 +799,7 @@ msgstr "<b>Desconectar:</b>"
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
 #, fuzzy
 msgid "Send a _File…"
-msgstr "Enviar un _ficheiro..."
+msgstr "Enviar un _ficheiro…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Pair"
@@ -826,14 +828,12 @@ msgid "Block/Unblock this device"
 msgstr "Enviar ficheiros ao dispositivo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:417
-#, fuzzy
 msgid "R_ename device…"
-msgstr "Renomear dispositivo"
+msgstr "Renomear dispositivo…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:426
-#, fuzzy
 msgid "_Remove…"
-msgstr "Retirar"
+msgstr "_Retirar…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -902,9 +902,8 @@ msgid "Adapter selection"
 msgstr "Selección do adaptador"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Descubríbel… %ss"
+msgstr "Descubríbel…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -2071,10 +2070,8 @@ msgid "Broadcasting Device"
 msgstr "Emparellar o dispositivo"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Servizo:"
+msgstr "Servizo: Desk"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
@@ -3174,9 +3171,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:36
-#, fuzzy
 msgid "Disconnected"
-msgstr "Desconectando..."
+msgstr "Desconectando"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
@@ -3278,7 +3274,7 @@ msgstr "Número máximo de elementos"
 
 #: blueman/plugins/applet/RecentConns.py:54
 msgid "The maximum number of items recent connections menu will display."
-msgstr "Número máximo de conexións recentes amosadas no menú"
+msgstr "Número máximo de conexións recentes amosadas no menú."
 
 #: blueman/plugins/applet/RecentConns.py:155
 #, python-format
@@ -3299,9 +3295,8 @@ msgid "Adapter for this connection is not available"
 msgstr "O adaptador para esta conexión non está dispoñíbel"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Desconectando..."
+msgstr "Desconectando…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3352,7 +3347,7 @@ msgid ""
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
 "Asegúrese de que o directorio «<b>%s</b>» existe ou configúreo con blueman-"
-"services. Ata entón empregarase o «%s» predeterminado."
+"services. Ata entón empregarase o «%s» predeterminado"
 
 #: blueman/plugins/applet/TransferService.py:302
 msgid "File received"
@@ -3382,11 +3377,11 @@ msgid "Files received"
 msgstr "Ficheiros recibidos"
 
 #: blueman/plugins/applet/TransferService.py:333
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Recibiuse %d ficheiro en segundo plano"
-msgstr[1] "Recibíronse %d ficheiros en segundo plano"
+msgstr[0] "Recibiuse %(files)d ficheiro en segundo plano"
+msgstr[1] "Recibíronse %(files)d ficheiros en segundo plano"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
@@ -3394,11 +3389,11 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:342
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Recibiuse %d ficheiro en segundo plano"
-msgstr[1] "Recibironse %d ficheiros en segundo plano"
+msgstr[0] "Recibiuse %(files)d ficheiro en segundo plano"
+msgstr[1] "Recibironse %(files)d ficheiros en segundo plano"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3472,7 +3467,7 @@ msgid ""
 "Please wait…"
 msgstr ""
 "Tentando obter un enderezo IP en %s\n"
-"Agarde..."
+"Agarde…"
 
 #: blueman/plugins/applet/ShowConnected.py:21
 #, fuzzy
@@ -3500,9 +3495,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Desconectando..."
+msgstr "Desconectando %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3535,10 +3530,8 @@ msgid "Discoverable… %ss"
 msgstr "Descubríbel… %ss"
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discoverable…"
-msgstr "Descubríbel… %ss"
+msgstr "Descubríbel…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
