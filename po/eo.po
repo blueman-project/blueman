@@ -1,20 +1,22 @@
 # Esperanto translation for blueman.
 # This file is distributed under the same license as the blueman package.
 #
+# Aden Blake <adenblake22@icloud.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-07-25 11:38+0000\n"
-"PO-Revision-Date: 2024-09-08 09:07+0200\n"
-"Last-Translator:  <blueman@cschramm.eu>\n"
-"Language-Team: Esperanto <https://hosted.weblate.org/projects/blueman/"
-"blueman/eo/>\n"
+"POT-Creation-Date: 2024-05-17 22:25+0200\n"
+"PO-Revision-Date: 2024-11-21 03:21+0000\n"
+"Last-Translator: Aden Blake <adenblake22@icloud.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/blueman/2-4/eo/"
+">\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -50,142 +52,146 @@ msgstr ""
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
+msgstr "Montru enigon"
+
+#: data/ui/manager-main.ui:48
+msgid "Bluetooth Devices"
 msgstr ""
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
 msgstr ""
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:71
 msgid "_Search"
 msgstr ""
 
-#: data/ui/manager-main.ui:91
+#: data/ui/manager-main.ui:92
 msgid "_Preferences"
 msgstr ""
 
-#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr ""
 
-#: data/ui/manager-main.ui:123
+#: data/ui/manager-main.ui:124
 msgid "_Device"
 msgstr ""
 
-#: data/ui/manager-main.ui:131
+#: data/ui/manager-main.ui:132
 msgid "_View"
 msgstr ""
 
-#: data/ui/manager-main.ui:141
+#: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
 msgstr ""
 
-#: data/ui/manager-main.ui:149
+#: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
 msgstr ""
 
-#: data/ui/manager-main.ui:157
+#: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
 msgstr ""
 
-#: data/ui/manager-main.ui:171
+#: data/ui/manager-main.ui:172
 msgid "S_ort By"
 msgstr ""
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:182
 msgid "_Name"
 msgstr ""
 
-#: data/ui/manager-main.ui:190
+#: data/ui/manager-main.ui:191
 msgid "_Added"
 msgstr ""
 
-#: data/ui/manager-main.ui:206
+#: data/ui/manager-main.ui:207
 msgid "_Descending"
 msgstr ""
 
-#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:68
+#: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
 msgstr ""
 
-#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:59
+#: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
 msgstr ""
 
-#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
+#: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
 #: blueman/plugins/applet/StandardItems.py:65
 msgid "_Help"
 msgstr ""
 
-#: data/ui/manager-main.ui:250
+#: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
 msgstr ""
 
-#: data/ui/manager-main.ui:293
+#: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr ""
+msgstr "Serĉu proksimajn aparatojn"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:295
+#: data/ui/manager-main.ui:296
 msgid "Search"
-msgstr ""
+msgstr "Serĉu"
 
-#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "Kreu ligon kun la aparato"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:320
 msgid "Pair"
-msgstr ""
+msgstr "Kunligu"
 
-#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
-msgstr ""
+msgstr "Fidu"
 
-#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:347
+#: data/ui/manager-main.ui:348
 msgid "Remove"
-msgstr ""
+msgstr "Forigu"
 
-#: data/ui/manager-main.ui:369
+#: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:372
 msgid "Send File"
 msgstr ""
 
-#: data/ui/manager-main.ui:491
+#: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
 msgstr ""
 
-#: data/ui/manager-main.ui:533
+#: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
 msgstr ""
 
-#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
+#: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
 msgstr ""
 
-#: data/ui/manager-main.ui:635
+#: data/ui/manager-main.ui:636
 msgid "More"
 msgstr ""
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "Renomu aparaton"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
@@ -207,7 +213,7 @@ msgstr ""
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr ""
+msgstr "Rekomendita"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
@@ -215,7 +221,7 @@ msgstr ""
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
-msgstr ""
+msgstr "IP Adreso:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
@@ -375,11 +381,11 @@ msgstr[1] ""
 msgid "Adapter"
 msgstr ""
 
-#: blueman/main/DBusProxies.py:73
+#: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
 msgstr ""
 
-#: blueman/main/DBusProxies.py:74
+#: blueman/main/DBusProxies.py:65
 msgid ""
 "It seems like blueman-manager could no get activated via D-Bus. A typical "
 "cause for this is a broken graphical setup in the D-Bus activation "
@@ -605,7 +611,7 @@ msgstr ""
 #: blueman/gui/manager/ManagerDeviceList.py:568
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:31
-#: blueman/plugins/applet/RecentConns.py:156
+#: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:77
 msgid "Connected"
 msgstr ""
@@ -830,7 +836,7 @@ msgstr ""
 msgid "No conflicts"
 msgstr ""
 
-#: blueman/gui/applet/PluginDialog.py:351
+#: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
 msgstr ""
 
@@ -3078,40 +3084,40 @@ msgid ""
 "NetworkManager"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:43
+#: blueman/plugins/applet/RecentConns.py:42
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
 
 #. the maximum number of items RecentConns menu will display
-#: blueman/plugins/applet/RecentConns.py:54
+#: blueman/plugins/applet/RecentConns.py:53
 msgid "Maximum items"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:55
+#: blueman/plugins/applet/RecentConns.py:54
 msgid "The maximum number of items recent connections menu will display."
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:156
+#: blueman/plugins/applet/RecentConns.py:155
 #, python-format
 msgid "Connected to %s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:162
+#: blueman/plugins/applet/RecentConns.py:161
 msgid "Failed to connect"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:173
+#: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:177
+#: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:190
-msgid "Recent _Connections"
+#: blueman/plugins/applet/RecentConns.py:188
+msgid "Reconnect to…"
 msgstr ""
 
 #: blueman/plugins/applet/NMPANSupport.py:18

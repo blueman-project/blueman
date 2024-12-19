@@ -1,293 +1,300 @@
 # Irish translation for blueman.
 # This file is distributed under the same license as the blueman package.
 #
+# Aindriú Mac Giolla Eoin <aindriu80@gmail.com>, 2024.
+# Sander Sweers <infirit@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-07-25 11:38+0000\n"
-"PO-Revision-Date: 2024-09-08 09:07+0200\n"
-"Last-Translator:  <blueman@cschramm.eu>\n"
-"Language-Team: Irish <https://hosted.weblate.org/projects/blueman/"
-"blueman/ga/>\n"
+"POT-Creation-Date: 2024-05-17 22:25+0200\n"
+"PO-Revision-Date: 2024-12-18 10:44+0000\n"
+"Last-Translator: Aindriú Mac Giolla Eoin <aindriu80@gmail.com>\n"
+"Language-Team: Irish <https://hosted.weblate.org/projects/blueman/2-4/ga/>\n"
 "Language: ga\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;\n"
+"X-Generator: Weblate 5.9.2-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>Socrú Infheictheachta</b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
 msgid "Hidden"
-msgstr ""
+msgstr "I bhfolach"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
-msgstr ""
+msgstr "Feicthe i gcóna"
 
 #: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
-msgstr ""
+msgstr "Feicthe go sealadach"
 
 #: data/ui/adapters-tab.ui:110
 msgid "<b>Name</b>"
-msgstr ""
+msgstr "<b>Ainm</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
-msgstr ""
+msgstr "Iarratas péireála"
 
 #: data/ui/applet-passkey.ui:94
 msgid "Pairing request for device:"
-msgstr ""
+msgstr "Iarratas péireála ar ghléas:"
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
-msgstr ""
+msgstr "Ba chóir é seo a fhorscríobh"
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
-msgstr ""
+msgstr "Taispeáin ionchur"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:48
+msgid "Bluetooth Devices"
+msgstr "Gléasanna Bluetooth"
+
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr ""
+msgstr "_Cuibheoir"
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:71
 msgid "_Search"
-msgstr ""
+msgstr "_Cuardaigh"
 
-#: data/ui/manager-main.ui:91
+#: data/ui/manager-main.ui:92
 msgid "_Preferences"
-msgstr ""
+msgstr "_Roghanna"
 
-#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr ""
+msgstr "_Scoir"
 
-#: data/ui/manager-main.ui:123
+#: data/ui/manager-main.ui:124
 msgid "_Device"
-msgstr ""
+msgstr "_Gléas"
 
-#: data/ui/manager-main.ui:131
+#: data/ui/manager-main.ui:132
 msgid "_View"
-msgstr ""
+msgstr "_Féach"
 
-#: data/ui/manager-main.ui:141
+#: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "Taispeáin _Barra Uirlisí"
 
-#: data/ui/manager-main.ui:149
+#: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "Taispeáin Barra_Stádas"
 
-#: data/ui/manager-main.ui:157
+#: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
-msgstr ""
+msgstr "Folaigh gléasanna neamhainmnithe"
 
-#: data/ui/manager-main.ui:171
+#: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr ""
+msgstr "S_órtáil De réir"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr ""
+msgstr "Ainm"
 
-#: data/ui/manager-main.ui:190
+#: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr ""
+msgstr "_Cuireadh leis"
 
-#: data/ui/manager-main.ui:206
+#: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr ""
+msgstr "_Íslitheach"
 
-#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:68
+#: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
-msgstr ""
+msgstr "_Breiseáin"
 
-#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:59
+#: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
-msgstr ""
+msgstr "_Seirbhísí Áitiúla"
 
-#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
+#: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
 #: blueman/plugins/applet/StandardItems.py:65
 msgid "_Help"
-msgstr ""
+msgstr "_Cabhair"
 
-#: data/ui/manager-main.ui:250
+#: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
-msgstr ""
+msgstr "Fadhb a thuairisciú"
 
-#: data/ui/manager-main.ui:293
+#: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr ""
+msgstr "Cuardaigh feistí in aice láimhe"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:295
+#: data/ui/manager-main.ui:296
 msgid "Search"
-msgstr ""
+msgstr "Cuardaigh"
 
-#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:367
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "Cruthaigh péireáil leis an bhfeiste"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:320
 msgid "Pair"
-msgstr ""
+msgstr "Péire"
 
-#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "Marcáil/Dímharcáil an gléas seo mar iontaofa"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Trust"
-msgstr ""
+msgstr "Iontaobhas"
 
-#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
-msgstr ""
+msgstr "Bain an gléas seo ó liosta na bhfeistí aitheanta"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:347
+#: data/ui/manager-main.ui:348
 msgid "Remove"
-msgstr ""
+msgstr "Bain"
 
-#: data/ui/manager-main.ui:369
+#: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
-msgstr ""
+msgstr "Seol comhad (í) chuig an bhfeiste"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:372
 msgid "Send File"
-msgstr ""
+msgstr "Seol Comhad"
 
-#: data/ui/manager-main.ui:491
+#: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "Sonraí iomlána a seoltar agus ráta tarchuir"
 
-#: data/ui/manager-main.ui:533
+#: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "Sonraí iomlána a fuarthas agus ráta tarchuir"
 
-#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
+#: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
-msgstr ""
+msgstr "Táscaire gníomhaíochta sonraí"
 
-#: data/ui/manager-main.ui:635
+#: data/ui/manager-main.ui:636
 msgid "More"
-msgstr ""
+msgstr "Tuilleadh"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "Athainmnigh gléas"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr ""
+msgstr "_Athshocraigh"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_Cancel"
-msgstr ""
+msgstr "_Cealaigh"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_CEART GO LEOR"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
-msgstr ""
+msgstr "Cineál freastalaí DHCP:"
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr ""
+msgstr "Molta"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b>Níl aon fhreastalaí DHCP suiteáilte</b>"
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
-msgstr ""
+msgstr "Seoladh IP:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
-msgstr ""
+msgstr "<b>Socruithe NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Líonra Ceantair Pearsanta"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b>Tacaíocht PAN</b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr ""
+msgstr "Líonrú Diailigh"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr ""
+msgstr "<b>Tacaíocht DUN</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "Pointe Rochtana Líonra (NAP)"
 
 #: data/ui/services-network.ui:348
 msgid "<b>NAP Support</b>"
-msgstr ""
+msgstr "<b>Tacaíocht NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b>Glacadh Comhad (Brú Réada)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
-msgstr ""
+msgstr "Fillteán Isteach:"
 
 #: data/ui/services-transfer.ui:45
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "Roghnaigh fillteán d'aistrithe comhad isteach"
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
-msgstr ""
+msgstr "Glac le comhaid ó ghléasanna iontaofa"
 
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
+"<span weight=\"bold\" size=\"large\">Comhaid á seoladh trí Bluetooth</span>"
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
-msgstr ""
+msgstr "<b>Chuig:</b>"
 
 #: data/ui/send-dialog.ui:109
 msgid "<b>File:</b>"
-msgstr ""
+msgstr "<b>Comhad:</b>"
 
 #: data/ui/applet-plugins-widget.ui:79
 msgid "Configuration"
-msgstr ""
+msgstr "Cumraíocht"
 
 #: data/ui/applet-plugins-widget.ui:83
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "Cumraigh roghanna breiseán roghnaithe"
 
 #: data/ui/applet-plugins-widget.ui:129
 msgid "Not specified"
-msgstr ""
+msgstr "Níl sonraithe"
 
 #: data/ui/applet-plugins-widget.ui:151
 msgid "<b>Author:</b>"
-msgstr ""
+msgstr "<b>Údar:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
@@ -298,89 +305,91 @@ msgstr ""
 #: blueman/plugins/applet/NetUsage.py:210
 #: blueman/plugins/applet/NetUsage.py:211
 msgid "Unknown"
-msgstr ""
+msgstr "Anaithnid"
 
 #: data/ui/applet-plugins-widget.ui:193
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b>Ag brath ar:</b>"
 
 #: data/ui/applet-plugins-widget.ui:235
 msgid "<b>Conflicts with:</b>"
-msgstr ""
+msgstr "<b>Coimhlint le:</b>"
 
 #: data/ui/gsm-settings.ui:35
 msgid "<b>GSM settings</b>"
-msgstr ""
+msgstr "<b>Socruithe GSM</b>"
 
 #: data/ui/gsm-settings.ui:56
 msgid "Number:"
-msgstr ""
+msgstr "Uimhir:"
 
 #: data/ui/gsm-settings.ui:79
 msgid "APN:"
-msgstr ""
+msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
-msgstr ""
+msgstr "Staitisticí tráchta"
 
 #: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:39
 msgid "_Close"
-msgstr ""
+msgstr "_Dún"
 
 #: data/ui/net-usage.ui:80
 msgid "<b>Downloaded:</b>"
-msgstr ""
+msgstr "<b>Íosluchtaithe:</b>"
 
 #: data/ui/net-usage.ui:120
 msgid "<b>Uploaded:</b>"
-msgstr ""
+msgstr "<b>Uaslódáilte:</b>"
 
 #: data/ui/net-usage.ui:160
 msgid "<b>Total:</b>"
-msgstr ""
+msgstr "<b>Iomlán:</b>"
 
 #: data/ui/net-usage.ui:197
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b>Tosaíodh ar an logáil:</b>"
 
 #: data/ui/net-usage.ui:210
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b>Fad an loga:</b>"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "Seol nóta"
 
 #: blueman/main/Adapter.py:57
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
+"Ní mór Bluetooth a chasadh air chun go n-oibreoidh an bainisteoir "
+"oiriúnaitheora"
 
 #: blueman/main/Adapter.py:97 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "Cuibheoirí Bluetooth"
 
 #: blueman/main/Adapter.py:160
 msgid "Always"
-msgstr ""
+msgstr "I gcónaí"
 
 #: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(minutes)d Nóiméad"
+msgstr[1] "%(minutes)d Nóiméad"
+msgstr[2] "%(minutes)d Nóiméad"
 
 #: blueman/main/Adapter.py:230
 msgid "Adapter"
-msgstr ""
+msgstr "Cuibheoir"
 
-#: blueman/main/DBusProxies.py:73
+#: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Theip ar bhainisteoir blueman-bhainisteoir a bhaint amach"
 
-#: blueman/main/DBusProxies.py:74
+#: blueman/main/DBusProxies.py:65
 msgid ""
 "It seems like blueman-manager could no get activated via D-Bus. A typical "
 "cause for this is a broken graphical setup in the D-Bus activation "
@@ -388,10 +397,15 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Dealraíonn sé nach bhféadfadh bainisteoir blueman a ghníomhachtú trí D-Bus. "
+"Cúis tipiciúil leis seo is ea socrú grafach briste sa timpeallacht "
+"ghníomhachtaithe D-Bus is féidir a réiteach le glao chuig timpeallacht "
+"gníomhachtaithe dbus-update-activation-, a eisítear de ghnáth ó xinitrc (an "
+"cumraíocht Sway faoi seach nó den chineál céanna)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
-msgstr ""
+msgstr "Theip ar nasc le BlueZ"
 
 #: blueman/main/Manager.py:105
 msgid ""
@@ -399,142 +413,148 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
+"Níl Bluez daemon ag rith, ní féidir le bainisteoir blueman-leanúint ar "
+"aghaidh.\n"
+"Is dócha go gciallaíonn sé seo nach bhfuarthas aon oiriúnaitheoirí Bluetooth "
+"nó nár cuireadh tús le daemon Bluetooth."
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Cliceáil chun díchumasú."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Cliceáil chun cumasú."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
-msgstr ""
+msgstr "Cuardach"
 
 #: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
-msgstr ""
+msgstr "Roghanna Cuibheoir"
 
 #: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
 #: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
-msgstr ""
+msgstr "Tarchuradóir Comhad"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
-msgstr ""
+msgstr "Aistriú Comhad Bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Stad"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr ""
+msgstr "Ag nascadh"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
-msgstr ""
+msgstr "míl obexd ar fáil"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Theip ar an tseirbhís obex a uathosú. Déan cinnte go bhfuil an daemon obex "
+"ag rith"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
-msgstr ""
+msgstr "Ag cealú"
 
 #: blueman/main/Sendto.py:154
 msgid "Sending File"
-msgstr ""
+msgstr "Comhad a sheoladh"
 
 #: blueman/main/Sendto.py:154
 msgid "ETA:"
-msgstr ""
+msgstr "ETA:"
 
 #: blueman/main/Sendto.py:192
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(seconds)d Soicind"
+msgstr[1] "%(seconds)d Soicind"
+msgstr[2] "%(seconds)d Soicind"
 
 #: blueman/main/Sendto.py:225
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr ""
+msgstr "Tharla earráid agus comhad %s á sheoladh"
 
 #: blueman/main/Sendto.py:229
 msgid "Skip"
-msgstr ""
+msgstr "Scipeáil"
 
 #: blueman/main/Sendto.py:230
 msgid "Retry"
-msgstr ""
+msgstr "Déan iarracht arís"
 
 #: blueman/main/Sendto.py:281
 msgid "Error occurred"
-msgstr ""
+msgstr "Tharla earráid"
 
 #: blueman/main/applet/BluezAgent.py:123
 #, python-format
 msgid "Pairing request for %s"
-msgstr ""
+msgstr "Iarratas péireála ar %s"
 
 #: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
 msgid "Bluetooth Authentication"
-msgstr ""
+msgstr "Fíordheimhniú Bluetooth"
 
 #: blueman/main/applet/BluezAgent.py:165
 msgid "Enter PIN code for authentication:"
-msgstr ""
+msgstr "Cuir isteach cód PIN le haghaidh fíordheimhnithe:"
 
 #: blueman/main/applet/BluezAgent.py:174
 msgid "Enter passkey for authentication:"
-msgstr ""
+msgstr "Cuir isteach eochair pasfhocal le haghaidh fíordheimhnithe:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr ""
+msgstr "Eochair pasfhocal a phéireáil le haghaidh"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr ""
+msgstr "Cód PIN a phéireáil le haghaidh"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
-msgstr ""
+msgstr "Iarratas péireála ar:"
 
 #: blueman/main/applet/BluezAgent.py:212
 msgid "Confirm value for authentication:"
-msgstr ""
+msgstr "Deimhnigh luach fíordheimhnithe:"
 
 #: blueman/main/applet/BluezAgent.py:213
 msgid "Confirm"
-msgstr ""
+msgstr "Deimhnigh"
 
 #: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
 msgid "Deny"
-msgstr ""
+msgstr "Diúltú"
 
 #: blueman/main/applet/BluezAgent.py:241
 msgid "Authorization request for:"
-msgstr ""
+msgstr "Iarratas ar údarú ar:"
 
 #: blueman/main/applet/BluezAgent.py:241
 msgid "Service:"
-msgstr ""
+msgstr "Seirbhís:"
 
 #: blueman/main/applet/BluezAgent.py:242
 msgid "Always accept"
-msgstr ""
+msgstr "Glacadh i gcónaí"
 
 #: blueman/main/applet/BluezAgent.py:243
 #: blueman/plugins/applet/TransferService.py:129
 msgid "Accept"
-msgstr ""
+msgstr "Glacadh le"
 
 #: blueman/main/PluginManager.py:67
 msgid ""
@@ -542,58 +562,62 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Tharla earráid agus breiseán á lódáil. Cuir ábhar na teachtaireachta seo "
+"in iúl do na forbróirí chuig ár </b> le do thoil\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">suíomh gréasáin."
+"</a>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
-msgstr ""
+msgstr "Múchadh Bluetooth"
 
 #: blueman/Functions.py:71
 msgid "Exit"
-msgstr ""
+msgstr "Scoir"
 
 #: blueman/Functions.py:72
 msgid "Enable Bluetooth"
-msgstr ""
+msgstr "Cumasaigh Bluetooth"
 
 #: blueman/Functions.py:166
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:169
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:172
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:175
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
-msgstr ""
+msgstr "Bainisteoir Gléas"
 
 #: blueman/gui/manager/ManagerMenu.py:80
 #: blueman/plugins/applet/StandardItems.py:102
 msgid "Service Preferences"
-msgstr ""
+msgstr "Roghanna Seirbhíse"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
-msgstr ""
+msgstr "Méarchlár"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Teaglann"
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
 msgid "Unnamed device"
-msgstr ""
+msgstr "Gléas gan ainmniú"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
@@ -601,212 +625,213 @@ msgstr ""
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
-msgstr ""
+msgstr "Gan catagóir"
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/gui/manager/ManagerDeviceList.py:568
 #: blueman/plugins/applet/AutoConnect.py:50
 #: blueman/plugins/applet/ConnectionNotifier.py:31
-#: blueman/plugins/applet/RecentConns.py:156
+#: blueman/plugins/applet/RecentConns.py:155
 #: blueman/plugins/applet/PPPSupport.py:77
 msgid "Connected"
-msgstr ""
+msgstr "Ceangailte"
 
 #: blueman/gui/manager/ManagerDeviceList.py:570
 msgid "Trusted"
-msgstr ""
+msgstr "Iontaofa"
 
 #: blueman/gui/manager/ManagerDeviceList.py:572
 msgid "Paired"
-msgstr ""
+msgstr "Péireáilte"
 
 #: blueman/gui/manager/ManagerDeviceList.py:574
 msgid "Blocked"
-msgstr ""
+msgstr "Blocáilte"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
 msgid "<b>Connected</b>"
-msgstr ""
+msgstr "<b>Ceangailte</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Poor"
-msgstr ""
+msgstr "Bocht"
 
 #: blueman/gui/manager/ManagerDeviceList.py:612
 #: blueman/gui/manager/ManagerDeviceList.py:631
 msgid "Sub-optimal"
-msgstr ""
+msgstr "Fo-optamach"
 
 #: blueman/gui/manager/ManagerDeviceList.py:614
 #: blueman/gui/manager/ManagerDeviceList.py:633
 msgid "Optimal"
-msgstr ""
+msgstr "Optamach"
 
 #: blueman/gui/manager/ManagerDeviceList.py:616
 msgid "Much"
-msgstr ""
+msgstr "Go leor"
 
 #: blueman/gui/manager/ManagerDeviceList.py:618
 msgid "Too much"
-msgstr ""
+msgstr "An iomarca"
 
 #: blueman/gui/manager/ManagerDeviceList.py:621
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Neart Comhartha Faighte: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Neart Comhartha Faighte: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Low"
-msgstr ""
+msgstr "Íseal"
 
 #: blueman/gui/manager/ManagerDeviceList.py:635
 msgid "High"
-msgstr ""
+msgstr "Ard"
 
 #: blueman/gui/manager/ManagerDeviceList.py:637
 msgid "Very High"
-msgstr ""
+msgstr "An-Ard"
 
 #: blueman/gui/manager/ManagerDeviceList.py:640
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Leibhéal Tarchuir Cumhachta: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:643
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Leibhéal Tarchuir Cumhachta: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:137
 msgid "Success!"
-msgstr ""
+msgstr "Rath!"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:142
 msgid "Failed"
-msgstr ""
+msgstr "Teip"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:148
 msgid "Connecting…"
-msgstr ""
+msgstr "Ag nascadh…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:171
 msgid "Disconnection Failed: "
-msgstr ""
+msgstr "Theip ar dhícheangal: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:195
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Níl aon chríochphointe fuaime clárai"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:198
 msgid "Input/output error"
-msgstr ""
+msgstr "Earráid ionchuir/aschuir"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "Device did not respond"
-msgstr ""
+msgstr "Níor fhreagair an gléas"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 msgid "Unknown error"
-msgstr ""
+msgstr "Earráid anaithnid"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
-msgstr ""
+msgstr "Theip ar Nasc: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:295
 msgid "<b>_Connect</b>"
-msgstr ""
+msgstr "<b>_Ceangail</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
+"Ceanglaíonn sé próifílí ceangail uathoibríoch foinse A2DP, doirteal A2DP"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:301
 msgid "<b>_Disconnect</b>"
-msgstr ""
+msgstr "<b>_Dícheangail</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:302
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "Déan an gléas a dhícheangal go foréigeach"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:318
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "<b>Ceangail Le:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:323
 msgid "<b>Disconnect:</b>"
-msgstr ""
+msgstr "<b>Dícheangail:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:333
 msgid "<b>Auto-connect:</b>"
-msgstr ""
+msgstr "<b>Uathcheangail:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
 msgid "Send a _File…"
-msgstr ""
+msgstr "Seol _Comhad…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Pair"
-msgstr ""
+msgstr "_Péire"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:376
 msgid "_Trust"
-msgstr ""
+msgstr "_Iontaobhas"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:381
 msgid "_Untrust"
-msgstr ""
+msgstr "_Neamh-iontaobhas"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "_Block"
-msgstr ""
+msgstr "_Bloc"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "_Unblock"
-msgstr ""
+msgstr "_Díchoisc"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:397
 msgid "Block/Unblock this device"
-msgstr ""
+msgstr "Bloc/Díchoisc an gléas seo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:417
 msgid "R_ename device…"
-msgstr ""
+msgstr "_Athainmnigh gléas…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:426
 msgid "_Remove…"
-msgstr ""
+msgstr "_Bain…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr ""
+msgstr "Cealaigh Oibríocht"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Untrust"
-msgstr ""
+msgstr "Neamhiontaobhas"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
-msgstr ""
+msgstr "Roghnaigh Gléas"
 
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr ""
+msgstr "Is bainisteoir Bluetooth GTK+é Blueman"
 
 #: blueman/gui/GsmSettings.py:25
 msgid "GSM Settings"
-msgstr ""
+msgstr "Socruithe GSM"
 
 #: blueman/gui/applet/PluginDialog.py:121
 #: blueman/plugins/applet/StandardItems.py:108
 msgid "Plugins"
-msgstr ""
+msgstr "Breiseáin"
 
 #: blueman/gui/applet/PluginDialog.py:231
 #, python-format
@@ -815,6 +840,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"Braitheann breiseán <b>\"%(0)s\"</b> ar <b>%(1)s</b>. Má dhéantar <b>%(1)s</"
+"b> a dhíluchtú, díluchtófar <b>\"%(0)s\"</b> freisin.\n"
+"Ar aghaidh?"
 
 #: blueman/gui/applet/PluginDialog.py:241
 #, python-format
@@ -823,2341 +851,2359 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"Tagann an breiseán <b>%(0)s</b> le <b>%(1)s</b>. Má lódáiltear <b>%(1)s</b> "
+"díluchtófar <b>%(0)s</b>.\n"
+"Ar aghaidh?"
 
 #: blueman/gui/applet/PluginDialog.py:267
 msgid "No dependencies"
-msgstr ""
+msgstr "Gan spleáchas"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Gan aon choimhlintí"
 
-#: blueman/gui/applet/PluginDialog.py:351
+#: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
-msgstr ""
+msgstr "Saincheist spleáchais"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
-msgstr ""
+msgstr "Roghnú Cuibheoir"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr ""
+msgstr "Ag fáil amach…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Ilghnéireach"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Ríomhaire"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Fón"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
 msgid "Access point"
-msgstr ""
+msgstr "Pointe rochtana"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Fuaime/físeán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Imeallach"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:518
 msgid "Imaging"
-msgstr ""
+msgstr "Íomháú"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Inchaite"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Bréagán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
 msgid "Desktop"
-msgstr ""
+msgstr "Deisce"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
 msgid "Server"
-msgstr ""
+msgstr "Freastalaí"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35 blueman/DeviceClass.py:173
 msgid "Laptop"
-msgstr ""
+msgstr "Ríomhaire glúine"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr ""
+msgstr "Láimhe"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Pailm"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
 msgid "Cellular"
-msgstr ""
+msgstr "Ceallach"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
 msgid "Cordless"
-msgstr ""
+msgstr "Gan sreang"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
 msgid "Smartphone"
-msgstr ""
+msgstr "Fón cliste"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
 msgid "Modem"
-msgstr ""
+msgstr "Móideim"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Go hiomlán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1–17 percent"
-msgstr ""
+msgstr "1-17 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17–33 percent"
-msgstr ""
+msgstr "17-33 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33–50 percent"
-msgstr ""
+msgstr "33-50 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50–67 percent"
-msgstr ""
+msgstr "50-67 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67–83 percent"
-msgstr ""
+msgstr "67-83 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83–99 percent"
-msgstr ""
+msgstr "83-99 faoin gcéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
 msgid "Not available"
-msgstr ""
+msgstr "Níl ar fáil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/DeviceClass.py:417 blueman/Sdp.py:123
 #: blueman/Sdp.py:164
 msgid "Headset"
-msgstr ""
+msgstr "Gléas cinn"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
 msgid "Handsfree"
-msgstr ""
+msgstr "Saor ó lámh"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88 blueman/DeviceClass.py:374
 msgid "Microphone"
-msgstr ""
+msgstr "Micreafón"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Callaire"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
 msgid "Headphones"
-msgstr ""
+msgstr "Cluasáin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Fuaim iniompartha"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Fuaim gluaisteán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Bosca barr socraithe"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Fuaim Hi-Fi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
 msgid "Video camera"
-msgstr ""
+msgstr "Ceamara físe"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Ceamthaifeadán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
 msgid "Video monitor"
-msgstr ""
+msgstr "Monatóir físe"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Taispeáint físe agus ardchainteoir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
 msgid "Video conferencing"
-msgstr ""
+msgstr "Comhdhála fís"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Cearrbhachas/bréagán"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
 msgid "Pointing"
-msgstr ""
+msgstr "Pointeáil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Taispeáin"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Ceamara"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Scanóir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Printéir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Uaireadóir láimhe"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Glaoire"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Seaicéad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Clogad"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Gloiní"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Robot"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Feithicil"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Bábóg"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Rialaitheoir"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Cluiche"
 
 #: blueman/DeviceClass.py:168
 msgid "Generic Unknown"
-msgstr ""
+msgstr "Ainaithnid Cineál"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
-msgstr ""
+msgstr "Fón Cineálach"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
-msgstr ""
+msgstr "Ríomhaire cineálach"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Stáisiún Oibre Deisce"
 
 #: blueman/DeviceClass.py:172
 msgid "Server-class Computer"
-msgstr ""
+msgstr "Ríomhaire aicme freastalaí"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "PC boise/PDA (clamshell)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "PC/PDA de mhéid pailme"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Ríomhaire inchaitheanta (méid faire)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Táibléad"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Stáisiún Duc"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Gach i gceann amháin"
 
 #: blueman/DeviceClass.py:180
 msgid "Blade Server"
-msgstr ""
+msgstr "Freastalaí Blade"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Inchosaithe"
 
 #: blueman/DeviceClass.py:182
 msgid "Detachable"
-msgstr ""
+msgstr "Inscartha"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "Geata IoT"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Mini ríomhaire"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Bata ríomhaire"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
-msgstr ""
+msgstr "Faire Cineálach"
 
 #: blueman/DeviceClass.py:187
 msgid "Sports Watch"
-msgstr ""
+msgstr "Faire Spóirt"
 
 #: blueman/DeviceClass.py:188
 msgid "Smartwatch"
-msgstr ""
+msgstr "Uaireadóirí cliste"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
-msgstr ""
+msgstr "Clog Cineálach"
 
 #: blueman/DeviceClass.py:190
 msgid "Generic Display"
-msgstr ""
+msgstr "Taispeáin Cineálach"
 
 #: blueman/DeviceClass.py:191
 msgid "Generic Remote Control"
-msgstr ""
+msgstr "Cianrialtán Cineálach"
 
 #: blueman/DeviceClass.py:192
 msgid "Generic Eye-glasses"
-msgstr ""
+msgstr "Gloiní súl cineálacha"
 
 #: blueman/DeviceClass.py:193
 msgid "Generic Tag"
-msgstr ""
+msgstr "Clib Cineálach"
 
 #: blueman/DeviceClass.py:194
 msgid "Generic Keyring"
-msgstr ""
+msgstr "Eochairí Cineálach"
 
 #: blueman/DeviceClass.py:195
 msgid "Generic Media Player"
-msgstr ""
+msgstr "Imreoir Meán Cineálach"
 
 #: blueman/DeviceClass.py:196
 msgid "Generic Barcode Scanner"
-msgstr ""
+msgstr "Scanóir Barcode Cineálach"
 
 #: blueman/DeviceClass.py:197
 msgid "Generic Thermometer"
-msgstr ""
+msgstr "Teirmiméadar cineál"
 
 #: blueman/DeviceClass.py:198
 msgid "Ear Thermometer"
-msgstr ""
+msgstr "Teirmiméadar Cluas"
 
 #: blueman/DeviceClass.py:199
 msgid "Generic Heart Rate Sensor"
-msgstr ""
+msgstr "Braiteoir Ráta Croí Cineálach"
 
 #: blueman/DeviceClass.py:200
 msgid "Heart Rate Belt"
-msgstr ""
+msgstr "Crios Ráta Croí"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Brú Fola Cineálach"
 
 #: blueman/DeviceClass.py:202
 msgid "Arm Blood Pressure"
-msgstr ""
+msgstr "Brú Fola Lámh"
 
 #: blueman/DeviceClass.py:203
 msgid "Wrist Blood Pressure"
-msgstr ""
+msgstr "Brú Fola láimhe"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "Gléas Comhéadan Daonna cineálach"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
-msgstr ""
+msgstr "Luch"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "Stiúrthán"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
-msgstr ""
+msgstr "Cluichepad"
 
 #: blueman/DeviceClass.py:209
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Táibléad Digitizer"
 
 #: blueman/DeviceClass.py:210
 msgid "Card Reader"
-msgstr ""
+msgstr "Léitheoir Cárta"
 
 #: blueman/DeviceClass.py:211
 msgid "Digital Pen"
-msgstr ""
+msgstr "Peann Digiteach"
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Scanóir Barrachód"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Ceap tadhaill"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Cur i láthair cianda"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
-msgstr ""
+msgstr "Méadar Glúcóis Cineál"
 
 #: blueman/DeviceClass.py:216
 msgid "Generic Running Walking Sensor"
-msgstr ""
+msgstr "Braiteoir Siúil Reatha Cineálach"
 
 #: blueman/DeviceClass.py:217
 msgid "In-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Braiteoir Siúil Reatha In-Bróg"
 
 #: blueman/DeviceClass.py:218
 msgid "On-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Braiteoir Siúil Rith Ar Bróg"
 
 #: blueman/DeviceClass.py:219
 msgid "On-Hip Running Walking Sensor"
-msgstr ""
+msgstr "Braiteoir Siúil Rith Ar an gcromáin"
 
 #: blueman/DeviceClass.py:220
 msgid "Generic Cycling"
-msgstr ""
+msgstr "Rothaíocht cineálach"
 
 #: blueman/DeviceClass.py:221
 msgid "Cycling Computer"
-msgstr ""
+msgstr "Ríomhaire rothaíochta"
 
 #: blueman/DeviceClass.py:222
 msgid "Speed Sensor"
-msgstr ""
+msgstr "Braiteoir Luais"
 
 #: blueman/DeviceClass.py:223
 msgid "Cadence Sensor"
-msgstr ""
+msgstr "Braiteoir Cadence"
 
 #: blueman/DeviceClass.py:224
 msgid "Power Sensor"
-msgstr ""
+msgstr "Braiteoir Cumhachta"
 
 #: blueman/DeviceClass.py:225
 msgid "Speed and Cadence Sensor"
-msgstr ""
+msgstr "Braiteoir Luais agus Cadence"
 
 #: blueman/DeviceClass.py:226
 msgid "Generic Control Device"
-msgstr ""
+msgstr "Gléas rialaithe cineálach"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Athraigh"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Il-lasc"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Cnaipe"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Sleamhnán"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Lasc Rothlach"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Painéal Teagmháil"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Lasc Aonair"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Lasc Dúbailte"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Athraigh Triple"
 
 #: blueman/DeviceClass.py:236
 msgid "Battery Switch"
-msgstr ""
+msgstr "Lasc Ceallraí"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Lasc Fómhair Fuinnimh"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Cnaipe Brúigh"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Diailiú"
 
 #: blueman/DeviceClass.py:240
 msgid "Generic Network Device"
-msgstr ""
+msgstr "Gléas Líonra cineálach"
 
 #: blueman/DeviceClass.py:241
 msgid "Access Point"
-msgstr ""
+msgstr "Pointe Rochtana"
 
 #: blueman/DeviceClass.py:242
 msgid "Mesh Device"
-msgstr ""
+msgstr "Gléas Mogalra"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Proxy Líonra Mogalra"
 
 #: blueman/DeviceClass.py:244
 msgid "Generic Sensor"
-msgstr ""
+msgstr "Braiteoir Cineálach"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Braiteoir Tairisceana"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Braiteoir cáilíochta aeir"
 
 #: blueman/DeviceClass.py:247
 msgid "Temperature Sensor"
-msgstr ""
+msgstr "Braiteoir Teochta"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Braiteoir Bogthaise"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Braiteoir Sceitheadh"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Braiteoir Deataigh"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Braiteoir Áitíochta"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Braiteoir Teagmháil"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Braiteoir Aonocsaíd Carbóin"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Braiteoir Dé-ocsaíd"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Braiteoir Solais Timpeallach"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Braiteoir Fuinnimh"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Braiteoir Solas Dath"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Braiteoir Báistí"
 
 #: blueman/DeviceClass.py:259
 msgid "Fire Sensor"
-msgstr ""
+msgstr "Braiteoir Dóiteáin"
 
 #: blueman/DeviceClass.py:260
 msgid "Wind Sensor"
-msgstr ""
+msgstr "Braiteoir Gaoithe"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Braiteoir cóngarachta"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Il-Braiteoir"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "Braiteoir Suiteáilte"
 
 #: blueman/DeviceClass.py:264
 msgid "Ceiling Mounted Sensor"
-msgstr ""
+msgstr "Braiteoir Suite Uasteorainn"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Braiteoir suite ar bhalla"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Ilbhraiteach"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Méadar Fuinnimh"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Brathadóir Lasair"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Braiteoir Brú Bonn Feithicle"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
-msgstr ""
+msgstr "Daingneáin Solais Cineál"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Solas Balla"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Solas Uasteorainn"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Solas Urlár"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Solas Comh-Aireachta"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Solas Deasc"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "Solas Troffer"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "Solas Pendant"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "Solas laistigh den talamh"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Solas Tuile"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "Solas faoi uisce"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "Bollard le Solas"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "Solas Conair"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "Solas Gairdín"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "Solas barr cuaille"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "Spotsolas"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "Solas Líneach"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "Solas Sráide"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "Seilfeanna Solas"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "Solas an Bá"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "Solas Scoir Éigeandála"
 
 #: blueman/DeviceClass.py:291
 msgid "Light Controller"
-msgstr ""
+msgstr "Rialaitheoir Solais"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "Tiománaí Solais"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Bolgán"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Solas Bá Íseal"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Solas Ard-bhá"
 
 #: blueman/DeviceClass.py:296
 msgid "Generic Fan"
-msgstr ""
+msgstr "Fan Cineálach"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Fan Uasteorainn"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "Lucht leanúna aiseach"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "Fan Sceite"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "Fan Pedestal"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "Deasc Fan"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "Lucht leanúna Balla"
 
 #: blueman/DeviceClass.py:303
 msgid "Generic HVAC"
-msgstr ""
+msgstr "HVAC cineálach"
 
 #: blueman/DeviceClass.py:304
 msgid "Thermostat"
-msgstr ""
+msgstr "Teirmeastat"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Humaitheoir"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Dí-humidifier"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Téitheoir"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Radaitheoir"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Coire"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Caidéal teasa"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Téitheoir Infrid"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "Téitheoir Painéal Radiant"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "Téitheoir Fan"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Cuirtíní aeir"
 
 #: blueman/DeviceClass.py:315
 msgid "Generic Air Conditioning"
-msgstr ""
+msgstr "Aerchóiriú Cineálach"
 
 #: blueman/DeviceClass.py:316
 msgid "Generic Humidifier"
-msgstr ""
+msgstr "Lumiditheoir cineál"
 
 #: blueman/DeviceClass.py:317
 msgid "Generic Heating"
-msgstr ""
+msgstr "Téamh Cineálach"
 
 #: blueman/DeviceClass.py:325
 msgid "Generic Access Control"
-msgstr ""
+msgstr "Rialú Rochtana Cineálach"
 
 #: blueman/DeviceClass.py:326
 msgid "Access Door"
-msgstr ""
+msgstr "Doras Rochtana"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Doras Garáiste"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Doras Scoir Éigeandála"
 
 #: blueman/DeviceClass.py:329
 msgid "Access Lock"
-msgstr ""
+msgstr "Glas Rochtana"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Ardaitheoir"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Fuinneog"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "Geata Iontrála"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Glas Doras"
 
 #: blueman/DeviceClass.py:334
 msgid "Locker"
-msgstr ""
+msgstr "Taisceadán"
 
 #: blueman/DeviceClass.py:335
 msgid "Generic Motorized Device"
-msgstr ""
+msgstr "Gléas Mótaraithe Cineálach"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "Geata Mótaraithe"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Túnadh"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Dallóga nó Scáthanna"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "Cuirtíní"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Scáileán"
 
 #: blueman/DeviceClass.py:341
 msgid "Generic Power Device"
-msgstr ""
+msgstr "Gléas Cumhachta cineálach"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "Asraon Cumhachta"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Stráice Cumhachta"
 
 #: blueman/DeviceClass.py:344
 msgid "Plug"
-msgstr ""
+msgstr "Breiseán"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Soláthar Cumhachta"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "Tiománaí stiúir"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
-msgstr ""
+msgstr "Fearas Lampa Fluaraiseacha"
 
 #: blueman/DeviceClass.py:348
 msgid "HID Lamp Gear"
-msgstr ""
+msgstr "Fearas Lampa HID"
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "Cás Muirear"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Banc Cumhachta"
 
 #: blueman/DeviceClass.py:351
 msgid "Generic Light Source"
-msgstr ""
+msgstr "Foinse Solais Cineálach"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
-msgstr ""
+msgstr "Bolgán Solais Gloinseach"
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "Lampa faoi stiúir"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "Lampa HID"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "Lampa Fluaraiseacha"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "Eagar faoi stiúir"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "Eagar faoi stiúir il-Dath"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
-msgstr ""
+msgstr "Halaigine voltais íseal"
 
 #: blueman/DeviceClass.py:359
 msgid "Organic light emitting diode (OLED)"
-msgstr ""
+msgstr "Dé-óid astaithe solais orgánach (OLED)"
 
 #: blueman/DeviceClass.py:360
 msgid "Generic Window Covering"
-msgstr ""
+msgstr "Clúdach Fuinneog Cineál"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr ""
+msgstr "Scáthanna Fuinneog"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
-msgstr ""
+msgstr "Dallóga Fuinneog"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Túnna Fuinneoige"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
-msgstr ""
+msgstr "Cuirtíní Fuinneog"
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "Cumhach Taobh amui"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Scáileán Seachtrach"
 
 #: blueman/DeviceClass.py:367
 msgid "Generic Audio Sink"
-msgstr ""
+msgstr "Doirteal Fuaime cineálach"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "Cainteoir Neamhspleách"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "Barra fuaime"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Cainteoir seilf leabhar"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
-msgstr ""
+msgstr "Cainteoir Seastánach"
 
 #: blueman/DeviceClass.py:372
 msgid "Speakerphone"
-msgstr ""
+msgstr "Cainteoir"
 
 #: blueman/DeviceClass.py:373
 msgid "Generic Audio Source"
-msgstr ""
+msgstr "Foinse Fuaime Cineálach"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "Aláraim"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Cloigín"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "Corn"
 
 #: blueman/DeviceClass.py:378
 msgid "Broadcasting Device"
-msgstr ""
+msgstr "Gléas Craolacháin"
 
 #: blueman/DeviceClass.py:379
 msgid "Service Desk"
-msgstr ""
+msgstr "Deasc Seirbhíse"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Bothanna"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "Seomra Craolacháin"
 
 #: blueman/DeviceClass.py:382
 msgid "Auditorium"
-msgstr ""
+msgstr "Éisteacht"
 
 #: blueman/DeviceClass.py:383
 msgid "Generic Motorized Vehicle"
-msgstr ""
+msgstr "Feithicil Mótaraithe Cineálach"
 
 #: blueman/DeviceClass.py:384
 msgid "Car"
-msgstr ""
+msgstr "Gluaisteán"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Feithicil Earraí Móra"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "Feithicil 2 Rothaí"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Gluaisrothar"
 
 #: blueman/DeviceClass.py:388
 msgid "Scooter"
-msgstr ""
+msgstr "Scútar"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Mopéid"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "Feithicil 3 Rothaí"
 
 #: blueman/DeviceClass.py:391
 msgid "Light Vehicle"
-msgstr ""
+msgstr "Feithicil Éadrom"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "Rothar Quad"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Mionbhus"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Bus"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Tralaí"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "Feithicil Talmhaíochta"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "Camper/Carabhán"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "Feithicil Áineasa/Baile Mótair"
 
 #: blueman/DeviceClass.py:399
 msgid "Generic Domestic Appliance"
-msgstr ""
+msgstr "Fearas Baile Cineálach"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Cuisneoir"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Reoiteoir"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Oigheann"
 
 #: blueman/DeviceClass.py:403
 msgid "Microwave"
-msgstr ""
+msgstr "Micreathonn"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Tóstóir"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Meaisín níocháin"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Triomadóir"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Déantóir caife"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "Éadaí iarann"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "Iarann curling"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Triomadóir gruaige"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Folúsghlantóir"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "Folúsghlantóir róbatach"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "Cócaireán ríse"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "Gaile éadaí"
 
 #: blueman/DeviceClass.py:415
 msgid "Generic Wearable Audio Device"
-msgstr ""
+msgstr "Gléas Fuaime Inchaite Cineálach"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Buille cluaise"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "Banda Muineál"
 
 #: blueman/DeviceClass.py:420
 msgid "Generic Aircraft"
-msgstr ""
+msgstr "Aerárthaí cineálacha"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "Aerárthach Éadrom"
 
 #: blueman/DeviceClass.py:422
 msgid "Microlight"
-msgstr ""
+msgstr "Micrea-solas"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Paraglider"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "Aerárthach Paisinéirí"
 
 #: blueman/DeviceClass.py:425
 msgid "Generic AV Equipment"
-msgstr ""
+msgstr "Trealamh AV Cineálach"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Aimplitheoir"
 
 #: blueman/DeviceClass.py:427
 msgid "Receiver"
-msgstr ""
+msgstr "Glacadóir"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Raidió"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "Tiúnóir"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Caschlár"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "Seinnteoir CD"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "Seinnteoir DVD"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Imreoir Bluray"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Imreoir Diosca Optúil"
 
 #: blueman/DeviceClass.py:435
 msgid "Set-Top Box"
-msgstr ""
+msgstr "Bosca Barr Socraithe"
 
 #: blueman/DeviceClass.py:436
 msgid "Generic Display Equipment"
-msgstr ""
+msgstr "Trealamh Taispeáin Cineál"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Teilifís"
 
 #: blueman/DeviceClass.py:438
 msgid "Monitor"
-msgstr ""
+msgstr "Monatóireacht"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Teilgeoir"
 
 #: blueman/DeviceClass.py:440
 msgid "Generic Hearing aid"
-msgstr ""
+msgstr "Áis Éisteachta Cineálach"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "Cúnamh éisteachta in-chluas"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "Áis éisteachta taobh thiar den chluas"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Ionchlannán Cochlear"
 
 #: blueman/DeviceClass.py:444
 msgid "Generic Gaming"
-msgstr ""
+msgstr "Cearrbhachas cineál"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
-msgstr ""
+msgstr "Consól Cluiche Físeáin Baile"
 
 #: blueman/DeviceClass.py:446
 msgid "Portable handheld console"
-msgstr ""
+msgstr "Consól láimhe iniompartha"
 
 #: blueman/DeviceClass.py:447
 msgid "Generic Signage"
-msgstr ""
+msgstr "Comharthaíocht Chiné"
 
 #: blueman/DeviceClass.py:448
 msgid "Digital Signage"
-msgstr ""
+msgstr "Comharthaíocht Digiteach"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "Lipéad leictreonach"
 
 #: blueman/DeviceClass.py:450
 msgid "Generic Pulse Oximeter"
-msgstr ""
+msgstr "Oximéadar Pulse Cineálach"
 
 #: blueman/DeviceClass.py:451
 msgid "Fingertip Pulse Oximeter"
-msgstr ""
+msgstr "Oximéadar Pulse Feartip"
 
 #: blueman/DeviceClass.py:452
 msgid "Wrist Worn Pulse Oximeter"
-msgstr ""
+msgstr "Oximéadar Pulse Chaite na láimhe"
 
 #: blueman/DeviceClass.py:453
 msgid "Generic Weight Scale"
-msgstr ""
+msgstr "Scála Meáchan cineálach"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Gléas Soghluaisteachta Pear"
 
 #: blueman/DeviceClass.py:455
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Cathaoir Rothaí"
 
 #: blueman/DeviceClass.py:456
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Scútar Soghlu"
 
 #: blueman/DeviceClass.py:457
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Monatóir Glúcóis Leanúnach"
 
 #: blueman/DeviceClass.py:458
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Caidéal Inslin Cineál"
 
 #: blueman/DeviceClass.py:459
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Caidéal Inslin, caidéal buan"
 
 #: blueman/DeviceClass.py:460
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Caidéal Inslin, caidéal paiste"
 
 #: blueman/DeviceClass.py:461
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Peann Insulin"
 
 #: blueman/DeviceClass.py:462
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Seachadadh Cógais Chiné"
 
 #: blueman/DeviceClass.py:463
 msgid "Generic Spirometer"
-msgstr ""
+msgstr "Spirometer Cineálach"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "Spirometer láimhe"
 
 #: blueman/DeviceClass.py:465
 msgid "Generic Outdoor Sports Activity"
-msgstr ""
+msgstr "Gníomhaíocht Spóirt Allamui"
 
 #: blueman/DeviceClass.py:466
 msgid "Location Display"
-msgstr ""
+msgstr "Taispeáin Suíomh"
 
 #: blueman/DeviceClass.py:467
 msgid "Location and Navigation Display"
-msgstr ""
+msgstr "Taispeántas Suíomh agus Nascleanúna"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
-msgstr ""
+msgstr "Suíomh Pod"
 
 #: blueman/DeviceClass.py:469
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Suíomh agus Pod Nascleanúint"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BRUSCAIR"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDDEN"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Cainéal Rialaithe Crua-chóip"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Cainéal Sonraí Crua-Choipeáil"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Fógra Crua-chóip"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Eitleán"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Prótacal Oiriúnaithe Ilchainéil (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "SeirbhísDiscoveryServerServiceClassid"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassid"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Grúpa Brabhsáil Phoi"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
-msgstr ""
+msgstr "Port Sraitheach"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Rochtain LAN ag baint úsáide as PPP"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
-msgstr ""
+msgstr "Líonrú Dialup (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "Sioncronú iRMC"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "Brúigh Réad OBEX"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
-msgstr ""
+msgstr "Aistriú Comhad OBEX"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Ordú Sync iRMC"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Teileafónaíocht gan"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
-msgstr ""
+msgstr "Foinse Fuaime"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr ""
+msgstr "Doirteal Fuaime"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Sprioc Cianrialtáin"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Ardfuaime"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Cianrialtán"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Físchomhdháil"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Idirchum"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Facs"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Geata Fuaime Headset"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Cliant WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANE"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
-msgstr ""
+msgstr "Pointe Rochtana Líonra"
 
 #: blueman/Sdp.py:138
 msgid "Group Network"
-msgstr ""
+msgstr "Líonra Grúpa"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Priontáil Díreach (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "TagairPriontáil (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Íomháú (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "Freagróir íomháithe (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "Íomháú Uathoibríoch (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "ImagingReferenceDObjects (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Geata Fuaime Saor ó Láimhe"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "Seirbhís Obair ReferencePriontáil Díreach (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "UI Frithchaite (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Priontáil Bunúsach (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Stádas Priontála (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Seirbhís Gléas Comhéadan Daonna (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "Crua-Copy Cableathsholáthar (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_Print (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_scan (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Rochtain Choiteann ISDN (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "Físchomhdháil GW (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Fuaime/Físeán"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "Rochtain SIM (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Rochtain ar leabhar teileafóin (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Rochtain ar leabhar teileafóin (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
-msgstr ""
+msgstr "Rochtain ar leabhar teileafóin (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Freastalaí Rochtana Teachtai"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Freastalaí Fógra Teach"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
-msgstr ""
+msgstr "Próifíl Rochtana Teachtaireachta (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "Freastalaí GNSS"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "Taispeáin 3D"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "Gloiní 3D"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "Sioncrónú 3D (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Próifíl Sonraíochta Ilphróifíle (MPS)"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Seirbhís Sonraíochta Ilphróifíle (MPS)"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Seirbhís Rochtana Féilire, Tasc agus Nótaí (CTN)"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Seirbhís Fógra Féilire, Tascanna agus Nótaí (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Próifíl Féilire, Tasc agus Nótaí (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "Eolas PnP"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr ""
+msgstr "Líonrú Cineálach"
 
 #: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
-msgstr ""
+msgstr "FileTransfer cineálach"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Fuaim Cineálach"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Teileafónaíocht Chin"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
-msgstr ""
+msgstr "Foinse Físe"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr ""
+msgstr "Doirteal Físe"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Dáileadh Físe"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
 msgid "HDP Source"
-msgstr ""
+msgstr "Foinse HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "Doirteal HDP"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Rochtain Cineálach"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Tréith Cineálach"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Foláireamh Láithreach"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Caillteanas Nasc"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Cumhacht Tx"
 
 #: blueman/Sdp.py:194
 msgid "Current Time Service"
-msgstr ""
+msgstr "Seirbhís Am Reatha"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Seirbhís Nuashonrú Am Tagartha"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "An Chéad Seirbhís Athraithe DST eile"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Glúcóis"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Teirmiméadar sláinte"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
-msgstr ""
+msgstr "Faisnéis Gléas"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Ráta Croí"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Seirbhís Stádas Foláireamh Fón"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
-msgstr ""
+msgstr "Seirbhís Ceallraí"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Brú fola"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Seirbhís Fógra Foláiri"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Gléas Comhéadan Daonna"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Paraiméadair scanadh"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Luas agus Cadence Rith"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "Uathoibriú IO"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Luas agus Cadence Rothaíochta"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "Cumhacht Rothaíochta"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Suíomh agus Nascleanúint"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Braiteadh Comhshaoil"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Comhdhéanamh Coirp"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Sonraí Úsáideora"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Scála Meáchain"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "Bainistíocht Bannaí"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Monatóireacht Leanúnach"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Tacaíocht Prótacal Idirlín"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Suíomh faoi Dhíon"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Oximeter Pulse"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "Seachfhreastalaí"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Fionnachtain Iompair"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
-msgstr ""
+msgstr "Aistriú Réad"
 
 #: blueman/Sdp.py:224
 msgid "AppleAgent"
-msgstr ""
+msgstr "AppleGníomhaire"
 
 #: blueman/Sdp.py:225
 msgid "Primary Service"
-msgstr ""
+msgstr "Seirbhís Bunscoile"
 
 #: blueman/Sdp.py:226
 msgid "Secondary Service"
-msgstr ""
+msgstr "Seirbhís Tánaisteach"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Áireamh"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Dearbhú Saintréith"
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
-msgstr ""
+msgstr "Ainm Gléas"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Dealramh"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Bratach Príobháideachais"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
-msgstr ""
+msgstr "Seoladh Athnasctha"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Paraiméadair Nasc Roghnaithe"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
-msgstr ""
+msgstr "Seirbhís Athraithe"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "ID Córais"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Sreang Uimhir Mhúnla"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Sreang Uimhir Sraitheach"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Teaghrán Athbhreithnithe Firmware"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Teaghrán Athbhreithnithe Crua-earraí"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Teaghrán Athbhreithnithe Bogearraí"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "String Ainm Monaróra"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "ID PnP"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Airíonna Leathnaithe tréithe"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Cur síos ar an úsáideoir"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Cumraíocht Saintréith Cliant"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Cumraíocht tréith Freastalaí"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Formáid cur i láthair tréith"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Formáid Comhiomlán Saintré"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Raon Bailí"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Tagairt Tuarascála Seachtrach"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
-msgstr ""
+msgstr "Tagairt Tuarascála"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
-msgstr ""
+msgstr "Próifílí fuaime agus ionchuir"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
-msgstr ""
+msgstr "Dílseánaigh"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "yes"
-msgstr ""
+msgstr "tá"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "no"
-msgstr ""
+msgstr "níl"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Roghnaigh rónna agus úsáid <i>Control + C</i> chun cóipeáil</big>"
 
 #: blueman/plugins/manager/Info.py:125
 msgid "_Info"
-msgstr ""
+msgstr "_Eolas"
 
 #: blueman/plugins/manager/Info.py:126
 msgid "Show device information"
-msgstr ""
+msgstr "Taispeáin faisnéis ghléas"
 
 #: blueman/plugins/manager/Notes.py:59
 msgid "Send _note"
-msgstr ""
+msgstr "Seol _nóta"
 
 #: blueman/plugins/manager/Notes.py:60
 msgid "Send a text note"
-msgstr ""
+msgstr "Seol nóta téacs"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:86
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "Theip ar phróifíl a athrú go %s"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:132
 msgid "Audio Profile"
-msgstr ""
+msgstr "Próifíl Fuaime"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:133
 msgid "Select audio profile for PulseAudio"
-msgstr ""
+msgstr "Roghnaigh próifíl fuaime do PulseAudio"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
-msgstr ""
+msgstr "Neamhshonraithe"
 
 #: blueman/plugins/applet/AutoConnect.py:20
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Déanann iarracht ceangal uathoibríoch le seirbhísí inchumraithe ag tús agus "
+"gach 60 soicind."
 
 #: blueman/plugins/applet/AutoConnect.py:50
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "Ceangailte go huathoibríoch le %(service)s ar %(device)s"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"Taispeánann sé fógraí deisce nuair a nasctar gléasanna nó nuair a "
+"dhícheanglaítear iad."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:36
 msgid "Disconnected"
-msgstr ""
+msgstr "Dícheangailte"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
 #: blueman/plugins/applet/NetUsage.py:272
 msgid "Connected:"
-msgstr ""
+msgstr "Ceangailte:"
 
 #: blueman/plugins/applet/NetUsage.py:169
 #: blueman/plugins/applet/NetUsage.py:282
 msgid "Not Connected"
-msgstr ""
+msgstr "Níl Ceangailte"
 
 #: blueman/plugins/applet/NetUsage.py:175
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
+"Níl aon staitisticí úsáide ar fáil fós. Bain triail as nasc a bhunú ar dtús "
+"agus ansin seiceáil an leathanach seo."
 
 #: blueman/plugins/applet/NetUsage.py:203
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "lá"
+msgstr[1] "laethanta"
+msgstr[2] "laethanta"
 
 #: blueman/plugins/applet/NetUsage.py:204
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "uair"
+msgstr[1] "uair an chloig"
+msgstr[2] "uair an chloig"
 
 #: blueman/plugins/applet/NetUsage.py:205
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "nóiméad"
+msgstr[1] "nóiméad"
+msgstr[2] "nóiméad"
 
 #: blueman/plugins/applet/NetUsage.py:207
 #, python-format
 msgid "%d %s %d %s and %d %s"
-msgstr ""
+msgstr "%d %s %d %s agus %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:243
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "An bhfuil tú cinnte gur mhaith leat an cuntar a athshocrú?"
 
 #: blueman/plugins/applet/NetUsage.py:289
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
 msgstr ""
+"Ligeann duit monatóireacht a dhéanamh ar úsáid tráchta líonra (leathanbhanda "
+"soghluaiste Úsáideach do phleananna teoranta rochtana sonraí. Rianaíonn an "
+"breiseán seo gach gléas ar leithligh."
 
 #: blueman/plugins/applet/NetUsage.py:309
 msgid "Network _Usage"
-msgstr ""
+msgstr "Úsáid Líonra"
 
 #: blueman/plugins/applet/NetUsage.py:310
 msgid "Shows network traffic usage"
-msgstr ""
+msgstr "Taispeánann úsáid tráchta líonra"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 #: blueman/plugins/applet/ShowConnected.py:79
 #: blueman/plugins/applet/PowerManager.py:173
 msgid "Bluetooth Enabled"
-msgstr ""
+msgstr "Bluetooth Cumasaithe"
 
 #: blueman/plugins/applet/Networking.py:18
 msgid "Manages local network services, like NAP bridges"
-msgstr ""
+msgstr "Bainistíonn sé seirbhísí líonra áitiúla, cosúil"
 
 #: blueman/plugins/applet/NMDUNSupport.py:18
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
 msgstr ""
+"Soláthraíonn sé tacaíocht do Dial Up Networking (DUN) le ModemManager agus "
+"NetworkManager"
 
-#: blueman/plugins/applet/RecentConns.py:43
+#: blueman/plugins/applet/RecentConns.py:42
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
+"Soláthraíonn mír roghchlár ina bhfuil naisc a úsáidtear go deireanach le "
+"haghaidh rochtana"
 
 #. the maximum number of items RecentConns menu will display
-#: blueman/plugins/applet/RecentConns.py:54
+#: blueman/plugins/applet/RecentConns.py:53
 msgid "Maximum items"
-msgstr ""
+msgstr "Míreanna uasta"
 
-#: blueman/plugins/applet/RecentConns.py:55
+#: blueman/plugins/applet/RecentConns.py:54
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "Taispeánfar an líon uasta míreanna roghchlár naisc le déanaí."
 
-#: blueman/plugins/applet/RecentConns.py:156
+#: blueman/plugins/applet/RecentConns.py:155
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "Ceangailte le %s"
 
-#: blueman/plugins/applet/RecentConns.py:162
+#: blueman/plugins/applet/RecentConns.py:161
 msgid "Failed to connect"
-msgstr ""
+msgstr "Theip ar nascadh"
 
-#: blueman/plugins/applet/RecentConns.py:173
+#: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr ""
+msgstr "%(service)s ar %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:177
+#: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "Níl cuibheoir don nasc seo ar fáil"
 
-#: blueman/plugins/applet/RecentConns.py:190
-msgid "Recent _Connections"
-msgstr ""
+#: blueman/plugins/applet/RecentConns.py:188
+msgid "Reconnect to…"
+msgstr "Athcheangail le…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"Soláthraíonn sé tacaíocht do Líonrú Ceantair Pearsanta (PAN) a tugadh "
+"isteach i NetworkManager 0.8"
 
 #: blueman/plugins/applet/DBusService.py:46
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "Soláthraíonn API dBus do chomhpháirteanna Blueman eile"
 
 #: blueman/plugins/applet/TransferService.py:126
 msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "Comhad atá ag teacht isteach thar Bluetooth"
 
 #: blueman/plugins/applet/TransferService.py:127
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr ""
+msgstr "Comhad atá ag teacht isteach %(0)s ó %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:129
 msgid "Reject"
-msgstr ""
+msgstr "Diúltaigh"
 
 #: blueman/plugins/applet/TransferService.py:136
 msgid "Receiving file"
-msgstr ""
+msgstr "Comhad a ghlacadh"
 
 #: blueman/plugins/applet/TransferService.py:137
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr ""
+msgstr "Comhad a fháil %(0)s ó %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:156
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
+msgstr "Soláthraíonn cumais aistrithe comhad OBEX"
 
 #: blueman/plugins/applet/TransferService.py:179
 msgid "Configured directory for incoming files does not exist"
-msgstr ""
+msgstr "Níl eolaire cumraithe do chomhaid atá ag teacht isteach ann"
 
 #: blueman/plugins/applet/TransferService.py:180
 #, python-format
@@ -3165,54 +3211,56 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
+"Cinntigh go bhfuil an t-eolaire \"<b>%s</b>\" ann nó cumraigh le blueman-"
+"services é. Go dtí sin bainfear úsáid as an réamhshocrú \"%s\""
 
 #: blueman/plugins/applet/TransferService.py:302
 msgid "File received"
-msgstr ""
+msgstr "Comhad a fuarthas"
 
 #: blueman/plugins/applet/TransferService.py:303
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "D'éirigh le comhad %(0)s ó %(1)s a fháil"
 
 #: blueman/plugins/applet/TransferService.py:307
 msgid "Open"
-msgstr ""
+msgstr "Oscailte"
 
 #: blueman/plugins/applet/TransferService.py:311
 msgid "Transfer failed"
-msgstr ""
+msgstr "Theip ar aistriú"
 
 #: blueman/plugins/applet/TransferService.py:312
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr ""
+msgstr "Theip ar aistriú comhad %(0)s"
 
 #: blueman/plugins/applet/TransferService.py:332
 #: blueman/plugins/applet/TransferService.py:341
 msgid "Files received"
-msgstr ""
+msgstr "Comhaid a fuarthas"
 
 #: blueman/plugins/applet/TransferService.py:333
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Fuarthas %(files)d comhad sa chúlra"
+msgstr[1] "Fuarthas %(files)d comhaid sa chúlra"
+msgstr[2] "Fuarthas %(files)d comhaid sa chúlra"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
 msgid "Open Location"
-msgstr ""
+msgstr "Suíomh Oscailte"
 
 #: blueman/plugins/applet/TransferService.py:342
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Fuarthas %(files)d comhad eile sa chúlra"
+msgstr[1] "Fuarthas %(files)d comhad sa chúlra"
+msgstr[2] "Fuarthas %(files)d comhad sa chúlra"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3220,64 +3268,70 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Athraíonn stádas killswitch Bluetooth chun stát cumhachta Bluetooth a "
+"mheaitseáil. Ligeann sé Bluetooth a chasadh ar ais ó dheilbhín a "
+"thaispeánann a stádas; ar choinníoll nach bhfuil sé díphlugáilte ag an "
+"gcóras, nó go fisiciúil."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "Cuireann míreanna caighdeánacha roghchláir leis an roghchlár"
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
-msgstr ""
+msgstr "Athraigh an bainisteoir ag cliceáil ar dheilbhín tráidire an chórais"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
 msgstr ""
+"Cliceáil ar dheilbhín tráidire an chórais déanfar an bainisteoir a athrú in "
+"ionad díriú air."
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "Seol _Comhaid chuig an Gléas"
 
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
-msgstr ""
+msgstr "_Feistí"
 
 #: blueman/plugins/applet/StandardItems.py:55
 msgid "Adap_ters"
-msgstr ""
+msgstr "Cuibh_eoirí"
 
 #: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
-msgstr ""
+msgstr "feidhmchláirín"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr ""
+msgstr "Soláthraíonn sé passkey, seirbhísí fíordheimhnithe do BlueZ daemon"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr ""
+msgstr "Cuireann mír roghchlár imeachta leis chun an applet a scor"
 
 #: blueman/plugins/applet/DhcpClient.py:14
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr ""
+msgstr "Soláthraíonn sé cliant dhcp bunúsach do naisc PAN Bluetooth."
 
 #: blueman/plugins/applet/DhcpClient.py:47
 #: blueman/plugins/applet/DhcpClient.py:55
 #: blueman/plugins/applet/DhcpClient.py:60
 msgid "Bluetooth Network"
-msgstr ""
+msgstr "Líonra Bluetooth"
 
 #: blueman/plugins/applet/DhcpClient.py:48
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr ""
+msgstr "Comhéadan %(0)s ceangailte le seoladh IP %(1)s"
 
 #: blueman/plugins/applet/DhcpClient.py:55
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr ""
+msgstr "Theip ar sheoladh IP a fháil ar %s"
 
 #: blueman/plugins/applet/DhcpClient.py:60
 #, python-format
@@ -3285,67 +3339,75 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
+"Ag iarraidh seoladh IP a fháil ar %s\n"
+"Fan le do thoil…"
 
 #: blueman/plugins/applet/ShowConnected.py:21
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
+"Cuireann sé tásc ar an deilbhín stádais nuair a bhíonn Bluetooth gníomhach "
+"agus taispeánann sé na naisc sa leid uirlisí."
 
 #: blueman/plugins/applet/ShowConnected.py:72
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "Bluetooth Gníomhach"
 
 #: blueman/plugins/applet/ShowConnected.py:81
 #: blueman/plugins/applet/PowerManager.py:176
 msgid "Bluetooth Disabled"
-msgstr ""
+msgstr "Bluetooth faoi mhíchumas"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Cuireann sé míreanna roghchláir"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
 msgid "Disconnect %s"
-msgstr ""
+msgstr "Dícheangail %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
+"Soláthraíonn sé mír roghchláir chun an t-oiriúntóir réamhshocraithe a "
+"dhéanamh le feiceáil go sealadach nuair a shocraítear é"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr ""
+msgstr "Amach inúsáidte"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "Mairfidh méid ama i soicind modh infhaighte"
 
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:126
 msgid "_Make Discoverable"
-msgstr ""
+msgstr "_Déan In-aimsithe"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr ""
+msgstr "Déan an cuibheoir réamhshocraithe le feice"
 
 #: blueman/plugins/applet/DiscvManager.py:61
 #, python-format
 msgid "Discoverable… %ss"
-msgstr ""
+msgstr "In-aimsithe... %ss"
 
 #: blueman/plugins/applet/DiscvManager.py:63
 msgid "Discoverable…"
-msgstr ""
+msgstr "Infhaighte…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
+"Soláthraíonn roghchlár don applet agus API do bhreiseáin eile chun é a "
+"ionramháil"
 
 #: blueman/plugins/applet/PPPSupport.py:73
 #, python-format
@@ -3353,19 +3415,23 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
+"D'éirigh leis an tseirbhís <b>DUN</b> a nascadh ar <b>%(0)s.</b>\n"
+"Tá líonra ar fáil anois trí <b>%(1)s</b>"
 
 #: blueman/plugins/applet/PPPSupport.py:82
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
+"Soláthraíonn sé tacaíocht bhunúsach chun nascadh leis an idirlíon trí "
+"phróifíl DUN."
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
-msgstr ""
+msgstr "Ceadaíonn láimhseálaí ceangail phróifíle SPP caighdeánach gníom"
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
-msgstr ""
+msgstr "Script le forghníomhú ar nasc"
 
 #: blueman/plugins/applet/SerialManager.py:32
 msgid ""
@@ -3377,20 +3443,29 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
+"<span size=\"small\">Rithfidh na hargóintí seo a leanas:\n"
+"Seoladh, Ainm, ainm seirbhíse, uuid16s, nód rfcomm\n"
+"Mar shampla:\n"
+"AA:BB:CC:DD:EE:FF, Fón, seirbhís DUN, 0x1103, /dev/rfcomm0\n"
+"cuirtear uuid16s ar ais mar liosta scartha le camóga\n"
+"\n"
+"Nuair a dhéanfar an gléas a dhínascadh seolfar comhartha HUP</span> chuig an "
+"script"
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
-msgstr ""
+msgstr "Port sraitheach ceangailte"
 
 #: blueman/plugins/applet/SerialManager.py:64
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
+"Beidh seirbhís port srathach ar ghléas <b>%s</b> ar fáil anois trí <b>%s</b>"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
-msgstr ""
+msgstr "Theip ar script nasc calafort sraitheach"
 
 #: blueman/plugins/applet/SerialManager.py:115
 #, python-format
@@ -3398,51 +3473,56 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
+"Bhí fadhb ann ag seoladh script %s\n"
+"%s"
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
-msgstr ""
+msgstr "Rialaíonn stáit chumhachta cuibheoir Bluetooth"
 
 #: blueman/plugins/applet/PowerManager.py:41
 #: blueman/plugins/applet/PowerManager.py:154
 msgid "<b>Turn Bluetooth _Off</b>"
-msgstr ""
+msgstr "<b>Múch Bluetooth _As</b>"
 
 #: blueman/plugins/applet/PowerManager.py:43
 #: blueman/plugins/applet/PowerManager.py:156
 msgid "Turn off all adapters"
-msgstr ""
+msgstr "Múch gach oiriúnaitheoir"
 
 #: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr ""
+msgstr "<b>Cas Bluetooth _Air</b>"
 
 #: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
-msgstr ""
+msgstr "Cas ar gach oiriúnaitheoir"
 
 #: blueman/plugins/applet/GameControllerWakelock.py:26
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
+"Cuireann sé an scáileán ar fionraí go sealadach nuair a bhíonn rialtóir "
+"cluiche bluetooth ceangailte."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
 msgid "Provides a StatusNotifierItem to show a statusicon"
-msgstr ""
+msgstr "Soláthraíonn StatusNotifierItem chun stádas a thaispeáint"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
-msgstr ""
+msgstr "Líonra"
 
 #: blueman/plugins/services/Network.py:90
 msgid "Invalid IP address"
-msgstr ""
+msgstr "Seoladh IP neamhbhailí"
 
 #: blueman/plugins/services/Network.py:95
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
 msgstr ""
+"Coimhlinníonn seoladh IP le comhéadan %s a bhfuil an seoladh céanna aige"
 
 #: blueman/plugins/services/Network.py:103
 #, python-format
@@ -3451,81 +3531,84 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"Forluíonn seoladh IP le fo-líon an chomhéadan %s, a bhfuil an chumraíocht "
+"seo a leanas aige %s/%s\n"
+"D'fhéadfadh sé seo a bheith ina chúis le hiompar"
 
 #: blueman/plugins/services/Network.py:228
 #: blueman/plugins/services/Network.py:237
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "Níl tacaíocht leis an socrú seo faoi láthair"
 
 #: blueman/plugins/services/Transfer.py:14
 msgid "Transfer"
-msgstr ""
+msgstr "Aistriú"
 
 #: blueman/plugins/services/Transfer.py:26
 msgid "Applet's transfer service plugin is disabled"
-msgstr ""
+msgstr "Tá breiseán seirbhíse aistrithe Applet díchumasaithe"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr ""
+msgstr "Socruithe Dialup"
 
 #: blueman/services/meta/SerialService.py:45
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "Port Sraitheach %s"
 
 #: blueman/services/meta/NetworkService.py:51
 msgid "Renew IP Address"
-msgstr ""
+msgstr "Athnuachan Seoladh IP"
 
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
-msgstr ""
+msgstr "Socraigh Airíonna Cuibheoir Bluetooth"
 
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
-msgstr ""
+msgstr "Feidhmchláirín Blueman"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
-msgstr ""
+msgstr "Bainisteoir Bluetooth Blueman"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
-msgstr ""
+msgstr "Bainisteoir Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 msgid "Bluetooth Device"
-msgstr ""
+msgstr "Gléas Bluetooth"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "Cumraigh Líonra Bluetooth"
 
 #: data/configs/org.blueman.policy.in:11
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "Teastaíonn pribhléidí a chumrú"
 
 #: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
-msgstr ""
+msgstr "Seoladh cliant DHCP"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr ""
+msgstr "Teastaíonn pribhléidí ó chliant DHCP"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr ""
+msgstr "Seoladh déamón PPP"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr ""
+msgstr "Éilíonn pribhléidí a sheoladh déamón PPP"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
-msgstr ""
+msgstr "Socraigh Stáit RFKill"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr ""
+msgstr "Éilíonn pribhléidí Stát RFKill a shocrú"
