@@ -162,6 +162,12 @@ class _NotificationBubble(Gio.DBusProxy):
         self._timeout = timeout
         self._return_id = None
 
+        if self._timeout > 0:
+            try:
+                self.set_hint('transient', True)
+            except ValueError:
+                pass
+
         if icon_name:
             self._app_icon = icon_name
         elif image_data:
