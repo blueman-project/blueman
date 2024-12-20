@@ -128,7 +128,7 @@ class Agent(DbusService):
                 _("Incoming file over Bluetooth"),
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
-                30000, 
+                30000,
                 actions=[("accept", _("Accept")), ("reject", _("Reject"))], actions_cb=on_action, icon_name="blueman"
             )
             notification.show()
