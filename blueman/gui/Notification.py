@@ -24,7 +24,7 @@ class Fade(AnimBase):
 
 
 class _NotificationDialog(Gtk.MessageDialog):
-    def __init__(self, summary: str, message: str, _timeout: int = -1,
+    def __init__(self, summary: str, message: str, _timeout: int = -1, _transient: bool = False,
                  actions: Iterable[tuple[str, str]] | None = None,
                  actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
                  image_data: GdkPixbuf.Pixbuf | None = None) -> None:
@@ -119,7 +119,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 
 class _NotificationBubble(Gio.DBusProxy):
-    def __init__(self, summary: str, message: str, timeout: int = -1,
+    def __init__(self, summary: str, message: str, timeout: int = -1, transient: bool = False,
                  actions: Iterable[tuple[str, str]] | None = None,
                  actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
                  image_data: GdkPixbuf.Pixbuf | None = None) -> None:
@@ -162,7 +162,7 @@ class _NotificationBubble(Gio.DBusProxy):
         self._timeout = timeout
         self._return_id = None
 
-        if self._timeout > 0:
+        if transient:
             try:
                 self.set_hint('transient', True)
             except ValueError:
@@ -273,9 +273,16 @@ class _NotificationBubble(Gio.DBusProxy):
         self._return_id = None
 
 
-def Notification(summary: str, message: str, timeout: int = -1, actions: Iterable[tuple[str, str]] | None = None,
-                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
-                 image_data: GdkPixbuf.Pixbuf | None = None) -> _NotificationBubble | _NotificationDialog:
+def Notification(
+    summary: str,
+    message: str,
+    timeout: int = -1,
+    transient: bool = False,
+    actions: Iterable[tuple[str, str]] | None = None,
+    actions_cb: Callable[[str], None] | None = None,
+    icon_name: str | None = None,
+    image_data: GdkPixbuf.Pixbuf | None = None
+) -> _NotificationBubble | _NotificationDialog:
 
     forced_fallback = not Gio.Settings(schema_id='org.blueman.general')['notification-daemon']
     try:
@@ -295,4 +302,4 @@ def Notification(summary: str, message: str, timeout: int = -1, actions: Iterabl
     else:
         klass = _NotificationBubble
 
-    return klass(summary, message, timeout, actions, actions_cb, icon_name, image_data)
+    return klass(summary, message, timeout, transient, actions, actions_cb, icon_name, image_data)
