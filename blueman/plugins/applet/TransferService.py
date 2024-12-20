@@ -288,12 +288,12 @@ class TransferService(AppletPlugin):
         dest_dir, ignored = self._make_share_path()
         filename = os.path.basename(src)
 
-        dest = os.path.join(dest_dir, filename)
-        if os.path.exists(dest):
+        if os.path.exists(os.path.join(dest_dir, filename)):
             now = datetime.now()
             filename = f"{now.strftime('%Y%m%d%H%M%S')}_{filename}"
             logging.info(f"Destination file exists, renaming to: {filename}")
 
+        dest = os.path.join(dest_dir, filename)
         try:
             shutil.move(src, dest)
         except (OSError, PermissionError):
