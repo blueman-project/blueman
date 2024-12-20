@@ -31,7 +31,7 @@ class ConnectionNotifier(AppletPlugin):
                     device.display_name,
                     _('Connected'),
                     icon_name=device["Icon"],
-                    timeout=5,
+                    transient=True,
                 )
                 notification.show()
             else:
@@ -39,7 +39,7 @@ class ConnectionNotifier(AppletPlugin):
                     device.display_name,
                     _('Disconnected'),
                     icon_name=device["Icon"],
-                    timeout=5,
+                    transient=True,
                 ).show()
 
     def _on_battery_update(self, path: ObjectPath, value: int) -> None:
