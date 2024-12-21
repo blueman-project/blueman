@@ -1,9 +1,9 @@
-import os
+import pathlib
 import struct
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 from blueman.plugins.applet.KillSwitch import RFKILL_TYPE_BLUETOOTH, RFKillOp
 
-if not os.path.exists('/dev/rfkill'):
+if not pathlib.Path('/dev/rfkill').exists():
     raise ImportError("Hardware kill switch not found")
 
 
