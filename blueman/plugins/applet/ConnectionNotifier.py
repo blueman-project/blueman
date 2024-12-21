@@ -30,11 +30,17 @@ class ConnectionNotifier(AppletPlugin):
                 self._notifications[path] = notification = Notification(
                     device.display_name,
                     _('Connected'),
-                    icon_name=device["Icon"]
+                    icon_name=device["Icon"],
+                    transient=True,
                 )
                 notification.show()
             else:
-                Notification(device.display_name, _('Disconnected'), icon_name=device["Icon"]).show()
+                Notification(
+                    device.display_name,
+                    _('Disconnected'),
+                    icon_name=device["Icon"],
+                    transient=True,
+                ).show()
 
     def _on_battery_update(self, path: ObjectPath, value: int) -> None:
         notification = self._notifications.pop(path, None)
