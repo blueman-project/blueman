@@ -2,6 +2,7 @@ import os.path
 import shutil
 import subprocess
 from ipaddress import IPv4Address
+from pathlib import Path
 from subprocess import Popen
 from typing import Optional, List
 from unittest import TestCase
@@ -24,8 +25,8 @@ class FakeSocket:
         return self._ret
 
 
-@patch("blueman.main.NetConf.have", return_value="/usr/bin/mydnsmasq")
-@patch("blueman.main.NetConf.DnsMasqHandler._pid_path", PropertyMock(return_value="/tmp/pid"))
+@patch("blueman.main.NetConf.have", return_value=Path("/usr/bin/mydnsmasq"))
+@patch("blueman.main.NetConf.DnsMasqHandler._pid_path", PropertyMock(return_value=Path("/tmp/pid")))
 class TestDnsmasqHandler(TestCase):
     @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
     @patch("blueman.main.NetConf.NetConf.lock")
@@ -68,9 +69,9 @@ class TestDnsmasqHandler(TestCase):
         )
 
 
-@patch("blueman.main.NetConf.have", return_value="/usr/bin/mydhcpd")
-@patch("blueman.main.NetConf.DhcpdHandler._pid_path", PropertyMock(return_value="/tmp/pid"))
-@patch("blueman.main.NetConf.DHCP_CONFIG_FILE", "/tmp/dhcpd.conf")
+@patch("blueman.main.NetConf.have", return_value=Path("/usr/bin/mydhcpd"))
+@patch("blueman.main.NetConf.DhcpdHandler._pid_path", PropertyMock(return_value=Path("/tmp/pid")))
+@patch("blueman.main.NetConf.DHCP_CONFIG_FILE", Path("/tmp/dhcpd.conf"))
 @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
 class TestDhcpdHandler(TestCase):
     @classmethod
@@ -107,8 +108,8 @@ class TestDhcpdHandler(TestCase):
         )
 
 
-@patch("blueman.main.NetConf.have", return_value="/usr/bin/myudhcpd")
-@patch("blueman.main.NetConf.UdhcpdHandler._pid_path", PropertyMock(return_value="/tmp/pid"))
+@patch("blueman.main.NetConf.have", return_value=Path("/usr/bin/myudhcpd"))
+@patch("blueman.main.NetConf.UdhcpdHandler._pid_path", PropertyMock(return_value=Path("/tmp/pid")))
 @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
 class TestUdhcpdHandler(TestCase):
     @classmethod
@@ -148,16 +149,23 @@ class TestUdhcpdHandler(TestCase):
         self.assertEqual(args[1], {"stderr": subprocess.PIPE})
 
 
-@patch("blueman.main.NetConf.NetConf._IPV4_SYS_PATH", "/tmp/blueman-test/ipv4")
-@patch("blueman.main.NetConf.NetConf._RUN_PATH", "/tmp/blueman-test/run")
+@patch("blueman.main.NetConf.NetConf._IPV4_SYS_PATH", Path("/tmp/blueman-test/ipv4"))
+@patch("blueman.main.NetConf.NetConf._RUN_PATH", Path("/tmp/blueman-test/run"))
 @patch("blueman.main.NetConf.create_bridge")
 @patch("blueman.main.NetConf.call", return_value=0)
 class TestNetConf(TestCase):
     def setUp(self) -> None:
-        os.makedirs("/tmp/blueman-test/run", exist_ok=True)
-        os.makedirs("/tmp/blueman-test/ipv4/conf", exist_ok=True)
-        os.makedirs("/tmp/blueman-test/ipv4/conf/i0", exist_ok=True)
-        os.makedirs("/tmp/blueman-test/ipv4/conf/i1", exist_ok=True)
+        tmpdir = Path("/tmp/blueman-test")
+        tmpdir.joinpath("run").mkdir(parents=True)
+        tmpdir.joinpath("ipv4").mkdir()
+        tmpdir.joinpath("ipv4", "ip_forward").write_text("0")
+
+        i0fw = tmpdir.joinpath("ipv4", "conf", "i0", "forwarding")
+        i0fw.parent.mkdir(parents=True)
+        i0fw.write_text("0")
+        i1fw = tmpdir.joinpath("ipv4", "conf", "i1", "forwarding")
+        i1fw.parent.mkdir(parents=True)
+        i1fw.write_text("0")
 
     def tearDown(self) -> None:
         shutil.rmtree("/tmp/blueman-test")
