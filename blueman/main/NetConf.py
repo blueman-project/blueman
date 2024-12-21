@@ -1,5 +1,6 @@
 import errno
 import os
+import pathlib
 import ipaddress
 import socket
 from tempfile import mkstemp
@@ -38,8 +39,8 @@ def _read_pid_file(fname: str) -> int | None:
 def _get_binary(*names: str) -> str:
     for name in names:
         path = have(name)
-        if path:
-            return path
+        if path is not None:
+            return path.as_posix()
     raise FileNotFoundError(f"{' '.join(names)} not found")
 
 
@@ -147,7 +148,7 @@ class DhcpdHandler(DHCPHandler):
         existing_subnet = ''
         start = end = False
 
-        with open(DHCP_CONFIG_FILE) as f:
+        with DHCP_CONFIG_FILE.open() as f:
             for line in f:
                 if line == '#### BLUEMAN AUTOMAGIC SUBNET ####\n':
                     start = True
@@ -183,7 +184,7 @@ class DhcpdHandler(DHCPHandler):
 
         subnet = self._generate_subnet_config(ip4_address, ip4_mask, dns_servers)
 
-        with open(DHCP_CONFIG_FILE, "w") as f:
+        with DHCP_CONFIG_FILE.open("w") as f:
             f.write(dhcp_config)
             f.write(subnet)
 
@@ -196,7 +197,7 @@ class DhcpdHandler(DHCPHandler):
 
     def _clean_up_configuration(self) -> None:
         dhcp_config, existing_subnet = self._read_dhcp_config()
-        with open(DHCP_CONFIG_FILE, "w") as f:
+        with DHCP_CONFIG_FILE.open("w") as f:
             f.write(dhcp_config)
 
 
