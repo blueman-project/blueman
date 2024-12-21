@@ -28,7 +28,7 @@ class TransferDict(TypedDict):
 
 
 class PendingTransferDict(TypedDict):
-    transfer_path: str
+    transfer_path: ObjectPath
     address: BtAddress
     root: str
     filename: str
@@ -64,7 +64,7 @@ class Agent(DbusService):
         self._allowed_devices: list[str] = []
         self._notification: NotificationType | None = None
         self._pending_transfer: Optional[PendingTransferDict] = None
-        self.transfers: dict[str, TransferDict] = {}
+        self.transfers: dict[ObjectPath, TransferDict] = {}
 
     def register_at_manager(self) -> None:
         AgentManager().register_agent(self.__agent_path)
@@ -254,7 +254,7 @@ class TransferService(AppletPlugin):
             self._agent.unregister()
             self._agent = None
 
-    def _on_transfer_started(self, _manager: Manager, transfer_path: str) -> None:
+    def _on_transfer_started(self, _manager: Manager, transfer_path: ObjectPath) -> None:
         if not self._agent or transfer_path not in self._agent.transfers:
             # This is not an incoming transfer we authorized
             return
@@ -277,7 +277,7 @@ class TransferService(AppletPlugin):
 
             n.add_action("open", name, on_open)
 
-    def _on_transfer_completed(self, _manager: Manager, transfer_path: str, success: bool) -> None:
+    def _on_transfer_completed(self, _manager: Manager, transfer_path: ObjectPath, success: bool) -> None:
         if not self._agent or transfer_path not in self._agent.transfers:
             logging.info("This is probably not an incoming transfer we authorized")
             return
