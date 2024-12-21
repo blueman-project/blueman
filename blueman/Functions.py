@@ -117,9 +117,9 @@ def launch(
     env["BLUEMAN_EVENT_TIME"] = str(timestamp)
 
     if not system:
-        cmd = os.path.join(BIN_DIR, cmd)
+        command = BIN_DIR / cmd
     else:
-        cmd = os.path.expanduser(cmd)
+        command = pathlib.Path(cmd).expanduser()
 
     if paths:
         files: list[Gio.File] | None = [Gio.File.new_for_commandline_arg(p) for p in paths]
@@ -129,7 +129,7 @@ def launch(
     if icon_name and context is not None:
         context.set_icon_name(icon_name)
 
-    appinfo = Gio.AppInfo.create_from_commandline(cmd, name, flags)
+    appinfo = Gio.AppInfo.create_from_commandline(command.as_posix(), name, flags)
     launched: bool = appinfo.launch(files, context)
 
     if not launched:
@@ -140,7 +140,7 @@ def launch(
 
 def setup_icon_path() -> None:
     ic = Gtk.IconTheme.get_default()
-    ic.prepend_search_path(ICON_PATH)
+    ic.prepend_search_path(ICON_PATH.as_posix())
 
 
 def adapter_path_to_name(path: str | None) -> str | None:
@@ -205,14 +205,11 @@ def create_menuitem(
     return item
 
 
-def have(t: str) -> str | None:
-    paths = os.environ['PATH'] + ':/sbin:/usr/sbin'
-    for path in paths.split(os.pathsep):
-        exec_path = os.path.join(path, t)
-        exists = os.path.exists(exec_path)
-        executable = os.access(exec_path, os.EX_OK)
-        if exists and executable:
-            return exec_path
+def have(t: str) -> pathlib.Path | None:
+    pathstr = os.environ['PATH'] + ':/sbin:/usr/sbin'
+    for path in [pathlib.Path(p, t) for p in pathstr.split(":")]:
+        if path.exists() and os.access(path, os.EX_OK):
+            return path
     return None
 
 
@@ -220,7 +217,7 @@ def set_proc_title(name: str | None = None) -> int:
     """Set the process title"""
 
     if not name:
-        name = os.path.basename(sys.argv[0])
+        name = pathlib.Path(sys.argv[0]).name
 
     libc = cdll.LoadLibrary('libc.so.6')
     buff = create_string_buffer(len(name) + 1)

@@ -1,25 +1,27 @@
+import os
+import pathlib
+
 __all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH", "BIN_DIR", "BLUETOOTHD_PATH"]
 
 VERSION = "@VERSION@"
 PACKAGE = "@PACKAGE@"
 WEBSITE = "https://github.com/blueman-project/blueman"
-PREFIX = "@prefix@"
-BIN_DIR = "@BINDIR@"
-LOCALEDIR = "@LOCALEDIR@"
-ICON_PATH = "@icondir@"
-PIXMAP_PATH = "@pkgdatadir@/pixmaps"
-BLUETOOTHD_PATH = "@bluetoothd_path@"
-UI_PATH = "@pkgdatadir@/ui"
-DHCP_CONFIG_FILE = "@dhconfig@"
+PREFIX = pathlib.Path("@prefix@")
+BIN_DIR = pathlib.Path("@BINDIR@")
+LOCALEDIR = pathlib.Path("@LOCALEDIR@")
+ICON_PATH = pathlib.Path("@icondir@")
+PIXMAP_PATH = pathlib.Path("@pkgdatadir@/pixmaps")
+BLUETOOTHD_PATH = pathlib.Path("@bluetoothd_path@")
+UI_PATH = pathlib.Path("@pkgdatadir@/ui")
+DHCP_CONFIG_FILE = pathlib.Path("@dhconfig@")
 POLKIT = @POLKIT@
 GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@"
-RFCOMM_WATCHER_PATH = "@LIBEXECDIR@/blueman-rfcomm-watcher"
+RFCOMM_WATCHER_PATH = pathlib.Path("@LIBEXECDIR@/blueman-rfcomm-watcher")
 
-import os
 
 if 'BLUEMAN_SOURCE' in os.environ:
-    _dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-    BIN_DIR = os.path.join(_dirname, 'apps')
-    ICON_PATH = os.path.join(_dirname, 'data', 'icons')
-    PIXMAP_PATH = os.path.join(_dirname, 'data', 'icons', 'pixmaps')
-    UI_PATH = os.path.join(_dirname, 'data', 'ui')
+    _dirname = pathlib.Path(*pathlib.Path(__file__).parts[:-2])
+    BIN_DIR = _dirname / "apps"
+    ICON_PATH = _dirname / "data" / "icons"
+    PIXMAP_PATH = _dirname / "data" / "icons" / "pixmaps"
+    UI_PATH = _dirname / "data" / "ui"

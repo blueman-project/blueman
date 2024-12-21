@@ -4,7 +4,6 @@ from collections.abc import Callable
 import html
 import logging
 import cairo
-import os
 
 from blueman.bluemantyping import ObjectPath, BtAddress
 from blueman.bluez.Adapter import Adapter
@@ -527,8 +526,8 @@ class ManagerDeviceList(DeviceList):
 
         for (name, perc) in bars.items():
             if round(row[name], -1) != round(perc, -1):
-                icon_name = f"blueman-{name}-{int(round(perc, -1))}.png"
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(os.path.join(PIXMAP_PATH, icon_name), w, h, True)
+                path = PIXMAP_PATH / f"blueman-{name}-{int(round(perc, -1))}.png"
+                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(path.as_posix(), w, h, True)
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
