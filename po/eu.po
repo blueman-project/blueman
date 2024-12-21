@@ -5,7 +5,7 @@
 # Alexander Gabilondo <alexgabi@disroot.org>, 2019
 # Aritz Jorge Sánchez <aritz.jorge@protonmail.com>, 2015
 # Asier Iturralde Sarasola <asier.iturralde@gmail.com>, 2014,2018
-# Alex Gabilondo <alexgabi@disroot.org>, 2022, 2023.
+# Alex Gabilondo <alexgabi@disroot.org>, 2022, 2023, 2024.
 # Alexander Gabilondo <alexgabi@openmailbox.org>, 2023, 2024.
 # Joseba <jansajansa45@gmail.com>, 2024.
 msgid ""
@@ -13,15 +13,15 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-06-26 07:09+0000\n"
-"Last-Translator: Alexander Gabilondo <alexgabi@openmailbox.org>\n"
+"PO-Revision-Date: 2024-09-02 03:55+0000\n"
+"Last-Translator: Alex Gabilondo <alexgabi@disroot.org>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/blueman/2-4/eu/>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6-rc\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -1170,10 +1170,8 @@ msgid "Game"
 msgstr "Jolasa"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Telefono generikoa"
+msgstr "Generikoa ezezaguna"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1188,10 +1186,8 @@ msgid "Desktop Workstation"
 msgstr "Mahaigaineko lantokia"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Ordenagailu generikoa"
+msgstr "Ordenagailu zerbitzaria"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
@@ -1218,20 +1214,16 @@ msgid "All in One"
 msgstr "Guztiak batean"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "Zerbitzaria"
+msgstr "Blade zerbitzaria"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
 msgstr "Bihurgarria"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Eramangarria"
+msgstr "Desmuntagarria"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
@@ -1250,16 +1242,12 @@ msgid "Generic Watch"
 msgstr "Eskumuturreko erloju generikoa"
 
 #: blueman/DeviceClass.py:187
-#, fuzzy
-#| msgid "Watch: Sports Watch"
 msgid "Sports Watch"
-msgstr "Erlojua: Kirol erlojua"
+msgstr "Kirol erlojua"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
-#| msgid "Wrist watch"
 msgid "Smartwatch"
-msgstr "Eskumuturreko erlojua"
+msgstr "Erloju adimentsua"
 
 #: blueman/DeviceClass.py:189
 msgid "Generic Clock"
@@ -1298,44 +1286,32 @@ msgid "Generic Thermometer"
 msgstr "Termometro generikoa"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
-#| msgid "Health Thermometer"
 msgid "Ear Thermometer"
-msgstr "Osasun Termometroa"
+msgstr "Belarriko termometroa"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Generic Heart Rate Sensor"
-msgstr "Bihotz-taupadaren sentsore generikoa"
+msgstr "Bihotz-taupadaren sentsorea"
 
 #: blueman/DeviceClass.py:200
-#, fuzzy
-#| msgid "Heart Rate"
 msgid "Heart Rate Belt"
-msgstr "Bihotz taupadak"
+msgstr "Bihotz-taupaden gerrikoa"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
 msgstr "Tentsio arteriala generikoa"
 
 #: blueman/DeviceClass.py:202
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Arm Blood Pressure"
-msgstr "Odol-presioa"
+msgstr "Besoko odol-presioa"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Wrist Blood Pressure"
-msgstr "Odol-presioa"
+msgstr "Eskuturreko odol-presioa"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "Giza interfaze gailua"
+msgstr "Giza interfaze gailu generikoa"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1378,80 +1354,56 @@ msgid "Generic Glucose Meter"
 msgstr "Glukosa-neurgailu generikoa"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "Generic Running Walking Sensor"
-msgstr "Generikoa: korrika eta oinezko sentsorea"
+msgstr "Korrika eta oinezko sentsore generikoa"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "In-Shoe Running Walking Sensor"
-msgstr "Generikoa: korrika eta oinezko sentsorea"
+msgstr "Oinetako korrika eta ibiltze-sentsorea"
 
 #: blueman/DeviceClass.py:218
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Shoe Running Walking Sensor"
-msgstr "Generikoa: korrika eta oinezko sentsorea"
+msgstr "Oinetako korrika eta ibiltze sentsorea"
 
 #: blueman/DeviceClass.py:219
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Hip Running Walking Sensor"
-msgstr "Generikoa: korrika eta oinezko sentsorea"
+msgstr "Gerriko korrika eta ibiltze-sentsorea"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
-msgstr "Generikoa: Txirrindularitza"
+msgstr "Txirrindularitza generikoa"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "Txirrindularitza: bizikleta ordenagailua"
+msgstr "Txirrinduko ordenagailua"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Txirrindularitza: abiadura sentsorea"
+msgstr "Abiadura sentsorea"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Txirrindularitza: kadentzia-sentsorea"
+msgstr "Kadentzia-sentsorea"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Txirrindularitza: potentzia-sentsorea"
+msgstr "Potentzia-sentsorea"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "Txirrindularitza: abiadura eta kadentzia-sentsorea"
+msgstr "Abiadura eta kadentzia-sentsorea"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Control Device"
-msgstr "Mugikortasun pertsonaleko gailu generikoa"
+msgstr "Kontrol-gailu generikoa"
 
 #: blueman/DeviceClass.py:227
-#, fuzzy
 msgid "Switch"
-msgstr "Switch"
+msgstr "Etengailua"
 
 #: blueman/DeviceClass.py:228
-#, fuzzy
 msgid "Multi-switch"
-msgstr "Multi-switch"
+msgstr "Etengailu anitza"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
@@ -1502,10 +1454,8 @@ msgid "Generic Network Device"
 msgstr "Sare generikoko gailua"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Point"
-msgstr "Sarbide puntua"
+msgstr "Sarbide-puntua"
 
 #: blueman/DeviceClass.py:242
 msgid "Mesh Device"
@@ -1645,7 +1595,7 @@ msgstr "Mahaigaineko argia"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "Sabaian sartutako argia"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
@@ -1657,7 +1607,7 @@ msgstr "Zoru barneko argia"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Argi-proiektorea"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
@@ -1704,10 +1654,8 @@ msgid "Emergency Exit Light"
 msgstr "Larrialdi-irteerako argia"
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Urruneko agintea"
+msgstr "Urrutiko argi-agintea"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
@@ -1726,10 +1674,8 @@ msgid "High-bay Light"
 msgstr "Altura handiko argia"
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Tag generikoa"
+msgstr "Haizagailu generikoa"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
@@ -1756,16 +1702,12 @@ msgid "Wall Fan"
 msgstr "Hormako haizagailua"
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
-#| msgid "Generic Clock"
 msgid "Generic HVAC"
-msgstr "Erloju generikoa"
+msgstr "Klimatizazio generikoa"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Termometroa: belarrikoa"
+msgstr "Termostatoa"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
@@ -1808,34 +1750,24 @@ msgid "Air Curtain"
 msgstr "Aire gortina"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "Audio generikoa"
+msgstr "Aire girotua generikoa"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "Audio generikoa"
+msgstr "Hezegailu generikoa"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Heating"
-msgstr "Giltzatako generikoa"
+msgstr "Berokuntza generikoa"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
-#| msgid "Generic Access"
 msgid "Generic Access Control"
-msgstr "Sarbide generikoa"
+msgstr "Sarbide-kontrol generikoa"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Door"
-msgstr "Sarbide puntua"
+msgstr "Sarbideko atea"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
@@ -1846,10 +1778,8 @@ msgid "Emergency Exit Door"
 msgstr "Larrialdiko Irteeraren atea"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Lock"
-msgstr "Sarbide puntua"
+msgstr "Sarbide-blokeoa"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
@@ -1868,16 +1798,12 @@ msgid "Door Lock"
 msgstr "Ateko sarraila"
 
 #: blueman/DeviceClass.py:334
-#, fuzzy
-#| msgid "Blocked"
 msgid "Locker"
-msgstr "Blokeatua"
+msgstr "Takila"
 
 #: blueman/DeviceClass.py:335
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Motorized Device"
-msgstr "Mugikortasun pertsonaleko gailu generikoa"
+msgstr "Gailu motorizatu generikoa"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
@@ -1900,10 +1826,8 @@ msgid "Screen"
 msgstr "Pantaila"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Power Device"
-msgstr "Mugikortasun pertsonaleko gailu generikoa"
+msgstr "Elikadura gailu generikoa"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
@@ -1911,13 +1835,11 @@ msgstr "Elektrizitate-hartunea"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Entxufeen oinarria"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Pluginak"
+msgstr "Entxufea"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
@@ -1933,477 +1855,415 @@ msgstr "Lanpara fluoreszenteen engranajea"
 
 #: blueman/DeviceClass.py:348
 msgid "HID Lamp Gear"
-msgstr ""
+msgstr "HID lanpararen engranajea"
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "Karga egoera"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Kanpoko bateria"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Source"
-msgstr "Generikoa: baskula"
+msgstr "Argi iturri generikoa"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
-msgstr ""
+msgstr "Goritasun lanpara"
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "LED lanpara"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "HID lanpara"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "Lanpara fluoreszentea"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "LED multzoa"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "Kolore anitzeko LED multzoa"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
-msgstr ""
+msgstr "Behe tentsioko halogenoa"
 
 #: blueman/DeviceClass.py:359
 msgid "Organic light emitting diode (OLED)"
-msgstr ""
+msgstr "Argi organikoko diodo igorlea (OLED)"
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Window Covering"
-msgstr "Giltzatako generikoa"
+msgstr "Leiho-estaldura generikoa"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr ""
+msgstr "Kortinak"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
-msgstr ""
+msgstr "Pertsianak"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Leihoko toldoa"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
-msgstr ""
+msgstr "Kortina"
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "Kanpoko pertsiana"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Kanpoko pantaila"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Sink"
-msgstr "Audio generikoa"
+msgstr "Audio-hustubide orokorra"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "Bozgorailu autonomoa"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "Soinu-barra"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Mahaigaineko bozgorailua"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
-msgstr ""
+msgstr "Euskarriko bozgorailua"
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
-#| msgid "Smartphone"
 msgid "Speakerphone"
-msgstr "Smartphonea"
+msgstr "Telefono bozgorailuduna"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Audio Source"
-msgstr "Audio generikoa"
+msgstr "Audio iturri generikoa"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "Alarma"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Kanpaia"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "Adarra"
 
 #: blueman/DeviceClass.py:378
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Broadcasting Device"
-msgstr "Kokapena bistaratzeko gailua"
+msgstr "Igorpen-gailua"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Zerbitzua:"
+msgstr "Zerbitzu-mahaia"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Kioskoa"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "Emisio aretoa"
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Audio profila"
+msgstr "Auditorioa"
 
 #: blueman/DeviceClass.py:383
-#, fuzzy
-#| msgid "Generic Media Player"
 msgid "Generic Motorized Vehicle"
-msgstr "Multimedia erreproduzigailu generikoa"
+msgstr "Motordun ibilgailu generikoa"
 
 #: blueman/DeviceClass.py:384
-#, fuzzy
-#| msgid "Camera"
 msgid "Car"
-msgstr "Kamera"
+msgstr "Autoa"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Ibilgailu astuna"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "2 gurpileko ibilgailua"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Motorra"
 
 #: blueman/DeviceClass.py:388
-#, fuzzy
-#| msgid "Mobility Scooter"
 msgid "Scooter"
-msgstr "Mugikortasun Scooter"
+msgstr "Motorra"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Ziklomotorra"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "3 gurpileko ibilgailua"
 
 #: blueman/DeviceClass.py:391
-#, fuzzy
-#| msgid "Vehicle"
 msgid "Light Vehicle"
-msgstr "Ibilgailua"
+msgstr "Ibilgailu arina"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "Quada"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Minibusa"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Autobusa"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Tranbia"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "Nekazal ibilgailua"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "Kanperra / Karabana"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "Aisialdirako Ibilgailua / Autokarabana"
 
 #: blueman/DeviceClass.py:399
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Domestic Appliance"
-msgstr "Pantaila generikoa"
+msgstr "Etxetresna generikoa"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Hozkailua"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "izozkailua"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Labea"
 
 #: blueman/DeviceClass.py:403
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microwave"
-msgstr "Mikrofonoa"
+msgstr "Mikrouhin-labea"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Txigorgailua"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Garbigailua"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Lehorgailua"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Kafetera"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "Lisagailua"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "Curling plantxa"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Ile-lehorgailua"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Xurgagailu"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "Robot xurgagailua"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "Arrozaren lapikoa"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "Arropa baporea"
 
 #: blueman/DeviceClass.py:415
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Wearable Audio Device"
-msgstr "Mugikortasun pertsonaleko gailu generikoa"
+msgstr "Audio-gailu eramangarri generikoa"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Aurikularrak"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "Lepoko banda"
 
 #: blueman/DeviceClass.py:420
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Aircraft"
-msgstr "Audio generikoa"
+msgstr "Hegazkin generikoa"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "Hegazkin arina"
 
 #: blueman/DeviceClass.py:422
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microlight"
-msgstr "Mikrofonoa"
+msgstr "Ultrarina"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Parapentea"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "Bidaiarien hegazkin handia"
 
 #: blueman/DeviceClass.py:425
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic AV Equipment"
-msgstr "Audio generikoa"
+msgstr "Ikus-entzunezko ekipo generikoak"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Anplifikadorea"
 
 #: blueman/DeviceClass.py:427
-#, fuzzy
-#| msgid "Receiving file"
 msgid "Receiver"
-msgstr "Fitxategia jasotzen"
+msgstr "Hartzailea"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Irratia"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "Sintonizatzailea"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Disko jogailua"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "CD erreproduzitzailea"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "DVD erreproduzitzailea"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Bluray erreproduzitzailea"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Disko optiko erreproduzitzailea"
 
 #: blueman/DeviceClass.py:435
-#, fuzzy
-#| msgid "Set-top box"
 msgid "Set-Top Box"
-msgstr "Telebista deskodetzailea"
+msgstr "Telebista-deskodetzailea"
 
 #: blueman/DeviceClass.py:436
-#, fuzzy
-#| msgid "Generic Display"
 msgid "Generic Display Equipment"
-msgstr "Pantaila generikoa"
+msgstr "Bistaratzeko ekipo generikoa"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Telebista"
 
 #: blueman/DeviceClass.py:438
-#, fuzzy
-#| msgid "Video monitor"
 msgid "Monitor"
-msgstr "Bideo monitorea"
+msgstr "Monitorea"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Proiektorea"
 
 #: blueman/DeviceClass.py:440
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Hearing aid"
-msgstr "Giltzatako generikoa"
+msgstr "Audifono generikoa"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "Belarri barneko audifonoa"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "Belarri atzeko audifonoa"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Inplante koklearra"
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Gaming"
-msgstr "Tag generikoa"
+msgstr "Jolas generikoa"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
-msgstr ""
+msgstr "Etxeko bideo-jokoen kontsola"
 
 #: blueman/DeviceClass.py:446
-#, fuzzy
-#| msgid "Portable audio"
 msgid "Portable handheld console"
-msgstr "Audio eramangarria"
+msgstr "Eskuko kontsola"
 
 #: blueman/DeviceClass.py:447
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Signage"
-msgstr "Tag generikoa"
+msgstr "Seinaleztapen generikoa"
 
 #: blueman/DeviceClass.py:448
-#, fuzzy
-#| msgid "Digital Pen"
 msgid "Digital Signage"
-msgstr "Boligrafo digitala"
+msgstr "Errotulazio digitala"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "Etiketa elektronikoa"
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Generic Pulse Oximeter"
-msgstr "Generikoa: pulsioximetroa"
+msgstr "Pultsu-oximetro generikoa"
 
 #: blueman/DeviceClass.py:451
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Fingertip Pulse Oximeter"
-msgstr "Generikoa: pulsioximetroa"
+msgstr "Hatz puntako pultsu-oximetroa"
 
 #: blueman/DeviceClass.py:452
-#, fuzzy
-#| msgid "Pulse Oximeter"
 msgid "Wrist Worn Pulse Oximeter"
-msgstr "Pultsu-oximetroa"
+msgstr "Eskuturreko pultsu-oximetroa"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Weight Scale"
-msgstr "Generikoa: baskula"
+msgstr "Baskula generikoa"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
@@ -2442,32 +2302,24 @@ msgid "Generic Medication Delivery"
 msgstr "Botika generikoak ematea"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
-#| msgid "Generic Thermometer"
 msgid "Generic Spirometer"
-msgstr "Termometro generikoa"
+msgstr "Espirometro generikoa"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "Eskuko espirometroa"
 
 #: blueman/DeviceClass.py:465
-#, fuzzy
-#| msgid "Generic: Outdoor Sports Activity"
 msgid "Generic Outdoor Sports Activity"
-msgstr "Generikoa: kanpoko kirol jarduera"
+msgstr "Kanpoko kirol jarduera generikoa"
 
 #: blueman/DeviceClass.py:466
-#, fuzzy
-#| msgid "Location Display Device"
 msgid "Location Display"
-msgstr "Kokapena bistaratzeko gailua"
+msgstr "Kokapena bistaratzea"
 
 #: blueman/DeviceClass.py:467
-#, fuzzy
-#| msgid "Location and Navigation Display Device"
 msgid "Location and Navigation Display"
-msgstr "Kokapena eta nabigazioa bistaratzeko gailua"
+msgstr "Kokapen eta nabigazio pantaila"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
@@ -3308,9 +3160,8 @@ msgid "Adapter for this connection is not available"
 msgstr "Konexio honetarako egokitzailea ez dago erabilgarri"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Deskonektatzen..."
+msgstr "Berriro konektatu honekin…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3425,13 +3276,15 @@ msgstr "Menu-elementu estandarrak gehitzen ditu egoera-ikonoaren menuan"
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
-msgstr ""
+msgstr "Aldatu kudeatzailea sistemaren erretiluko ikonoan klik egitean"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
 msgstr ""
+"Sistemaren erretiluaren ikonoan klik eginez gero, kudeatzailea aldatu egingo "
+"da bertan zentratu beharrean."
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
