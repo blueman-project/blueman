@@ -10,7 +10,7 @@ from gi.repository import Gtk
 class Builder(Gtk.Builder):
     def __init__(self, filename: str):
         super().__init__(translation_domain="blueman")
-        self.add_from_file(UI_PATH + "/" + filename)
+        self.add_from_file(UI_PATH.joinpath(filename).as_posix())
 
     T = TypeVar("T", bound=Gtk.Widget)
 

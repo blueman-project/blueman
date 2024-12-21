@@ -1,14 +1,17 @@
 #!@PYTHON@
-import sys
 import os
+import pathlib
+import sys
 import logging
 import gettext
 
+
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+dirname = pathlib.Path(*pathlib.Path(__file__).parts[:-2])
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+    sys.path.insert(0, dirname.joinpath('module', '.libs').as_posix())
+    sys.path.insert(0, dirname.as_posix())
+    os.environ["GSETTINGS_SCHEMA_DIR"] = dirname.joinpath("data").as_posix()
 
 gettext.textdomain("@GETTEXT_PACKAGE@")
 
