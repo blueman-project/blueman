@@ -126,8 +126,8 @@ class Agent(DbusService):
                 _("Incoming file over Bluetooth"),
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
-                30000, [("accept", _("Accept")), ("reject", _("Reject"))], on_action,
-                icon_name="blueman"
+                30000,
+                actions=[("accept", _("Accept")), ("reject", _("Reject"))], actions_cb=on_action, icon_name="blueman"
             )
             notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
