@@ -1,6 +1,6 @@
 from datetime import datetime
 from gettext import gettext as _, ngettext
-import os
+from pathlib import Path
 import shutil
 import logging
 from html import escape
@@ -22,7 +22,7 @@ from gi.repository import GLib, Gio
 
 
 class TransferDict(TypedDict):
-    path: str
+    path: Path
     size: int | None
     name: str
 
@@ -30,7 +30,7 @@ class TransferDict(TypedDict):
 class PendingTransferDict(TypedDict):
     transfer_path: ObjectPath
     address: BtAddress
-    root: str
+    root: Path
     filename: str
     size: int | None
     name: str
@@ -75,7 +75,7 @@ class Agent(DbusService):
     def _release(self) -> None:
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[str], None],
+    def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[Path], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
         def on_action(action: str) -> None:
             logging.info(f"Action {action}")
@@ -83,7 +83,7 @@ class Agent(DbusService):
             if action == "accept":
                 assert self._pending_transfer
                 self.transfers[self._pending_transfer['transfer_path']] = {
-                    'path': self._pending_transfer['root'] + '/' + os.path.basename(self._pending_transfer['filename']),
+                    'path': self._pending_transfer['root'] / self._pending_transfer['filename'],
                     'size': self._pending_transfer['size'],
                     'name': self._pending_transfer['name']
                 }
@@ -103,7 +103,7 @@ class Agent(DbusService):
 
         transfer = Transfer(obj_path=transfer_path)
         session = Session(obj_path=transfer.session)
-        root = session.root
+        root = Path(session.root)
         address = session.address
         filename = transfer.name
         size = transfer.size
@@ -194,15 +194,15 @@ class TransferService(AppletPlugin):
 
         self._unregister_agent()
 
-    def _make_share_path(self) -> tuple[str, bool]:
-        config_path = self._config["shared-path"]
-        default_path = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
+    def _make_share_path(self) -> tuple[Path, bool]:
+        config_path = Path(self._config["shared-path"])
+        default_path = Path(GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD))
         path = None
         error = False
 
-        if config_path == '':
+        if config_path == Path():
             path = default_path
-        elif not os.path.isdir(config_path):
+        elif not config_path.is_dir():
             path = default_path
             error = True
             logging.warning(f"Invalid shared-path {config_path}")
@@ -210,7 +210,7 @@ class TransferService(AppletPlugin):
             path = config_path
 
         if not path:
-            path = os.path.expanduser("~")
+            path = Path("~").expanduser()
             logging.warning('Failed to get Download dir from XDG')
 
         # We used to always store the full path which caused problems
@@ -266,14 +266,14 @@ class TransferService(AppletPlugin):
         else:
             self._silent_transfers += 1
 
-    def _add_open(self, n: NotificationType, name: str, path: str) -> None:
+    def _add_open(self, n: NotificationType, name: str, path: Path) -> None:
         if n.actions_supported:
             logging.info("adding action")
 
             def on_open(_action: str) -> None:
                 self._notification = None
                 logging.info("open")
-                launch("xdg-open", paths=[path], system=True)
+                launch("xdg-open", paths=[path.as_posix()], system=True)
 
             n.add_action("open", name, on_open)
 
@@ -286,14 +286,14 @@ class TransferService(AppletPlugin):
 
         src = attributes['path']
         dest_dir, ignored = self._make_share_path()
-        filename = os.path.basename(src)
+        filename = src.name
 
-        if os.path.exists(os.path.join(dest_dir, filename)):
+        if dest_dir.joinpath(filename).exists():
             now = datetime.now()
             filename = f"{now.strftime('%Y%m%d%H%M%S')}_{filename}"
             logging.info(f"Destination file exists, renaming to: {filename}")
 
-        dest = os.path.join(dest_dir, filename)
+        dest = dest_dir.joinpath(filename)
         try:
             shutil.move(src, dest)
         except (OSError, PermissionError):
