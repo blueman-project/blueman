@@ -1,8 +1,8 @@
-from blueman.bluemantyping import BtAddress
+from blueman.bluez.BtAddress import BtAddress  # Corrected import for BtAddress
 import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
-from gi.repository import Gio
+from gi.repository import Gtk, Gio
 
 
 class AutoConnectConfig(Gio.Settings):
@@ -13,13 +13,13 @@ class AutoConnectConfig(Gio.Settings):
         def switch(active: bool) -> None:
             services = set(self["services"])
             if active:
-                self["services"] = set(services).union({data})
+                self["services"] = list(services.union({data}))
             else:
-                self["services"] = set(self["services"]).difference({data})
+                self["services"] = list(services.difference({data}))
 
         def on_change(config: AutoConnectConfig, key: str) -> None:
             if key == "services":
-                item.props.active = data in set(config[key])
+                item.props.active = data in set(config["services"])
 
         item.props.active = data in set(self["services"])
         item.connect("toggled", lambda i: switch(i.props.active))
