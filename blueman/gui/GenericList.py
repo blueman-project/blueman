@@ -21,46 +21,47 @@ class ListDataDict(_ListDataDictBase, total=False):
 
 # noinspection PyAttributeOutsideInit
 class GenericList(Gtk.TreeView):
-    def __init__(self, data: Iterable[ListDataDict], headers_visible: bool = True, visible: bool = False) -> None:
+    def __init__(self, rowdata: Iterable[ListDataDict], headers_visible: bool = True, visible: bool = False) -> None:
         super().__init__(headers_visible=headers_visible, visible=visible)
         self.set_name("GenericList")
         self.selection = self.get_selection()
-        self._load(data)
+        self._load(rowdata)
 
     def _load(self, data: Iterable[ListDataDict]) -> None:
-        self.ids: dict[str, int] = {}
-        self.columns: dict[str, Gtk.TreeViewColumn] = {}
+        # Mapping of internal rowdata id to the ListStore column number and TreeViewColumn
+        self.list_col_order: dict[str, int] = {}
+        self.view_columns: dict[str, Gtk.TreeViewColumn] = {}
 
-        types = [row["type"] for row in data]
+        list_col_types = [row["type"] for row in data]
 
-        self.liststore = Gtk.ListStore(*types)
+        self.liststore = Gtk.ListStore(*list_col_types)
         self.filter = self.liststore.filter_new()
         self.set_model(self.filter)
 
-        for i, row in enumerate(data):
-            self.ids[row["id"]] = i
+        for list_col_num, row in enumerate(data):
+            self.list_col_order[row["id"]] = list_col_num
 
             if "renderer" not in row:
                 continue
 
-            column = Gtk.TreeViewColumn()
-            column.pack_start(row["renderer"], True)
-            column.set_attributes(row["renderer"], **row["render_attrs"])
+            view_column = Gtk.TreeViewColumn()
+            view_column.pack_start(row["renderer"], True)
+            view_column.set_attributes(row["renderer"], **row["render_attrs"])
 
             if "view_props" in row:
-                column.set_properties(**row["view_props"])
+                view_column.set_properties(**row["view_props"])
 
             if "celldata_func" in row:
                 func, user_data = row["celldata_func"]
-                column.set_cell_data_func(row["renderer"], func, user_data)
+                view_column.set_cell_data_func(row["renderer"], func, user_data)
 
-            self.columns[row["id"]] = column
-            self.append_column(column)
+            self.view_columns[row["id"]] = view_column
+            self.append_column(view_column)
 
     def selected(self) -> Gtk.TreeIter | None:
-        model, tree_iter = self.selection.get_selected()
+        list_model, tree_iter = self.selection.get_selected()
         if tree_iter is not None:
-            tree_iter = model.convert_iter_to_child_iter(tree_iter)
+            tree_iter = list_model.convert_iter_to_child_iter(tree_iter)
         return tree_iter
 
     def delete(self, tree_iter: Gtk.TreeIter) -> bool:
@@ -70,41 +71,41 @@ class GenericList(Gtk.TreeView):
         else:
             return False
 
-    def _add(self, **columns: object) -> Collection[object]:
+    def _add(self, **list_columns: object) -> Collection[object]:
         items: dict[int, object] = {}
-        for k, v in self.ids.items():
-            items[v] = None
+        for col_id, list_col_num in self.list_col_order.items():
+            items[list_col_num] = None
 
-        for k, val in columns.items():
-            if k in self.ids:
-                items[self.ids[k]] = val
+        for col_id, col_value in list_columns.items():
+            if col_id in self.list_col_order:
+                items[self.list_col_order[col_id]] = col_value
             else:
-                raise Exception(f"Invalid key {k}")
+                raise Exception(f"Invalid key {col_id}")
 
         return items.values()
 
-    def append(self, **columns: object) -> Gtk.TreeIter:
-        vals = self._add(**columns)
+    def append(self, **list_columns: object) -> Gtk.TreeIter:
+        vals = self._add(**list_columns)
         return self.liststore.append(vals)
 
-    def prepend(self, **columns: object) -> Gtk.TreeIter:
-        vals = self._add(**columns)
+    def prepend(self, **list_columns: object) -> Gtk.TreeIter:
+        vals = self._add(**list_columns)
         return self.liststore.prepend(vals)
 
-    def set(self, tree_iter: Gtk.TreeIter, **cols: object) -> None:
-        for k, v in cols.items():
-            self.liststore.set(tree_iter, self.ids[k], v)
+    def set(self, tree_iter: Gtk.TreeIter, **list_columns: object) -> None:
+        for col_id, col_value in list_columns.items():
+            self.liststore.set(tree_iter, self.list_col_order[col_id], col_value)
 
     def get(self, tree_iter: Gtk.TreeIter, *items: str) -> dict[str, Any]:
-        row_data = {}
+        data = {}
         if not items:
-            columns = [(name, self.ids[name]) for name in self.ids]
+            columns = [(col_id, self.list_col_order[col_id]) for col_id in self.list_col_order]
         else:
-            columns = [(name, self.ids[name]) for name in items if name in self.ids]
+            columns = [(col_id, self.list_col_order[col_id]) for col_id in items if col_id in self.list_col_order]
 
-        for name, colid in columns:
-            row_data[name] = self.liststore.get_value(tree_iter, colid)
-        return row_data
+        for col_id, list_col_num in columns:
+            data[col_id] = self.liststore.get_value(tree_iter, list_col_num)
+        return data
 
     def get_iter(self, path: Gtk.TreePath | None) -> Gtk.TreeIter | None:
         if path is None:

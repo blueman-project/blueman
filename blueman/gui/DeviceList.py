@@ -323,14 +323,14 @@ class DeviceList(GenericList):
             self.path_to_row[object_path] = Gtk.TreeRowReference.new(self.liststore,
                                                                      self.liststore.get_path(tree_iter))
 
-    def append(self, **columns: object) -> Gtk.TreeIter:
-        tree_iter = super().append(**columns)
-        self.do_cache(tree_iter, columns)
+    def append(self, **list_columns: object) -> Gtk.TreeIter:
+        tree_iter = super().append(**list_columns)
+        self.do_cache(tree_iter, list_columns)
         return tree_iter
 
-    def prepend(self, **columns: object) -> Gtk.TreeIter:
-        tree_iter = super().prepend(**columns)
-        self.do_cache(tree_iter, columns)
+    def prepend(self, **list_columns: object) -> Gtk.TreeIter:
+        tree_iter = super().prepend(**list_columns)
+        self.do_cache(tree_iter, list_columns)
         return tree_iter
 
     def set(self, tree_iter: Gtk.TreeIter, **kwargs: object) -> None:
