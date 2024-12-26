@@ -124,10 +124,10 @@ class ManagerDeviceList(DeviceList):
             else:
                 sort_type = Gtk.SortType.DESCENDING
 
-            column_id = self.ids.get(sort_by)
+            list_col_num = self.list_col_order.get(sort_by)
 
-            if column_id:
-                self.liststore.set_sort_column_id(column_id, sort_type)
+            if list_col_num:
+                self.liststore.set_sort_column_id(list_col_num, sort_type)
 
     def on_icon_theme_changed(self, _icon_them: Gtk.IconTheme) -> None:
         for row in self.liststore:
@@ -560,7 +560,7 @@ class ManagerDeviceList(DeviceList):
             self.tooltip_col = path[1]
             return False
 
-        if path[1] == self.columns["device_surface"]:
+        if path[1] == self.view_columns["device_surface"]:
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
@@ -585,9 +585,9 @@ class ManagerDeviceList(DeviceList):
             self.tooltip_col = path[1]
             return True
 
-        elif path[1] == self.columns["battery_pb"] \
-                or path[1] == self.columns["tpl_pb"] \
-                or path[1] == self.columns["rssi_pb"]:
+        elif path[1] == self.view_columns["battery_pb"] \
+                or path[1] == self.view_columns["tpl_pb"] \
+                or path[1] == self.view_columns["rssi_pb"]:
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
@@ -602,7 +602,7 @@ class ManagerDeviceList(DeviceList):
             tpl = self.get(tree_iter, "tpl")["tpl"]
 
             if battery != 0:
-                if path[1] == self.columns["battery_pb"]:
+                if path[1] == self.view_columns["battery_pb"]:
                     lines.append(f"<b>Battery: {int(battery)}%</b>")
                 else:
                     lines.append(f"Battery: {int(battery)}%")
@@ -619,7 +619,7 @@ class ManagerDeviceList(DeviceList):
                 else:
                     rssi_state = _("Too much")
 
-                if path[1] == self.columns["rssi_pb"]:
+                if path[1] == self.view_columns["rssi_pb"]:
                     lines.append(_("<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>") %
                                  {"rssi": rssi, "rssi_state": rssi_state})
                 else:
@@ -638,7 +638,7 @@ class ManagerDeviceList(DeviceList):
                 else:
                     tpl_state = _("Very High")
 
-                if path[1] == self.columns["tpl_pb"]:
+                if path[1] == self.view_columns["tpl_pb"]:
                     lines.append(_("<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") %
                                  {"tpl": tpl, "tpl_state": tpl_state})
                 else:
