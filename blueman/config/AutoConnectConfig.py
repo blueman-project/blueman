@@ -3,24 +3,27 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
+from typing import Tuple
 
 
 class AutoConnectConfig(Gio.Settings):
     def __init__(self) -> None:
         super().__init__(schema_id="org.blueman.plugins.autoconnect")
 
-    def bind_to_menuitem(self, item: Gtk.CheckMenuItem, data: tuple[BtAddress, str]) -> None:
+    def bind_to_menuitem(self, item: Gtk.CheckMenuItem, data: Tuple[BtAddress, str]) -> None:
         def switch(active: bool) -> None:
-            services = set(self["services"])
+            services = set(self.get_value("services"))
             if active:
-                self["services"] = list(services.union({data}))
+                services.add(data)
             else:
-                self["services"] = list(services.difference({data}))
+                services.discard(data)
+            self.set_value("services", Gio.Variant("as", list(services)))
 
-        def on_change(config: AutoConnectConfig, key: str) -> None:
+        def on_change(config: Gio.Settings, key: str) -> None:
             if key == "services":
-                item.props.active = data in set(config["services"])
+                item.props.active = data in set(config.get_value("services"))
 
-        item.props.active = data in set(self["services"])
+        # Initialize the menu item's active state
+        item.props.active = data in set(self.get_value("services"))
         item.connect("toggled", lambda i: switch(i.props.active))
-        self.connect("changed", on_change)
+        self.connect("changed::services", on_change)
