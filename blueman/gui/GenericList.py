@@ -80,7 +80,7 @@ class GenericList(Gtk.TreeView):
             if col_id in self.list_col_order:
                 items[self.list_col_order[col_id]] = col_value
             else:
-                raise Exception(f"Invalid key {col_id}")
+                raise KeyError(f"Invalid key {col_id}")
 
         return items.values()
 
