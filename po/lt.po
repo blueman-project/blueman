@@ -6,7 +6,7 @@
 # brennus <jonas.ska@gmail.com>, 2014-2015
 # Moo, 2015-2019
 # Kornelijus Tvarijanavičius <kornelitvari@protonmail.com>, 2020.
-# Moo <hazap@hotmail.com>, 2020, 2022.
+# Moo <hazap@hotmail.com>, 2020, 2022, 2024.
 # Džiugas J <dziugas1959@hotmail.com>
 # Andrius Majauskas <komitetas@gmail.com>
 msgid ""
@@ -14,10 +14,10 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2022-09-09 09:43+0000\n"
+"PO-Revision-Date: 2024-10-28 04:00+0000\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
-"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
-"blueman/lt/>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/2-4/"
+"lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 5.8.2-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -260,10 +260,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Tinklo prieigos taškas (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>PAN palaikymas</b>"
+msgstr "<b>NAP palaikymas</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -400,7 +398,7 @@ msgstr "Adapteris"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Nepavyko pasiekti blueman-manager"
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -427,11 +425,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Spustelėkite norėdami išjungti."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Spustelėkite norėdami įjungti."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -664,9 +662,8 @@ msgid "Blocked"
 msgstr "Užblokuotas"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "_<b>Prisijungti</b>"
+msgstr "<b>Prisijungta</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Poor"
@@ -693,12 +690,12 @@ msgstr "Per didelis"
 #: blueman/gui/manager/ManagerDeviceList.py:621
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Gauto signalo stiprumas: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Gauto signalo stiprumas: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Low"
@@ -744,17 +741,15 @@ msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:198
 msgid "Input/output error"
-msgstr ""
+msgstr "Įvesties/išvesties klaida"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "Device did not respond"
 msgstr "Įrenginys neatsakė"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Nežinoma"
+msgstr "Nežinoma klaida"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
@@ -874,14 +869,12 @@ msgstr ""
 "Tęsti?"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Priklausomybių problema"
+msgstr "Nėra priklausomybių"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Nėra konfliktų"
 
 #: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
@@ -989,7 +982,7 @@ msgstr "Modemas"
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
@@ -1092,7 +1085,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
@@ -1158,7 +1151,7 @@ msgstr "Riešinis laikrodis"
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Pranešimų gaviklis"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
@@ -1238,7 +1231,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Planšetė"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
@@ -1264,7 +1257,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT tinklų sietuvas"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
@@ -1372,11 +1365,11 @@ msgstr "Pelė"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "Valdymo svirtis"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
-msgstr ""
+msgstr "Žaidimų pultas"
 
 #: blueman/DeviceClass.py:209
 msgid "Digitizer Tablet"
@@ -1384,23 +1377,23 @@ msgstr ""
 
 #: blueman/DeviceClass.py:210
 msgid "Card Reader"
-msgstr ""
+msgstr "Kortelių skaitlys"
 
 #: blueman/DeviceClass.py:211
 msgid "Digital Pen"
-msgstr ""
+msgstr "Skaitmeninis rašiklis"
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Brūkšninių kodų skeneris"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Jutiklinis kilimėlis"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Pateikčių nuotolinis pultas"
 
 #: blueman/DeviceClass.py:215
 #, fuzzy
@@ -1437,7 +1430,7 @@ msgstr "Kompiuteris"
 
 #: blueman/DeviceClass.py:222
 msgid "Speed Sensor"
-msgstr ""
+msgstr "Greičio jutiklis"
 
 #: blueman/DeviceClass.py:223
 msgid "Cadence Sensor"
@@ -1466,7 +1459,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Mygtukas"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
@@ -1541,16 +1534,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Oro kokybės jutiklis"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
 msgid "Temperature Sensor"
-msgstr "Bluetooth failų siuntimas"
+msgstr "Temperatūros jutiklis"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Drėgmės jutiklis"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
@@ -1558,7 +1550,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Dūmų jutiklis"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
@@ -1570,11 +1562,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Anglies monoksido jutiklis"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Anglies dioksido jutiklis"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
@@ -1590,7 +1582,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Lietaus jutiklis"
 
 #: blueman/DeviceClass.py:259
 #, fuzzy
@@ -1600,7 +1592,7 @@ msgstr "Failų siuntėjas"
 
 #: blueman/DeviceClass.py:260
 msgid "Wind Sensor"
-msgstr ""
+msgstr "Vėjo jutiklis"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
@@ -1636,7 +1628,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Automobilio padangų slėgio jutiklis"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
@@ -1778,31 +1770,31 @@ msgstr "Prisijungti"
 
 #: blueman/DeviceClass.py:304
 msgid "Thermostat"
-msgstr ""
+msgstr "Termostatas"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Drėkintuvas"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Sausintuvas"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Šildytuvas"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Radiatorius"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Katilas"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Šilumos siurblys"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
@@ -1862,11 +1854,11 @@ msgstr "Prieigos taškas"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Liftas"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Langas"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
@@ -1874,7 +1866,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Durų užraktas"
 
 #: blueman/DeviceClass.py:334
 #, fuzzy
@@ -2055,7 +2047,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Skambutis"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
@@ -2138,7 +2130,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Autobusas"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
@@ -2163,29 +2155,27 @@ msgstr "Bluetooth failų siuntimas"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Šaldytuvas"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Šaldiklis"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Orkaitė"
 
 #: blueman/DeviceClass.py:403
-#, fuzzy
-#| msgid "Microphone"
 msgid "Microwave"
-msgstr "Mikrofonas"
+msgstr "Mikrobangų krosnelė"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Skrudintuvas"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Skalbimo mašina"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
@@ -2205,11 +2195,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Plaukų džiovintuvas"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Dulkių siurblys"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
@@ -2252,7 +2242,7 @@ msgstr "Mikrofonas"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Parasparnis"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
@@ -2274,7 +2264,7 @@ msgstr "Priimamas failas"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Radijas"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
