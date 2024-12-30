@@ -18,14 +18,14 @@
 # Yuri Chornoivan <yurchor@ukr.net>
 # Artem <artem@molotov.work>, 2022.
 # Dan <denqwerta@gmail.com>, 2023.
-# Pavlo <acid@jack.kiev.ua>, 2023.
+# Pavlo <acid@jack.kiev.ua>, 2023, 2024.
 # Сергій <sergiy.goncharuk.1@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-04-03 18:00+0000\n"
+"PO-Revision-Date: 2024-10-17 19:55+0000\n"
 "Last-Translator: Pavlo <acid@jack.kiev.ua>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/blueman/2-4/uk/"
 ">\n"
@@ -37,7 +37,7 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.8-rc\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3185,9 +3185,8 @@ msgid "Adapter for this connection is not available"
 msgstr "Адаптер для цього з’єднання не доступний"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Від’єднання..."
+msgstr "Повторне з'єднання…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3307,13 +3306,15 @@ msgstr "Додає стандартні елементи до меню пікт�
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
-msgstr ""
+msgstr "Вмикати/вимикати менеджер клацанням по значку в системному лотку"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
 msgstr ""
+"Клацання по значку в системному лотку буде вмикати та вимикати менеджер, а "
+"не фокусуватись на ньому."
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
