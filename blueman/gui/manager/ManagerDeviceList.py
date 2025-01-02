@@ -92,7 +92,7 @@ class ManagerDeviceList(DeviceList):
         self.Config.connect('changed', self._on_settings_changed)
         # Set the correct sorting
         self._on_settings_changed(self.Config, "sort-by")
-        self._on_settings_changed(self.Config, "sort-type")
+        self._on_settings_changed(self.Config, "sort-descending")
 
         self.connect("query-tooltip", self.tooltip_query)
         self.tooltip_row: Gtk.TreePath | None = None
@@ -115,14 +115,13 @@ class ManagerDeviceList(DeviceList):
         self.filter.set_visible_func(self.filter_func)
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
-        if key in ('sort-by', 'sort-order'):
+        if key in ('sort-by', 'sort-descending'):
             sort_by = settings['sort-by']
-            sort_order = settings['sort-order']
 
-            if sort_order == 'ascending':
-                sort_type = Gtk.SortType.ASCENDING
-            else:
+            if settings['sort-descending']:
                 sort_type = Gtk.SortType.DESCENDING
+            else:
+                sort_type = Gtk.SortType.ASCENDING
 
             column_id = self.ids.get(sort_by)
 
