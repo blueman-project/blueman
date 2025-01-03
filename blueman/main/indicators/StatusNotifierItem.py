@@ -45,8 +45,9 @@ class MenuService(DbusService):
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: List[str]
                     ) -> Tuple[int, Tuple[int, Dict[str, GLib.Variant], List[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {}, self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
-                                                             self._render_submenu))
+            return self._revision, (0, {'children-display': GLib.Variant("s", "submenu")},
+                                    self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
+                                    self._render_submenu))
         else:
             item = self._items[parent_id >> 8]
             if "submenu" in item and _recursion_depth != 0:
