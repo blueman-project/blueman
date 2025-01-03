@@ -68,12 +68,8 @@ class ManagerMenu:
         else:
             self._sort_timestamp_item.props.active = True
 
-        self._sort_type_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
-
-        if self.Config['sort-order'] == "ascending":
-            self._sort_type_item.props.active = False
-        else:
-            self._sort_type_item.props.active = True
+        sort_descending_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
+        self.blueman.Config.bind("sort-descending", sort_descending_item, "active", Gio.SettingsBindFlags.DEFAULT)
 
         item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
         item_plugins.connect('activate', self._on_plugin_dialog_activate)
@@ -102,19 +98,12 @@ class ManagerMenu:
         self.Config.connect("changed", self._on_settings_changed)
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
-        self._sort_type_item.connect("activate", self._on_sorting_changed, "sort-type")
 
     def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
         if sort_opt == 'alias' and btn.props.active:
             self.Config['sort-by'] = "alias"
         elif sort_opt == "timestamp" and btn.props.active:
             self.Config['sort-by'] = "timestamp"
-        elif sort_opt == 'sort-type':
-            # FIXME bind widget to gsetting
-            if btn.props.active:
-                self.Config["sort-order"] = "descending"
-            else:
-                self.Config["sort-order"] = "ascending"
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         value = settings[key]
@@ -125,13 +114,6 @@ class ManagerMenu:
             elif value == "timestamp":
                 if not self._sort_timestamp_item.props.active:
                     self._sort_timestamp_item.props.active = True
-        elif key == "sort-type":
-            if value == "ascending":
-                if not self._sort_type_item.props.active:
-                    self._sort_type_item.props.active = True
-            else:
-                if not self._sort_type_item.props.active:
-                    self._sort_type_item.props.active = False
         elif key == "hide-unnamed":
             logging.debug("refilter")
             self.blueman.List.filter.refilter()
