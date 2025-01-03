@@ -125,8 +125,7 @@ class Info(ManagerPlugin, MenuItemsProvider):
     ) -> list[DeviceMenuItem]:
         item = create_menuitem(_("_Info"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Show device information")
-        _window = manager_menu.get_toplevel()
-        assert isinstance(_window, Gtk.Window)
-        window = _window  # https://github.com/python/mypy/issues/2608
+        window = manager_menu.get_toplevel()
+        assert isinstance(window, Gtk.Window)
         item.connect('activate', lambda x: show_info(device, window))
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 400)]
