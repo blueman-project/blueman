@@ -86,7 +86,7 @@ class DeviceList(GenericList):
         self._selectionhandler = self.selection.connect('changed', self.on_selection_changed)
 
         self.icon_theme = Gtk.IconTheme.get_default()
-        self.icon_theme.prepend_search_path(ICON_PATH)
+        self.icon_theme.prepend_search_path(ICON_PATH.as_posix())
         # handle icon theme changes
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
 
