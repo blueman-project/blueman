@@ -37,13 +37,14 @@
 # Артём Котлубай <artemkotlubai@yandex.ru>, 2022, 2023.
 # Andrei Stepanov <adem4ik@gmail.com>, 2023, 2024.
 # Denis Efremov <efremov.a.denis@gmail.com>, 2023.
+# Elena Mishina <lepata@basealt.ru>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-05-22 08:15+0000\n"
-"Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
+"PO-Revision-Date: 2024-11-10 15:00+0000\n"
+"Last-Translator: Elena Mishina <lepata@basealt.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/blueman/2-4/ru/"
 ">\n"
 "Language: ru\n"
@@ -53,7 +54,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 5.6-dev\n"
+"X-Generator: Weblate 5.8.2\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -145,7 +146,7 @@ msgstr "_Добавлен"
 
 #: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr "_Снижение"
+msgstr "По у_быванию"
 
 #: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
@@ -3059,7 +3060,7 @@ msgstr "Не указано"
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
-"Пытаться при запуске автоматически подключиться к настраиваемым службам и "
+"Пытается автоматически подключиться к настраиваемым службам при запуске и "
 "каждые 60 секунд."
 
 #: blueman/plugins/applet/AutoConnect.py:50
@@ -3070,7 +3071,7 @@ msgstr "Автоматически подключено к службе %(servic
 #: blueman/plugins/applet/ConnectionNotifier.py:15
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
-"Показывать уведомления на рабочем столе при подключении или отключении "
+"Показывает уведомления на рабочем столе при подключении или отключении "
 "устройств."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:36
@@ -3136,7 +3137,7 @@ msgid ""
 msgstr ""
 "Позволяет отслеживать использование сетевого трафика (мобильного "
 "широкополосного соединения). Полезно для тарифных планов с оплатой за "
-"количество переданных/полученных данных. Статистика ведется отельно для "
+"количество переданных/полученных данных. Статистика ведется отдельно для "
 "каждого устройства."
 
 #: blueman/plugins/applet/NetUsage.py:309
@@ -3155,7 +3156,7 @@ msgstr "Bluetooth включён"
 
 #: blueman/plugins/applet/Networking.py:18
 msgid "Manages local network services, like NAP bridges"
-msgstr "Управляет местными услугами сети, такими как NAP мосты"
+msgstr "Управляет локальными сетевыми службами, такими как мосты NAP"
 
 #: blueman/plugins/applet/NMDUNSupport.py:18
 msgid ""
@@ -3201,7 +3202,7 @@ msgstr "Адаптер для этого соединения недоступе
 
 #: blueman/plugins/applet/RecentConns.py:188
 msgid "Reconnect to…"
-msgstr "Восстановить подключение…"
+msgstr "Переподключиться к…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3265,7 +3266,7 @@ msgstr "Успешно получен файл %(0)s от %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:307
 msgid "Open"
-msgstr "Открытый"
+msgstr "Открыть"
 
 #: blueman/plugins/applet/TransferService.py:311
 msgid "Transfer failed"
@@ -3317,19 +3318,18 @@ msgstr ""
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr "Добавить стандартные пункты меню к меню значка в области уведомления"
+msgstr "Добавляет стандартные пункты меню к меню значка в области уведомления"
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
-msgstr "Переключение менеджера при нажатии на значок в трее"
+msgstr "Переключать менеджер по щелчку мышью на значок в трее"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
 msgstr ""
-"При нажатии на значок в трее менеджер переключается, а не фокусируется на "
-"нём."
+"Щелчок мышью по значку в трее переключит менеджер, а не выведет его в фокус."
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
@@ -3389,8 +3389,8 @@ msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
-"Добавить индикацию в значок области уведомления, когда Bluetooth включён, и "
-"показывать соединения во всплывающей подсказке."
+"Добавляет индикацию к значку в области уведомления, когда Bluetooth включён, "
+"и показывает соединения во всплывающей подсказке."
 
 #: blueman/plugins/applet/ShowConnected.py:72
 msgid "Bluetooth Active"
@@ -3415,8 +3415,8 @@ msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
-"Пункт меню для временного отображения адаптера по-умолчанию, если по "
-"умолчанию он скрыт"
+"Предоставляет пункт меню для временного отображения адаптера по умолчанию, "
+"когда он по умолчанию скрыт"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"

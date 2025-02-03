@@ -13,13 +13,14 @@
 # Willy Sudiarto Raharjo <willysr@slackware-id.org>, 2014
 # zk, 2015
 # Reza Almanda <rezaalmanda27@gmail.com>, 2021.
+# Iqbal Rifai <iqbalrifai@163.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-04-29 10:07+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"PO-Revision-Date: 2024-11-18 08:08+0000\n"
+"Last-Translator: Iqbal Rifai <iqbalrifai@163.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/2-4/"
 "id/>\n"
 "Language: id\n"
@@ -27,7 +28,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.2\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -398,7 +399,7 @@ msgstr "Adaptor"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Gagal mengakses blueman-manager."
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -408,6 +409,11 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Tampaknya blueman-manager tidak dapat diaktifkan melalui D-Bus. Penyebab "
+"umum untuk masalah ini adalah konfigurasi grafis yang rusak dalam lingkungan "
+"aktivasi D-Bus. Hal ini biasanya dapat diatasi dengan menjalankan perintah "
+"dbus-update-activation-environment, yang biasanya dimasukkan dalam file "
+"startup seperti xinitrc (atau dalam konfigurasi Sway atau yang serupa)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -425,11 +431,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Klik untuk menonaktifkan."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Klik untuk mengaktifkan."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -659,7 +665,7 @@ msgstr "Pasang"
 
 #: blueman/gui/manager/ManagerDeviceList.py:574
 msgid "Blocked"
-msgstr ""
+msgstr "Diblokir"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
 msgid "<b>Connected</b>"
@@ -884,7 +890,7 @@ msgstr "Masalah ketergantungan"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Tidak ada konflik"
 
 #: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
@@ -1231,15 +1237,15 @@ msgstr "Komputer Biasa"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "PC/PDA Genggam (clamshell)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "PC/PDA seukuran telapak tangan"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Komputer yang dapat dikenakan (ukuran jam tangan)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
@@ -1261,13 +1267,11 @@ msgstr "Server"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Dapat dikonversi"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Wearable"
+msgstr "Dapat dipakai"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
@@ -1369,7 +1373,7 @@ msgstr "Tekanan Darah Generik"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "Perangkat Antarmuka Manusia Generik"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
