@@ -20,21 +20,22 @@
 # Rauli L. <rauli.laine@iki.fi>, 2016
 # Matti Niemelä <niememat@gmail.com>, 2021.
 # Kimmo Kujansuu <mrkujansuu@gmail.com>, 2022, 2023.
+# Ricky Tigg <ricky.tigg@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-04-01 16:01+0000\n"
-"Last-Translator: Åzze <laitinen.jere222@gmail.com>\n"
-"Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/2-4/fi/"
-">\n"
+"PO-Revision-Date: 2025-03-12 12:36+0000\n"
+"Last-Translator: Ricky Tigg <ricky.tigg@gmail.com>\n"
+"Language-Team: Finnish <https://hosted.weblate.org/projects/blueman/2-4/fi/>"
+"\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -266,10 +267,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Verkon tukiasema (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>PAB-tuki</b>"
+msgstr "<b>NAP-tuki</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -568,11 +567,6 @@ msgid "Accept"
 msgstr "Hyväksy"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
@@ -596,19 +590,19 @@ msgstr "Ota bluetooth käyttöön"
 
 #: blueman/Functions.py:166
 msgid "B"
-msgstr "B"
+msgstr "t"
 
 #: blueman/Functions.py:169
 msgid "KB"
-msgstr "KB"
+msgstr "kt"
 
 #: blueman/Functions.py:172
 msgid "MB"
-msgstr "MB"
+msgstr "Mt"
 
 #: blueman/Functions.py:175
 msgid "GB"
-msgstr "GB"
+msgstr "Gt"
 
 #: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
@@ -1228,10 +1222,8 @@ msgid "All in One"
 msgstr "Kaikki yhdessä"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "Palvelin"
+msgstr "Blade-palvelin"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
@@ -1322,10 +1314,8 @@ msgid "Arm Blood Pressure"
 msgstr "Käsi verenpaine"
 
 #: blueman/DeviceClass.py:203
-#, fuzzy
-#| msgid "Blood Pressure"
 msgid "Wrist Blood Pressure"
-msgstr "Verenpaine"
+msgstr "Ranteen verenpaine"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
@@ -1372,64 +1362,44 @@ msgid "Generic Glucose Meter"
 msgstr "Yleinen verensokerimittari"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "Generic Running Walking Sensor"
 msgstr "Yleinen: juoksu- tai kävelyanturi"
 
 #: blueman/DeviceClass.py:217
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "In-Shoe Running Walking Sensor"
-msgstr "Yleinen: juoksu- tai kävelyanturi"
+msgstr "Kenkien sisäinen juoksukävelyanturi"
 
 #: blueman/DeviceClass.py:218
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Shoe Running Walking Sensor"
-msgstr "Yleinen: juoksu- tai kävelyanturi"
+msgstr "Kenkien päällä oleva juoksukävelyanturi"
 
 #: blueman/DeviceClass.py:219
-#, fuzzy
-#| msgid "Generic: Running Walking Sensor"
 msgid "On-Hip Running Walking Sensor"
-msgstr "Yleinen: juoksu- tai kävelyanturi"
+msgstr "Lantion päällä oleva juoksukävelyanturi"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
-#| msgid "Generic: Cycling"
 msgid "Generic Cycling"
 msgstr "Yleinen: pyöräily"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
-#| msgid "Cycling: Cycling Computer"
 msgid "Cycling Computer"
-msgstr "Pyöräily: pyöräilytietokone"
+msgstr "Pyöräilytietokone"
 
 #: blueman/DeviceClass.py:222
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Speed Sensor"
-msgstr "Pyöräily: nopeusanturi"
+msgstr "Nopeusanturi"
 
 #: blueman/DeviceClass.py:223
-#, fuzzy
-#| msgid "Cycling: Cadence Sensor"
 msgid "Cadence Sensor"
-msgstr "Pyöräily: rytmianturi"
+msgstr "Rytmianturi"
 
 #: blueman/DeviceClass.py:224
-#, fuzzy
-#| msgid "Cycling: Power Sensor"
 msgid "Power Sensor"
-msgstr "Pyöräily: voima-anturi"
+msgstr "Voima-anturi"
 
 #: blueman/DeviceClass.py:225
-#, fuzzy
-#| msgid "Cycling: Speed and Cadence Sensor"
 msgid "Speed and Cadence Sensor"
-msgstr "Pyöräily: nopeus- ja rytmianturi"
+msgstr "Nopeus- ja rytmianturi"
 
 #: blueman/DeviceClass.py:226
 msgid "Generic Control Device"
@@ -1445,7 +1415,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Painike"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
@@ -1457,7 +1427,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr "Kosketuspaneeli"
+msgstr "Kosketusppaneeli"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
@@ -1472,10 +1442,8 @@ msgid "Triple Switch"
 msgstr ""
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
-#| msgid "Battery Service"
 msgid "Battery Switch"
-msgstr "Akku palvelu"
+msgstr "Akun kytkin"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
@@ -1518,10 +1486,8 @@ msgid "Air quality Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
-#| msgid "Generic Heart rate Sensor"
 msgid "Temperature Sensor"
-msgstr "Yleinen sykeanturi"
+msgstr "Lämpötila-anturi"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
@@ -1568,16 +1534,12 @@ msgid "Rain Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Tiedoston lähettäjä"
+msgstr "Palo-anturi"
 
 #: blueman/DeviceClass.py:260
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Wind Sensor"
-msgstr "Pyöräily: nopeusanturi"
+msgstr "Tuulianturi"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
@@ -1592,10 +1554,8 @@ msgid "Flush Mounted Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:264
-#, fuzzy
-#| msgid "Cycling: Speed Sensor"
 msgid "Ceiling Mounted Sensor"
-msgstr "Pyöräily: nopeusanturi"
+msgstr "Kattoon asennettu anturi"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
@@ -1618,10 +1578,8 @@ msgid "Vehicle Tire Pressure Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "Yleinen: vaaka"
+msgstr "Yleiset valokiinnikkeet"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
@@ -1704,10 +1662,8 @@ msgid "Emergency Exit Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:291
-#, fuzzy
-#| msgid "Controller"
 msgid "Light Controller"
-msgstr "Ohjainlaite"
+msgstr "Valo-ohjain"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
@@ -1726,10 +1682,8 @@ msgid "High-bay Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Fan"
-msgstr "Yleinen luokitus"
+msgstr "Yleinen tuuletin"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
@@ -1756,16 +1710,12 @@ msgid "Wall Fan"
 msgstr ""
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
-#| msgid "Generic Clock"
 msgid "Generic HVAC"
-msgstr "Yleinen kello"
+msgstr "Yleinen LVI"
 
 #: blueman/DeviceClass.py:304
-#, fuzzy
-#| msgid "Thermometer: Ear"
 msgid "Thermostat"
-msgstr "Lämpömittari: korva"
+msgstr "Termostaatti"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
@@ -1808,16 +1758,12 @@ msgid "Air Curtain"
 msgstr ""
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "Yleinen ääni"
+msgstr "Yleinen ilmastointi"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "Yleinen ääni"
+msgstr "Yleinen ilmankostutin"
 
 #: blueman/DeviceClass.py:317
 #, fuzzy
