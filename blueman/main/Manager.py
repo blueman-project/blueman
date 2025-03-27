@@ -98,10 +98,17 @@ class Blueman(Gtk.Application):
                 statusbar.set_margin_right(margin_right + 10)
 
             def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
+                action = self.lookup_action("bluetooth_status")
+
                 if signal_name == 'BluetoothStatusChanged':
                     status = params.unpack()[0]
-                    action = self.lookup_action("bluetooth_status")
                     action.change_state(GLib.Variant.new_boolean(status))
+                elif signal_name == "PluginsChanged":
+                    if "PowerManager" in self.Applet.QueryPlugins():
+                        status = self.Applet.GetBluetoothStatus()
+                        action.change_state(GLib.Variant.new_boolean(status))
+
+                    self.Toolbar._update_buttons(self.List.Adapter)
 
             def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
                 logging.info(name)
@@ -154,8 +161,10 @@ class Blueman(Gtk.Application):
                 self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
                 self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
+                pm_available = "PowerManager" in self.Applet.QueryPlugins()
+                action_status = self.Applet.GetBluetoothStatus() if pm_available else False
                 bt_status_action = self.lookup_action("bluetooth_status")
-                bt_status_action.change_state(GLib.Variant.new_boolean(self.Applet.GetBluetoothStatus()))
+                bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
 
             Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
 
