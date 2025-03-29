@@ -27,6 +27,8 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 
 
 class Blueman(Gtk.Application):
+    window: Gtk.ApplicationWindow | None
+
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
         self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
@@ -41,7 +43,17 @@ class Blueman(Gtk.Application):
         s.set_callback(do_quit)
         s.attach()
 
-    window: Gtk.ApplicationWindow | None
+        setup_icon_path()
+
+        try:
+            self.Applet = AppletService()
+            self.Applet.connect('g-signal', self.on_applet_signal)
+        except DBusProxyFailed:
+            print("Blueman applet needs to be running")
+            bmexit()
+
+        self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
+        self.Plugins.load_plugin()
 
     def do_startup(self) -> None:
         def doquit(_a: Gio.SimpleAction, _param: None) -> None:
@@ -54,6 +66,16 @@ class Blueman(Gtk.Application):
 
         self.builder = Builder("manager-main.ui")
 
+        toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
+        statusbar = self.builder.get_widget("statusbar", Gtk.Box)
+
+        self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
+        self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
+
+        self._infobar = self.builder.get_widget("message_area", Gtk.InfoBar)
+        self._infobar.connect("response", self._infobar_response)
+        self._infobar_bt: str = ""
+
         quit_action = Gio.SimpleAction.new("Quit", None)
         quit_action.connect("activate", doquit)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -62,6 +84,8 @@ class Blueman(Gtk.Application):
         bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
         bt_status_action.connect("change-state", self._on_bt_state_changed)
         self.add_action(bt_status_action)
+
+        Manager.watch_name_owner(self.on_dbus_name_appeared, self.on_dbus_name_vanished)
 
     def do_shutdown(self) -> None:
         Gtk.Application.do_shutdown(self)
@@ -82,88 +106,65 @@ class Blueman(Gtk.Application):
             # Connect to configure event to store new window position and size
             self.window.connect("configure-event", self._on_configure)
 
-            toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
-            statusbar = self.builder.get_widget("statusbar", Gtk.Box)
-
-            self._infobar = self.builder.get_widget("message_area", Gtk.InfoBar)
-            self._infobar.connect("response", self._infobar_response)
-            self._infobar_bt: str = ""
-
-            self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
-            self.Plugins.load_plugin()
-
-            def on_applet_signal(_proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
-                action = self.lookup_action("bluetooth_status")
-
-                if signal_name == 'BluetoothStatusChanged':
-                    status = params.unpack()[0]
-                    action.change_state(GLib.Variant.new_boolean(status))
-                elif signal_name == "PluginsChanged":
-                    if "PowerManager" in self.Applet.QueryPlugins():
-                        status = self.Applet.GetBluetoothStatus()
-                        action.change_state(GLib.Variant.new_boolean(status))
-
-                    self.Toolbar._update_buttons(self.List.Adapter)
-
-            def on_dbus_name_vanished(_connection: Gio.DBusConnection, name: str) -> None:
-                logging.info(name)
-
-                if self.window is not None:
-                    self.window.hide()
-
-                d = ErrorDialog(
-                    _("Connection to BlueZ failed"),
-                    _("Bluez daemon is not running, blueman-manager cannot continue.\n"
-                      "This probably means that there were no Bluetooth adapters detected "
-                      "or Bluetooth daemon was not started."),
-                    icon_name="blueman")
-                d.run()
-                d.destroy()
-
-                # FIXME ui can handle BlueZ start/stop but we should inform user
-                self.quit()
-
-            def on_dbus_name_appeared(_connection: Gio.DBusConnection, name: str, owner: str) -> None:
-                logging.info(f"{name} {owner}")
-                setup_icon_path()
-
-                try:
-                    self.Applet = AppletService()
-                    self.Applet.connect('g-signal', on_applet_signal)
-                except DBusProxyFailed:
-                    print("Blueman applet needs to be running")
-                    bmexit()
-
-                sw = self.builder.get_widget("scrollview", Gtk.ScrolledWindow)
-                # Disable overlay scrolling
-                if Gtk.get_minor_version() >= 16:
-                    sw.props.overlay_scrolling = False
-
-                self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
-
-                self.List.show()
-                sw.add(self.List)
-
-                self.Toolbar = ManagerToolbar(self)
-                self.Menu = ManagerMenu(self)
-                self.Stats = ManagerStats(self)
-
-                if self.List.is_valid_adapter():
-                    self.List.populate_devices()
-
-                self.List.connect("adapter-changed", self.on_adapter_changed)
-
-                self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
-                self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
-
-                pm_available = "PowerManager" in self.Applet.QueryPlugins()
-                action_status = self.Applet.GetBluetoothStatus() if pm_available else False
-                bt_status_action = self.lookup_action("bluetooth_status")
-                bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
-
-            Manager.watch_name_owner(on_dbus_name_appeared, on_dbus_name_vanished)
-
         self.window.present_with_time(Gtk.get_current_event_time())
+
+    def on_applet_signal(self, _proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
+        action = self.lookup_action("bluetooth_status")
+
+        if signal_name == 'BluetoothStatusChanged':
+            status = params.unpack()[0]
+            action.change_state(GLib.Variant.new_boolean(status))
+        elif signal_name == "PluginsChanged":
+            if "PowerManager" in self.Applet.QueryPlugins():
+                status = self.Applet.GetBluetoothStatus()
+                action.change_state(GLib.Variant.new_boolean(status))
+
+            self.Toolbar._update_buttons(self.List.Adapter)
+
+    def on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
+        logging.info(f"{name} {owner}")
+
+        sw = self.builder.get_widget("scrollview", Gtk.ScrolledWindow)
+        # Disable overlay scrolling
+        if Gtk.get_minor_version() >= 16:
+            sw.props.overlay_scrolling = False
+
+        self.List = ManagerDeviceList(adapter=self.Config["last-adapter"], inst=self)
+
+        self.List.show()
+        sw.add(self.List)
+
+        self.Toolbar = ManagerToolbar(self)
+        self.Menu = ManagerMenu(self)
+        self.Stats = ManagerStats(self)
+
+        if self.List.is_valid_adapter():
+            self.List.populate_devices()
+
+        self.List.connect("adapter-changed", self.on_adapter_changed)
+
+        pm_available = "PowerManager" in self.Applet.QueryPlugins()
+        action_status = self.Applet.GetBluetoothStatus() if pm_available else False
+        bt_status_action = self.lookup_action("bluetooth_status")
+        bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
+
+    def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
+        logging.info(name)
+
+        if self.window is not None:
+            self.window.hide()
+
+        d = ErrorDialog(
+            _("Connection to BlueZ failed"),
+            _("Bluez daemon is not running, blueman-manager cannot continue.\n"
+              "This probably means that there were no Bluetooth adapters detected "
+              "or Bluetooth daemon was not started."),
+            icon_name="blueman")
+        d.run()
+        d.destroy()
+
+        # FIXME ui can handle BlueZ start/stop but we should inform user
+        self.quit()
 
     def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
         action.set_state(state_variant)
