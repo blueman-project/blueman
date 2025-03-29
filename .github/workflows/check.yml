@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: apt-get update
       - run: apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext libglib2.0-dev python-gi-dev libbluetooth-dev iproute2 libgirepository1.0-dev gir1.2-gtk-3.0 gir1.2-nm-1.0 libpulse0 libpulse-mainloop-glib0 libdbus-1-dev
-      - run: python3 -m pip install cython pygobject python-dbusmock dbus-python
+      - run: python3 -m pip install cython pygobject==3.50 python-dbusmock dbus-python
       - run: ./autogen.sh
       - run: make -C module
       - run: touch /dev/rfkill
