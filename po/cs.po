@@ -28,22 +28,22 @@
 # Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022.
 # Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
 # Vojtěch Otáhal <vojta.otahal@seznam.cz>, 2022.
+# zenobit <zenobit@users.noreply.hosted.weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2022-07-28 16:24+0000\n"
-"Last-Translator: Vojtěch Otáhal <vojta.otahal@seznam.cz>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/blueman/cs/"
-">\n"
+"PO-Revision-Date: 2025-02-28 23:37+0000\n"
+"Last-Translator: zenobit <zenobit@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/2-4/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -256,17 +256,15 @@ msgstr "<b>Nastavení NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Osobní síťový prostor"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Podpora PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Vytáčené připojení (DUN)"
+msgstr "Vytáčené připojení"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -277,10 +275,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Síťový přístupový bod (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Podpora PAN</b>"
+msgstr "<b>Podpora NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -417,7 +413,7 @@ msgstr "Adaptér"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Nemohu dosáhnout na blueman-manager"
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -427,6 +423,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Zdá se, že blueman-manager nelze aktivovat přes D-Bus. Typickou příčinou je "
+"nefunkční grafické nastavení aktivačního prostředí D-Bus, které lze vyřešit "
+"voláním příkazu dbus-update-activation-environment, typicky vydávaného z "
+"xinitrc (respektive z konfigurace Sway nebo podobně)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -444,11 +444,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Klikněte pro deaktivaci."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Klikněte pro povolení."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -896,7 +896,7 @@ msgstr "Problém se součástmi, na kterých závisí"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Žádné konflikty"
 
 #: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
@@ -1217,7 +1217,7 @@ msgstr "Všeobecný počítač"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Stolní Počítač"
 
 #: blueman/DeviceClass.py:172
 #, fuzzy
@@ -1227,27 +1227,27 @@ msgstr "Všeobecný počítač"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Kapesní PC/PDA („krabička“)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "PC/PDA velikosti dlaně"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Přenosný počítač (velikost hodinek)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Dokovací stanice"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Vše v jednom"
 
 #: blueman/DeviceClass.py:180
 #, fuzzy
@@ -1257,7 +1257,7 @@ msgstr "Server"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Konvertibilní"
 
 #: blueman/DeviceClass.py:182
 #, fuzzy
@@ -1267,15 +1267,15 @@ msgstr "Nositelné"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT Brána"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Mini Počítač"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Zásuvný Počítač"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
@@ -1399,7 +1399,7 @@ msgstr "Skener čárových kódů"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Dotyková plocha"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
@@ -1477,39 +1477,39 @@ msgstr "Obecné osobní mobilní zařízení"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Spínač"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Multi-spínač"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Tlačítko"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Posuvník"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Rotační Spínač"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Dotykový Panel"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Jeden Spínač"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Dvojitý Spínač"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Trojitý Spínač"
 
 #: blueman/DeviceClass.py:236
 #, fuzzy
@@ -1522,7 +1522,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Stisknout Tlačítko"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
@@ -1558,11 +1558,11 @@ msgstr "Všeobecný senzor tepu"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Snímač Pohybu"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Senzor Kvality Ovzduší"
 
 #: blueman/DeviceClass.py:247
 #, fuzzy
@@ -1572,35 +1572,35 @@ msgstr "Všeobecný senzor tepu"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Senzor Vlhkosti"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Senzor Průsaku"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Senzor Kouře"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Senzor Kapacity"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Kontaktní Senzor"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Senzor Oxidu Uhelnatého"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Senzor Oxidu Uhličitého"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Senzor Okolního Světla"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
@@ -1608,11 +1608,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Senzor Barevného Světela"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Senzor Deště"
 
 #: blueman/DeviceClass.py:259
 #, fuzzy
@@ -1628,11 +1628,11 @@ msgstr "Cyklistika: rychloměr"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Senzor Přiblížení"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Multi-Senzor"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
@@ -1646,23 +1646,23 @@ msgstr "Cyklistika: rychloměr"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Nástěnný Senzor"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Multisenzor"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Měřič Energie"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Detektor Plamene"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Snímač Tlaku Pneumatik"
 
 #: blueman/DeviceClass.py:270
 #, fuzzy
@@ -1672,23 +1672,23 @@ msgstr "Obecné: osobní váha"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Nástěnné Světlo"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Stropní Světlo"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Podlahové Světlo"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Světlo Skříň"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Světlo Stůl"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
@@ -1696,19 +1696,19 @@ msgstr ""
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "Světlo Přívěsek"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "Světlo Podlaha"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Protipovodňové Světlo"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "Podvodní Světlo"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
