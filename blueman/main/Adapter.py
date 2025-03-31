@@ -1,5 +1,4 @@
 from gettext import gettext as _
-import os.path
 import logging
 import gettext
 import signal
@@ -109,7 +108,9 @@ class BluemanAdapters(Gtk.Application):
         self.set_accels_for_action("app.quit", ["<Ctrl>w", "<Ctrl>q", "Escape"])
 
     def on_property_changed(self, _adapter: Adapter, name: str, value: Any, path: ObjectPath) -> None:
-        hci_dev = os.path.basename(path)
+        hci_dev = adapter_path_to_name(path)
+        assert hci_dev is not None
+
         if name == "Discoverable" and value == 0:
             self.tabs[hci_dev]["hidden_radio"].set_active(True)
         elif name == "Alias":
@@ -117,7 +118,9 @@ class BluemanAdapters(Gtk.Application):
             self.tabs[hci_dev]["name_entry"].set_text(value)
 
     def on_adapter_added(self, _manager: Manager, adapter_path: ObjectPath) -> None:
-        hci_dev = os.path.basename(adapter_path)
+        hci_dev = adapter_path_to_name(adapter_path)
+        assert hci_dev is not None
+
         if hci_dev not in self._adapters:
             self._adapters[hci_dev] = Adapter(obj_path=adapter_path)
 
@@ -125,7 +128,8 @@ class BluemanAdapters(Gtk.Application):
         self.add_to_notebook(self._adapters[hci_dev])
 
     def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
-        hci_dev = os.path.basename(adapter_path)
+        hci_dev = adapter_path_to_name(adapter_path)
+        assert hci_dev is not None
         self.remove_from_notebook(self._adapters[hci_dev])
 
     def _on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
@@ -217,7 +221,8 @@ class BluemanAdapters(Gtk.Application):
         )
 
     def add_to_notebook(self, adapter: Adapter) -> None:
-        hci_dev = os.path.basename(adapter.get_object_path())
+        hci_dev = adapter_path_to_name(adapter.get_object_path())
+        assert hci_dev is not None
         hci_dev_num = int(hci_dev[3:])
 
         if hci_dev not in self.tabs:
@@ -239,7 +244,8 @@ class BluemanAdapters(Gtk.Application):
         self.notebook.insert_page(ui['grid'], label, hci_dev_num)
 
     def remove_from_notebook(self, adapter: Adapter) -> None:
-        hci_dev = os.path.basename(adapter.get_object_path())
+        hci_dev = adapter_path_to_name(adapter.get_object_path())
+        assert hci_dev is not None
         hci_dev_num = int(hci_dev[3:])
 
         self.tabs[hci_dev]['visible'] = False

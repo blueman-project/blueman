@@ -1,7 +1,7 @@
 from gettext import gettext as _
-import os
 import logging
 
+from blueman.Functions import adapter_path_to_name
 from blueman.bluez.Adapter import Adapter
 from blueman.gui.DeviceSelectorList import DeviceSelectorList
 
@@ -87,7 +87,7 @@ class DeviceSelectorWidget(Gtk.Box):
                 if self.List.Adapter.get_object_path() != adapter_path:
                     # Stop discovering on previous adapter
                     self.List.Adapter.stop_discovery()
-                    self.List.set_adapter(os.path.basename(adapter_path))
+                    self.List.set_adapter(adapter_path_to_name(adapter_path))
                     # Start discovery on selected adapter
                     self.List.Adapter.start_discovery()
 
