@@ -147,6 +147,10 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
                 return device
         return None
 
+    def destroy(self) -> None:
+        if self._object_manager:
+            del self._object_manager
+
     @classmethod
     def watch_name_owner(
         cls,
