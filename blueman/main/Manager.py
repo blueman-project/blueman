@@ -2,6 +2,7 @@ import logging
 import signal
 from gettext import gettext as _
 from typing import Any
+from collections.abc import Callable
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
@@ -56,9 +57,6 @@ class Blueman(Gtk.Application):
         self.Plugins.load_plugin()
 
     def do_startup(self) -> None:
-        def doquit(_a: Gio.SimpleAction, _param: None) -> None:
-            self.quit()
-
         Gtk.Application.do_startup(self)
         self.window = None
 
@@ -76,10 +74,8 @@ class Blueman(Gtk.Application):
         self._infobar.connect("response", self._infobar_response)
         self._infobar_bt: str = ""
 
-        quit_action = Gio.SimpleAction.new("Quit", None)
-        quit_action.connect("activate", doquit)
+        self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
-        self.add_action(quit_action)
 
         bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
         bt_status_action.connect("change-state", self._on_bt_state_changed)
@@ -189,6 +185,26 @@ class Blueman(Gtk.Application):
         if event.x != x or event.y != y or event.width != width or event.height != height:
             self.Config["window-properties"] = [event.width, event.height, event.x, event.y]
         return False
+
+    def register_settings_action(self, name: str) -> None:
+        action = self.Config.create_action(name)
+        self.add_action(action)
+
+    def register_action(self, name: str, callback: Callable[[Gio.SimpleAction, Any | None], None],
+                        vtype: GLib.VariantType | None = None) -> None:
+        if name in self.list_actions():
+            logging.error(f"{name} already exists")
+        else:
+            action = Gio.SimpleAction.new(name, vtype)
+            action.connect("activate", callback)
+            self.add_action(action)
+
+    def simple_action(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
+        match action.get_name():
+            case "Quit":
+                self.quit()
+            case _ as name:
+                logging.error(f"Unknown action: {name}")
 
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
