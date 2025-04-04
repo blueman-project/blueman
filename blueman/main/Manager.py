@@ -7,6 +7,7 @@ from collections.abc import Callable
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
+from blueman.Constants import WEBSITE
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
@@ -15,7 +16,7 @@ from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed, DBus, AppletServiceApplication
-from blueman.gui.CommonUi import ErrorDialog
+from blueman.gui.CommonUi import ErrorDialog, show_about_dialog
 from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
@@ -79,6 +80,11 @@ class Blueman(Gtk.Application):
         self.register_action("trust-toggle", self.simple_action)
         self.register_action("remove", self.simple_action)
         self.register_action("send", self.simple_action)
+        self.register_action("report", self.simple_action)
+        self.register_action("help", self.simple_action)
+        self.register_action("plugins", self.simple_action)
+        self.register_action("services", self.simple_action)
+        self.register_action("preferences", self.simple_action)
 
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -227,6 +233,18 @@ class Blueman(Gtk.Application):
                 device = self.List.get_selected_device()
                 if device is not None:
                     self.send(device)
+            case "report":
+                launch(f"xdg-open {WEBSITE}/issues", system=True)
+            case "help":
+                widget = self.window.get_toplevel() if self.window else None
+                assert isinstance(widget, Gtk.Window)
+                show_about_dialog('Blueman ' + _('Device Manager'), parent=widget)
+            case "plugins":
+                self.Applet.OpenPluginDialog()
+            case "services":
+                launch("blueman-services", name=_("Service Preferences"))
+            case "preferences":
+                self.adapter_properties()
             case _ as name:
                 logging.error(f"Unknown action: {name}")
 
