@@ -1,7 +1,6 @@
 from gettext import gettext as _
 import logging
 from typing import TYPE_CHECKING
-from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 import gi
@@ -27,36 +26,23 @@ class ManagerToolbar:
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
 
         self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
-        self.b_search.connect("clicked", lambda button: blueman.inquiry())
-
         self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
-        self.b_bond.connect("clicked", self.on_action, self.blueman.bond)
-
         self.b_trust = blueman.builder.get_widget("b_trust", Gtk.ToolButton)
-        self.b_trust.connect("clicked", self.on_action, self.blueman.toggle_trust)
 
         self.b_trust.props.label = _("Untrust")
         (size, nsize) = Gtk.Widget.get_preferred_size(self.b_trust)
         self.b_trust.props.label = _("Trust")
         (size2, nsize2) = Gtk.Widget.get_preferred_size(self.b_trust)
-
         self.b_trust.props.width_request = max(size.width, size2.width)
 
         self.b_remove = blueman.builder.get_widget("b_remove", Gtk.ToolButton)
-        self.b_remove.connect("clicked", self.on_action, self.blueman.remove)
 
         self.b_send = blueman.builder.get_widget("b_send", Gtk.ToolButton)
         self.b_send.props.sensitive = False
-        self.b_send.connect("clicked", self.on_action, self.blueman.send)
 
         self.b_bluetooth_status = blueman.builder.get_widget("sw_bluetooth_status", Gtk.Switch)
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
-
-    def on_action(self, _button: Gtk.ToolButton, func: Callable[[Device], None]) -> None:
-        device = self.blueman.List.get_selected_device()
-        if device is not None:
-            func(device)
 
     def on_adapter_property_changed(self, _lst: ManagerDeviceList, adapter: Adapter,
                                     key_value: tuple[str, object]) -> None:
