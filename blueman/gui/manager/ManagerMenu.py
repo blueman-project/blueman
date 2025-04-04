@@ -1,4 +1,3 @@
-from gettext import gettext as _
 import logging
 from typing import TYPE_CHECKING, Any
 from collections.abc import Sequence
@@ -9,9 +8,7 @@ from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
-from blueman.gui.CommonUi import show_about_dialog
-from blueman.Constants import WEBSITE
-from blueman.Functions import launch, adapter_path_to_name
+from blueman.Functions import adapter_path_to_name
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -38,16 +35,6 @@ class ManagerMenu:
         self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
         self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
-        report_item = blueman.builder.get_widget("report", Gtk.ImageMenuItem)
-        report_item.connect("activate", lambda x: launch(f"xdg-open {WEBSITE}/issues"))
-
-        help_item = blueman.builder.get_widget("help", Gtk.ImageMenuItem)
-        assert self.blueman.window is not None
-        widget = self.blueman.window.get_toplevel()
-        assert isinstance(widget, Gtk.Window)
-        window = widget
-        help_item.connect("activate", lambda x: show_about_dialog('Blueman ' + _('Device Manager'), parent=window))
-
         item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
 
@@ -71,20 +58,9 @@ class ManagerMenu:
         sort_descending_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
         self.blueman.Config.bind("sort-descending", sort_descending_item, "active", Gio.SettingsBindFlags.DEFAULT)
 
-        item_plugins = blueman.builder.get_widget("plugins_item", Gtk.ImageMenuItem)
-        item_plugins.connect('activate', self._on_plugin_dialog_activate)
-
-        item_services = blueman.builder.get_widget("services_item", Gtk.ImageMenuItem)
-        item_services.connect('activate', lambda *args: launch("blueman-services", name=_("Service Preferences")))
-
-        self.Search = search_item = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
-        search_item.connect("activate", lambda x: self.blueman.inquiry())
+        self.Search = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
 
         self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
-        self._adapter_settings.connect("activate", lambda x: self.blueman.adapter_properties())
-
-        exit_item = blueman.builder.get_widget("exit_item", Gtk.ImageMenuItem)
-        exit_item.connect("activate", lambda x: self.blueman.quit())
 
         self._manager = Manager()
         self._manager.connect_signal("adapter-added", self.on_adapter_added)
@@ -202,8 +178,3 @@ class ManagerMenu:
         else:
             self.Search.props.visible = False
             self._adapter_settings.props.visible = False
-
-    def _on_plugin_dialog_activate(self, _item: Gtk.MenuItem) -> None:
-        def cb(_proxy: Gio.DBusProxy, _res: Any, _userdata: Any) -> None:
-            pass
-        self.blueman.Applet.OpenPluginDialog(result_handler=cb)

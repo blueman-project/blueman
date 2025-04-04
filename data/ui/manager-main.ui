@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.94.1 -->
 <interface>
+  <!-- interface-name manager-main.ui -->
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkImage" id="ib_more_icon">
     <property name="visible">True</property>
@@ -68,6 +69,7 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="search_item">
+                        <property name="action-name">app.inquiry</property>
                         <property name="label" translatable="yes">_Search</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
@@ -89,6 +91,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="prefs_item">
+                        <property name="action-name">app.preferences</property>
                         <property name="label" translatable="yes">_Preferences</property>
                         <property name="can-focus">False</property>
                         <property name="use-underline">True</property>
@@ -104,6 +107,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="exit_item">
+                        <property name="action-name">app.Quit</property>
                         <property name="label" translatable="yes">_Exit</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -214,6 +218,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="plugins_item">
+                        <property name="action-name">app.plugins</property>
                         <property name="label" translatable="yes">_Plugins</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -224,6 +229,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="services_item">
+                        <property name="action-name">app.services</property>
                         <property name="label" translatable="yes">_Local Services</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -248,6 +254,7 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkImageMenuItem" id="report">
+                        <property name="action-name">app.report</property>
                         <property name="label" translatable="yes">_Report a Problem</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -264,6 +271,7 @@
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="help">
+                        <property name="action-name">app.help</property>
                         <property name="label" translatable="yes">_Help</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -288,6 +296,7 @@
             <property name="can-focus">False</property>
             <child>
               <object class="GtkToolButton" id="b_search">
+                <property name="action-name">app.inquiry</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
@@ -313,6 +322,7 @@
             </child>
             <child>
               <object class="GtkToolButton" id="b_bond">
+                <property name="action-name">app.bond</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
@@ -327,6 +337,7 @@
             </child>
             <child>
               <object class="GtkToolButton" id="b_trust">
+                <property name="action-name">app.trust-toggle</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
@@ -341,6 +352,7 @@
             </child>
             <child>
               <object class="GtkToolButton" id="b_remove">
+                <property name="action-name">app.remove</property>
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="can-focus">False</property>
@@ -365,6 +377,7 @@
             </child>
             <child>
               <object class="GtkToolButton" id="b_send">
+                <property name="action-name">app.send</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="tooltip-text" translatable="yes">Send file(s) to the device</property>

@@ -130,7 +130,7 @@ __DICT_ERROR__ = {'org.bluez.Error.Failed': DBusFailedError,
 
 
 def parse_dbus_error(exception: GLib.Error) -> BluezDBusException:
-    global __DICT_ERROR__
+    global __DICT_ERROR__  # noqa F824
 
     gerror, dbus_error, message = exception.message.split(':', 2)
     try:
