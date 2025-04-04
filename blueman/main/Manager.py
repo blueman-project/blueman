@@ -74,6 +74,12 @@ class Blueman(Gtk.Application):
         self._infobar.connect("response", self._infobar_response)
         self._infobar_bt: str = ""
 
+        self.register_action("inquiry", self.simple_action)
+        self.register_action("bond", self.simple_action)
+        self.register_action("trust-toggle", self.simple_action)
+        self.register_action("remove", self.simple_action)
+        self.register_action("send", self.simple_action)
+
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
 
@@ -203,6 +209,24 @@ class Blueman(Gtk.Application):
         match action.get_name():
             case "Quit":
                 self.quit()
+            case "inquiry":
+                self.inquiry()
+            case "bond":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.bond(device)
+            case "trust-toggle":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.toggle_trust(device)
+            case "remove":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.remove(device)
+            case "send":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.send(device)
             case _ as name:
                 logging.error(f"Unknown action: {name}")
 
