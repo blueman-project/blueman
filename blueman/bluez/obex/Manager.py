@@ -86,6 +86,6 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
         cls,
         appeared_handler: Callable[[Gio.DBusConnection, str, str], None],
         vanished_handler: Callable[[Gio.DBusConnection, str], None],
-    ) -> None:
-        Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
-                           appeared_handler, vanished_handler)
+    ) -> int:
+        return Gio.bus_watch_name(Gio.BusType.SESSION, cls.__bus_name, Gio.BusNameWatcherFlags.AUTO_START,
+                                  appeared_handler, vanished_handler)

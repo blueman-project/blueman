@@ -1,5 +1,6 @@
 from gettext import gettext as _
 import os
+import pathlib
 from typing import Any
 from collections.abc import Callable
 
@@ -21,7 +22,7 @@ RFKILL_OP_CHANGE_ALL = 3
 
 RFKILL_EVENT_SIZE_V1 = 8
 
-if not os.path.exists('/dev/rfkill'):
+if not pathlib.Path('/dev/rfkill').exists():
     raise ImportError('Hardware kill switch not found')
 
 

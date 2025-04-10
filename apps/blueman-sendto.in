@@ -1,5 +1,6 @@
 #!@PYTHON@
 import os
+import pathlib
 import sys
 import signal
 import logging
@@ -10,10 +11,11 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gio
 
 # support running uninstalled
-_dirname = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+dirname = pathlib.Path(*pathlib.Path(__file__).parts[:-2])
 if 'BLUEMAN_SOURCE' in os.environ:
-    sys.path = [_dirname, os.path.join(_dirname, 'module', '.libs')] + sys.path
-    os.environ["GSETTINGS_SCHEMA_DIR"] = os.path.join(_dirname, "data")
+    sys.path.insert(0, dirname.joinpath('module', '.libs').as_posix())
+    sys.path.insert(0, dirname.as_posix())
+    os.environ["GSETTINGS_SCHEMA_DIR"] = dirname.joinpath("data").as_posix()
 
 _ = gettext.gettext
 gettext.textdomain("@GETTEXT_PACKAGE@")
