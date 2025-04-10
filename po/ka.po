@@ -1,38 +1,42 @@
 # Georgian translation for blueman.
 # This file is distributed under the same license as the blueman package.
 #
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.4-alpha\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2023-02-16 09:39+0100\n"
-"Last-Translator:  <blueman@cschramm.eu>\n"
-"Language-Team: Georgian <(nothing)>\n"
+"POT-Creation-Date: 2024-12-03 18:48+0000\n"
+"PO-Revision-Date: 2024-08-10 21:09+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <https://hosted.weblate.org/projects/blueman/blueman/"
+"ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b>ხილვადობის პარამეტრი</b>"
 
-#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
-msgstr ""
+msgstr "დამალული"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
-msgstr ""
+msgstr "ყოველთვის ხილული"
 
 #: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
-msgstr ""
+msgstr "დროებით ხილული"
 
 #: data/ui/adapters-tab.ui:110
 msgid "<b>Name</b>"
-msgstr ""
+msgstr "<b>სახელი</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -48,156 +52,162 @@ msgstr ""
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
-msgstr ""
+msgstr "შეყვანის ჩვენება"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:48
+#, fuzzy
+#| msgid "Bluetooth File Transfer"
+msgid "Bluetooth Devices"
+msgstr "ბლუთუზით ფაილის გადაცემა"
+
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr ""
+msgstr "_ადაპტერი"
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:71
 msgid "_Search"
-msgstr ""
+msgstr "_ძებნა"
 
-#: data/ui/manager-main.ui:91
+#: data/ui/manager-main.ui:92
 msgid "_Preferences"
-msgstr ""
+msgstr "_მორგება"
 
-#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr ""
+msgstr "_გასვლა"
 
-#: data/ui/manager-main.ui:123
+#: data/ui/manager-main.ui:124
 msgid "_Device"
-msgstr ""
+msgstr "_მოწყობილობა"
 
-#: data/ui/manager-main.ui:131
+#: data/ui/manager-main.ui:132
 msgid "_View"
-msgstr ""
+msgstr "_ხედი"
 
-#: data/ui/manager-main.ui:141
+#: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "_პანელის ჩვენება"
 
-#: data/ui/manager-main.ui:149
+#: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "_სტატუსის ზოლის ჩვენება"
 
-#: data/ui/manager-main.ui:157
+#: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
 msgstr ""
 
-#: data/ui/manager-main.ui:171
+#: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr ""
+msgstr "_დალაგება"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr ""
+msgstr "_სახელი"
 
-#: data/ui/manager-main.ui:190
+#: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr ""
+msgstr "_დამატებული"
 
-#: data/ui/manager-main.ui:206
+#: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr ""
+msgstr "_დაღმავალი"
 
-#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
+#: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
 msgstr ""
 
-#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:45
+#: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
-msgstr ""
+msgstr "_ლოკალური სერვისები"
 
-#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
-#: blueman/plugins/applet/StandardItems.py:51
+#: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
+#: blueman/plugins/applet/StandardItems.py:65
 msgid "_Help"
-msgstr ""
+msgstr "_დახმარება"
 
-#: data/ui/manager-main.ui:250
+#: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
 msgstr ""
 
-#: data/ui/manager-main.ui:293
+#: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:295
+#: data/ui/manager-main.ui:296
 msgid "Search"
 msgstr ""
 
-#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:370
 msgid "Create pairing with the device"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:320
 msgid "Pair"
-msgstr ""
+msgstr "წყვილი"
 
-#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "Mark/Unmark this device as trusted"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Trust"
-msgstr ""
+msgstr "ნდობა"
 
-#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:433
 msgid "Remove this device from the known devices list"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:347
+#: data/ui/manager-main.ui:348
 msgid "Remove"
-msgstr ""
+msgstr "წაშლა"
 
-#: data/ui/manager-main.ui:369
+#: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
 msgstr ""
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:372
 msgid "Send File"
-msgstr ""
+msgstr "ფაილის გაგზავნა"
 
-#: data/ui/manager-main.ui:491
+#: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
 msgstr ""
 
-#: data/ui/manager-main.ui:533
+#: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
 msgstr ""
 
-#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
+#: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
 msgstr ""
 
-#: data/ui/manager-main.ui:635
+#: data/ui/manager-main.ui:636
 msgid "More"
-msgstr ""
+msgstr "მეტი"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "მოწყობილობის სახელის გადარქმევა"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr ""
+msgstr "_საწყის მნიშვნელობებზე დაბრუნება"
 
-#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_Cancel"
-msgstr ""
+msgstr "_შეწყვეტა"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_OK"
-msgstr ""
+msgstr "_დიახ"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
@@ -205,7 +215,7 @@ msgstr ""
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
-msgstr ""
+msgstr "რეკომენდებული"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
@@ -213,7 +223,7 @@ msgstr ""
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
-msgstr ""
+msgstr "IP მისამართი:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
@@ -259,21 +269,31 @@ msgstr ""
 msgid "Accept files from trusted devices"
 msgstr ""
 
+#: data/ui/services-window.ui:9
+#, fuzzy
+#| msgid "_Local Services"
+msgid "Local Services"
+msgstr "_ლოკალური სერვისები"
+
+#: data/ui/services-window.ui:49
+msgid "_Apply"
+msgstr ""
+
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
-msgstr ""
+msgstr "<b>ვის:</b>"
 
 #: data/ui/send-dialog.ui:109
 msgid "<b>File:</b>"
-msgstr ""
+msgstr "<b>ფაილი:</b>"
 
 #: data/ui/applet-plugins-widget.ui:79
 msgid "Configuration"
-msgstr ""
+msgstr "მორგება"
 
 #: data/ui/applet-plugins-widget.ui:83
 msgid "Configure selected plugin's preferences"
@@ -281,22 +301,22 @@ msgstr ""
 
 #: data/ui/applet-plugins-widget.ui:129
 msgid "Not specified"
-msgstr ""
+msgstr "მითითებული არაა"
 
 #: data/ui/applet-plugins-widget.ui:151
 msgid "<b>Author:</b>"
-msgstr ""
+msgstr "<b>ავტორი:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
-#: blueman/gui/manager/ManagerDeviceList.py:369
-#: blueman/gui/manager/ManagerDeviceList.py:371 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:378
+#: blueman/gui/manager/ManagerDeviceList.py:380 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:484
 #: blueman/DeviceClass.py:533 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
 #: blueman/plugins/applet/NetUsage.py:211
 msgid "Unknown"
-msgstr ""
+msgstr "უცნობი"
 
 #: data/ui/applet-plugins-widget.ui:193
 msgid "<b>Depends on:</b>"
@@ -312,11 +332,11 @@ msgstr ""
 
 #: data/ui/gsm-settings.ui:56
 msgid "Number:"
-msgstr ""
+msgstr "რიცხვი:"
 
 #: data/ui/gsm-settings.ui:79
 msgid "APN:"
-msgstr ""
+msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
@@ -324,7 +344,7 @@ msgstr ""
 
 #: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:39
 msgid "_Close"
-msgstr ""
+msgstr "_დახურვა"
 
 #: data/ui/net-usage.ui:80
 msgid "<b>Downloaded:</b>"
@@ -350,34 +370,34 @@ msgstr ""
 msgid "Send note"
 msgstr ""
 
-#: blueman/main/Adapter.py:57
+#: blueman/main/Adapter.py:60
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
 
-#: blueman/main/Adapter.py:97 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:100 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr ""
 
-#: blueman/main/Adapter.py:160
+#: blueman/main/Adapter.py:163
 msgid "Always"
-msgstr ""
+msgstr "ყოველთვის"
 
-#: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
+#: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/main/Adapter.py:230
+#: blueman/main/Adapter.py:233
 msgid "Adapter"
-msgstr ""
+msgstr "ადაპტერი"
 
-#: blueman/main/DBusProxies.py:64
+#: blueman/main/DBusProxies.py:90
 msgid "Failed to reach blueman-manager"
 msgstr ""
 
-#: blueman/main/DBusProxies.py:65
+#: blueman/main/DBusProxies.py:91
 msgid ""
 "It seems like blueman-manager could no get activated via D-Bus. A typical "
 "cause for this is a broken graphical setup in the D-Bus activation "
@@ -386,151 +406,151 @@ msgid ""
 "similar)."
 msgstr ""
 
-#: blueman/main/Manager.py:104
+#: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
 msgstr ""
 
-#: blueman/main/Manager.py:105
+#: blueman/main/Manager.py:114
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
 
-#: blueman/main/Manager.py:163
+#: blueman/main/Manager.py:172
 msgid "Click to disable."
 msgstr ""
 
-#: blueman/main/Manager.py:166
+#: blueman/main/Manager.py:175
 msgid "Click to enable."
 msgstr ""
 
-#: blueman/main/Manager.py:199
+#: blueman/main/Manager.py:208
 msgid "Searching"
-msgstr ""
+msgstr "ძებნა"
 
-#: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:270 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
 msgstr ""
 
-#: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
-#: blueman/plugins/applet/StandardItems.py:75
+#: blueman/main/Manager.py:286 blueman/gui/manager/ManagerDeviceList.py:179
+#: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
 msgstr ""
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
-msgstr ""
+msgstr "ბლუთუზით ფაილის გადაცემა"
 
-#: blueman/main/Sendto.py:42
+#: blueman/main/Sendto.py:44
 msgid "_Stop"
-msgstr ""
+msgstr "_გაჩერება"
 
-#: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
+#: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
 msgstr ""
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "obexd not available"
 msgstr ""
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 
-#: blueman/main/Sendto.py:142
+#: blueman/main/Sendto.py:144
 msgid "Cancelling"
-msgstr ""
+msgstr "გაუქმება"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "Sending File"
-msgstr ""
+msgstr "ფალის გაგზავნა"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "ETA:"
-msgstr ""
+msgstr "დარჩენილი დრო:"
 
-#: blueman/main/Sendto.py:192
+#: blueman/main/Sendto.py:194
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/main/Sendto.py:225
+#: blueman/main/Sendto.py:227
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr ""
 
-#: blueman/main/Sendto.py:229
+#: blueman/main/Sendto.py:231
 msgid "Skip"
-msgstr ""
+msgstr "გამოტოვება"
 
-#: blueman/main/Sendto.py:230
+#: blueman/main/Sendto.py:232
 msgid "Retry"
-msgstr ""
+msgstr "თავიდან"
 
-#: blueman/main/Sendto.py:281
+#: blueman/main/Sendto.py:283
 msgid "Error occurred"
-msgstr ""
+msgstr "აღმოჩენილია შეცდომა"
 
-#: blueman/main/applet/BluezAgent.py:123
+#: blueman/main/applet/BluezAgent.py:142
 #, python-format
 msgid "Pairing request for %s"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:153 blueman/main/applet/BluezAgent.py:265
 msgid "Bluetooth Authentication"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:165
+#: blueman/main/applet/BluezAgent.py:184
 msgid "Enter PIN code for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:174
+#: blueman/main/applet/BluezAgent.py:193
 msgid "Enter passkey for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:185
+#: blueman/main/applet/BluezAgent.py:204
 msgid "Pairing passkey for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:196
+#: blueman/main/applet/BluezAgent.py:215
 msgid "Pairing PIN code for"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:209
+#: blueman/main/applet/BluezAgent.py:228
 msgid "Pairing request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:212
+#: blueman/main/applet/BluezAgent.py:231
 msgid "Confirm value for authentication:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:213
+#: blueman/main/applet/BluezAgent.py:232
 msgid "Confirm"
-msgstr ""
+msgstr "დადასტურება"
 
-#: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
+#: blueman/main/applet/BluezAgent.py:232 blueman/main/applet/BluezAgent.py:263
 msgid "Deny"
-msgstr ""
+msgstr "უარყოფა"
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Authorization request for:"
 msgstr ""
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Service:"
-msgstr ""
+msgstr "სერვისი:"
 
-#: blueman/main/applet/BluezAgent.py:242
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Always accept"
-msgstr ""
+msgstr "ყოველთვის მიღება"
 
-#: blueman/main/applet/BluezAgent.py:243
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/main/applet/BluezAgent.py:262
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
-msgstr ""
+msgstr "დასტური"
 
 #: blueman/main/PluginManager.py:67
 msgid ""
@@ -539,255 +559,255 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 
-#: blueman/Functions.py:70
-msgid "Bluetooth Turned Off"
-msgstr ""
-
 #: blueman/Functions.py:71
+msgid "Bluetooth Turned Off"
+msgstr "ბლუთუზი გამორთულია"
+
+#: blueman/Functions.py:72
 msgid "Exit"
 msgstr ""
 
-#: blueman/Functions.py:72
+#: blueman/Functions.py:73
 msgid "Enable Bluetooth"
-msgstr ""
+msgstr "ბლუთუზის ჩართვა"
 
-#: blueman/Functions.py:166
+#: blueman/Functions.py:167
 msgid "B"
 msgstr ""
 
-#: blueman/Functions.py:169
+#: blueman/Functions.py:170
 msgid "KB"
-msgstr ""
+msgstr "კბ"
 
-#: blueman/Functions.py:172
+#: blueman/Functions.py:173
 msgid "MB"
-msgstr ""
+msgstr "მბ"
 
-#: blueman/Functions.py:175
+#: blueman/Functions.py:176
 msgid "GB"
-msgstr ""
+msgstr "გბ"
 
-#: blueman/gui/manager/ManagerMenu.py:47
+#: blueman/gui/manager/ManagerMenu.py:48
 msgid "Device Manager"
-msgstr ""
+msgstr "მოწყობილობის მმართველი"
 
-#: blueman/gui/manager/ManagerMenu.py:80
-#: blueman/plugins/applet/StandardItems.py:85
+#: blueman/gui/manager/ManagerMenu.py:81
+#: blueman/plugins/applet/StandardItems.py:102
 msgid "Service Preferences"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
-msgstr ""
+msgstr "კლავიატურა"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:127
 msgid "Combo"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:333
+#: blueman/gui/manager/ManagerDeviceList.py:342
 msgid "Unnamed device"
 msgstr ""
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:340
-#: blueman/gui/manager/ManagerDeviceList.py:369 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:349
+#: blueman/gui/manager/ManagerDeviceList.py:378 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
-msgstr ""
+msgstr "დაულაგებელი"
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/gui/manager/ManagerDeviceList.py:560
-#: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:31
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/gui/manager/ManagerDeviceList.py:569
+#: blueman/plugins/applet/AutoConnect.py:68
+#: blueman/plugins/applet/ConnectionNotifier.py:32
+#: blueman/plugins/applet/RecentConns.py:157
 #: blueman/plugins/applet/PPPSupport.py:77
 msgid "Connected"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:562
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "Trusted"
-msgstr ""
+msgstr "სანდო"
 
-#: blueman/gui/manager/ManagerDeviceList.py:564
+#: blueman/gui/manager/ManagerDeviceList.py:573
 msgid "Paired"
-msgstr ""
+msgstr "შეწყვილებულია"
 
-#: blueman/gui/manager/ManagerDeviceList.py:566
+#: blueman/gui/manager/ManagerDeviceList.py:575
 msgid "Blocked"
-msgstr ""
+msgstr "დაბლოკილია"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "<b>Connected</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:602
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Poor"
-msgstr ""
+msgstr "ცუდი"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
-#: blueman/gui/manager/ManagerDeviceList.py:623
+#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:632
 msgid "Sub-optimal"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:634
 msgid "Optimal"
-msgstr ""
+msgstr "ოპტიმალური"
 
-#: blueman/gui/manager/ManagerDeviceList.py:608
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "Much"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:610
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Too much"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:630
 msgid "Low"
-msgstr ""
+msgstr "დაბალი"
 
-#: blueman/gui/manager/ManagerDeviceList.py:627
+#: blueman/gui/manager/ManagerDeviceList.py:636
 msgid "High"
-msgstr ""
+msgstr "მაღალი"
 
-#: blueman/gui/manager/ManagerDeviceList.py:629
+#: blueman/gui/manager/ManagerDeviceList.py:638
 msgid "Very High"
-msgstr ""
+msgstr "ძალიან მაღალი"
 
-#: blueman/gui/manager/ManagerDeviceList.py:632
+#: blueman/gui/manager/ManagerDeviceList.py:641
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceList.py:635
+#: blueman/gui/manager/ManagerDeviceList.py:644
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:137
+#: blueman/gui/manager/ManagerDeviceMenu.py:139
 msgid "Success!"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:142
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Failed"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:148
+#: blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting…"
-msgstr ""
+msgstr "დაკავშირება…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:171
+#: blueman/gui/manager/ManagerDeviceMenu.py:173
 msgid "Disconnection Failed: "
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:197
 msgid "No audio endpoints registered"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
-msgid "Input/output error"
-msgstr ""
-
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
+msgid "Input/output error"
+msgstr "შეტანა/გამოტანის შეცდომა"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:202
 msgid "Device did not respond"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:204
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
 msgid "Unknown error"
-msgstr ""
+msgstr "უცნობ შეცდომა"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
+#: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:295
+#: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "<b>_Connect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:303
 msgid "<b>_Disconnect</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:302
+#: blueman/gui/manager/ManagerDeviceMenu.py:304
 msgid "Forcefully disconnect the device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:318
+#: blueman/gui/manager/ManagerDeviceMenu.py:320
 msgid "<b>Connect To:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:323
+#: blueman/gui/manager/ManagerDeviceMenu.py:325
 msgid "<b>Disconnect:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:333
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
 msgid "<b>Auto-connect:</b>"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:353
+#: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "Send a _File…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:366
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Pair"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:376
+#: blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Trust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "_Untrust"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "_Block"
-msgstr ""
+msgstr "_დაბლოკვა"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:393
+#: blueman/gui/manager/ManagerDeviceMenu.py:396
 msgid "_Unblock"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:397
+#: blueman/gui/manager/ManagerDeviceMenu.py:400
 msgid "Block/Unblock this device"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:417
+#: blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "R_ename device…"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:426
+#: blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "_Remove…"
 msgstr ""
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr ""
+msgstr "ოპერაციის გაუქმება"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Untrust"
-msgstr ""
+msgstr "ნდობის მოხსნა"
 
-#: blueman/gui/DeviceSelectorDialog.py:14
+#: blueman/gui/DeviceSelectorDialog.py:16
 msgid "Select Device"
 msgstr ""
 
@@ -800,9 +820,9 @@ msgid "GSM Settings"
 msgstr ""
 
 #: blueman/gui/applet/PluginDialog.py:121
-#: blueman/plugins/applet/StandardItems.py:91
+#: blueman/plugins/applet/StandardItems.py:108
 msgid "Plugins"
-msgstr ""
+msgstr "დამატებები"
 
 #: blueman/gui/applet/PluginDialog.py:231
 #, python-format
@@ -822,13 +842,13 @@ msgstr ""
 
 #: blueman/gui/applet/PluginDialog.py:267
 msgid "No dependencies"
-msgstr ""
+msgstr "დამოკიდებულებების გარეშე"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
 msgstr ""
 
-#: blueman/gui/applet/PluginDialog.py:349
+#: blueman/gui/applet/PluginDialog.py:351
 msgid "Dependency issue"
 msgstr ""
 
@@ -843,22 +863,22 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "სხვადასხვა"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "კომპიუტერი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "ტელეფონი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
 msgid "Access point"
-msgstr ""
+msgstr "წვდომის წერტილი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
@@ -868,27 +888,27 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "გარე"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:518
 msgid "Imaging"
-msgstr ""
+msgstr "გამოსახულება"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "მინიმოწყობილობა"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "სათამაშო"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
 msgid "Desktop"
-msgstr ""
+msgstr "სამაგიდო"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
@@ -898,12 +918,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:35 blueman/DeviceClass.py:173
 msgid "Laptop"
-msgstr ""
+msgstr "ლეპტოპი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr ""
+msgstr "ჯიბის"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
@@ -913,7 +933,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:48
 msgid "Cellular"
-msgstr ""
+msgstr "მობილური"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
@@ -928,17 +948,17 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:54
 msgid "Modem"
-msgstr ""
+msgstr "მოდემი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "სრულად"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
@@ -979,17 +999,17 @@ msgstr ""
 #: blueman/DeviceClass.py:82 blueman/DeviceClass.py:417 blueman/Sdp.py:123
 #: blueman/Sdp.py:164
 msgid "Headset"
-msgstr ""
+msgstr "ყურსაცვამები & მიკროფონი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
 msgid "Handsfree"
-msgstr ""
+msgstr "ხელის გარეშე სამართავი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88 blueman/DeviceClass.py:374
 msgid "Microphone"
-msgstr ""
+msgstr "მიკროფონი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
@@ -999,7 +1019,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
 msgid "Headphones"
-msgstr ""
+msgstr "ყურსაცვამები"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
@@ -1029,7 +1049,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:104
 msgid "Video camera"
-msgstr ""
+msgstr "ვიდეოკამერა"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
@@ -1069,17 +1089,17 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "კამერა"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "სკანერი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "პრინტერი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
@@ -1089,7 +1109,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "პეიჯერი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
@@ -1099,7 +1119,7 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "ჩაფხუტი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
@@ -1109,12 +1129,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "რობოტი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "მანქანა"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
@@ -1124,12 +1144,12 @@ msgstr ""
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "კონტროლერი"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "თამაში"
 
 #: blueman/DeviceClass.py:168
 msgid "Generic Unknown"
@@ -1165,7 +1185,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "ტაბლეტი"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
@@ -1181,23 +1201,23 @@ msgstr ""
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "გარდაქმნადი"
 
 #: blueman/DeviceClass.py:182
 msgid "Detachable"
-msgstr ""
+msgstr "მოხსნადი"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT ნაგულისხმები რაუტერი"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "მინი PC"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "კომპიუტერი ჩიპზე"
 
 #: blueman/DeviceClass.py:186
 msgid "Generic Watch"
@@ -1277,11 +1297,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
-msgstr ""
+msgstr "თაგუნა"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "ჯოისტიკი"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
@@ -1301,15 +1321,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "ბარკოდის სკანერი"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "თაჩპედი"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "დაშორებული პრეზენტაცია"
 
 #: blueman/DeviceClass.py:215
 msgid "Generic Glucose Meter"
@@ -1369,11 +1389,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "ღილაკი"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "ჩოჩია"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
@@ -1405,11 +1425,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "ღილაკი"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "დარეკვა"
 
 #: blueman/DeviceClass.py:240
 msgid "Generic Network Device"
@@ -1417,7 +1437,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:241
 msgid "Access Point"
-msgstr ""
+msgstr "წვდომის წერტილი"
 
 #: blueman/DeviceClass.py:242
 msgid "Mesh Device"
@@ -1569,7 +1589,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "პროექტორი"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
@@ -1593,11 +1613,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "პროჟექტორი"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "ხაზოვანი განათება"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
@@ -1625,7 +1645,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "ნათურა"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
@@ -1745,7 +1765,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "ლიფტი"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
@@ -1761,7 +1781,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:334
 msgid "Locker"
-msgstr ""
+msgstr "ჩასაკეტი პატარა კარადა"
 
 #: blueman/DeviceClass.py:335
 msgid "Generic Motorized Device"
@@ -1781,11 +1801,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "ფარდები"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "ეკრანი"
 
 #: blueman/DeviceClass.py:341
 msgid "Generic Power Device"
@@ -1913,7 +1933,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:372
 msgid "Speakerphone"
-msgstr ""
+msgstr "სამაგიდო დინამიკი"
 
 #: blueman/DeviceClass.py:373
 msgid "Generic Audio Source"
@@ -1921,11 +1941,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "მაღვიძარა"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "ზარი"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
@@ -1937,11 +1957,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:379
 msgid "Service Desk"
-msgstr ""
+msgstr "მხარდაჭერის სამსახური"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "კიოსკი"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
@@ -1949,7 +1969,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:382
 msgid "Auditorium"
-msgstr ""
+msgstr "აუდიტორია"
 
 #: blueman/DeviceClass.py:383
 msgid "Generic Motorized Vehicle"
@@ -1957,7 +1977,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:384
 msgid "Car"
-msgstr ""
+msgstr "მანქანა"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
@@ -1969,15 +1989,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "მოტოციკლეტი"
 
 #: blueman/DeviceClass.py:388
 msgid "Scooter"
-msgstr ""
+msgstr "სკუტერი"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "მოპედი"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
@@ -1997,7 +2017,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "მატარებელი"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
@@ -2117,15 +2137,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "გამაძლიერებელი"
 
 #: blueman/DeviceClass.py:427
 msgid "Receiver"
-msgstr ""
+msgstr "მიმღები"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "რადიო"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
@@ -2161,15 +2181,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "ტელევიზია"
 
 #: blueman/DeviceClass.py:438
 msgid "Monitor"
-msgstr ""
+msgstr "მონიტორი"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "პროექტორი"
 
 #: blueman/DeviceClass.py:440
 msgid "Generic Hearing aid"
@@ -2297,7 +2317,7 @@ msgstr ""
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
@@ -2305,7 +2325,7 @@ msgstr ""
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
@@ -2321,19 +2341,19 @@ msgstr ""
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
@@ -2353,15 +2373,15 @@ msgstr ""
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "უსადენო მართვის კონტროლის არხი"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "უსადენო მართვის მონაცემების არხი"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "უსადენო მართვის გაფრთხილება"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -2397,11 +2417,11 @@ msgstr ""
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "საჯარო დათვალიერების ჯგუფი"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
-msgstr ""
+msgstr "სერიული პორტი"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
@@ -2433,11 +2453,11 @@ msgstr ""
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
-msgstr ""
+msgstr "აუდიოს წყარო"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr ""
+msgstr "ხმის მიმღები"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
@@ -2449,11 +2469,11 @@ msgstr ""
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "დაშორებული მართვა"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "ვიდეო კონფერენცია"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
@@ -2461,7 +2481,7 @@ msgstr ""
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "ფაქსი"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
@@ -2565,7 +2585,7 @@ msgstr ""
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "ვიდეო/აუდიო"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
@@ -2585,11 +2605,11 @@ msgstr ""
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "შეტყობინებებთან წვდომის სერვერი"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "შეტყობინებების გაფრთხილების სერვერი"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
@@ -2641,7 +2661,7 @@ msgstr ""
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr ""
+msgstr "ზოგადი ქსელი"
 
 #: blueman/Sdp.py:180
 msgid "Generic FileTransfer"
@@ -2649,23 +2669,23 @@ msgstr ""
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "ზოგადი ხმა"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "ზოგადი ტელეფონია"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
-msgstr ""
+msgstr "ვიდეოს წყარო"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr ""
+msgstr "ვიდეოს მიმღები"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "ვიდეოს დისტრიბუცია"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
@@ -2681,19 +2701,19 @@ msgstr ""
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "ზოგადი წვდომა"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "ზოგადი ატრიბუტი"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "დაუყოვნებილი განგაში"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "კავშირს კარგვა"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
@@ -2701,59 +2721,59 @@ msgstr ""
 
 #: blueman/Sdp.py:194
 msgid "Current Time Service"
-msgstr ""
+msgstr "მიმდინარე დროის სერვისი"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "ფარდობითი დროის განახლების სერვისი"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "შემდეგი ზამთარი/ზაფხულის დროის შეცვლის სერვისი"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "გლუკოზა"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "თერმომეტრი"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
-msgstr ""
+msgstr "დისკის ინფორმაცია"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "გულისცემა"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "ტელეფონის განგაშის სტატუსის სერვისი"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
-msgstr ""
+msgstr "ელემენტის სერვისი"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "სისხლის წნევა"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "განგაშის შეტყობინების სერვისი"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "ადამიანთან ურთიერთობის მოწყობილობა"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "სკანირების პარამეტრები"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "სირბილის სიჩქარე და ტემპი"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
@@ -2761,39 +2781,39 @@ msgstr ""
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "ველოსიპედის სიჩქარე და ტემპი"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "ველოსიპედის ენერგია"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "მდებარეობა და ნავიგაცია"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "გარემოს აღქმა"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "სხეულის შემადგენლობა"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "მომხმარებლის მონაცემები"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "წონის შკალა"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "გატარების სიჩქარის მართვა"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "გლუკოზის დონის თვალყურის უწყვეტი დევნება"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
@@ -2809,7 +2829,7 @@ msgstr ""
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP პროქსი"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
@@ -2833,7 +2853,7 @@ msgstr ""
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "ჩართვა"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
@@ -2841,11 +2861,11 @@ msgstr ""
 
 #: blueman/Sdp.py:229
 msgid "Device Name"
-msgstr ""
+msgstr "მოწყობილობის სახელი"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "გარეგნობა"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
@@ -2865,31 +2885,31 @@ msgstr ""
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "სისტემის ID"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "მოდელის ნომრის სტრიქონი"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "სერიული ნომრის სტრიქონი"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "მიკროკოდის ვერსიის სტრიქონი"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "აპარატურის რევიზიის სტრიქონი"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "პროგრამის რევიზიის ტრიქონი"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "მწარმოებლის სახელის სტრიქონი"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
@@ -2897,39 +2917,39 @@ msgstr ""
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "დამახასიათებელი გაფართოებული თვისებები"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "დამახასიათებელი მომხმარებლის აღწერა"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "კლიენტის დამახასიათებელი კონფიგურაცია"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "სერვერის მახასიათებლების მორგება"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "დამახასიათებელი წარმოდგენის ფორმატი"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "დამახასიათების აგრეგაციის ფორმატი"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "სწორი შუალედი"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "მიმართვა გარე ანგარიშზე"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
-msgstr ""
+msgstr "მიმართვა ანგარიშზე"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
@@ -2937,7 +2957,7 @@ msgstr ""
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
-msgstr ""
+msgstr "დახურული კოდი"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "yes"
@@ -2953,7 +2973,7 @@ msgstr ""
 
 #: blueman/plugins/manager/Info.py:125
 msgid "_Info"
-msgstr ""
+msgstr "_ინფორმაცია"
 
 #: blueman/plugins/manager/Info.py:126
 msgid "Show device information"
@@ -2982,25 +3002,25 @@ msgstr ""
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
-msgstr ""
+msgstr "მიუთითებელი"
 
-#: blueman/plugins/applet/AutoConnect.py:20
+#: blueman/plugins/applet/AutoConnect.py:22
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
 
-#: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/AutoConnect.py:68
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:15
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:36
+#: blueman/plugins/applet/ConnectionNotifier.py:37
 msgid "Disconnected"
-msgstr ""
+msgstr "გამომძვრალია"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
@@ -3011,7 +3031,7 @@ msgstr ""
 #: blueman/plugins/applet/NetUsage.py:169
 #: blueman/plugins/applet/NetUsage.py:282
 msgid "Not Connected"
-msgstr ""
+msgstr "დაკავშირებული არაა"
 
 #: blueman/plugins/applet/NetUsage.py:175
 msgid ""
@@ -3028,14 +3048,14 @@ msgstr[1] ""
 #: blueman/plugins/applet/NetUsage.py:204
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "საათი"
+msgstr[1] "საათი"
 
 #: blueman/plugins/applet/NetUsage.py:205
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "წუთი"
+msgstr[1] "წუთი"
 
 #: blueman/plugins/applet/NetUsage.py:207
 #, python-format
@@ -3061,12 +3081,22 @@ msgid "Shows network traffic usage"
 msgstr ""
 
 #: blueman/plugins/applet/StatusIcon.py:38
-#: blueman/plugins/applet/ShowConnected.py:79
-#: blueman/plugins/applet/PowerManager.py:171
+msgid "Force symbolic status icons"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:39
+msgid ""
+"When enabled this will force the use of a symbolic version of the blueman "
+"statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:51
+#: blueman/plugins/applet/ShowConnected.py:80
+#: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Enabled"
 msgstr ""
 
-#: blueman/plugins/applet/Networking.py:18
+#: blueman/plugins/applet/Networking.py:19
 msgid "Manages local network services, like NAP bridges"
 msgstr ""
 
@@ -3076,41 +3106,43 @@ msgid ""
 "NetworkManager"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:42
+#: blueman/plugins/applet/RecentConns.py:44
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
 
 #. the maximum number of items RecentConns menu will display
-#: blueman/plugins/applet/RecentConns.py:53
+#: blueman/plugins/applet/RecentConns.py:55
 msgid "Maximum items"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:54
+#: blueman/plugins/applet/RecentConns.py:56
 msgid "The maximum number of items recent connections menu will display."
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/plugins/applet/RecentConns.py:157
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "მიერთებულია %s-თან"
 
-#: blueman/plugins/applet/RecentConns.py:161
+#: blueman/plugins/applet/RecentConns.py:163
 msgid "Failed to connect"
-msgstr ""
+msgstr "კავშირის შეცდომა"
 
-#: blueman/plugins/applet/RecentConns.py:171
+#: blueman/plugins/applet/RecentConns.py:174
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:175
+#: blueman/plugins/applet/RecentConns.py:178
 msgid "Adapter for this connection is not available"
 msgstr ""
 
-#: blueman/plugins/applet/RecentConns.py:188
-msgid "Recent _Connections"
-msgstr ""
+#: blueman/plugins/applet/RecentConns.py:191
+#, fuzzy
+#| msgid "Connecting…"
+msgid "Reconnect to…"
+msgstr "დაკავშირება…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3118,87 +3150,87 @@ msgid ""
 "NetworkManager 0.8"
 msgstr ""
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:126
-msgid "Incoming file over Bluetooth"
-msgstr ""
-
 #: blueman/plugins/applet/TransferService.py:127
+msgid "Incoming file over Bluetooth"
+msgstr "ფაილის მიღება Bluetooth-ით"
+
+#: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
-msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:136
-msgid "Receiving file"
-msgstr ""
+msgstr "უარყოფა"
 
 #: blueman/plugins/applet/TransferService.py:137
+msgid "Receiving file"
+msgstr "ფალის მიღება"
+
+#: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:156
+#: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:179
+#: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:180
+#: blueman/plugins/applet/TransferService.py:181
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:302
-msgid "File received"
-msgstr ""
-
 #: blueman/plugins/applet/TransferService.py:303
+msgid "File received"
+msgstr "ფაილი მიღებულია"
+
+#: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:307
+#: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:311
-msgid "Transfer failed"
-msgstr ""
-
 #: blueman/plugins/applet/TransferService.py:312
+msgid "Transfer failed"
+msgstr "გადაცემის შეცდომა"
+
+#: blueman/plugins/applet/TransferService.py:313
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:332
-#: blueman/plugins/applet/TransferService.py:341
-msgid "Files received"
-msgstr ""
-
 #: blueman/plugins/applet/TransferService.py:333
+#: blueman/plugins/applet/TransferService.py:342
+msgid "Files received"
+msgstr "მიღებული ფაილები"
+
+#: blueman/plugins/applet/TransferService.py:334
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
 msgstr[0] ""
 msgstr[1] ""
 
-#: blueman/plugins/applet/TransferService.py:338
-#: blueman/plugins/applet/TransferService.py:346
+#: blueman/plugins/applet/TransferService.py:339
+#: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:342
+#: blueman/plugins/applet/TransferService.py:343
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
@@ -3216,19 +3248,29 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:32
+#: blueman/plugins/applet/StandardItems.py:34
+msgid "Toggle the manager on clicking the system tray icon"
+msgstr ""
+
+#: blueman/plugins/applet/StandardItems.py:35
+msgid ""
+"Clicking the system tray icon will toggle the manager instead of focusing on "
+"it."
+msgstr ""
+
+#: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:37
+#: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
-msgstr ""
+msgstr "_მოწყობილობები"
 
-#: blueman/plugins/applet/StandardItems.py:41
+#: blueman/plugins/applet/StandardItems.py:55
 msgid "Adap_ters"
 msgstr ""
 
-#: blueman/plugins/applet/StandardItems.py:88
+#: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
 msgstr ""
 
@@ -3240,45 +3282,45 @@ msgstr ""
 msgid "Adds an exit menu item to quit the applet"
 msgstr ""
 
-#: blueman/plugins/applet/DhcpClient.py:14
+#: blueman/plugins/applet/DhcpClient.py:15
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr ""
 
-#: blueman/plugins/applet/DhcpClient.py:47
-#: blueman/plugins/applet/DhcpClient.py:55
-#: blueman/plugins/applet/DhcpClient.py:60
+#: blueman/plugins/applet/DhcpClient.py:48
+#: blueman/plugins/applet/DhcpClient.py:56
+#: blueman/plugins/applet/DhcpClient.py:61
 msgid "Bluetooth Network"
 msgstr ""
 
-#: blueman/plugins/applet/DhcpClient.py:48
+#: blueman/plugins/applet/DhcpClient.py:49
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr ""
 
-#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:56
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr ""
 
-#: blueman/plugins/applet/DhcpClient.py:60
+#: blueman/plugins/applet/DhcpClient.py:61
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
 
-#: blueman/plugins/applet/ShowConnected.py:21
+#: blueman/plugins/applet/ShowConnected.py:22
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
 
-#: blueman/plugins/applet/ShowConnected.py:72
+#: blueman/plugins/applet/ShowConnected.py:73
 msgid "Bluetooth Active"
 msgstr ""
 
-#: blueman/plugins/applet/ShowConnected.py:81
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/ShowConnected.py:82
+#: blueman/plugins/applet/PowerManager.py:177
 msgid "Bluetooth Disabled"
 msgstr ""
 
@@ -3289,7 +3331,7 @@ msgstr ""
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
 msgid "Disconnect %s"
-msgstr ""
+msgstr "გათიშვა %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3339,16 +3381,16 @@ msgstr ""
 msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:22
+#: blueman/plugins/applet/SerialManager.py:23
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:31
+#: blueman/plugins/applet/SerialManager.py:32
 msgid "Script to execute on connection"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:32
+#: blueman/plugins/applet/SerialManager.py:33
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
@@ -3359,50 +3401,50 @@ msgid ""
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:63
+#: blueman/plugins/applet/SerialManager.py:64
 msgid "Serial port connected"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:64
+#: blueman/plugins/applet/SerialManager.py:65
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:114
+#: blueman/plugins/applet/SerialManager.py:115
 msgid "Serial port connection script failed"
 msgstr ""
 
-#: blueman/plugins/applet/SerialManager.py:115
+#: blueman/plugins/applet/SerialManager.py:116
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
 
-#: blueman/plugins/applet/PowerManager.py:31
+#: blueman/plugins/applet/PowerManager.py:32
 msgid "Controls Bluetooth adapter power states"
 msgstr ""
 
-#: blueman/plugins/applet/PowerManager.py:41
-#: blueman/plugins/applet/PowerManager.py:153
+#: blueman/plugins/applet/PowerManager.py:42
+#: blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr ""
 
-#: blueman/plugins/applet/PowerManager.py:43
-#: blueman/plugins/applet/PowerManager.py:155
+#: blueman/plugins/applet/PowerManager.py:44
+#: blueman/plugins/applet/PowerManager.py:157
 msgid "Turn off all adapters"
 msgstr ""
 
-#: blueman/plugins/applet/PowerManager.py:144
+#: blueman/plugins/applet/PowerManager.py:146
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr ""
 
-#: blueman/plugins/applet/PowerManager.py:146
+#: blueman/plugins/applet/PowerManager.py:148
 msgid "Turn on all adapters"
 msgstr ""
 
-#: blueman/plugins/applet/GameControllerWakelock.py:26
+#: blueman/plugins/applet/GameControllerWakelock.py:27
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
@@ -3410,6 +3452,15 @@ msgstr ""
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
 msgid "Provides a StatusNotifierItem to show a statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/PulseAudioProfile.py:19
+msgid "Adds audio profile selector to the status icon menu"
+msgstr ""
+
+#: blueman/plugins/applet/PulseAudioProfile.py:83
+#, python-format
+msgid "Audio Profiles for %s"
 msgstr ""
 
 #: blueman/plugins/services/Network.py:23
@@ -3440,7 +3491,7 @@ msgstr ""
 
 #: blueman/plugins/services/Transfer.py:14
 msgid "Transfer"
-msgstr ""
+msgstr "Გადაცემა"
 
 #: blueman/plugins/services/Transfer.py:26
 msgid "Applet's transfer service plugin is disabled"
