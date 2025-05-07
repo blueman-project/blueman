@@ -45,7 +45,7 @@ class NetworkService(Service):
     @property
     def common_actions(self) -> set[Action]:
         def renew() -> None:
-            AppletService().DhcpClient('(s)', self.device.get_object_path())
+            AppletService().dchp_client(self.device.get_object_path())
 
         return {Action(
             _("Renew IP Address"),

@@ -15,6 +15,7 @@ class DhcpClient(AppletPlugin):
     __description__ = _("Provides a basic dhcp client for Bluetooth PAN connections.")
     __icon__ = "network-workgroup-symbolic"
     __author__ = "Walmis"
+    __dbus_iface_name__ = "org.blueman.Applet.DhcpClient"
 
     _any_network = None
 
@@ -24,7 +25,7 @@ class DhcpClient(AppletPlugin):
 
         self.querying: list[str] = []
 
-        self._add_dbus_method("DhcpClient", ("s",), "", self.dhcp_acquire)
+        self._add_dbus_method("DhcpClient", ("o",), "", self.dhcp_acquire)
 
     def on_unload(self) -> None:
         del self._any_network

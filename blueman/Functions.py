@@ -39,7 +39,7 @@ import time
 import subprocess
 import cairo
 
-from blueman.main.DBusProxies import AppletService, DBusProxyFailed
+from blueman.main.DBusProxies import AppletService, AppletPowerManagerService, DBusProxyFailed
 from blueman.Constants import BIN_DIR, ICON_PATH, BLUETOOTHD_PATH
 
 import gi
@@ -58,6 +58,7 @@ __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_
 def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     try:
         applet = AppletService()
+        powermanager = AppletPowerManagerService()
     except DBusProxyFailed as e:
         logging.exception(e)
         print("Blueman applet needs to be running")
@@ -67,7 +68,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     if "PowerManager" not in applet.QueryPlugins():
         return
 
-    if not applet.GetBluetoothStatus():
+    if not powermanager.get_bluetooth_status():
         d = Gtk.MessageDialog(
             type=Gtk.MessageType.ERROR, icon_name="blueman",
             text=_("Bluetooth Turned Off"), secondary_text=message)
@@ -81,8 +82,8 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
             exitfunc()
             return
 
-    applet.SetBluetoothStatus('(b)', True)
-    if not applet.GetBluetoothStatus():
+    powermanager.set_bluetooth_status(True)
+    if not powermanager.get_bluetooth_status():
         print('Failed to enable bluetooth')
         exitfunc()
 
