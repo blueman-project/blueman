@@ -57,18 +57,15 @@ class DbusService:
         if is_async:
             options.add("async")
         self._methods[name] = (arguments, self._handle_return_type(return_values), method, options)
-        self._reregister()
 
     def remove_method(self, name: str) -> None:
         del self._methods[name]
-        self._reregister()
 
     def add_signal(self, name: str, types: str | tuple[str, ...]) -> None:
         if name in self._signals:
             raise Exception(f"{name} already defined")
 
         self._signals[name] = self._handle_return_type(types)
-        self._reregister()
 
     def _handle_return_type(self, types: str | tuple[str, ...]) -> tuple[str, ...]:
         if isinstance(types, str):
@@ -83,7 +80,6 @@ class DbusService:
 
     def remove_signal(self, name: str) -> None:
         del self._signals[name]
-        self._reregister()
 
     def emit_signal(self, name: str, *args: Any) -> None:
         self._bus.emit_signal(None, self._path, self._interface_name, name,
@@ -125,11 +121,6 @@ class DbusService:
         if self._regid is not None:
             self._bus.unregister_object(self._regid)
             self._regid = None
-
-    def _reregister(self) -> None:
-        if self._regid:
-            self.unregister()
-            self.register()
 
     def _handle_method_call(self, _connection: Gio.DBusConnection, sender: str, _path: str, interface_name: str,
                             method_name: str, parameters: GLib.Variant, invocation: Gio.DBusMethodInvocation) -> None:

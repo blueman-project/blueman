@@ -13,7 +13,6 @@ from blueman.bluez.Adapter import AnyAdapter
 from blueman.bluez.Device import AnyDevice
 import blueman.plugins.applet
 from blueman.main.PluginManager import PersistentPluginManager
-from blueman.main.DbusService import DbusService
 from blueman.plugins.AppletPlugin import AppletPlugin
 from blueman.plugins.applet.DBusService import DBusService
 from blueman.plugins.applet.Menu import Menu
@@ -47,10 +46,6 @@ class BluemanApplet(Gtk.Application):
         self.Manager.connect_signal('adapter-removed', self.on_adapter_removed)
         self.Manager.connect_signal('device-created', self.on_device_created)
         self.Manager.connect_signal('device-removed', self.on_device_removed)
-
-        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/org/blueman/Applet",
-                                   Gio.BusType.SESSION)
-        self.DbusSvc.register()
 
         self.Plugins = Plugins(self)
         self.Plugins.load_plugin()

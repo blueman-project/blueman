@@ -15,8 +15,14 @@ from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
 from blueman.main.Builder import Builder
-from blueman.main.DBusProxies import AppletService, DBusProxyFailed, DBus, AppletServiceApplication
 from blueman.gui.CommonUi import ErrorDialog, show_about_dialog
+from blueman.main.DBusProxies import (
+    AppletService,
+    AppletPowerManagerService,
+    DBusProxyFailed,
+    DBus,
+    AppletServiceApplication
+)
 from blueman.gui.Notification import Notification
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
@@ -50,6 +56,8 @@ class Blueman(Gtk.Application):
         try:
             self.Applet = AppletService()
             self.Applet.connect('g-signal', self.on_applet_signal)
+            self.PowerManager = AppletPowerManagerService()
+            self.PowerManager.connect('g-signal', self.on_applet_signal)
         except DBusProxyFailed:
             print("Blueman applet needs to be running")
             bmexit()
@@ -116,7 +124,8 @@ class Blueman(Gtk.Application):
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
-    def on_applet_signal(self, _proxy: AppletService, _sender: str, signal_name: str, params: GLib.Variant) -> None:
+    def on_applet_signal(self, _proxy: AppletService | AppletPowerManagerService, _sender: str, signal_name: str,
+                         params: GLib.Variant) -> None:
         action = self.lookup_action("bluetooth_status")
 
         if signal_name == 'BluetoothStatusChanged':
@@ -124,7 +133,7 @@ class Blueman(Gtk.Application):
             action.change_state(GLib.Variant.new_boolean(status))
         elif signal_name == "PluginsChanged":
             if "PowerManager" in self.Applet.QueryPlugins():
-                status = self.Applet.GetBluetoothStatus()
+                status = self.PowerManager.get_bluetooth_status()
                 action.change_state(GLib.Variant.new_boolean(status))
 
             self.Toolbar._update_buttons(self.List.Adapter)
@@ -152,7 +161,7 @@ class Blueman(Gtk.Application):
         self.List.connect("adapter-changed", self.on_adapter_changed)
 
         pm_available = "PowerManager" in self.Applet.QueryPlugins()
-        action_status = self.Applet.GetBluetoothStatus() if pm_available else False
+        action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
         bt_status_action = self.lookup_action("bluetooth_status")
         bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
 
@@ -178,7 +187,7 @@ class Blueman(Gtk.Application):
         action.set_state(state_variant)
 
         state = state_variant.unpack()
-        self.Applet.SetBluetoothStatus("(b)", state)
+        self.PowerManager.set_bluetooth_status(state)
 
         if state:
             icon_name = "bluetooth"

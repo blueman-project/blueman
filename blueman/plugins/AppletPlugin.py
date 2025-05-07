@@ -3,17 +3,27 @@ from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
 from blueman.plugins.BasePlugin import BasePlugin
+from blueman.main.DbusService import DbusService
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from gi.repository import Gio
 
 if TYPE_CHECKING:
     from blueman.main.Applet import BluemanApplet
 
 
+class DBusNotImplementedError(Exception):
+    def __init__(self) -> None:
+        self.message = "No DBusService requested"
+        super().__init__(self.message)
+
+
 class AppletPlugin(BasePlugin):
     __icon__ = "application-x-addon-symbolic"
+    __dbus_iface_name__: str | None = None
+    _dbus_service: DbusService | None = None
 
     def __init__(self, parent: "BluemanApplet"):
         super().__init__()
@@ -22,20 +32,28 @@ class AppletPlugin(BasePlugin):
         if not Gtk.IconTheme.get_default().has_icon(self.__class__.__icon__):
             self.__class__.__icon__ = "application-x-addon-symbolic"
 
-        self._dbus_service = parent.DbusSvc
-        self._dbus_methods: set[str] = set()
-        self._dbus_signals: set[str] = set()
+        if self.__dbus_iface_name__ is not None:
+            self._dbus_service = DbusService(
+                "org.blueman.Applet",
+                self.__dbus_iface_name__,
+                "/org/blueman/Applet",
+                Gio.BusType.SESSION
+            )
 
     def _add_dbus_method(self, name: str, arguments: tuple[str, ...], return_value: str, method: Callable[..., Any],
                          is_async: bool = False) -> None:
-        self._dbus_methods.add(name)
+        if self._dbus_service is None:
+            raise DBusNotImplementedError
         self._dbus_service.add_method(name, arguments, return_value, method, is_async=is_async)
 
     def _add_dbus_signal(self, name: str, signature: str) -> None:
-        self._dbus_signals.add(name)
+        if self._dbus_service is None:
+            raise DBusNotImplementedError
         self._dbus_service.add_signal(name, signature)
 
     def _emit_dbus_signal(self, name: str, *args: Any) -> None:
+        if self._dbus_service is None:
+            raise DBusNotImplementedError
         self._dbus_service.emit_signal(name, *args)
 
     def on_unload(self) -> None:
@@ -44,13 +62,13 @@ class AppletPlugin(BasePlugin):
     def _unload(self) -> None:
         super()._unload()
 
-        for method in self._dbus_methods:
-            self._dbus_service.remove_method(method)
-        for signal in self._dbus_signals:
-            self._dbus_service.remove_signal(signal)
+        if self._dbus_service is not None:
+            self._dbus_service.unregister()
 
     def _load(self) -> None:
         super()._load()
+        if self._dbus_service is not None:
+            self._dbus_service.register()
 
         # The applet will run on_manager_state_changed once at startup so until it has we don't.
         if self.parent.plugin_run_state_changed:
