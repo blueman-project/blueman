@@ -141,6 +141,7 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkCheckMenuItem" id="show_tb_item">
+                        <property name="action-name">app.show-toolbar</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Show _Toolbar</property>
@@ -149,6 +150,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="show_sb_item">
+                        <property name="action-name">app.show-statusbar</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Show _Statusbar</property>
@@ -157,6 +159,7 @@
                     </child>
                     <child>
                       <object class="GtkCheckMenuItem" id="hide_unnamed_item">
+                        <property name="action-name">app.hide-unnamed</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Hide _unnamed devices</property>
@@ -206,6 +209,7 @@
                             </child>
                             <child>
                               <object class="GtkCheckMenuItem" id="sort_descending_item">
+                                <property name="action-name">app.sort-descending</property>
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
                                 <property name="label" translatable="yes">_Descending</property>

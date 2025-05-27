@@ -65,12 +65,6 @@ class Blueman(Gtk.Application):
 
         self.builder = Builder("manager-main.ui")
 
-        toolbar = self.builder.get_widget("toolbar", Gtk.Toolbar)
-        statusbar = self.builder.get_widget("statusbar", Gtk.Box)
-
-        self.Config.bind("show-toolbar", toolbar, "visible", Gio.SettingsBindFlags.DEFAULT)
-        self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
-
         self._infobar = self.builder.get_widget("message_area", Gtk.InfoBar)
         self._infobar.connect("response", self._infobar_response)
         self._infobar_bt: str = ""
@@ -88,6 +82,11 @@ class Blueman(Gtk.Application):
 
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
+
+        self.register_settings_action("sort-descending")
+        self.register_settings_action("show-toolbar")
+        self.register_settings_action("show-statusbar")
+        self.register_settings_action("hide-unnamed")
 
         bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
         bt_status_action.connect("change-state", self._on_bt_state_changed)
