@@ -32,9 +32,6 @@ class ManagerMenu:
         self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
         self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
 
-        self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
-        self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
-
         self.device_menu: ManagerDeviceMenu | None = None
 
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
