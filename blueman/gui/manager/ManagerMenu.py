@@ -35,15 +35,6 @@ class ManagerMenu:
         self.item_view = self.blueman.builder.get_widget("item_view", Gtk.MenuItem)
         self.item_help = self.blueman.builder.get_widget("item_help", Gtk.MenuItem)
 
-        item_toolbar = blueman.builder.get_widget("show_tb_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("show-toolbar", item_toolbar, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        item_statusbar = blueman.builder.get_widget("show_sb_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("show-statusbar", item_statusbar, "active", Gio.SettingsBindFlags.DEFAULT)
-
-        item_unnamed = blueman.builder.get_widget("hide_unnamed_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("hide-unnamed", item_unnamed, "active", Gio.SettingsBindFlags.DEFAULT)
-
         self.device_menu: ManagerDeviceMenu | None = None
 
         self._sort_alias_item = blueman.builder.get_widget("sort_name_item", Gtk.CheckMenuItem)
@@ -54,9 +45,6 @@ class ManagerMenu:
             self._sort_alias_item.props.active = True
         else:
             self._sort_timestamp_item.props.active = True
-
-        sort_descending_item = blueman.builder.get_widget("sort_descending_item", Gtk.CheckMenuItem)
-        self.blueman.Config.bind("sort-descending", sort_descending_item, "active", Gio.SettingsBindFlags.DEFAULT)
 
         self.Search = blueman.builder.get_widget("search_item", Gtk.ImageMenuItem)
 
@@ -93,6 +81,12 @@ class ManagerMenu:
         elif key == "hide-unnamed":
             logging.debug("refilter")
             self.blueman.List.filter.refilter()
+        elif key == "show-toolbar":
+            toolbar = self.blueman.builder.get_widget("toolbar", Gtk.Toolbar)
+            toolbar.set_visible(value)
+        elif key == "show-statusbar":
+            statusbar = self.blueman.builder.get_widget("statusbar", Gtk.Box)
+            statusbar.set_visible(value)
 
     def on_device_selected(self, _lst: ManagerDeviceList, device: Device | None, tree_iter: Gtk.TreeIter) -> None:
         if tree_iter and device:
