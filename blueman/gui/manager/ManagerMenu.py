@@ -63,11 +63,10 @@ class ManagerMenu:
         self._sort_alias_item.connect("activate", self._on_sorting_changed, "alias")
         self._sort_timestamp_item.connect("activate", self._on_sorting_changed, "timestamp")
 
-    def _on_sorting_changed(self, btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
-        if sort_opt == 'alias' and btn.props.active:
-            self.Config['sort-by'] = "alias"
-        elif sort_opt == "timestamp" and btn.props.active:
-            self.Config['sort-by'] = "timestamp"
+    def _on_sorting_changed(self, _btn: Gtk.CheckMenuItem, sort_opt: str) -> None:
+        action = self.blueman.lookup_action("sort-by")
+        assert action is not None
+        action.change_state(GLib.Variant.new_string(sort_opt))
 
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         value = settings[key]
