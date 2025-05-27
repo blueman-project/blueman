@@ -87,6 +87,7 @@ class Blueman(Gtk.Application):
         self.register_settings_action("show-toolbar")
         self.register_settings_action("show-statusbar")
         self.register_settings_action("hide-unnamed")
+        self.register_settings_action("sort-by")
 
         bt_status_action = Gio.SimpleAction.new_stateful("bluetooth_status", None, GLib.Variant.new_boolean(False))
         bt_status_action.connect("change-state", self._on_bt_state_changed)
