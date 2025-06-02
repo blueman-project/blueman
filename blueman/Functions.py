@@ -344,8 +344,11 @@ def log_system_info() -> None:
         try:
             with path.open() as f:
                 for line in f:
+                    line = line.strip()
+                    if line.startswith("#"):
+                        continue
                     try:
-                        key, val = line.strip().split("=")
+                        key, val = line.split("=")
                         release_dict[key] = val.strip("\"")
                     except ValueError:
                         logging.error(f"Unable to parse line: {line}")
