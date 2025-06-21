@@ -90,7 +90,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             self._enabled = False
             self._hardblocked = False
 
-    def _on_connman_appeared(self, connection: Gio.DBusConnection, name: str, owner: str) -> None:
+    def _on_connman_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
         logging.info(f"{name} appeared")
         self._connman_proxy = Gio.DBusProxy.new_for_bus_sync(
             Gio.BusType.SYSTEM,
@@ -101,7 +101,7 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
             'net.connman.Technology',
             None)
 
-    def _on_connman_vanished(self, connection: Gio.DBusConnection, name: str) -> None:
+    def _on_connman_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(f"{name} vanished")
         self._connman_proxy = None
 
