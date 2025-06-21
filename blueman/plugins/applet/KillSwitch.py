@@ -21,9 +21,6 @@ RFKILL_OP_CHANGE_ALL = 3
 
 RFKILL_EVENT_SIZE_V1 = 8
 
-if not os.path.exists('/dev/rfkill'):
-    raise ImportError('Hardware kill switch not found')
-
 
 class Switch:
     def __init__(self, idx: int, switch_type: int, soft: int, hard: int):
@@ -50,26 +47,48 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
     }
 
     _switches: dict[int, Switch] = {}
-    _iom = None
-    _enabled = True
-    _hardblocked = False
+    _iom: int | None = None
+    _monitor: Gio.FileMonitor | None
+    _rfkill: Gio.File | None
+    _enabled: bool = True
+    _hardblocked: bool = False
 
     def on_load(self) -> None:
+        self._rfkill = Gio.File.new_for_path("/dev/rfkill")
+        start_event = Gio.FileMonitorEvent.CREATED if self._rfkill.query_exists() else Gio.FileMonitorEvent.DELETED
+
+        self._monitor = self._rfkill.monitor(Gio.FileMonitorFlags.NONE, None)
+        self._monitor.connect("changed", self.__on_file_changed)
+        self.__on_file_changed(self._monitor, self._rfkill, None, start_event)
+
         self._connman_proxy: Gio.DBusProxy | None = None
         self._connman_watch_id = Gio.bus_watch_name(Gio.BusType.SYSTEM, "net.connman", Gio.BusNameWatcherFlags.NONE,
                                                     self._on_connman_appeared, self._on_connman_vanished)
 
-        channel = GLib.IOChannel.new_file("/dev/rfkill", "r")
-        if channel is None:
-            raise ImportError('Could not access RF kill switch')
-
-        self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
-
     def on_unload(self) -> None:
         Gio.bus_unwatch_name(self._connman_watch_id)
         self._connman_proxy = None
+        self._monitor = None
+        self._rfkill = None
+
         if self._iom:
             GLib.source_remove(self._iom)
+            self._iom = None
+
+    def __on_file_changed(self, _monitor: Gio.FileMonitor, _gfile: Gio.File, _other: Gio.File | None,
+                          _event: Gio.FileMonitorEvent) -> None:
+        if self._iom:
+            GLib.source_remove(self._iom)
+            self._iom = None
+
+        try:
+            channel = GLib.IOChannel.new_file("/dev/rfkill", "r")
+            self._iom = GLib.io_add_watch(channel, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.io_event)
+        except GLib.Error as e:
+            logging.debug(f"Could not open rfkill device: {e.message}")
+            # At this point we have no idea if there even is a working killswitch
+            self._enabled = False
+            self._hardblocked = False
 
     def _on_connman_appeared(self, connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} appeared")
