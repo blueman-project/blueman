@@ -2,6 +2,7 @@ from gettext import gettext as _
 import os
 from typing import Any
 from collections.abc import Callable
+from enum import IntEnum
 
 from gi.repository import GLib, Gio
 import struct
@@ -13,13 +14,14 @@ from blueman.plugins.applet.PowerManager import PowerManager, PowerStateHandler
 from blueman.plugins.applet.StatusIcon import StatusIconVisibilityHandler
 
 RFKILL_TYPE_BLUETOOTH = 2
-
-RFKILL_OP_ADD = 0
-RFKILL_OP_DEL = 1
-RFKILL_OP_CHANGE = 2
-RFKILL_OP_CHANGE_ALL = 3
-
 RFKILL_EVENT_SIZE_V1 = 8
+
+
+class RFKillOp(IntEnum):
+    ADD = 0
+    DEL = 1
+    CHANGE = 2
+    CHANGE_ALL = 3
 
 
 class Switch:
@@ -121,17 +123,18 @@ class KillSwitch(AppletPlugin, PowerStateHandler, StatusIconVisibilityHandler):
         if switch_type != RFKILL_TYPE_BLUETOOTH:
             return True
 
-        if op == RFKILL_OP_ADD:
-            self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            logging.info(f"killswitch registered {idx}")
-        elif op == RFKILL_OP_DEL:
-            del self._switches[idx]
-            logging.info(f"killswitch removed {idx}")
-        elif op == RFKILL_OP_CHANGE and (self._switches[idx].soft != soft or self._switches[idx].hard != hard):
-            self._switches[idx] = Switch(idx, switch_type, soft, hard)
-            logging.info(f"killswitch changed {idx}")
-        else:
-            return True
+        match RFKillOp(op):
+            case RFKillOp.ADD:
+                self._switches[idx] = Switch(idx, switch_type, soft, hard)
+                logging.info(f"killswitch registered {idx}")
+            case RFKillOp.DEL:
+                del self._switches[idx]
+                logging.info(f"killswitch removed {idx}")
+            case RFKillOp.CHANGE:
+                self._switches[idx] = Switch(idx, switch_type, soft, hard)
+                logging.info(f"killswitch changed {idx}")
+            case _:
+                return True
 
         self._enabled = True
         self._hardblocked = False
