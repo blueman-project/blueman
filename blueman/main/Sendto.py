@@ -111,6 +111,8 @@ class SendTo:
         match signal_name:
             case "adapter-added":
                 self._device_selector.add_adapter(object_path)
+                # Let the adapter become ready before we start discovery
+                GLib.timeout_add_seconds(1, self._start_discovery, True)
             case "adapter-removed":
                 self._device_selector.remove_adapter(object_path)
             case "device-added":
@@ -140,9 +142,13 @@ class SendTo:
                 return True
         return False
 
-    def _start_discovery(self) -> None:
+    def _start_discovery(self, from_timer: bool = False) -> bool:
         for adapter in self._manager.get_adapters():
-            adapter.start_discovery()
+            if not adapter["Discovering"]:
+                adapter.start_discovery()
+        if from_timer:
+            return False
+        return True
 
     def __cleanup(self) -> None:
         self._manager.destroy()
