@@ -1,13 +1,13 @@
 # Icelandic translation for blueman.
 # This file is distributed under the same license as the blueman package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2023, 2024.
+# Sveinn í Felli <sv1@fellsnet.is>, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-11-10 15:00+0000\n"
+"PO-Revision-Date: 2025-02-18 12:33+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/blueman/2-4/is/"
 ">\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 5.8.2\n"
+"X-Generator: Weblate 5.10.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -1790,7 +1790,7 @@ msgstr "Vélknúið hlið"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Markísa"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
@@ -1894,7 +1894,7 @@ msgstr "Strimlagluggatjöld"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Gluggamarkísa"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
@@ -2302,11 +2302,11 @@ msgstr "Birting á staðsetningu og leiðsögn"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
-msgstr ""
+msgstr "Staðsetningartæki"
 
 #: blueman/DeviceClass.py:469
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Staðsetningar- og leiðsagnartæki"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
@@ -2434,7 +2434,7 @@ msgstr "IrMC-samstilling"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX Object Push"
 
 #: blueman/Sdp.py:121
 msgid "OBEX File Transfer"
@@ -2726,7 +2726,7 @@ msgstr "Uppfærsluþjónusta viðmiðunartíma"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Þjónusta fyrir næstu breytingu sumar-/vetrartíma"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
@@ -3150,7 +3150,7 @@ msgstr ""
 
 #: blueman/plugins/applet/DBusService.py:46
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
+msgstr "Gefur DBus API fyrir aðrar Blueman-einingar"
 
 #: blueman/plugins/applet/TransferService.py:126
 msgid "Incoming file over Bluetooth"
@@ -3318,6 +3318,8 @@ msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
+"Bætir merki á stöðutáknið þegar Bluetooth er virkt og sýnir tengingar í "
+"vísbendingunni."
 
 #: blueman/plugins/applet/ShowConnected.py:72
 msgid "Bluetooth Active"
@@ -3411,6 +3413,13 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
+"<span size=\"small\">Eftirfarandi viðföng verða send áfram:\n"
+"Vistfang, nafn, heiti þjónustu, uuid16s, rfcomm node\n"
+"Til dæmis:\n"
+"AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
+"uuid16s eru sett fram sem kommu-aðgreindur listi\n"
+"\n"
+"Þegar aftengst er þjónustu mun skriftan fá sent HUP-merki</span>"
 
 #: blueman/plugins/applet/SerialManager.py:63
 msgid "Serial port connected"
