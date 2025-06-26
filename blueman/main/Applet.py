@@ -48,10 +48,6 @@ class BluemanApplet(Gtk.Application):
         self.Manager.connect_signal('device-created', self.on_device_created)
         self.Manager.connect_signal('device-removed', self.on_device_removed)
 
-        self.DbusSvc = DbusService("org.blueman.Applet", "org.blueman.Applet", "/org/blueman/Applet",
-                                   Gio.BusType.SESSION)
-        self.DbusSvc.register()
-
         self.Plugins = Plugins(self)
         self.Plugins.load_plugin()
 

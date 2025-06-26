@@ -116,6 +116,7 @@ class Menu(AppletPlugin):
     __icon__ = "open-menu-symbolic"
     __author__ = "Walmis"
     __unloadable__ = False
+    __dbus_iface_name__ = "org.blueman.Applet.Menu"
 
     def on_load(self) -> None:
         self.__menuitems: dict[tuple[int, int], MenuItem] = {}

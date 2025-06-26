@@ -47,6 +47,7 @@ class DBusService(AppletPlugin):
     __unloadable__ = False
     __description__ = _("Provides DBus API for other Blueman components")
     __author__ = "Walmis"
+    __dbus_iface_name__ = "org.blueman.Applet"
 
     def on_load(self) -> None:
         self._add_dbus_method("QueryPlugins", (), "as", self.parent.Plugins.get_loaded)

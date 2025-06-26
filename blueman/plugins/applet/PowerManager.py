@@ -33,6 +33,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     __description__ = _("Controls Bluetooth adapter power states")
     __author__ = "Walmis"
     __icon__ = "gnome-power-manager-symbolic"
+    __dbus_iface_name__ = "org.blueman.Applet.PowerManager"
 
     class State(Enum):
         ON = 2

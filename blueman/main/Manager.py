@@ -105,7 +105,7 @@ class Blueman(Gtk.Application):
                     action.change_state(GLib.Variant.new_boolean(status))
                 elif signal_name == "PluginsChanged":
                     if "PowerManager" in self.Applet.QueryPlugins():
-                        status = self.Applet.GetBluetoothStatus()
+                        status = self.Applet.get_bluetooth_status()
                         action.change_state(GLib.Variant.new_boolean(status))
 
                     self.Toolbar._update_buttons(self.List.Adapter)
@@ -162,7 +162,7 @@ class Blueman(Gtk.Application):
                 self.Config.bind("show-statusbar", statusbar, "visible", Gio.SettingsBindFlags.DEFAULT)
 
                 pm_available = "PowerManager" in self.Applet.QueryPlugins()
-                action_status = self.Applet.GetBluetoothStatus() if pm_available else False
+                action_status = self.Applet.get_bluetooth_status() if pm_available else False
                 bt_status_action = self.lookup_action("bluetooth_status")
                 bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
 
@@ -174,7 +174,7 @@ class Blueman(Gtk.Application):
         action.set_state(state_variant)
 
         state = state_variant.unpack()
-        self.Applet.SetBluetoothStatus("(b)", state)
+        self.Applet.set_bluetooth_status(state)
 
         if state:
             icon_name = "bluetooth"

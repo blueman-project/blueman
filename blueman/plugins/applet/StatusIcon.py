@@ -25,6 +25,7 @@ class StatusIconProvider:
 class StatusIcon(AppletPlugin, GObject.GObject):
     __icon__ = "bluetooth-symbolic"
     __depends__ = ["StandardItems", "Menu"]
+    __dbus_iface_name__ = "org.blueman.Applet.StatusIcon"
 
     __gsettings__ = {
         "schema": "org.blueman.general",

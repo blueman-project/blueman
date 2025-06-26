@@ -4,7 +4,7 @@ import os
 import signal
 import sys
 from blueman.Functions import log_system_info
-from blueman.main.DBusProxies import AppletService
+from blueman.main.DBusProxies import AppletMenuService
 from gi.repository import Gio, GLib
 
 from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
@@ -38,11 +38,11 @@ class BluemanTray(Gio.Application):
     def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
         logging.debug(f"Applet started on name {name}, showing indicator")
 
-        applet = AppletService()
-        for indicator_name in applet.GetStatusIconImplementations():
+        applet = AppletMenuService()
+        for indicator_name in applet.get_statusicon_implementations():
             indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
             try:
-                self.indicator = indicator_class(self, applet.GetIconName())
+                self.indicator = indicator_class(self, applet.get_icon_name())
                 break
             except IndicatorNotAvailable:
                 logging.info(f'Indicator "{indicator_name}" is not available')
@@ -50,10 +50,10 @@ class BluemanTray(Gio.Application):
 
         applet.connect('g-signal', self.on_signal)
 
-        self.indicator.set_tooltip_title(applet.GetToolTipTitle())
-        self.indicator.set_tooltip_text(applet.GetToolTipText())
-        self.indicator.set_visibility(applet.GetVisibility())
-        self.indicator.set_menu(applet.GetMenu())
+        self.indicator.set_tooltip_title(applet.get_tooltip_title())
+        self.indicator.set_tooltip_text(applet.get_tooltip_text())
+        self.indicator.set_visibility(applet.get_visibility())
+        self.indicator.set_menu(applet.get_menu())
 
         self._active = True
 
@@ -62,12 +62,12 @@ class BluemanTray(Gio.Application):
         self.quit()
 
     def activate_menu_item(self, *indexes: int) -> None:
-        AppletService().ActivateMenuItem('(ai)', indexes)
+        AppletMenuService().ActivateMenuItem('(ai)', indexes)
 
     def activate_status_icon(self) -> None:
-        AppletService().Activate()
+        AppletMenuService().Activate()
 
-    def on_signal(self, _applet: AppletService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
+    def on_signal(self, _applet: AppletMenuService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
         if signal_name == 'IconNameChanged':
             self.indicator.set_icon(*args)
         elif signal_name == 'ToolTipTitleChanged':
