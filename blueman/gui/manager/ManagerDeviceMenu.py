@@ -121,7 +121,11 @@ class ManagerDeviceMenu(Gtk.Menu):
             return None
 
     def unset_op(self, device: Device) -> None:
-        del ManagerDeviceMenu.__ops__[device.get_object_path()]
+        object_path = device.get_object_path()
+        message = self.__ops__.pop(object_path, None)
+        if message is None:
+            logging.error(f"No message found for {object_path}")
+
         for inst in ManagerDeviceMenu.__instances__:
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
