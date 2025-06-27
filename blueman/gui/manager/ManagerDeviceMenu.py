@@ -194,26 +194,29 @@ class ManagerDeviceMenu(Gtk.Menu):
                 self.generate()
 
     def _handle_error_message(self, error: GLib.Error) -> None:
-        err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
-
+        bt_error_code = error.message.split(":", 3)[-1].strip()
+        err = self._BLUEZ_ERROR_MAP.get(bt_error_code)
+        if err == self._BluezError.CANCELED:
+            logging.info("bluetoothd: " + "Canceled.")
+            return
         if err == self._BluezError.PROFILE_UNAVAILABLE:
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
-            msg = _("No audio endpoints registered")
+            logging.warning("bluetoothd: " + "No audio endpoints registered." + " " +
+                            "PulseAudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+            msg = (_("No audio endpoints registered.") + " " +
+                   _("PulseAudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing."))
         elif err == self._BluezError.CREATE_SOCKET:
-            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
-            msg = _("Input/output error")
+            logging.warning("bluetoothd: " + "Input/output error." + " " + "Check bluetoothd logs.")
+            msg = _("Input/output error.") + " " + _("Check bluetoothd logs.")
         elif err == self._BluezError.PAGE_TIMEOUT:
+            logging.info("bluetoothd: " + "Device did not respond")
             msg = _("Device did not respond")
         elif err == self._BluezError.UNKNOWN:
-            logging.warning("bluetoothd reported an unknown error. "
-                            "Retry or check its logs for context.")
-            msg = _("Unknown error")
+            logging.warning("bluetoothd: " + "Unknown error." + " " + "Check bluetoothd logs.")
+            msg = _("Unknown error.") + " " + _("Check bluetoothd logs.")
         else:
-            msg = error.message.split(":", 3)[-1].strip()
-
-        if err != self._BluezError.CANCELED:
-            self.Blueman.infobar_update(_("Connection Failed: ") + msg)
+            logging.warning("bluetoothd: " + bt_error_code + " " + "Check bluetoothd logs.")
+            msg = bt_error_code + " " + _("Check bluetoothd logs.")
+        self.Blueman.infobar_update(_("Connection Failed: ") + msg)
 
     class _BluezError(Enum):
         PAGE_TIMEOUT = auto()
