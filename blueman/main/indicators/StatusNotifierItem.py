@@ -156,7 +156,7 @@ class StatusNotifierItem(IndicatorInterface):
                 None, Gio.DBusCallFlags.NONE, -1)
             watcher_expected = True
         except GLib.Error as e:
-            watcher_expected = not e.message.startswith("GDBus.Error:org.freedesktop.DBusError.ServiceUnknown")
+            watcher_expected = not is_service_unknown(e)
             raise IndicatorNotAvailable
 
     def set_icon(self, icon_name: str) -> None:
@@ -177,3 +177,7 @@ class StatusNotifierItem(IndicatorInterface):
 
     def set_menu(self, menu: Iterable["MenuItemDict"]) -> None:
         self._sni.menu.set_items(menu)
+
+
+def is_service_unknown(error: GLib.Error) -> bool:
+    return error.message.startswith("GDBus.Error:org.freedesktop.DBus.Error.ServiceUnknown")
