@@ -6,25 +6,28 @@
 # bhuvi https://launchpad.net/~bhuvanesh
 # Kamala Kannan, 2016
 # Mooglie <mooglietech@gmail.com>, 2017
+# தமிழ்நேரம் <anishprabu.t@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Tamil (http://www.transifex.com/mate/MATE/language/ta/)\n"
+"POT-Creation-Date: 2024-12-03 18:48+0000\n"
+"PO-Revision-Date: 2025-05-31 05:52+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/blueman/blueman/ta/"
+">\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr ""
+msgstr "<b> தெரிவுநிலை அமைப்பு </b>"
 
-#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
 msgstr "மறைக்கப்பட்ட"
 
@@ -34,160 +37,162 @@ msgstr "எப்போதும் பார்க்கக்கூடிய�
 
 #: data/ui/adapters-tab.ui:75
 msgid "Temporarily visible"
-msgstr ""
+msgstr "தற்காலிகமாக தெரியும்"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>கோப்பு:</b>"
+msgstr "<b> பெயர் </b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
-msgstr ""
+msgstr "இணைத்தல் கோரிக்கை"
 
 #: data/ui/applet-passkey.ui:94
 msgid "Pairing request for device:"
-msgstr ""
+msgstr "சாதனத்திற்கான இணைத்தல் கோரிக்கை:"
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
-msgstr ""
+msgstr "இதை மேலெழுத வேண்டும்"
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
-msgstr ""
+msgstr "உள்ளீட்டைக் காட்டு"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:48
+msgid "Bluetooth Devices"
+msgstr "ஊடலை சாதனங்கள்"
+
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr ""
+msgstr "_ADAPTER"
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:71
 msgid "_Search"
 msgstr "_S தேடுக"
 
-#: data/ui/manager-main.ui:91
+#: data/ui/manager-main.ui:92
 msgid "_Preferences"
-msgstr ""
+msgstr "விருப்பத்தேர்வுகள்"
 
-#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
-msgstr ""
+msgstr "வெளியேறு (_E)"
 
-#: data/ui/manager-main.ui:123
+#: data/ui/manager-main.ui:124
 msgid "_Device"
 msgstr "_சாதனம்"
 
-#: data/ui/manager-main.ui:131
+#: data/ui/manager-main.ui:132
 msgid "_View"
 msgstr "_பார்"
 
-#: data/ui/manager-main.ui:141
+#: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "கருவிப்பட்டியைக் காட்டு (_T)"
 
-#: data/ui/manager-main.ui:149
+#: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "_ச்டேட்டச் பட்டியைக் காட்டு"
 
-#: data/ui/manager-main.ui:157
-#, fuzzy
+#: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
-msgstr "சாதனத்திற்கு மறுபெயரிடு"
+msgstr "_ இறக்கப்படாத சாதனங்களை மறைக்கவும்"
 
-#: data/ui/manager-main.ui:171
+#: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr ""
+msgstr "S_ort வழங்கியவர்"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr ""
+msgstr "_ பெயர்"
 
-#: data/ui/manager-main.ui:190
+#: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr ""
+msgstr "_ADDED"
 
-#: data/ui/manager-main.ui:206
+#: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr ""
+msgstr "இறங்கி(_D)"
 
-#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
+#: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
-msgstr ""
+msgstr "_Plugins"
 
-#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:45
+#: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
-msgstr ""
+msgstr "_ லோகல் சேவைகள்"
 
-#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
-#: blueman/plugins/applet/StandardItems.py:51
+#: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
+#: blueman/plugins/applet/StandardItems.py:65
 msgid "_Help"
 msgstr "_உதவி"
 
-#: data/ui/manager-main.ui:250
+#: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
-msgstr ""
+msgstr "ஒரு சிக்கலைப் புகாரளிக்கவும்"
 
-#: data/ui/manager-main.ui:293
+#: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr "அருகில் உள்ள சாதனத்தை தேடுக "
+msgstr "அருகில் உள்ள சாதனத்தைத் தேடுக"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:295
+#: data/ui/manager-main.ui:296
 msgid "Search"
 msgstr "தேடுக"
 
-#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:370
 msgid "Create pairing with the device"
-msgstr ""
+msgstr "சாதனத்துடன் இணைப்பை உருவாக்கவும்"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:320
 msgid "Pair"
 msgstr "பிணைக்க"
 
-#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "Mark/Unmark this device as trusted"
-msgstr ""
+msgstr "இந்தச் சாதனத்தை நம்பகமானதாகக் குறிக்கவும்/குறிநீக்கவும்"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Trust"
 msgstr "நம்பு"
 
-#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:433
 msgid "Remove this device from the known devices list"
-msgstr "இச்சாதனத்தை தெரிந்த சாதனங்கள் பட்டியலில் இருந்து நீக்கு "
+msgstr "இச்சாதனத்தை தெரிந்த சாதனங்கள் பட்டியலிலிருந்து நீக்கு"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:347
+#: data/ui/manager-main.ui:348
 msgid "Remove"
 msgstr "நீக்கு"
 
-#: data/ui/manager-main.ui:369
+#: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
-msgstr "கோப்பினை மற்றோரு சாதனத்திற்கு அனுப்ப "
+msgstr "கோப்பினை மற்றோரு சாதனத்திற்கு அனுப்பு"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:372
 msgid "Send File"
 msgstr "கோப்பை அனுப்பு"
 
-#: data/ui/manager-main.ui:491
+#: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
-msgstr ""
+msgstr "அனுப்பப்பட்ட மொத்த தரவு மற்றும் பரிமாற்ற வீதம்"
 
-#: data/ui/manager-main.ui:533
+#: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
-msgstr ""
+msgstr "பெறப்பட்ட மொத்த தரவு மற்றும் பரிமாற்ற விகிதம்"
 
-#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
+#: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
-msgstr ""
+msgstr "தரவு செயல்பாடு அறிகுறி"
 
-#: data/ui/manager-main.ui:635
+#: data/ui/manager-main.ui:636
 msgid "More"
-msgstr ""
+msgstr "மேலும்"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
@@ -195,21 +200,21 @@ msgstr "சாதனத்திற்கு மறுபெயரிடு"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr "நிலை மீள் "
+msgstr "மீட்டமை"
 
-#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_Cancel"
-msgstr ""
+msgstr "_CANCEL"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_OK"
-msgstr ""
+msgstr "_Ok"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
-msgstr ""
+msgstr "DHCP சேவையக வகை:"
 
 #: data/ui/services-network.ui:59
 msgid "Recommended"
@@ -217,7 +222,7 @@ msgstr "பரிந்துரைக்கப்பட்டது"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
-msgstr ""
+msgstr "<b> DHCP சேவையகங்கள் நிறுவப்படவில்லை </b>"
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
@@ -225,53 +230,60 @@ msgstr "IP முகவரி:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
-msgstr ""
+msgstr "<b> NAP அமைப்புகள் </b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "தனிப்பட்ட பகுதி பிணையம்"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
-msgstr ""
+msgstr "<b> பான் உதவி </b>"
 
 #: data/ui/services-network.ui:317
 msgid "Dial-up Networking"
-msgstr ""
+msgstr "டயல்-அப் நெட்வொர்க்கிங்"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
-msgstr ""
+msgstr "<b> டன் உதவி </b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
-msgstr ""
+msgstr "பிணைய அணுகல் புள்ளி (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>Author:</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>எழுதியவர்:</b>"
+msgstr "<b> NAP உதவி </b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr ""
+msgstr "<b> கோப்பு பெறுதல் (பொருள் புச்) </b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
-msgstr ""
+msgstr "உள்வரும் கோப்புறை:"
 
 #: data/ui/services-transfer.ui:45
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "உள்வரும் கோப்பு இடமாற்றங்களுக்கு கோப்புறையைத் தேர்ந்தெடுக்கவும்"
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
-msgstr ""
+msgstr "நம்பகமான சாதனங்களிலிருந்து கோப்புகளை ஏற்றுக்கொள்ளுங்கள்"
+
+#: data/ui/services-window.ui:9
+msgid "Local Services"
+msgstr "உள்ளக சேவைகள்"
+
+#: data/ui/services-window.ui:49
+msgid "_Apply"
+msgstr "_Aplay"
 
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
+"<span weight=\"bold\" size=\"large\"> ஊடலை வழியாகக் கோப்புகளை அனுப்புதல் </span>"
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
@@ -287,7 +299,7 @@ msgstr "கட்டமைப்பு"
 
 #: data/ui/applet-plugins-widget.ui:83
 msgid "Configure selected plugin's preferences"
-msgstr ""
+msgstr "தேர்ந்தெடுக்கப்பட்ட சொருகி விருப்பங்களை உள்ளமைக்கவும்"
 
 #: data/ui/applet-plugins-widget.ui:129
 msgid "Not specified"
@@ -299,8 +311,8 @@ msgstr "<b>எழுதியவர்:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
-#: blueman/gui/manager/ManagerDeviceList.py:369
-#: blueman/gui/manager/ManagerDeviceList.py:371 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:378
+#: blueman/gui/manager/ManagerDeviceList.py:380 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:484
 #: blueman/DeviceClass.py:533 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -310,15 +322,15 @@ msgstr "தெரியாத"
 
 #: data/ui/applet-plugins-widget.ui:193
 msgid "<b>Depends on:</b>"
-msgstr ""
+msgstr "<b> சார்ந்துள்ளது: </b>"
 
 #: data/ui/applet-plugins-widget.ui:235
 msgid "<b>Conflicts with:</b>"
-msgstr ""
+msgstr "<b> இதனுடன் மோதல்கள்: </b>"
 
 #: data/ui/gsm-settings.ui:35
 msgid "<b>GSM settings</b>"
-msgstr ""
+msgstr "<b> சிஎச்எம் அமைப்புகள் </b>"
 
 #: data/ui/gsm-settings.ui:56
 msgid "Number:"
@@ -326,11 +338,11 @@ msgstr "எண்:"
 
 #: data/ui/gsm-settings.ui:79
 msgid "APN:"
-msgstr ""
+msgstr "APN:"
 
 #: data/ui/net-usage.ui:14
 msgid "Traffic statistics"
-msgstr ""
+msgstr "போக்குவரத்து புள்ளிவிவரங்கள்"
 
 #: data/ui/net-usage.ui:33 blueman/gui/GsmSettings.py:39
 msgid "_Close"
@@ -350,44 +362,44 @@ msgstr "<b>மொத்தம்:</b>"
 
 #: data/ui/net-usage.ui:197
 msgid "<b>Log started:</b>"
-msgstr ""
+msgstr "<b> பதிவு தொடங்கியது: </b>"
 
 #: data/ui/net-usage.ui:210
 msgid "<b>Log duration:</b>"
-msgstr ""
+msgstr "<b> பதிவு காலம்: </b>"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "குறிப்பு அனுப்பவும்"
 
-#: blueman/main/Adapter.py:57
+#: blueman/main/Adapter.py:60
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
-msgstr ""
+msgstr "அடாப்டர் மேலாளருக்கு வேலை செய்ய புளூடூத்தை இயக்க வேண்டும்"
 
-#: blueman/main/Adapter.py:97 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:100 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
-msgstr ""
+msgstr "ஊடலை அடாப்டர்கள்"
 
-#: blueman/main/Adapter.py:160
+#: blueman/main/Adapter.py:163
 msgid "Always"
 msgstr "எப்போதும்"
 
-#: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
+#: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(minutes)d மணித்துளி"
+msgstr[1] "%(minutes)d நிமிடங்கள்"
 
-#: blueman/main/Adapter.py:230
+#: blueman/main/Adapter.py:233
 msgid "Adapter"
-msgstr ""
+msgstr "பின்னல்"
 
-#: blueman/main/DBusProxies.py:64
+#: blueman/main/DBusProxies.py:90
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "புளூமேன்-மேலாளரை அடையத் தவறிவிட்டது"
 
-#: blueman/main/DBusProxies.py:65
+#: blueman/main/DBusProxies.py:91
 msgid ""
 "It seems like blueman-manager could no get activated via D-Bus. A typical "
 "cause for this is a broken graphical setup in the D-Bus activation "
@@ -395,150 +407,156 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"டி-பியூச் வழியாக புளூமேன்-மேலாளர் செயல்படுத்த முடியாது என்று தெரிகிறது. இதற்கு ஒரு "
+"பொதுவான காரணம் டி-பச் செயல்படுத்தும் சூழலில் உடைந்த வரைகலை அமைப்பாகும், இது DBUS-"
+"புதுப்பிப்பு-செயல்படுத்தல்-சூழலுக்கான அழைப்புடன் தீர்க்கப்படலாம், இது பொதுவாக Xinitrc "
+"இலிருந்து வழங்கப்படுகிறது (முறையே SWAY கட்டமைப்பு அல்லது ஒத்த)."
 
-#: blueman/main/Manager.py:104
+#: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
-msgstr ""
+msgstr "புளூசுடனான இணைப்பு தோல்வியடைந்தது"
 
-#: blueman/main/Manager.py:105
+#: blueman/main/Manager.py:114
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
+"புளூச் டீமான் இயங்கவில்லை, புளூமேன்-மேலாளர் தொடர முடியாது. \n"
+"இதன் பொருள் ஊடலை அடாப்டர்கள் கண்டறியப்படவில்லை அல்லது ஊடலை டீமான் தொடங்கப்படவில்லை."
 
-#: blueman/main/Manager.py:163
+#: blueman/main/Manager.py:172
 msgid "Click to disable."
-msgstr ""
+msgstr "முடக்க சொடுக்கு செய்க."
 
-#: blueman/main/Manager.py:166
+#: blueman/main/Manager.py:175
 msgid "Click to enable."
-msgstr ""
+msgstr "இயக்க சொடுக்கு செய்க."
 
-#: blueman/main/Manager.py:199
+#: blueman/main/Manager.py:208
 msgid "Searching"
-msgstr ""
+msgstr "தேடுகிறது"
 
-#: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:270 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
-msgstr ""
+msgstr "பின்னல் விருப்பத்தேர்வுகள்"
 
-#: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
-#: blueman/plugins/applet/StandardItems.py:75
+#: blueman/main/Manager.py:286 blueman/gui/manager/ManagerDeviceList.py:179
+#: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
-msgstr ""
+msgstr "கோப்பு அனுப்புநர்"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
 msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
 
-#: blueman/main/Sendto.py:42
+#: blueman/main/Sendto.py:44
 msgid "_Stop"
-msgstr ""
+msgstr "_ச்டாப்"
 
-#: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
+#: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
 msgstr "இணைக்கப்படுகிறது"
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "obexd not available"
-msgstr ""
+msgstr "OBEXD கிடைக்கவில்லை"
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
-msgstr ""
+msgstr "ஆட்டோச்டார்ட் ஒபெக்ச் சேவையில் தோல்வியுற்றது. ஒபெக்ச் டீமான் இயங்குவதை உறுதிசெய்க"
 
-#: blueman/main/Sendto.py:142
+#: blueman/main/Sendto.py:144
 msgid "Cancelling"
-msgstr ""
+msgstr "ரத்துசெய்யும்"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "Sending File"
-msgstr ""
+msgstr "கோப்பை அனுப்புகிறது"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "ETA:"
-msgstr ""
+msgstr "மற்றும்:"
 
-#: blueman/main/Sendto.py:192
+#: blueman/main/Sendto.py:194
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d இரண்டாவது"
+msgstr[1] "%(seconds)d விநாடிகள்"
 
-#: blueman/main/Sendto.py:225
+#: blueman/main/Sendto.py:227
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr ""
+msgstr "%s கோப்பை அனுப்பும்போது பிழை ஏற்பட்டது"
 
-#: blueman/main/Sendto.py:229
+#: blueman/main/Sendto.py:231
 msgid "Skip"
-msgstr ""
+msgstr "தவிர்"
 
-#: blueman/main/Sendto.py:230
+#: blueman/main/Sendto.py:232
 msgid "Retry"
-msgstr ""
+msgstr "மீண்டும் முயற்சிக்கவும்"
 
-#: blueman/main/Sendto.py:281
+#: blueman/main/Sendto.py:283
 msgid "Error occurred"
 msgstr "பிழை ஏற்பட்டது"
 
-#: blueman/main/applet/BluezAgent.py:123
+#: blueman/main/applet/BluezAgent.py:142
 #, python-format
 msgid "Pairing request for %s"
-msgstr ""
+msgstr "%s க்கான இணைத்தல் கோரிக்கை"
 
-#: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:153 blueman/main/applet/BluezAgent.py:265
 msgid "Bluetooth Authentication"
-msgstr ""
+msgstr "ஊடலை ஏற்பு"
 
-#: blueman/main/applet/BluezAgent.py:165
+#: blueman/main/applet/BluezAgent.py:184
 msgid "Enter PIN code for authentication:"
-msgstr ""
+msgstr "அங்கீகாரத்திற்கு முள் குறியீட்டை உள்ளிடவும்:"
 
-#: blueman/main/applet/BluezAgent.py:174
+#: blueman/main/applet/BluezAgent.py:193
 msgid "Enter passkey for authentication:"
-msgstr ""
+msgstr "அங்கீகாரத்திற்காக பாச்கியை உள்ளிடவும்:"
 
-#: blueman/main/applet/BluezAgent.py:185
+#: blueman/main/applet/BluezAgent.py:204
 msgid "Pairing passkey for"
-msgstr ""
+msgstr "பாச்கியை இணைத்தல்"
 
-#: blueman/main/applet/BluezAgent.py:196
+#: blueman/main/applet/BluezAgent.py:215
 msgid "Pairing PIN code for"
-msgstr ""
+msgstr "இணைத்தல் முள் குறியீடு"
 
-#: blueman/main/applet/BluezAgent.py:209
+#: blueman/main/applet/BluezAgent.py:228
 msgid "Pairing request for:"
-msgstr ""
+msgstr "இணைத்தல் கோரிக்கை:"
 
-#: blueman/main/applet/BluezAgent.py:212
+#: blueman/main/applet/BluezAgent.py:231
 msgid "Confirm value for authentication:"
-msgstr ""
+msgstr "அங்கீகாரத்திற்கான மதிப்பை உறுதிப்படுத்தவும்:"
 
-#: blueman/main/applet/BluezAgent.py:213
+#: blueman/main/applet/BluezAgent.py:232
 msgid "Confirm"
 msgstr "உறுதி செய்"
 
-#: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
+#: blueman/main/applet/BluezAgent.py:232 blueman/main/applet/BluezAgent.py:263
 msgid "Deny"
 msgstr "நிராகரி"
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Authorization request for:"
-msgstr ""
+msgstr "அங்கீகார கோரிக்கை:"
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Service:"
 msgstr "சேவை:"
 
-#: blueman/main/applet/BluezAgent.py:242
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Always accept"
 msgstr "எப்பொழுதும் ஏற்றுக்கொள்"
 
-#: blueman/main/applet/BluezAgent.py:243
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/main/applet/BluezAgent.py:262
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "ஏற்றுக்கொள்"
 
@@ -548,285 +566,272 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-
-#: blueman/Functions.py:70
-msgid "Bluetooth Turned Off"
-msgstr ""
+"<b> ஒரு சொருகி ஏற்றும்போது பிழை ஏற்பட்டது. இந்த செய்தியின் உள்ளடக்கத்துடன் "
+"டெவலப்பர்களுக்கு எங்கள் </b> க்கு அறிவிக்கவும் \n"
+"<a href = \"http://github.com/blueman-project/blueman/issues\"> வலைத்தளம். </a>"
 
 #: blueman/Functions.py:71
-msgid "Exit"
-msgstr ""
+msgid "Bluetooth Turned Off"
+msgstr "ஊடலை அணைக்கப்பட்டது"
 
 #: blueman/Functions.py:72
+msgid "Exit"
+msgstr "வெளியேறு"
+
+#: blueman/Functions.py:73
 msgid "Enable Bluetooth"
-msgstr ""
+msgstr "புளூடூத்தை இயக்கவும்"
 
-#: blueman/Functions.py:166
+#: blueman/Functions.py:167
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#: blueman/Functions.py:169
+#: blueman/Functions.py:170
 msgid "KB"
-msgstr ""
+msgstr "கே.பி."
 
-#: blueman/Functions.py:172
+#: blueman/Functions.py:173
 msgid "MB"
-msgstr ""
+msgstr "எம்பி"
 
-#: blueman/Functions.py:175
+#: blueman/Functions.py:176
 msgid "GB"
-msgstr ""
+msgstr "சிபி"
 
-#: blueman/gui/manager/ManagerMenu.py:47
+#: blueman/gui/manager/ManagerMenu.py:48
 msgid "Device Manager"
 msgstr "சாதன மேலாளர்"
 
-#: blueman/gui/manager/ManagerMenu.py:80
-#: blueman/plugins/applet/StandardItems.py:85
+#: blueman/gui/manager/ManagerMenu.py:81
+#: blueman/plugins/applet/StandardItems.py:102
 msgid "Service Preferences"
-msgstr ""
+msgstr "பணி விருப்பத்தேர்வுகள்"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
-msgstr ""
+msgstr "விசைப்பலகை"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "காம்போ"
 
-#: blueman/gui/manager/ManagerDeviceList.py:333
-#, fuzzy
-#| msgid "Rename device"
+#: blueman/gui/manager/ManagerDeviceList.py:342
 msgid "Unnamed device"
-msgstr "சாதனத்திற்கு மறுபெயரிடு"
+msgstr "பெயரிடப்படாத சாதனம்"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:340
-#: blueman/gui/manager/ManagerDeviceList.py:369 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:349
+#: blueman/gui/manager/ManagerDeviceList.py:378 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
-msgstr ""
+msgstr "வகைப்படுத்தப்படாதது"
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/gui/manager/ManagerDeviceList.py:560
-#: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:31
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/gui/manager/ManagerDeviceList.py:569
+#: blueman/plugins/applet/AutoConnect.py:68
+#: blueman/plugins/applet/ConnectionNotifier.py:32
+#: blueman/plugins/applet/RecentConns.py:157
 #: blueman/plugins/applet/PPPSupport.py:77
 msgid "Connected"
 msgstr "இணைக்கப்பட்டது"
 
-#: blueman/gui/manager/ManagerDeviceList.py:562
-#, fuzzy
-#| msgid "Trust"
+#: blueman/gui/manager/ManagerDeviceList.py:571
 msgid "Trusted"
-msgstr "நம்பு"
+msgstr "நம்பகமான"
 
-#: blueman/gui/manager/ManagerDeviceList.py:564
-#, fuzzy
-#| msgid "Pair"
+#: blueman/gui/manager/ManagerDeviceList.py:573
 msgid "Paired"
-msgstr "பிணைக்க"
+msgstr "இணை"
 
-#: blueman/gui/manager/ManagerDeviceList.py:566
+#: blueman/gui/manager/ManagerDeviceList.py:575
 msgid "Blocked"
-msgstr ""
+msgstr "தடுக்கப்பட்டது"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "<b>Connected</b>"
-msgstr "<b>மொத்தம்:</b>"
+msgstr "<b> இணைக்கப்பட்ட </b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:602
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Poor"
 msgstr "மோசம்"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
-#: blueman/gui/manager/ManagerDeviceList.py:623
-msgid "Sub-optimal"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceList.py:606
-#: blueman/gui/manager/ManagerDeviceList.py:625
-msgid "Optimal"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceList.py:608
-msgid "Much"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceList.py:610
-msgid "Too much"
-msgstr ""
-
 #: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:632
+msgid "Sub-optimal"
+msgstr "துணை-உகந்த"
+
+#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:634
+msgid "Optimal"
+msgstr "உகந்த"
+
+#: blueman/gui/manager/ManagerDeviceList.py:617
+msgid "Much"
+msgstr "அதிகம்"
+
+#: blueman/gui/manager/ManagerDeviceList.py:619
+msgid "Too much"
+msgstr "அதிகமாக"
+
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b> பெறப்பட்ட சமிக்ஞை வலிமை:%(rssi)u%%</b> <i> (%(rssi_state)s) </i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "பெறப்பட்ட சமிக்ஞை வலிமை:%(rssi)u%% <i> (%(rssi_state)s) </i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:630
 msgid "Low"
 msgstr "குறைவு"
 
-#: blueman/gui/manager/ManagerDeviceList.py:627
+#: blueman/gui/manager/ManagerDeviceList.py:636
 msgid "High"
 msgstr "உயர்வு"
 
-#: blueman/gui/manager/ManagerDeviceList.py:629
+#: blueman/gui/manager/ManagerDeviceList.py:638
 msgid "Very High"
 msgstr "மிகவும் அதிகமான"
 
-#: blueman/gui/manager/ManagerDeviceList.py:632
+#: blueman/gui/manager/ManagerDeviceList.py:641
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b> மின் கடத்தி நிலை:%(tpl)u%% </b> <i> (%(tpl_state)s) </i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:635
+#: blueman/gui/manager/ManagerDeviceList.py:644
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "மின் கடத்தி நிலை:%(tpl)u%% <i> (%(tpl_state)s) </i>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:137
+#: blueman/gui/manager/ManagerDeviceMenu.py:139
 msgid "Success!"
 msgstr "வெற்றி!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:142
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Failed"
 msgstr "தோல்வியடைந்தது"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:148
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting…"
-msgstr "இணைக்கப்படுகிறது"
+msgstr "இணைத்தல்…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:171
+#: blueman/gui/manager/ManagerDeviceMenu.py:173
 msgid "Disconnection Failed: "
 msgstr "துண்டிக்க முடியவில்லை "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:197
 msgid "No audio endpoints registered"
-msgstr ""
-
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
-msgid "Input/output error"
-msgstr ""
+msgstr "ஆடியோ இறுதிப் புள்ளிகள் பதிவு செய்யப்படவில்லை"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
+msgid "Input/output error"
+msgstr "உள்ளீடு/வெளியீட்டு பிழை"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:202
 msgid "Device did not respond"
-msgstr ""
+msgstr "சாதனம் பதிலளிக்கவில்லை"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:204
-#, fuzzy
-#| msgid "Unknown"
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
 msgid "Unknown error"
-msgstr "தெரியாத"
+msgstr "தெரியாத பிழை"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
+#: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
 msgstr "இணைக்க முடியவில்லை "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:295
-#, fuzzy
-msgid "<b>_Connect</b>"
-msgstr "<b>மொத்தம்:</b>"
-
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
+msgid "<b>_Connect</b>"
+msgstr "<b> _connect </b>"
+
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr ""
+msgstr "ஆட்டோ கனெக்ட் சுயவிவரங்கள் A2DP மூல, A2DP மடு மற்றும் HID ஆகியவற்றை இணைக்கிறது"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:303
 msgid "<b>_Disconnect</b>"
-msgstr "<b>மொத்தம்:</b>"
+msgstr "<b> _disconnect </b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:302
+#: blueman/gui/manager/ManagerDeviceMenu.py:304
 msgid "Forcefully disconnect the device"
-msgstr ""
+msgstr "சாதனத்தை பலமாக துண்டிக்கவும்"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:318
+#: blueman/gui/manager/ManagerDeviceMenu.py:320
 msgid "<b>Connect To:</b>"
-msgstr ""
+msgstr "<b> இணைக்கவும்: </b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:323
+#: blueman/gui/manager/ManagerDeviceMenu.py:325
 msgid "<b>Disconnect:</b>"
-msgstr ""
+msgstr "<b> துண்டிக்கவும்: </b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:333
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>மொத்தம்:</b>"
+msgstr "<b> தானாக இணைத்தல்: </b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:353
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "Send a _File…"
-msgstr "கோப்பை அனுப்பு"
+msgstr "ஒரு கோப்பை அனுப்பவும்…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:366
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Pair"
-msgstr ""
+msgstr "_பேர்"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:376
+#: blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Trust"
-msgstr ""
+msgstr "_ டிரச்ட்"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "_Untrust"
-msgstr ""
+msgstr "நம்பகமின்மை(_U)"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "_Block"
-msgstr ""
+msgstr "_ பிளாக்"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:393
+#: blueman/gui/manager/ManagerDeviceMenu.py:396
 msgid "_Unblock"
-msgstr ""
+msgstr "_Unplock"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:397
+#: blueman/gui/manager/ManagerDeviceMenu.py:400
 msgid "Block/Unblock this device"
-msgstr ""
+msgstr "இந்த சாதனத்தைத் தடுக்கவும்/தடை செய்யவும்"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:417
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "R_ename device…"
-msgstr "சாதனத்திற்கு மறுபெயரிடு"
+msgstr "மறுபெயரிடு (_e) சாதனம்…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:426
-#, fuzzy
+#: blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "_Remove…"
-msgstr "நீக்கு"
+msgstr "_ REMOVE…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
 msgstr "செயல்பாட்டினை கைவிடுக"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Untrust"
-msgstr ""
+msgstr "பொய்"
 
-#: blueman/gui/DeviceSelectorDialog.py:14
+#: blueman/gui/DeviceSelectorDialog.py:16
 msgid "Select Device"
-msgstr ""
+msgstr "சாதனத்தைத் தேர்ந்தெடுக்கவும்"
 
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr ""
+msgstr "புளூமேன் ஒரு சி.டி.கே+ ஊடலை மேலாளர்"
 
 #: blueman/gui/GsmSettings.py:25
 msgid "GSM Settings"
-msgstr ""
+msgstr "சிஎச்எம் அமைப்புகள்"
 
 #: blueman/gui/applet/PluginDialog.py:121
-#: blueman/plugins/applet/StandardItems.py:91
+#: blueman/plugins/applet/StandardItems.py:108
 msgid "Plugins"
 msgstr "சொருகுப்பொருள்கள்"
 
@@ -837,6 +842,9 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
+"சொருகி <b> \"%(0)s\" </b> <b>%(1)s </b> ஐப் பொறுத்தது. இறக்குதல் <b>%(1)s </b> "
+"<b> \"%(0)s\" </b> ஐ இறக்கிவிடும்.\n"
+" தொடரவா?"
 
 #: blueman/gui/applet/PluginDialog.py:241
 #, python-format
@@ -845,2193 +853,2128 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"சொருகி <b>%(0)s</b> <b>%(1)s </b> உடன் மோதல்கள். ஏற்றுதல் <b>%(1)s </b> <b>%(0)s "
+"</b> ஐ இறக்கிவிடும்.\n"
+" தொடரவா?"
 
 #: blueman/gui/applet/PluginDialog.py:267
 msgid "No dependencies"
-msgstr ""
+msgstr "சார்பு இல்லை"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "மோதல்கள் இல்லை"
 
-#: blueman/gui/applet/PluginDialog.py:349
+#: blueman/gui/applet/PluginDialog.py:351
 msgid "Dependency issue"
-msgstr ""
+msgstr "சார்பு சிக்கல்"
 
 #: blueman/gui/DeviceSelectorWidget.py:39
 msgid "Adapter selection"
-msgstr ""
+msgstr "தழுவி தேர்வு"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "துண்டித்து கொண்டுஇருக்கிறது "
+msgstr "கண்டுபிடிப்பது…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "மற்றவை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "கணிப்பொறி, கணிணி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "தொலைபேசி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "ஏற்றுக்கொள்"
+msgstr "அணுகல் புள்ளி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "ஆடியோ/வீடியோ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "புற"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:518
 msgid "Imaging"
-msgstr ""
+msgstr "இமேசிங்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "அணியக்கூடிய"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "பொம்மை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "மேல்மேசை"
+msgstr "டெச்க்டாப்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "சேவை:"
+msgstr "சேவையகம்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35 blueman/DeviceClass.py:173
 msgid "Laptop"
-msgstr ""
+msgstr "மடிக்கணினி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr ""
+msgstr "கையடக்க"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "பனை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
 msgid "Cellular"
-msgstr ""
+msgstr "செல்லுலார்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
 msgid "Cordless"
-msgstr ""
+msgstr "கம்பியில்லா"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
 msgid "Smartphone"
-msgstr ""
+msgstr "ச்மார்ட்போன்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
 msgid "Modem"
-msgstr ""
+msgstr "இணக்கி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "Isdn"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "முழுமையாக"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1–17 percent"
-msgstr ""
+msgstr "1–17 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17–33 percent"
-msgstr ""
+msgstr "17–33 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33–50 percent"
-msgstr ""
+msgstr "33-50 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50–67 percent"
-msgstr ""
+msgstr "50–67 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67–83 percent"
-msgstr ""
+msgstr "67–83 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83–99 percent"
-msgstr ""
+msgstr "83-99 விழுக்காடு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
 msgid "Not available"
-msgstr ""
+msgstr "கிடைக்கவில்லை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/DeviceClass.py:417 blueman/Sdp.py:123
 #: blueman/Sdp.py:164
 msgid "Headset"
-msgstr ""
+msgstr "எட்செட்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
 msgid "Handsfree"
-msgstr ""
+msgstr "ஏண்ட்ச்ஃப்ரீ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88 blueman/DeviceClass.py:374
 msgid "Microphone"
-msgstr ""
+msgstr "ஒலிவாங்கி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "ஒலிபெருக்கி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
 msgid "Headphones"
-msgstr ""
+msgstr "எட்ஃபோன்கள்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "சிறிய ஆடியோ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "கார் ஆடியோ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "செட்-டாப் பெட்டி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "ஐ-ஃபை ஆடியோ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "வி.சி.ஆர்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
 msgid "Video camera"
-msgstr ""
+msgstr "வீடியோ கேமரா"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "நிகழ்பதிவி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
 msgid "Video monitor"
-msgstr ""
+msgstr "வீடியோ மானிட்டர்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "வீடியோ காட்சி மற்றும் ஒலிபெருக்கி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
 msgid "Video conferencing"
-msgstr ""
+msgstr "வீடியோ கான்பரன்சிங்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "கேமிங்/பொம்மை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "இணைக்கப்படுகிறது"
+msgstr "சுட்டிக்காட்டி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "காட்சி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "கேமரா"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "வருடி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "அச்சுப்பொறி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "மணிக்கட்டு கண்காணிப்பு"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "பேசர்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "உறை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "எல்மெட்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "கண்ணாடிகள்"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "ரோபோ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "வண்டி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "பொம்மை"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "கட்டுப்படுத்தி"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "விளையாட்டு"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
 msgid "Generic Unknown"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான தெரியவில்லை"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "இணைக்கவும்"
+msgstr "பொது பேசி"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான கணினி"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "டெச்க்டாப் பணிநிலையம்"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
 msgid "Server-class Computer"
-msgstr "இணைக்கவும்"
+msgstr "சேவையக-வகுப்பு கணினி"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "கையடக்க பிசி/பி.டி.ஏ (கிளாம்செல்)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "பனை அளவு பிசி/பிடிஏ"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "அணியக்கூடிய கணினி (வாட்ச் அளவு)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "டேப்லெட்"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "நறுக்குதல் நிலையம்"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "அனைத்தும் ஒன்றில்"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Blade Server"
-msgstr "சேவை:"
+msgstr "பிளேட் சேவையகம்"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "மாற்றத்தக்க"
 
 #: blueman/DeviceClass.py:182
 msgid "Detachable"
-msgstr ""
+msgstr "பிரிக்கக்கூடிய"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "Iot நுழைவாயில்"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "மினி பிசி"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "பிசி ஒட்டு"
 
 #: blueman/DeviceClass.py:186
-#, fuzzy
 msgid "Generic Watch"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான கைகடிகாரம்"
 
 #: blueman/DeviceClass.py:187
 msgid "Sports Watch"
-msgstr ""
+msgstr "விளையாட்டு கண்காணிப்பு"
 
 #: blueman/DeviceClass.py:188
 msgid "Smartwatch"
-msgstr ""
+msgstr "ச்மார்ட்வாட்ச்"
 
 #: blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Generic Clock"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான கடிகாரம்"
 
 #: blueman/DeviceClass.py:190
-#, fuzzy
 msgid "Generic Display"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான காட்சி"
 
 #: blueman/DeviceClass.py:191
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ரிமோட் கண்ட்ரோல்"
 
 #: blueman/DeviceClass.py:192
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான கண்-கண்ணாடி"
 
 #: blueman/DeviceClass.py:193
-#, fuzzy
 msgid "Generic Tag"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான குறிச்சொல்"
 
 #: blueman/DeviceClass.py:194
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான கீரிங்"
 
 #: blueman/DeviceClass.py:195
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான மீடியா பிளேயர்"
 
 #: blueman/DeviceClass.py:196
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான பார்கோடு ச்கேனர்"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான வெப்பமானி"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
 msgid "Ear Thermometer"
-msgstr "இணைக்கவும்"
+msgstr "காது வெப்பமானி"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
 msgid "Generic Heart Rate Sensor"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான இதய துடிப்பு சென்சார்"
 
 #: blueman/DeviceClass.py:200
 msgid "Heart Rate Belt"
-msgstr ""
+msgstr "இதய துடிப்பு பெல்ட்"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "பொதுவான இரத்த அழுத்தம்"
 
 #: blueman/DeviceClass.py:202
 msgid "Arm Blood Pressure"
-msgstr ""
+msgstr "கை இரத்த அழுத்தம்"
 
 #: blueman/DeviceClass.py:203
 msgid "Wrist Blood Pressure"
-msgstr ""
+msgstr "மணிக்கட்டு இரத்த அழுத்தம்"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "பொதுவான மனித இடைமுக சாதனம்"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
-msgstr ""
+msgstr "சுட்டி"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "இயக்குப்பிடி"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
-msgstr ""
+msgstr "கேம்பேட்"
 
 #: blueman/DeviceClass.py:209
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "டிசிட்டலைசர் டேப்லெட்"
 
 #: blueman/DeviceClass.py:210
 msgid "Card Reader"
-msgstr ""
+msgstr "அட்டை வாசகர்"
 
 #: blueman/DeviceClass.py:211
 msgid "Digital Pen"
-msgstr ""
+msgstr "டிசிட்டல் பேனா"
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "பார்கோடு ச்கேனர்"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "டச்பேட்"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "விளக்கக்காட்சி தொலைநிலை"
 
 #: blueman/DeviceClass.py:215
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான குளுக்கோச் மீட்டர்"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
 msgid "Generic Running Walking Sensor"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான இயங்கும் நடைபயிற்சி சென்சார்"
 
 #: blueman/DeviceClass.py:217
 msgid "In-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "இன்-சூ ஓடும் நடை சென்சார்"
 
 #: blueman/DeviceClass.py:218
 msgid "On-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "ஆன்-சூ இயங்கும் நடைபயிற்சி சென்சார்"
 
 #: blueman/DeviceClass.py:219
 msgid "On-Hip Running Walking Sensor"
-msgstr ""
+msgstr "ஆன்-இப் இயங்கும் நடைபயிற்சி சென்சார்"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
 msgid "Generic Cycling"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான சைக்கிள் ஓட்டுதல்"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
 msgid "Cycling Computer"
-msgstr "இணைக்கவும்"
+msgstr "சைக்கிள் ஓட்டுதல் கணினி"
 
 #: blueman/DeviceClass.py:222
 msgid "Speed Sensor"
-msgstr ""
+msgstr "வேக சென்சார்"
 
 #: blueman/DeviceClass.py:223
 msgid "Cadence Sensor"
-msgstr ""
+msgstr "கேடென்ச் சென்சார்"
 
 #: blueman/DeviceClass.py:224
 msgid "Power Sensor"
-msgstr ""
+msgstr "பவர் சென்சார்"
 
 #: blueman/DeviceClass.py:225
 msgid "Speed and Cadence Sensor"
-msgstr ""
+msgstr "விரைவு மற்றும் கேடென்ச் சென்சார்"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
 msgid "Generic Control Device"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான கட்டுப்பாட்டு சாதனம்"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "ஆளி, நிலைமாறி"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "பல சுவிட்ச்"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "பொத்தான்"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "ச்லைடர்"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "ரோட்டரி சுவிட்ச்"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "டச் பேனல்"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "ஒற்றை சுவிட்ச்"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "இரட்டை சுவிட்ச்"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "மூன்று சுவிட்ச்"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
 msgid "Battery Switch"
-msgstr "சேவை:"
+msgstr "பேட்டரி சுவிட்ச்"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "ஆற்றல் அறுவடை சுவிட்ச்"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "புச் பொத்தான்"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "டயல்"
 
 #: blueman/DeviceClass.py:240
 msgid "Generic Network Device"
-msgstr ""
+msgstr "பொதுவான பிணைய சாதனம்"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
 msgid "Access Point"
-msgstr "ஏற்றுக்கொள்"
+msgstr "அணுகல் புள்ளி"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "சாதனம்"
+msgstr "மெச் சாதனம்"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "மெச் பிணையம் பதிலாள்"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
 msgid "Generic Sensor"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான சென்சார்"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "இயக்க சென்சார்"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "காற்றின் தர சென்சார்"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
 msgid "Temperature Sensor"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "வெப்பநிலை சென்சார்"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "ஈரப்பதம் சென்சார்"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "கசிவு சென்சார்"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "புகை சென்சார்"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "வன்கவர்வு சென்சார்"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "தொடர்பு சென்சார்"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "கார்பன் மோனாக்சைடு சென்சார்"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "கார்பன் டை ஆக்சைடு சென்சார்"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "சுற்றுப்புற ஒளி சென்சார்"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "ஆற்றல் சென்சார்"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "வண்ண ஒளி சென்சார்"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "மழை சென்சார்"
 
 #: blueman/DeviceClass.py:259
 msgid "Fire Sensor"
-msgstr ""
+msgstr "தீ சென்சார்"
 
 #: blueman/DeviceClass.py:260
 msgid "Wind Sensor"
-msgstr ""
+msgstr "காற்று சென்சார்"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "அருகாமையில் சென்சார்"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "மல்டி சென்சார்"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "பறந்த ஏற்றப்பட்ட சென்சார்"
 
 #: blueman/DeviceClass.py:264
 msgid "Ceiling Mounted Sensor"
-msgstr ""
+msgstr "உச்சவரம்பு ஏற்றப்பட்ட சென்சார்"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "சுவர் ஏற்றப்பட்ட சென்சார்"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "மல்டிசென்சர்"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "ஆற்றல் மீட்டர்"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "சுடர் கண்டறிதல்"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "வாகன டயர் பிரசர் சென்சார்"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
-msgstr ""
+msgstr "பொதுவான ஒளி சாதனங்கள்"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "சுவர் ஒளி"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "உச்சவரம்பு ஒளி"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "தரையில் ஒளி"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "அமைச்சரவை ஒளி"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "மேசை ஒளி"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "டிராஃபர் லைட்"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "பதக்க ஒளி"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "நிலத்தடி ஒளி"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "வெள்ள ஒளி"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "நீருக்கடியில் ஒளி"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "ஒளியுடன் பொல்லார்ட்"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "பாதை ஒளி"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "தோட்ட ஒளி"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "துருவ-மேல் ஒளி"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "ச்பாட்லைட்"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "நேரியல் ஒளி"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "தெரு ஒளி"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "அலமாரிகள் ஒளி"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "விரிகுடா ஒளி"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "அவசரநிலை வெளியேறும் ஒளி"
 
 #: blueman/DeviceClass.py:291
 msgid "Light Controller"
-msgstr ""
+msgstr "ஒளி கட்டுப்படுத்தி"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "ஒளி இயக்கி"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "பூண்டு"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "குறைந்த விரிகுடா ஒளி"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "உயர் விரிகுடா ஒளி"
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
 msgid "Generic Fan"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான விசிறி"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "உச்சவரம்பு விசிறி"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "அச்சு விசிறி"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "வெளியேற்ற விசிறி"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "பீட விசிறி"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "மேசை விசிறி"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "சுவர் விசிறி"
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
 msgid "Generic HVAC"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான HVAC"
 
 #: blueman/DeviceClass.py:304
 msgid "Thermostat"
-msgstr ""
+msgstr "வெப்பநிலைப்பி"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "ஈரப்பதமூட்டி"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Dihemidife"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "ஈட்டர்"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "கதிர்வீசி"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "கொதிகலன்"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "வெப்ப பம்ப்"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "அகச்சிவப்பு ஈட்டர்"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "கதிரியக்க குழு ஈட்டர்"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "ஃபேன் ஈட்டர்"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "காற்று திரை"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
 msgid "Generic Air Conditioning"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான ஏர் கண்டிசனிங்"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
 msgid "Generic Humidifier"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ஈரப்பதமூட்டி"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
 msgid "Generic Heating"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான வெப்பமாக்கல்"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
 msgid "Generic Access Control"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான அணுகல் கட்டுப்பாடு"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
 msgid "Access Door"
-msgstr "ஏற்றுக்கொள்"
+msgstr "அணுகல் கதவு"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "கேரேச் கதவு"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "அவசரகால வெளியேறும் கதவு"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
 msgid "Access Lock"
-msgstr "ஏற்றுக்கொள்"
+msgstr "அணுகல் பூட்டு"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "மின்தூக்கி"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "சாளரம்"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "நுழைவு வாயில்"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "கதவு பூட்டு"
 
 #: blueman/DeviceClass.py:334
 msgid "Locker"
-msgstr ""
+msgstr "லாக்கர்"
 
 #: blueman/DeviceClass.py:335
 msgid "Generic Motorized Device"
-msgstr ""
+msgstr "பொதுவான மின்னோடி பொருத்தப்பட்ட சாதனம்"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "மின்னோடி செய்யப்பட்ட வாயில்"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "வெய்யில்"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "குருட்டுகள் அல்லது நிழல்கள்"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "திரைச்சீலைகள்"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "திரை"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
 msgid "Generic Power Device"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ஆற்றல் சாதனம்"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "பவர் அவுட்லெட்"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "ஆற்றல் துண்டு"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "சொருகுப்பொருள்கள்"
+msgstr "செருகி"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "மின் வழங்கி"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "எல்.ஈ.டி டிரைவர்"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
-msgstr ""
+msgstr "ஃப்ளோரசன்ட் விளக்கு கியர்"
 
 #: blueman/DeviceClass.py:348
 msgid "HID Lamp Gear"
-msgstr ""
+msgstr "லேம்ப் கியர்"
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "குற்றச்சாட்டு வழக்கு"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "ஆற்றல் வங்கி"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
 msgid "Generic Light Source"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ஒளி மூல"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
-msgstr ""
+msgstr "ஒளிரும் ஒளி விளக்கை"
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "எல்.ஈ.டி விளக்கு"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "ஒளி விளக்கு"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "ஒளிரும் விளக்கு"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "எல்.ஈ.டி வரிசை"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "பல வண்ண எல்.ஈ.டி வரிசை"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
-msgstr ""
+msgstr "குறைந்த மின்னழுத்த ஆலசன்"
 
 #: blueman/DeviceClass.py:359
 msgid "Organic light emitting diode (OLED)"
-msgstr ""
+msgstr "கரிம ஒளி உமிழும் டையோடு (OLED)"
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
 msgid "Generic Window Covering"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான சாளர உறை"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr ""
+msgstr "சாளரம் நிழல்கள்"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
-msgstr ""
+msgstr "சாளர குருட்டுகள்"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "சாளர வெய்யில்"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
-msgstr ""
+msgstr "சாளரம் திரை"
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "வெளிப்புற சட்டர்"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "வெளிப்புற திரை"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
 msgid "Generic Audio Sink"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ஆடியோ மடு"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "முழுமையான பேச்சாளர்"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "சவுண்ட்பார்"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "புத்தக அலமாரி பேச்சாளர்"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
-msgstr ""
+msgstr "ச்டாண்ட்மவுண்ட் பேச்சாளர்"
 
 #: blueman/DeviceClass.py:372
 msgid "Speakerphone"
-msgstr ""
+msgstr "ச்பீக்கர்ஃபோன்"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
 msgid "Generic Audio Source"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ஆடியோ மூல"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "அலாரம்"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "மணி"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "கொம்பு"
 
 #: blueman/DeviceClass.py:378
 msgid "Broadcasting Device"
-msgstr ""
+msgstr "ஒளிபரப்பு சாதனம்"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "சேவை:"
+msgstr "பணி மேசை"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "கியோச்க்"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "ஒளிபரப்பு அறை"
 
 #: blueman/DeviceClass.py:382
 msgid "Auditorium"
-msgstr ""
+msgstr "ஆடிட்டோரியம்"
 
 #: blueman/DeviceClass.py:383
-#, fuzzy
 msgid "Generic Motorized Vehicle"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான மின்னோடி செய்யப்பட்ட வண்டி"
 
 #: blueman/DeviceClass.py:384
 msgid "Car"
-msgstr ""
+msgstr "கார்"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "பெரிய பொருட்கள் வண்டி"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "2 சக்கர வண்டி"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "மின்னோடி பைக்"
 
 #: blueman/DeviceClass.py:388
 msgid "Scooter"
-msgstr ""
+msgstr "ச்கூட்டர்"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "மொபெட்"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "3 சக்கர வண்டி"
 
 #: blueman/DeviceClass.py:391
 msgid "Light Vehicle"
-msgstr ""
+msgstr "ஒளி வண்டி"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "குவாட் பைக்"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "மினி பச்"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "பச்"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "தள்ளுவண்டி"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "விவசாய வண்டி"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "கேம்பர் / கேரவன்"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "பொழுதுபோக்கு வண்டி / மின்னோடி வீடு"
 
 #: blueman/DeviceClass.py:399
-#, fuzzy
 msgid "Generic Domestic Appliance"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான உள்நாட்டு சாதனம்"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "குளிர்சாதன பெட்டி"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "உறைவிப்பான்"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "போறணை"
 
 #: blueman/DeviceClass.py:403
 msgid "Microwave"
-msgstr ""
+msgstr "நுண்ணலை"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "டோச்டர்"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "சலவை இயந்திரம்"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "உலர்த்தி"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "காபி தயாரிப்பாளர்"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "உடைகள் இரும்பு"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "கர்லிங் இரும்பு"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "ஏர் ட்ரையர்"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "வெற்றிட கிளீனர்"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "ரோபோ வெற்றிட கிளீனர்"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "அரிசி குக்கர்"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "துணி நீராவி"
 
 #: blueman/DeviceClass.py:415
 msgid "Generic Wearable Audio Device"
-msgstr ""
+msgstr "பொதுவான அணியக்கூடிய ஆடியோ சாதனம்"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "காதணி"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "கழுத்து இசைக்குழு"
 
 #: blueman/DeviceClass.py:420
-#, fuzzy
 msgid "Generic Aircraft"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான வானூர்தி"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "ஒளி வானூர்தி"
 
 #: blueman/DeviceClass.py:422
 msgid "Microlight"
-msgstr ""
+msgstr "மைக்ரோலைட்"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "பாராக்லிடர்"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "பெரிய பயணிகள் வானூர்தி"
 
 #: blueman/DeviceClass.py:425
 msgid "Generic AV Equipment"
-msgstr ""
+msgstr "பொதுவான ஏவி கருவி"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "மிகைப்பி"
 
 #: blueman/DeviceClass.py:427
 msgid "Receiver"
-msgstr ""
+msgstr "பெறுவி"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "வானொலி"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "இசைப்பி"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "டர்ன்டபிள்"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "சிடி பிளேயர்"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "டிவிடி பிளேயர்"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "புளூரே பிளேயர்"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "ஆப்டிகல் டிச்க் பிளேயர்"
 
 #: blueman/DeviceClass.py:435
 msgid "Set-Top Box"
-msgstr ""
+msgstr "செட்-டாப் பெட்டி"
 
 #: blueman/DeviceClass.py:436
-#, fuzzy
 msgid "Generic Display Equipment"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான காட்சி உபகரணங்கள்"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "தொலைக்காட்சி"
 
 #: blueman/DeviceClass.py:438
 msgid "Monitor"
-msgstr ""
+msgstr "கண்காணிக்கவும்"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "ப்ரொசெக்டர்"
 
 #: blueman/DeviceClass.py:440
-#, fuzzy
 msgid "Generic Hearing aid"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான செவிப்புலன் உதவி"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "உள்காது கேட்கும் உதவி"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "பின்காது கேட்கும் உதவி"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "கோக்லியர் உள்வைப்பு"
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
 msgid "Generic Gaming"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான கேமிங்"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
-msgstr ""
+msgstr "முகப்பு வீடியோ கேம் கன்சோல்"
 
 #: blueman/DeviceClass.py:446
 msgid "Portable handheld console"
-msgstr ""
+msgstr "சிறிய கையடக்க கன்சோல்"
 
 #: blueman/DeviceClass.py:447
-#, fuzzy
 msgid "Generic Signage"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான சிக்னேச்"
 
 #: blueman/DeviceClass.py:448
 msgid "Digital Signage"
-msgstr ""
+msgstr "டிசிட்டல் சிக்னேச்"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "மின்னணு சிட்டை"
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
 msgid "Generic Pulse Oximeter"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான துடிப்பு ஆக்சிமீட்டர்"
 
 #: blueman/DeviceClass.py:451
 msgid "Fingertip Pulse Oximeter"
-msgstr ""
+msgstr "விரல்முனை துடிப்பு ஆக்சிமீட்டர்"
 
 #: blueman/DeviceClass.py:452
 msgid "Wrist Worn Pulse Oximeter"
-msgstr ""
+msgstr "மணிக்கட்டு அணிந்த துடிப்பு ஆக்சிமீட்டர்"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
 msgid "Generic Weight Scale"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான எடை அளவு"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "பொதுவான தனிப்பட்ட இயக்கம் சாதனம்"
 
 #: blueman/DeviceClass.py:455
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "இயங்கும் சக்கர நாற்காலி"
 
 #: blueman/DeviceClass.py:456
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "மொபிலிட்டி ச்கூட்டர்"
 
 #: blueman/DeviceClass.py:457
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "பொதுவான தொடர்ச்சியான குளுக்கோச் மானிட்டர்"
 
 #: blueman/DeviceClass.py:458
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "பொதுவான இன்சுலின் பம்ப்"
 
 #: blueman/DeviceClass.py:459
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "இன்சுலின் பம்ப், நீடித்த பம்ப்"
 
 #: blueman/DeviceClass.py:460
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "இன்சுலின் பம்ப், ஒட்டு பம்ப்"
 
 #: blueman/DeviceClass.py:461
 msgid "Insulin Pen"
-msgstr ""
+msgstr "இன்சுலின் பேனா"
 
 #: blueman/DeviceClass.py:462
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "பொதுவான மருந்து வழங்கல்"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
 msgid "Generic Spirometer"
-msgstr "இணைக்கவும்"
+msgstr "பொதுவான ச்பைரோமீட்டர்"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "கையடக்க ச்பைரோமீட்டர்"
 
 #: blueman/DeviceClass.py:465
 msgid "Generic Outdoor Sports Activity"
-msgstr ""
+msgstr "பொதுவான வெளிப்புற விளையாட்டு செயல்பாடு"
 
 #: blueman/DeviceClass.py:466
 msgid "Location Display"
-msgstr ""
+msgstr "இருப்பிட காட்சி"
 
 #: blueman/DeviceClass.py:467
 msgid "Location and Navigation Display"
-msgstr ""
+msgstr "இருப்பிடம் மற்றும் வழிசெலுத்தல் காட்சி"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
-msgstr ""
+msgstr "இருப்பிட நெற்று"
 
 #: blueman/DeviceClass.py:469
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "இடம் மற்றும் வழிசெலுத்தல் நெற்று"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "எச்.டி.பி."
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "யுடிபி"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "டி.சி.பி."
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "டி.சி.எச்-பின்"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "Tcs-at"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "பெறுநர்"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "ஐபி"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "Ftp"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "Http"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "பிஎன்இபி"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPNP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "மறைக்கவும்"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "ஆர்ட்கோபி கட்டுப்பாட்டு சேனல்"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "ஆர்ட்கோபி தரவு சேனல்"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "ஆர்ட்கோபி அறிவிப்பு"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "Avdtp"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "Cmtp"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "Udi_c-blane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "மல்டி-சேனல் தழுவல் நெறிமுறை (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "Servicediscoveryserverserviceclassid"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "Bulowsegroupdescriptorserviceclassid"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "பொது உலாவு குழு"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
-msgstr ""
+msgstr "சீரியல் துறைமுகம்"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "பிபிபியைப் பயன்படுத்தி லேன் அணுகல்"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
-msgstr ""
+msgstr "டயலப் நெட்வொர்க்கிங் (டன்)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "ஐஆர்எம்சி ஒத்திசைவு"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "OBEX பொருள் உந்துதல்"
 
 #: blueman/Sdp.py:121
-#, fuzzy
 msgid "OBEX File Transfer"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "OBEX கோப்பு பரிமாற்றம்"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "ஐஆர்எம்சி ஒத்திசைவு கட்டளை"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "கம்பியில்லா தொலைபேசி"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
-msgstr ""
+msgstr "ஆடியோ மூல"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr ""
+msgstr "ஆடியோ மடு"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "தொலை கட்டுப்பாட்டு இலக்கு"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "மேம்பட்ட ஆடியோ"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "தொலை கட்டுப்பாடு"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "வீடியோ கான்பரன்சிங்"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "இண்டர்காம்"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "தொலைநகல்"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "எட்செட் ஆடியோ நுழைவாயில்"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "வாப்"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "WAP வாங்கி"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "ஆண்டவரே"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
-msgstr ""
+msgstr "பிணைய அணுகல் புள்ளி"
 
 #: blueman/Sdp.py:138
 msgid "Group Network"
-msgstr ""
+msgstr "குழு பிணையம்"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "டைரக்ட் பிரிண்டிங் (பிபிபி)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "குறிப்பு பிரின்டிங் (பிபிபி)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "இமேசிங் (பிஐபி)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "இமேசிங் ரெச்பாண்டர் (பிஐபி)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "இமேசிங்அடோமடிக்ஆர்கிவ் (பிஐபி)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "இமேசிங் ரெஃபெரேன் ஆப்செக்ட்ச் (பிஐபி)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "ஏண்ட்ச்ஃப்ரீ ஆடியோ நுழைவாயில்"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "நேரடிஅச்சிடுதல்குறிப்புபொருள்கள்சேவை (பிபீபீ)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "பிரதிபலித்த (பிபிபி)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "அடிப்படை அச்சிடுதல் (பிபிபி)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "அச்சிடும் நிலை (பிபிபி)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "மனித இடைமுக சாதன பணி (மறை)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "ஆர்ட்கோபிகாபிளெர் பிளேசெமென்ட் (எச்.சி.ஆர்)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "HCR_PRINT (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "HCR_SCAN (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "பொதுவான ஐ.எச்.டி.என் அணுகல் (சிஐபி)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "காணொளிசந்திப்புசீய (விசிபி)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "ஆடியோ/வீடியோ"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "சிம் அணுகல் (எச்ஏபி)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "தொலைபேசி புத்தக அணுகல் (பிபிஏபி) - பிசிஇ"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "தொலைபேசி புத்தக அணுகல் (பிபிஏபி) - பிஎச்இ"
 
 #: blueman/Sdp.py:163
 msgid "Phonebook Access (PBAP)"
-msgstr ""
+msgstr "தொலைபேசி புத்தக அணுகல் (பிபிஏபி)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "செய்தி அணுகல் சேவையகம்"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "செய்தி அறிவிப்பு சேவையகம்"
 
 #: blueman/Sdp.py:167
 msgid "Message Access Profile (MAP)"
-msgstr ""
+msgstr "செய்தி அணுகல் சுயவிவரம் (வரைபடம்)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "சி.என்.எச்.எச்"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "GNSS சேவையகம்"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "3D காட்சி"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "3 டி கண்ணாடிகள்"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "3D ஒத்திசைவு (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "பல சுயவிவர விவரக்குறிப்பு (எம்.பி.எச்) சுயவிவரம்"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "பல சுயவிவர விவரக்குறிப்பு (எம்.பி.எச்) பணி"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "காலண்டர், பணி மற்றும் குறிப்புகள் (சி.டி.என்) அணுகல் பணி"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "காலண்டர், பணி மற்றும் குறிப்புகள் (சி.டி.என்) அறிவிப்பு பணி"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "காலண்டர், பணி மற்றும் குறிப்புகள் (சி.டி.என்) சுயவிவரம்"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "பி.என்.பி செய்தி"
 
 #: blueman/Sdp.py:179
 msgid "Generic Networking"
-msgstr ""
+msgstr "பொதுவான நெட்வொர்க்கிங்"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "பொதுவான ஃபைல்ட்ரான்ச்ஃபர்"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "பொதுவான ஆடியோ"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "பொதுவான தொலைபேசி"
 
 #: blueman/Sdp.py:183
 msgid "Video Source"
-msgstr ""
+msgstr "வீடியோ சான்று"
 
 #: blueman/Sdp.py:184
 msgid "Video Sink"
-msgstr ""
+msgstr "வீடியோ மூழ்கும்"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "வீடியோ வழங்கல்"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "எச்டிபி"
 
 #: blueman/Sdp.py:187
 msgid "HDP Source"
-msgstr ""
+msgstr "எச்டிபி மூல"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "எச்டிபி மடு"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "பொதுவான அணுகல்"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "பொதுவான பண்புக்கூறு"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "உடனடி முன்னறிவிப்பு"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "இணைப்பு இழப்பு"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "டிஎக்ச் ஆற்றல்"
 
 #: blueman/Sdp.py:194
-#, fuzzy
 msgid "Current Time Service"
-msgstr "சாதனத்திற்கு மறுபெயரிடு"
+msgstr "தற்போதைய நேர பணி"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "குறிப்பு நேர புதுப்பிப்பு பணி"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "அடுத்த டிஎச்டி மாற்ற பணி"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "மாச்சர்க்கரை"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "சுகாதார வெப்பமானி"
 
 #: blueman/Sdp.py:199
 msgid "Device Information"
-msgstr ""
+msgstr "சாதன செய்தி"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "இதய துடிப்பு"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "தொலைபேசி முன்னறிவிப்பு நிலை பணி"
 
 #: blueman/Sdp.py:202
-#, fuzzy
 msgid "Battery Service"
-msgstr "சேவை:"
+msgstr "பேட்டரி பணி"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "இரத்த அழுத்தம்"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "முன்னறிவிப்பு அறிவிப்பு பணி"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "மனித இடைமுக சாதனம்"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "வருடு அளவுருக்கள்"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "இயங்கும் விரைவு மற்றும் கேடென்ச்"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "ஆட்டோமேசன் io"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "சைக்கிள் ஓட்டுதல் விரைவு மற்றும் கேடென்ச்"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "சைக்கிள் ஓட்டுதல் ஆற்றல்"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "இடம் மற்றும் வழிசெலுத்தல்"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "சுற்றுச்சூழல் உணர்திறன்"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "உடல் அமைப்பு"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "பயனர் தரவு"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "எடை அளவு"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "பத்திர மேலாண்மை"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "தொடர்ச்சியான குளுக்கோச் கண்காணிப்பு"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "இணைய நெறிமுறை உதவி"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "உட்புற பொருத்துதல்"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "துடிப்பு ஆக்சிமீட்டர்"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "HTTP பதிலாள்"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "போக்குவரத்து கண்டுபிடிப்பு"
 
 #: blueman/Sdp.py:223
 msgid "Object Transfer"
-msgstr ""
+msgstr "பொருள் பரிமாற்றம்"
 
 #: blueman/Sdp.py:224
 msgid "AppleAgent"
-msgstr ""
+msgstr "ஆப்பிள்சென்ட்"
 
 #: blueman/Sdp.py:225
-#, fuzzy
 msgid "Primary Service"
-msgstr "சேவை:"
+msgstr "முதன்மை பணி"
 
 #: blueman/Sdp.py:226
-#, fuzzy
 msgid "Secondary Service"
-msgstr "அருகில் உள்ள சாதனத்தை தேடுக "
+msgstr "இரண்டாம் நிலை பணி"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "அடங்கும்"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "சிறப்பியல்பு அறிவிப்பு"
 
 #: blueman/Sdp.py:229
-#, fuzzy
 msgid "Device Name"
-msgstr "சாதன மேலாளர்"
+msgstr "சாதன பெயர்"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "தோற்றம்"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "புற தனியுரிமை கொடி"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
-msgstr ""
+msgstr "மீண்டும் இணைத்தல் முகவரி"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "புற விருப்பமான இணைப்பு அளவுருக்கள்"
 
 #: blueman/Sdp.py:234
-#, fuzzy
 msgid "Service Changed"
-msgstr "சாதன மேலாளர்"
+msgstr "பணி மாற்றப்பட்டது"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "கணினி அடையாளம்"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "மாதிரி எண் சரம்"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "வரிசை எண் சரம்"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "ஃபார்ம்வேர் திருத்த சரம்"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "வன்பொருள் திருத்த சரம்"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "மென்பொருள் திருத்த சரம்"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "உற்பத்தியாளர் பெயர் சரம்"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "பி.என்.பி அடையாளம்"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "சிறப்பியல்பு நீட்டிக்கப்பட்ட பண்புகள்"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "சிறப்பியல்பு பயனர் விளக்கம்"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "கிளையன்ட் சிறப்பியல்பு உள்ளமைவு"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "சேவையக சிறப்பியல்பு உள்ளமைவு"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "சிறப்பியல்பு விளக்கக்காட்சி வடிவம்"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "சிறப்பியல்பு மொத்த வடிவம்"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "செல்லுபடியாகும் வரம்பு"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "வெளிப்புற அறிக்கை குறிப்பு"
 
 #: blueman/Sdp.py:251
 msgid "Report Reference"
-msgstr ""
+msgstr "அறிக்கை குறிப்பு"
 
 #: blueman/Sdp.py:378
 msgid "Audio and input profiles"
-msgstr ""
+msgstr "ஆடியோ மற்றும் உள்ளீட்டு சுயவிவரங்கள்"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
-msgstr ""
+msgstr "தனியுரிம"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "yes"
@@ -3044,87 +2987,94 @@ msgstr "இல்லை"
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
 msgstr ""
+"<big> வரிசை(களை) தேர்ந்தெடுத்து நகலெடுக்க <i> கட்டுப்பாடு + சி </i> ஐப் பயன்படுத்தவும் "
+"</big>"
 
 #: blueman/plugins/manager/Info.py:125
 msgid "_Info"
-msgstr ""
+msgstr "_Info"
 
 #: blueman/plugins/manager/Info.py:126
 msgid "Show device information"
-msgstr ""
+msgstr "சாதனத் தகவலைக் காட்டு"
 
 #: blueman/plugins/manager/Notes.py:59
 msgid "Send _note"
-msgstr ""
+msgstr "_ குறிப்பு அனுப்பவும்"
 
 #: blueman/plugins/manager/Notes.py:60
 msgid "Send a text note"
-msgstr ""
+msgstr "உரை குறிப்பை அனுப்பவும்"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:86
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr ""
+msgstr "சுயவிவரத்தை %s ஆக மாற்றுவதில் தோல்வி"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:132
 msgid "Audio Profile"
-msgstr ""
+msgstr "ஆடியோ சுயவிவரம்"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:133
 msgid "Select audio profile for PulseAudio"
-msgstr ""
+msgstr "பல்சியுடியோவுக்கு ஆடியோ சுயவிவரத்தைத் தேர்ந்தெடுக்கவும்"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
 msgstr "குறிப்பிடாத"
 
-#: blueman/plugins/applet/AutoConnect.py:20
+#: blueman/plugins/applet/AutoConnect.py:22
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"தொடக்கத்திலும் ஒவ்வொரு 60 விநாடிகளிலும் உள்ளமைக்கக்கூடிய சேவைகளுக்கு தானாக இணைக்க "
+"முயற்சிக்கிறது."
 
-#: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/AutoConnect.py:68
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr ""
+msgstr "%(service)s %(device)s உடன் தானாக இணைக்கப்பட்டுள்ளது"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:15
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"சாதனங்கள் இணைக்கப்படும்போது அல்லது துண்டிக்கப்படும்போது டெச்க்டாப் அறிவிப்புகளைக் "
+"காட்டுகிறது."
 
-#: blueman/plugins/applet/ConnectionNotifier.py:36
-#, fuzzy
+#: blueman/plugins/applet/ConnectionNotifier.py:37
 msgid "Disconnected"
-msgstr "துண்டித்து கொண்டுஇருக்கிறது "
+msgstr "துண்டிக்கப்பட்டது"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
 #: blueman/plugins/applet/NetUsage.py:272
 msgid "Connected:"
-msgstr ""
+msgstr "இணைக்கப்பட்டுள்ளது:"
 
 #: blueman/plugins/applet/NetUsage.py:169
 #: blueman/plugins/applet/NetUsage.py:282
 msgid "Not Connected"
-msgstr ""
+msgstr "இணைக்கப்படவில்லை"
 
 #: blueman/plugins/applet/NetUsage.py:175
 msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
+"பயன்பாட்டு புள்ளிவிவரங்கள் இதுவரை கிடைக்கவில்லை. முதலில் ஒரு இணைப்பை நிறுவ "
+"முயற்சிக்கவும், பின்னர் இந்த பக்கத்தை சரிபார்க்கவும்."
 
 #: blueman/plugins/applet/NetUsage.py:203
 msgid "day"
 msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "நாள்"
+msgstr[1] "நாட்கள்"
 
 #: blueman/plugins/applet/NetUsage.py:204
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "மணி"
+msgstr[1] "மணிகள்"
 
 #: blueman/plugins/applet/NetUsage.py:205
 msgid "minute"
@@ -3135,170 +3085,190 @@ msgstr[1] "நிமிடங்கள்"
 #: blueman/plugins/applet/NetUsage.py:207
 #, python-format
 msgid "%d %s %d %s and %d %s"
-msgstr ""
+msgstr "%d %s %d %s மற்றும் %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:243
 msgid "Are you sure you want to reset the counter?"
-msgstr ""
+msgstr "நீங்கள் நிச்சயமாக கவுண்டரை மீட்டமைக்க விரும்புகிறீர்களா?"
 
 #: blueman/plugins/applet/NetUsage.py:289
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
 msgstr ""
+"உங்கள் (மொபைல் பிராட்பேண்ட்) பிணைய போக்குவரத்து பயன்பாட்டை கண்காணிக்க உங்களை "
+"அனுமதிக்கிறது. வரையறுக்கப்பட்ட தரவு அணுகல் திட்டங்களுக்கு பயனுள்ளதாக இருக்கும். இந்த "
+"சொருகி ஒவ்வொரு சாதனத்தையும் தனித்தனியாக கண்காணிக்கிறது."
 
 #: blueman/plugins/applet/NetUsage.py:309
 msgid "Network _Usage"
-msgstr ""
+msgstr "பிணையம் _ பயன்பாடு"
 
 #: blueman/plugins/applet/NetUsage.py:310
 msgid "Shows network traffic usage"
-msgstr ""
+msgstr "பிணைய போக்குவரத்து பயன்பாட்டைக் காட்டுகிறது"
 
 #: blueman/plugins/applet/StatusIcon.py:38
-#: blueman/plugins/applet/ShowConnected.py:79
-#: blueman/plugins/applet/PowerManager.py:171
-msgid "Bluetooth Enabled"
-msgstr ""
+msgid "Force symbolic status icons"
+msgstr "குறியீட்டு நிலை சின்னங்களை கட்டாயப்படுத்துங்கள்"
 
-#: blueman/plugins/applet/Networking.py:18
+#: blueman/plugins/applet/StatusIcon.py:39
+msgid ""
+"When enabled this will force the use of a symbolic version of the blueman "
+"statusicon"
+msgstr "இயக்கப்பட்டால் இது புளூமேன் அந்தச்தின் குறியீட்டு பதிப்பைப் பயன்படுத்த கட்டாயப்படுத்தும்"
+
+#: blueman/plugins/applet/StatusIcon.py:51
+#: blueman/plugins/applet/ShowConnected.py:80
+#: blueman/plugins/applet/PowerManager.py:174
+msgid "Bluetooth Enabled"
+msgstr "ஊடலை இயக்கப்பட்டது"
+
+#: blueman/plugins/applet/Networking.py:19
 msgid "Manages local network services, like NAP bridges"
-msgstr ""
+msgstr "NAP பாலங்கள் போன்ற உள்ளக பிணைய சேவைகளை நிர்வகிக்கிறது"
 
 #: blueman/plugins/applet/NMDUNSupport.py:18
 msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
 msgstr ""
+"மோடம்மேனேசர் மற்றும் பிணையம் மேனேசருடன் டயல் அப் நெட்வொர்க்கிங் (டன்) க்கு ஆதரவை வழங்குகிறது"
 
-#: blueman/plugins/applet/RecentConns.py:42
+#: blueman/plugins/applet/RecentConns.py:44
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
+"விரைவான அணுகலுக்காக கடைசியாக பயன்படுத்தப்பட்ட இணைப்புகளைக் கொண்ட பட்டியல் உருப்படியை "
+"வழங்குகிறது"
 
 #. the maximum number of items RecentConns menu will display
-#: blueman/plugins/applet/RecentConns.py:53
+#: blueman/plugins/applet/RecentConns.py:55
 msgid "Maximum items"
-msgstr ""
+msgstr "அதிகபட்ச உருப்படிகள்"
 
-#: blueman/plugins/applet/RecentConns.py:54
+#: blueman/plugins/applet/RecentConns.py:56
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
+msgstr "அண்மைக் கால இணைப்புகள் பட்டியல் அதிகபட்ச உருப்படிகளின் எண்ணிக்கை காண்பிக்கப்படும்."
 
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/plugins/applet/RecentConns.py:157
 #, python-format
 msgid "Connected to %s"
-msgstr ""
+msgstr "%s உடன் இணைக்கப்பட்டுள்ளது"
 
-#: blueman/plugins/applet/RecentConns.py:161
+#: blueman/plugins/applet/RecentConns.py:163
 msgid "Failed to connect"
-msgstr ""
+msgstr "இணைக்கத் தவறிவிட்டது"
 
-#: blueman/plugins/applet/RecentConns.py:171
+#: blueman/plugins/applet/RecentConns.py:174
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr ""
+msgstr "%(service)s மீது %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:175
+#: blueman/plugins/applet/RecentConns.py:178
 msgid "Adapter for this connection is not available"
-msgstr ""
+msgstr "இந்த இணைப்பிற்கான அடாப்டர் கிடைக்கவில்லை"
 
-#: blueman/plugins/applet/RecentConns.py:188
-msgid "Recent _Connections"
-msgstr ""
+#: blueman/plugins/applet/RecentConns.py:191
+msgid "Reconnect to…"
+msgstr "மீண்டும் இணைக்கவும்…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
+"பிணையம் மேனேசர் 0.8 இல் அறிமுகப்படுத்தப்பட்ட தனிப்பட்ட பகுதி நெட்வொர்க்கிங் (பான்) க்கு "
+"ஆதரவை வழங்குகிறது"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
-msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:126
-msgid "Incoming file over Bluetooth"
-msgstr ""
+msgstr "பிற புளூமேன் கூறுகளுக்கு DBUS பநிஇ ஐ வழங்குகிறது"
 
 #: blueman/plugins/applet/TransferService.py:127
+msgid "Incoming file over Bluetooth"
+msgstr "ஊடலை மீது உள்வரும் கோப்பு"
+
+#: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr ""
+msgstr "உள்வரும் கோப்பு %(0)s %(1)s இலிருந்து"
 
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
 msgstr "நிராகரி"
 
-#: blueman/plugins/applet/TransferService.py:136
-msgid "Receiving file"
-msgstr ""
-
 #: blueman/plugins/applet/TransferService.py:137
+msgid "Receiving file"
+msgstr "பெறும் கோப்பு"
+
+#: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr ""
+msgstr "%(1)s இலிருந்து கோப்பு %(0)s பெறுதல்"
 
-#: blueman/plugins/applet/TransferService.py:156
+#: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
-msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:179
-msgid "Configured directory for incoming files does not exist"
-msgstr ""
+msgstr "ஓபெக்ச் கோப்பு பரிமாற்ற திறன்களை வழங்குகிறது"
 
 #: blueman/plugins/applet/TransferService.py:180
+msgid "Configured directory for incoming files does not exist"
+msgstr "உள்வரும் கோப்புகளுக்கான கட்டமைக்கப்பட்ட அடைவு இல்லை"
+
+#: blueman/plugins/applet/TransferService.py:181
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:302
-msgid "File received"
-msgstr ""
+"தயவுசெய்து \"<b>%s </b>\" இருப்பதை உறுதிப்படுத்தவும் அல்லது ப்ளூமேன்-சேவைகளுடன் "
+"கட்டமைக்கவும். அதுவரை இயல்புநிலை \"%s\" பயன்படுத்தப்படும்"
 
 #: blueman/plugins/applet/TransferService.py:303
+msgid "File received"
+msgstr "கோப்பு பெறப்பட்டது"
+
+#: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr ""
+msgstr "%(1)s வெற்றிகரமாகப் பெறப்பட்ட கோப்பு %(0)s"
 
-#: blueman/plugins/applet/TransferService.py:307
+#: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:311
-msgid "Transfer failed"
-msgstr "இடமாற்றம்  தோல்வியுற்றது"
+msgstr "திற"
 
 #: blueman/plugins/applet/TransferService.py:312
+msgid "Transfer failed"
+msgstr "இடமாற்றம் தோல்வியுற்றது"
+
+#: blueman/plugins/applet/TransferService.py:313
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr ""
-
-#: blueman/plugins/applet/TransferService.py:332
-#: blueman/plugins/applet/TransferService.py:341
-msgid "Files received"
-msgstr ""
+msgstr "கோப்பு %(0)s பரிமாற்றம் தோல்வியடைந்தது"
 
 #: blueman/plugins/applet/TransferService.py:333
+#: blueman/plugins/applet/TransferService.py:342
+msgid "Files received"
+msgstr "பெறப்பட்ட கோப்புகள்"
+
+#: blueman/plugins/applet/TransferService.py:334
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "பெறப்பட்ட %(files)d கோப்பு பின்னணியில்"
+msgstr[1] "பெறப்பட்ட %(files)d கோப்புகள் பின்னணியில்"
 
-#: blueman/plugins/applet/TransferService.py:338
-#: blueman/plugins/applet/TransferService.py:346
+#: blueman/plugins/applet/TransferService.py:339
+#: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "திறந்த இடம்"
 
-#: blueman/plugins/applet/TransferService.py:342
+#: blueman/plugins/applet/TransferService.py:343
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "பெறப்பட்ட %(files)d பின்னணியில் மேலும் கோப்பு"
+msgstr[1] "பெறப்பட்ட %(files)d பின்னணியில் மேலும் கோப்புகள்"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3306,123 +3276,142 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"ஊடலை பவர் நிலைக்கு பொருந்த ஊடலை கில்ச்விட்ச் நிலையை மாற்றுகிறது. புளூடூத்தை அதன் "
+"நிலையைக் காட்டும் ஒரு ஐகானிலிருந்து மீண்டும் இயக்க அனுமதிக்கிறது; இது அமைப்பால் அல்லது "
+"உடல் ரீதியாக அவிழ்க்கப்படவில்லை."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr ""
+msgstr "நிலை படவுரு பட்டியலில் நிலையான பட்டியல் உருப்படிகளைச் சேர்க்கிறது"
 
-#: blueman/plugins/applet/StandardItems.py:32
+#: blueman/plugins/applet/StandardItems.py:34
+msgid "Toggle the manager on clicking the system tray icon"
+msgstr "கணினி தட்டு ஐகானைக் சொடுக்கு செய்தால் மேலாளரை நிலைநிறுத்துங்கள்"
+
+#: blueman/plugins/applet/StandardItems.py:35
+msgid ""
+"Clicking the system tray icon will toggle the manager instead of focusing on "
+"it."
+msgstr ""
+"கணினி தட்டு ஐகானைக் சொடுக்கு செய்வதன் மூலம் மேலாளரை மையமாகக் கொண்டு அதை மாற்றும்."
+
+#: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
-msgstr ""
+msgstr "சாதனத்திற்கு _ கோப்புகளை அனுப்பவும்"
 
-#: blueman/plugins/applet/StandardItems.py:37
+#: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
-msgstr ""
+msgstr "_DEVICES"
 
-#: blueman/plugins/applet/StandardItems.py:41
+#: blueman/plugins/applet/StandardItems.py:55
 msgid "Adap_ters"
-msgstr ""
+msgstr "அடாப்டர்ச்"
 
-#: blueman/plugins/applet/StandardItems.py:88
+#: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
-msgstr ""
+msgstr "applet"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
-msgstr ""
+msgstr "புளூச் டீமனுக்கான பாச்கி, அங்கீகார சேவைகளை வழங்குகிறது"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr ""
+msgstr "ஆப்லெட்டை விட்டு வெளியேற வெளியேறும் பட்டியல் உருப்படியைச் சேர்க்கிறது"
 
-#: blueman/plugins/applet/DhcpClient.py:14
+#: blueman/plugins/applet/DhcpClient.py:15
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr ""
-
-#: blueman/plugins/applet/DhcpClient.py:47
-#: blueman/plugins/applet/DhcpClient.py:55
-#: blueman/plugins/applet/DhcpClient.py:60
-msgid "Bluetooth Network"
-msgstr ""
+msgstr "ஊடலை பான் இணைப்புகளுக்கு அடிப்படை டி.எச்.சி.பி கிளையண்டை வழங்குகிறது."
 
 #: blueman/plugins/applet/DhcpClient.py:48
+#: blueman/plugins/applet/DhcpClient.py:56
+#: blueman/plugins/applet/DhcpClient.py:61
+msgid "Bluetooth Network"
+msgstr "ஊடலை பிணையம்"
+
+#: blueman/plugins/applet/DhcpClient.py:49
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr ""
+msgstr "இடைமுகம் %(0)s ஐபி முகவரி %(1)s"
 
-#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:56
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr ""
+msgstr "%s இல் ஐபி முகவரியைப் பெறுவதில் தோல்வி"
 
-#: blueman/plugins/applet/DhcpClient.py:60
+#: blueman/plugins/applet/DhcpClient.py:61
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
+"%s மீது ஐபி முகவரியைப் பெற முயற்சிக்கிறது \n"
+"தயவுசெய்து காத்திருங்கள்…"
 
-#: blueman/plugins/applet/ShowConnected.py:21
+#: blueman/plugins/applet/ShowConnected.py:22
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
+"ஊடலை செயலில் இருக்கும்போது நிலை ஐகானில் ஒரு அறிகுறியைச் சேர்க்கிறது மற்றும் "
+"உதவிக்குறிப்பில் உள்ள இணைப்புகளைக் காட்டுகிறது."
 
-#: blueman/plugins/applet/ShowConnected.py:72
+#: blueman/plugins/applet/ShowConnected.py:73
 msgid "Bluetooth Active"
-msgstr ""
+msgstr "ஊடலை செயலில்"
 
-#: blueman/plugins/applet/ShowConnected.py:81
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/ShowConnected.py:82
+#: blueman/plugins/applet/PowerManager.py:177
 msgid "Bluetooth Disabled"
-msgstr ""
+msgstr "ஊடலை முடக்கப்பட்டது"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "துண்டிக்கப்படும் பட்டியல் உருப்படிகளைச் சேர்க்கிறது"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "துண்டித்து கொண்டுஇருக்கிறது "
+msgstr "%s துண்டிக்கவும்"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
+"இயல்புநிலை அடாப்டர் இயல்புநிலையாக மறைக்கப்படும் போது தற்காலிகமாகக் காணக்கூடிய பட்டியல் "
+"உருப்படியை வழங்குகிறது"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr ""
+msgstr "கண்டறியக்கூடிய நேரம் முடிந்தது"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
-msgstr ""
+msgstr "கண்டறியக்கூடிய பயன்முறையில் விநாடிகளில் நேரம் நீடிக்கும்"
 
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:126
 msgid "_Make Discoverable"
-msgstr ""
+msgstr "_ கண்டறியக்கூடியதாக்குங்கள்"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr ""
+msgstr "இயல்புநிலை அடாப்டரை தற்காலிகமாகக் காணச் செய்யுங்கள்"
 
 #: blueman/plugins/applet/DiscvManager.py:61
 #, python-format
 msgid "Discoverable… %ss"
-msgstr ""
+msgstr "கண்டறியக்கூடிய… %s.எச்"
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
 msgid "Discoverable…"
-msgstr "துண்டித்து கொண்டுஇருக்கிறது "
+msgstr "கண்டறியக்கூடியது…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr ""
+msgstr "ஆப்லெட்டுக்கு ஒரு பட்டியல் மற்றும் பிற செருகுநிரல்களுக்கு ஒரு பநிஇ வழங்குகிறது"
 
 #: blueman/plugins/applet/PPPSupport.py:73
 #, python-format
@@ -3430,21 +3419,24 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
+"<b> டன் </b> சேவையுடன் வெற்றிகரமாக இணைக்கப்பட்டுள்ளது <b>%(0)s.</b>\n"
+" பிணையம் இப்போது <b>%(1)s </b> மூலம் கிடைக்கிறது"
 
 #: blueman/plugins/applet/PPPSupport.py:82
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr ""
+msgstr "டன் சுயவிவரம் வழியாக இணையத்துடன் இணைப்பதற்கான அடிப்படை ஆதரவை வழங்குகிறது."
 
-#: blueman/plugins/applet/SerialManager.py:22
+#: blueman/plugins/applet/SerialManager.py:23
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
-
-#: blueman/plugins/applet/SerialManager.py:31
-msgid "Script to execute on connection"
-msgstr ""
+"நிலையான எச்பிபி சுயவிவர இணைப்பு கையாளுபவர், தனிப்பயன் செயல்களை இயக்க அனுமதிக்கிறது"
 
 #: blueman/plugins/applet/SerialManager.py:32
+msgid "Script to execute on connection"
+msgstr "இணைப்பை இயக்க ச்கிரிப்ட்"
+
+#: blueman/plugins/applet/SerialManager.py:33
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
@@ -3454,59 +3446,80 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-
-#: blueman/plugins/applet/SerialManager.py:63
-msgid "Serial port connected"
-msgstr ""
+"<span size=\"small\"> பின்வரும் வாதங்கள் அனுப்பப்படும்:\n"
+" முகவரி, பெயர், பணி பெயர், UUID16S, RFCOMM முனை\n"
+" உதாரணமாக:\n"
+" AA: BB: CC: DD: EE: FF, தொலைபேசி, டன் பணி, 0x1103, /dev /rfcomm0\n"
+" UUID16 கள் கமாவைப் பிரிக்கப்பட்ட பட்டியலாகத் திருப்பித் தரப்படுகின்றன\n"
+"\n"
+" சாதனம் துண்டிக்கப்பட்டவுடன் ச்கிரிப்ட் ஒரு HUP சமிக்ஞை அனுப்பப்படும் </span>"
 
 #: blueman/plugins/applet/SerialManager.py:64
+msgid "Serial port connected"
+msgstr "சீரியல் துறைமுகம் இணைக்கப்பட்டுள்ளது"
+
+#: blueman/plugins/applet/SerialManager.py:65
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
-
-#: blueman/plugins/applet/SerialManager.py:114
-msgid "Serial port connection script failed"
-msgstr ""
+"சாதனத்தில் சீரியல் துறைமுகம் பணி <b>%s </b> இப்போது <b>%s </b> வழியாக கிடைக்கும்"
 
 #: blueman/plugins/applet/SerialManager.py:115
+msgid "Serial port connection script failed"
+msgstr "சீரியல் துறைமுகம் இணைப்பு ச்கிரிப்ட் தோல்வியடைந்தது"
+
+#: blueman/plugins/applet/SerialManager.py:116
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
+"ச்கிரிப்ட் %s தொடங்குவதில் சிக்கல் இருந்தது \n"
+"%s"
 
-#: blueman/plugins/applet/PowerManager.py:31
+#: blueman/plugins/applet/PowerManager.py:32
 msgid "Controls Bluetooth adapter power states"
-msgstr ""
+msgstr "ஊடலை அடாப்டர் ஆற்றல் நிலைகளை கட்டுப்படுத்துகிறது"
 
-#: blueman/plugins/applet/PowerManager.py:41
-#: blueman/plugins/applet/PowerManager.py:153
-msgid "<b>Turn Bluetooth _Off</b>"
-msgstr ""
-
-#: blueman/plugins/applet/PowerManager.py:43
+#: blueman/plugins/applet/PowerManager.py:42
 #: blueman/plugins/applet/PowerManager.py:155
-msgid "Turn off all adapters"
-msgstr ""
+msgid "<b>Turn Bluetooth _Off</b>"
+msgstr "<b> புளூடூத்தை திருப்புங்கள் _ஆஃப் </b>"
 
-#: blueman/plugins/applet/PowerManager.py:144
-msgid "<b>Turn Bluetooth _On</b>"
-msgstr ""
+#: blueman/plugins/applet/PowerManager.py:44
+#: blueman/plugins/applet/PowerManager.py:157
+msgid "Turn off all adapters"
+msgstr "அனைத்து அடாப்டர்களையும் அணைக்கவும்"
 
 #: blueman/plugins/applet/PowerManager.py:146
-msgid "Turn on all adapters"
-msgstr ""
+msgid "<b>Turn Bluetooth _On</b>"
+msgstr "<b> புளூடூத்தை இயக்கவும் </b>"
 
-#: blueman/plugins/applet/GameControllerWakelock.py:26
+#: blueman/plugins/applet/PowerManager.py:148
+msgid "Turn on all adapters"
+msgstr "அனைத்து அடாப்டர்களையும் இயக்கவும்"
+
+#: blueman/plugins/applet/GameControllerWakelock.py:27
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
+"ஊடலை விளையாட்டு கட்டுப்படுத்தி இணைக்கப்படும்போது தற்காலிகமாக ச்கிரீன்சேவரை "
+"இடைநிறுத்துகிறது."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
 msgid "Provides a StatusNotifierItem to show a statusicon"
-msgstr ""
+msgstr "ஒரு நிலைப்பாட்டைக் காட்ட ஒரு statusnotifieritem ஐ வழங்குகிறது"
+
+#: blueman/plugins/applet/PulseAudioProfile.py:19
+msgid "Adds audio profile selector to the status icon menu"
+msgstr "நிலை படவுரு பட்டியலில் ஆடியோ சுயவிவரத் தேர்வாளரைச் சேர்க்கிறது"
+
+#: blueman/plugins/applet/PulseAudioProfile.py:83
+#, python-format
+msgid "Audio Profiles for %s"
+msgstr "%s க்கான ஆடியோ சுயவிவரங்கள்"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
@@ -3514,12 +3527,12 @@ msgstr "பிணையம்"
 
 #: blueman/plugins/services/Network.py:90
 msgid "Invalid IP address"
-msgstr ""
+msgstr "தவறான ஐபி முகவரி"
 
 #: blueman/plugins/services/Network.py:95
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
-msgstr ""
+msgstr "ஒரே முகவரியைக் கொண்ட %s இடைமுகத்துடன் ஐபி முகவரி மோதல்கள்"
 
 #: blueman/plugins/services/Network.py:103
 #, python-format
@@ -3528,86 +3541,87 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
+"%s இன் சப்நெட் உடன் ஐபி முகவரி ஒன்றுடன் ஒன்று, இது பின்வரும் உள்ளமைவு %s/ %s ஐக் "
+"கொண்டுள்ளது \n"
+"இது தவறான பிணைய நடத்தையை ஏற்படுத்தக்கூடும்"
 
 #: blueman/plugins/services/Network.py:228
 #: blueman/plugins/services/Network.py:237
 msgid "Not currently supported with this setup"
-msgstr ""
+msgstr "இந்த அமைப்புடன் தற்போது ஆதரிக்கப்படவில்லை"
 
 #: blueman/plugins/services/Transfer.py:14
 msgid "Transfer"
-msgstr ""
+msgstr "இடமாற்றம்"
 
 #: blueman/plugins/services/Transfer.py:26
 msgid "Applet's transfer service plugin is disabled"
-msgstr ""
+msgstr "ஆப்லெட்டின் பரிமாற்ற பணி சொருகி முடக்கப்பட்டுள்ளது"
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr ""
+msgstr "டயலப் அமைப்புகள்"
 
 #: blueman/services/meta/SerialService.py:45
 #, python-format
 msgid "Serial Port %s"
-msgstr ""
+msgstr "சீரியல் துறைமுகம் %s"
 
 #: blueman/services/meta/NetworkService.py:51
 msgid "Renew IP Address"
-msgstr ""
+msgstr "ஐபி முகவரியைப் புதுப்பிக்கவும்"
 
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
-msgstr ""
+msgstr "ஊடலை அடாப்டர் பண்புகளை அமைக்கவும்"
 
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
-msgstr ""
+msgstr "ப்ளூமேன் ஆப்லெட்"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
-msgstr ""
+msgstr "புளூமேன் ஊடலை மேலாளர்"
 
 #: data/blueman-manager.desktop.in:3
-#, fuzzy
 msgid "Bluetooth Manager"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "ஊடலை மேலாளர்"
 
 #: data/thunar-sendto-blueman.desktop.in:5
-#, fuzzy
 msgid "Bluetooth Device"
-msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
+msgstr "ஊடலை சாதனம்"
 
 #: data/configs/org.blueman.policy.in:10
 msgid "Configure Bluetooth Network"
-msgstr ""
+msgstr "ஊடலை நெட்வொர்க்கை உள்ளமைக்கவும்"
 
 #: data/configs/org.blueman.policy.in:11
 msgid "Configuring networking requires privileges"
-msgstr ""
+msgstr "நெட்வொர்க்கிங் கட்டமைக்க சலுகைகள் தேவை"
 
 #: data/configs/org.blueman.policy.in:19
 msgid "Launch DHCP client"
-msgstr ""
+msgstr "DHCP கிளையண்டைத் தொடங்கவும்"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr ""
+msgstr "DHCP கிளையண்டைத் தொடங்க சலுகைகள் தேவை"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"
-msgstr ""
+msgstr "பிபிபி டீமனைத் தொடங்கவும்"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr ""
+msgstr "பிபிபி டீமனைத் தொடங்குவதற்கு சலுகைகள் தேவை"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
-msgstr ""
+msgstr "Rfkill மாநிலத்தை அமைக்கவும்"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr ""
+msgstr "RFKILL நிலையை அமைப்பதற்கு சலுகைகள் தேவை"
 
 #, fuzzy
 #~ msgid "Turn Bluetooth _On"
@@ -3616,23 +3630,11 @@ msgstr ""
 #~ msgid "<b>Services</b>"
 #~ msgstr "<b>சேவைகள்</b>"
 
-#, fuzzy
-#~ msgid "Local Services"
-#~ msgstr "அருகில் உள்ள சாதனத்தை தேடுக "
-
 #~ msgid "Yes"
 #~ msgstr "ஆம்"
 
 #~ msgid "No"
 #~ msgstr "இல்லை"
-
-#, fuzzy
-#~ msgid "Bluetooth Devices"
-#~ msgstr "ப்ளூடூத் கோப்பு பரிமாற்றம்"
-
-#, fuzzy
-#~ msgid "Disconnecting…"
-#~ msgstr "துண்டித்து கொண்டுஇருக்கிறது "
 
 #~ msgid "Setup..."
 #~ msgstr "அமைப்பு..."
