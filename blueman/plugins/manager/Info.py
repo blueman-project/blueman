@@ -30,6 +30,9 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
     def format_uuids(uuids: Iterable[str]) -> str:
         return "\n".join([uuid + ' ' + ServiceUUID(uuid).name for uuid in uuids])
 
+    def format_advflags(flags: Iterable[bytes]) -> str:
+        return "\n".join([str(flag) for flag in flags])
+
     store = Gtk.ListStore(str, str)
     view = Gtk.TreeView(model=store, headers_visible=False)
     view_selection = view.get_selection()
@@ -86,6 +89,7 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
         ('Appearance', lambda x: f"0x{x:04x}"),
         ('Icon', None),
         ('Paired', format_boolean),
+        ('CablePairing', format_boolean),
         ('Trusted', format_boolean),
         ('Blocked', format_boolean),
         ('LegacyPairing', format_boolean),
@@ -97,7 +101,11 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
         # FIXME below 3 we need some sample data to decode and display properly
         ('ManufacturerData', str),
         ('ServiceData', str),
-        ('AdvertisingData', str)
+        ('AdvertisingData', str),
+        ('AdvertisingFlags', format_advflags),
+        ('WakeAllowed', format_boolean),
+        ('PreferredBearer', str)
+
     )
     for name, func in properties:
         try:
