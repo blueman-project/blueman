@@ -1,10 +1,12 @@
 # Changelog
 
-## 2.4.5
+## 2.4.6
 
 ### Bugs fixed
 
 * Handling for new StatusNotifierWatcher
+
+## 2.4.5
 
 ### Changes
 
