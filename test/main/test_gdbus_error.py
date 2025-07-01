@@ -1,12 +1,13 @@
-from unittest import TestCase
-
+import dbusmock
 from gi.repository import GLib, Gio
 
 from blueman.main.indicators.StatusNotifierItem import is_service_unknown
 
 
-class TestGDbusError(TestCase):
+class TestGDbusError(dbusmock.DBusTestCase):
     def test_is_service_unknown(self):
+        self.start_session_bus()
+
         error = None
 
         try:
