@@ -6,21 +6,22 @@
 # Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>, 2015-2019
 # Sergi Almacellas Abellana <sergi@koolpi.com>
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2022.
+# idotj <idotj@tutanota.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2022-10-31 21:04+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/blueman/"
-"ca/>\n"
+"PO-Revision-Date: 2025-05-14 19:47+0000\n"
+"Last-Translator: idotj <idotj@tutanota.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/blueman/2-4/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -233,17 +234,15 @@ msgstr "<b>Paràmetres del NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Xarxa personal"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Compatibilitat amb PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Accés a xarxes a través de línia telefònica (DUN)"
+msgstr "Accés a xarxes a través de línia telefònica"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -254,10 +253,8 @@ msgid "Network Access Point (NAP)"
 msgstr "NAP (punt d’accés a la xarxa)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Compatibilitat amb PAN</b>"
+msgstr "<b>Compatibilitat NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -393,7 +390,7 @@ msgstr "Adaptador"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "No s'ha pogut connectar amb blueman-manager"
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -403,6 +400,11 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Sembla que blueman-manager no s'ha pogut activar via D-Bus. Una causa "
+"possible pot ser per una configuració gràfica defectuosa a l'entorn "
+"d'activació de D-Bus que es pot resoldre amb una crida a dbus-update-"
+"activation-environment, normalment emesa des de xinitrc (respectivament la "
+"configuració de Sway o similar)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -420,11 +422,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Feu clic per desactivar."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Feu clic per activar."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -556,11 +558,6 @@ msgid "Accept"
 msgstr "Accepta"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
@@ -616,13 +613,11 @@ msgstr "Teclat"
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Combo"
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Reanomena el dispositiu"
+msgstr "Dispositiu sense nom"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
@@ -648,19 +643,16 @@ msgid "Trusted"
 msgstr "Confia"
 
 #: blueman/gui/manager/ManagerDeviceList.py:572
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Aparella"
+msgstr "Emparellat"
 
 #: blueman/gui/manager/ManagerDeviceList.py:574
 msgid "Blocked"
 msgstr "Blocat"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>Connecta a:</b>"
+msgstr "<b> Connectat</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Poor"
@@ -687,12 +679,12 @@ msgstr "Massa"
 #: blueman/gui/manager/ManagerDeviceList.py:621
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Intensitat del senyal rebut: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Intensitat del senyal rebut: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Low"
@@ -3509,9 +3501,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "S'està desconnectant..."
+msgstr "Desconnectar %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""

@@ -6,15 +6,16 @@
 # Mikola Tsekhan https://launchpad.net/~tsekhan
 # Mihas' Varantsou <meequz@gmail.com>
 # Zmicer Turok <nashtlumach@gmail.com>, 2019, 2020.
+# Зміцер <zmickli21@yandex.by>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2020-11-11 03:44+0000\n"
-"Last-Translator: Zmicer Turok <nashtlumach@gmail.com>\n"
-"Language-Team: Belarusian <https://hosted.weblate.org/projects/blueman/"
-"blueman/be/>\n"
+"PO-Revision-Date: 2025-03-30 12:53+0000\n"
+"Last-Translator: Зміцер <zmickli21@yandex.by>\n"
+"Language-Team: Belarusian <https://hosted.weblate.org/projects/blueman/2-4/"
+"be/>\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -41,9 +42,8 @@ msgid "Temporarily visible"
 msgstr "Часова бачны"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Спалучаныя</b>"
+msgstr "<b>Імя</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -98,9 +98,8 @@ msgid "Show _Statusbar"
 msgstr "Паказваць _радок стану"
 
 #: data/ui/manager-main.ui:158
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Змяніць назву прылады"
+msgstr "Схаваць безыменныя прылады"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
@@ -207,15 +206,13 @@ msgstr "_Скінуць"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Скасаванне"
+msgstr "_Скасаваць"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_Добра"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
@@ -239,17 +236,15 @@ msgstr "<b>Налады NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Персанальная сетка"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Падтрымка PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Перадача даных па Dial-Up (DUN)"
+msgstr "Камутаваная сетка"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -260,10 +255,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Пункт доступу да сеткі (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Падтрымка PAN</b>"
+msgstr "<b>Падтрымка NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -400,7 +393,7 @@ msgstr "Адаптар"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Не ўдалося звязацца з blueman-менеджарам"
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -410,6 +403,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Не ўдалося актываваць blueman-менеджара праз D-Bus. Звычайна гэта выклікана "
+"няслушнай наладкай атачэння актывацыі D-Bus у графічным рэжыме, і можа быць "
+"выпраўлена камандай dbus-update-activation-environment, звычайна ў файле "
+"xinitrc (або ж у наладах Sway і т.п.)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"

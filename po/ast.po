@@ -7,21 +7,23 @@
 # Ḷḷumex03, 2014
 # Xuacu Saturio <xuacusk8@gmail.com>, 2014
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020, 2022.
+# Giikah <jpocovi@gmail.com>, 2025.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2022-08-15 16:25+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Asturian <https://hosted.weblate.org/projects/blueman/blueman/"
-"ast/>\n"
+"PO-Revision-Date: 2025-07-01 11:26+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"Language-Team: Asturian <https://hosted.weblate.org/projects/blueman/2-4/ast/"
+">\n"
 "Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -53,7 +55,7 @@ msgstr "Solicitú d'empareyamientu pal preséu:"
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
-msgstr ""
+msgstr "Esto tien que sobrescribise"
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
@@ -89,19 +91,19 @@ msgstr "_Ver"
 
 #: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr ""
+msgstr "Enseña_Barra_de_Xeres"
 
 #: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr ""
+msgstr "Enseña_Barra_de_Estáu"
 
 #: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
-msgstr ""
+msgstr "Escuende_Aparatos_Ensin_Nome"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr ""
+msgstr "O_rdenar Por"
 
 #: data/ui/manager-main.ui:182
 msgid "_Name"
@@ -109,11 +111,11 @@ msgstr "_Nome"
 
 #: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr ""
+msgstr "_Añadíu"
 
 #: data/ui/manager-main.ui:207
 msgid "_Descending"
-msgstr ""
+msgstr "_Baxando"
 
 #: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
@@ -152,7 +154,7 @@ msgstr "Empareyar"
 
 #: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:385
 msgid "Mark/Unmark this device as trusted"
-msgstr "Conseñar/ non conseñar esti preséu como de confianza "
+msgstr "Conseñar/ non conseñar esti preséu como de confianza"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
@@ -188,7 +190,7 @@ msgstr "Datos totales recibíos y tasa de tresmisión"
 
 #: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
-msgstr ""
+msgstr "Indicativu d'actividá de datos"
 
 #: data/ui/manager-main.ui:636
 msgid "More"
@@ -196,7 +198,7 @@ msgstr "Más"
 
 #: data/ui/rename-device.ui:8
 msgid "Rename device"
-msgstr ""
+msgstr "Renombra aparatu"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
@@ -204,15 +206,13 @@ msgstr "_Reaniciar"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Encaboxando"
+msgstr "_Encaboxando"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
@@ -236,17 +236,15 @@ msgstr "<b>Axustes NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Area Personal de la Rede"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Sofitu PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Rede de marcáu (DUN)"
+msgstr "Rede de marcáu"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -257,10 +255,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Puntu d'accesu de rede (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Sofitu PAN</b>"
+msgstr "<b>NAP Sofitu</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -268,11 +264,11 @@ msgstr "<b>Recibimientu de ficheros (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
-msgstr ""
+msgstr "Carpeta d'entrada:"
 
 #: data/ui/services-transfer.ui:45
 msgid "Select folder for incoming file transfers"
-msgstr ""
+msgstr "Escoyer carpeta para tresferencies d'arquivos entrantes"
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
@@ -368,7 +364,7 @@ msgstr "<b>Duración del rexistru:</b>"
 
 #: data/ui/note.ui:8
 msgid "Send note"
-msgstr ""
+msgstr "Unviar nota"
 
 #: blueman/main/Adapter.py:57
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
@@ -384,19 +380,19 @@ msgid "Always"
 msgstr "Siempres"
 
 #: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Minutu"
-msgstr[1] "%d Minutos"
+msgstr[0] "%(minutes)d Minutu"
+msgstr[1] "%(minutes)d Minutos"
 
 #: blueman/main/Adapter.py:230
 msgid "Adapter"
-msgstr ""
+msgstr "Adaptador"
 
 #: blueman/main/DBusProxies.py:64
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Nun pudo contactase con blueman-manager"
 
 #: blueman/main/DBusProxies.py:65
 msgid ""
@@ -406,6 +402,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Paez que blueman-manager nun pudo activase por aciu D-Bus. Una causa típica "
+"ye una configuración gráfica defectuosa na redolá d'activación de D-Bus, que "
+"puede resolvese con una llamá a dbus-update-activation-environment, "
+"xeneralmente emitía dende xinitrc (la configuración de Sway o paecío)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -423,11 +423,11 @@ msgstr ""
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
-msgstr ""
+msgstr "Faiga clic para desallistar."
 
 #: blueman/main/Manager.py:166
 msgid "Click to enable."
-msgstr ""
+msgstr "Faiga click pa allistar."
 
 #: blueman/main/Manager.py:199
 msgid "Searching"
@@ -435,12 +435,12 @@ msgstr "Guetando"
 
 #: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
-msgstr ""
+msgstr "Preferencies del adaptador"
 
 #: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
 #: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
-msgstr ""
+msgstr "Enviaor d'archivos"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -448,7 +448,7 @@ msgstr "Tresferencia de ficheros Bluetooth"
 
 #: blueman/main/Sendto.py:42
 msgid "_Stop"
-msgstr ""
+msgstr "_Para"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
@@ -456,11 +456,13 @@ msgstr "Coneutando"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
-msgstr ""
+msgstr "obexd nun ta disponible"
 
 #: blueman/main/Sendto.py:111
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
+"Nun pudo empezase automáticamente el serviciu obex. Asegúrese de que'l obex "
+"daemon tea n'execución"
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
@@ -472,14 +474,14 @@ msgstr "Unviando ficheru"
 
 #: blueman/main/Sendto.py:154
 msgid "ETA:"
-msgstr ""
+msgstr "Tiempu envaloráu:"
 
 #: blueman/main/Sendto.py:192
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d Segundu"
+msgstr[1] "%(seconds)d Segundos"
 
 #: blueman/main/Sendto.py:225
 #, python-format
@@ -517,11 +519,11 @@ msgstr "Introduz la contraseña pa l'autenticación:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
-msgstr ""
+msgstr "Clave d'accesu d'axugamientu para"
 
 #: blueman/main/applet/BluezAgent.py:196
 msgid "Pairing PIN code for"
-msgstr ""
+msgstr "Códigu PIN d'axugamientu para"
 
 #: blueman/main/applet/BluezAgent.py:209
 msgid "Pairing request for:"
@@ -562,6 +564,9 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Producióse un erru al cargar un complementu. Por favor, eche voz de a los "
+"desarrollaores col conteníu d'esti mensaxe a nuesu</b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">páxina web.</a>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -569,7 +574,7 @@ msgstr "Bluetooth apagáu"
 
 #: blueman/Functions.py:71
 msgid "Exit"
-msgstr ""
+msgstr "Salida"
 
 #: blueman/Functions.py:72
 msgid "Enable Bluetooth"
@@ -581,7 +586,7 @@ msgstr "B"
 
 #: blueman/Functions.py:169
 msgid "KB"
-msgstr "kB"
+msgstr "KB"
 
 #: blueman/Functions.py:172
 msgid "MB"
@@ -609,11 +614,11 @@ msgstr "Tecláu"
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Combu"
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
 msgid "Unnamed device"
-msgstr ""
+msgstr "Aparatu ensin nome"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
@@ -647,7 +652,7 @@ msgstr "Empareyar"
 
 #: blueman/gui/manager/ManagerDeviceList.py:574
 msgid "Blocked"
-msgstr ""
+msgstr "Bloquiáu"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
 #, fuzzy
@@ -680,11 +685,12 @@ msgstr "Enforma"
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
+"<b>Intensidá de la señal recibida: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Intensidá de la señal recibida: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Low"
@@ -702,11 +708,12 @@ msgstr "Mui alta"
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr ""
+"<b>Nivel de potencia de tresmisión: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:643
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Nivel de potencia de tresmisión: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:137
 msgid "Success!"
@@ -717,25 +724,24 @@ msgid "Failed"
 msgstr "Fallíu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:148
-#, fuzzy
 msgid "Connecting…"
-msgstr "Coneutando"
+msgstr "Coneutando…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:171
 msgid "Disconnection Failed: "
-msgstr ""
+msgstr "Desconexón fallida: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:195
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Nun hai puntos finales d'audiu rexistraos"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:198
 msgid "Input/output error"
-msgstr ""
+msgstr "Erru d'entrada salida"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "Device did not respond"
-msgstr ""
+msgstr "El dispositivu nun respondió"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
 #, fuzzy
@@ -745,7 +751,7 @@ msgstr "Desconocíu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
-msgstr "Conexón fallida:"
+msgstr "Conexón fallida: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:295
 msgid "<b>_Connect</b>"
@@ -754,6 +760,7 @@ msgstr "<b>_Coneutar</b>"
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr ""
+"Conecta perfiles de conexón automática de fonte A2DP, receptor A2DP y HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:301
 msgid "<b>_Disconnect</b>"
@@ -777,9 +784,8 @@ msgid "<b>Auto-connect:</b>"
 msgstr "<b>Desconeutar:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Unviar un _ficheru..."
+msgstr "Unviar un _ficheru…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Pair"
@@ -795,11 +801,11 @@ msgstr "_Nun confiar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "_Block"
-msgstr ""
+msgstr "_Bloquiar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:393
 msgid "_Unblock"
-msgstr ""
+msgstr "_Desbloquiar"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:397
 #, fuzzy
@@ -809,12 +815,11 @@ msgstr "Unviar ficheros a esti preséu"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:417
 msgid "R_ename device…"
-msgstr ""
+msgstr "R_enombrar dispositivu…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:426
-#, fuzzy
 msgid "_Remove…"
-msgstr "Desaniciar"
+msgstr "Desaniciar…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -823,7 +828,7 @@ msgstr "Encaboxar operación"
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:96
 msgid "Untrust"
-msgstr ""
+msgstr "Rocea"
 
 #: blueman/gui/DeviceSelectorDialog.py:14
 msgid "Select Device"
@@ -831,7 +836,7 @@ msgstr "Esbillar preséu"
 
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr ""
+msgstr "Blueman ye un xerente Bluetooth GTK+"
 
 #: blueman/gui/GsmSettings.py:25
 msgid "GSM Settings"
@@ -872,7 +877,7 @@ msgstr "Problema de dependencia"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Ensin conflictos"
 
 #: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
@@ -883,19 +888,18 @@ msgid "Adapter selection"
 msgstr "Esbilla d'adautador"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Desconeutando..."
+msgstr "Desconeutando…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Variedaes"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Ordenador"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
@@ -911,7 +915,7 @@ msgstr "Puntu d'accesu de rede"
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Audiu/video"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
@@ -1456,7 +1460,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Botón"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
@@ -1468,7 +1472,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Panel Táctil"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
@@ -2052,10 +2056,8 @@ msgid "Broadcasting Device"
 msgstr ""
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Serviciu:"
+msgstr "Serviciu"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
@@ -3153,9 +3155,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:36
-#, fuzzy
 msgid "Disconnected"
-msgstr "Desconeutando..."
+msgstr "Desconeutando"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
@@ -3276,9 +3277,8 @@ msgid "Adapter for this connection is not available"
 msgstr "L'adautador nun ta disponible pa esta conexón"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Desconeutando..."
+msgstr "Desconeutando…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3356,11 +3356,11 @@ msgid "Files received"
 msgstr "Ficheros recibíos"
 
 #: blueman/plugins/applet/TransferService.py:333
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Recibíu %d ficheru de fondu"
-msgstr[1] "Recibíos %d ficheros de fondu"
+msgstr[0] "Recibíu %(files)d ficheru de fondu"
+msgstr[1] "Recibíos %(files)d ficheros de fondu"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
@@ -3368,11 +3368,11 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:342
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Recibíu %d ficheru más de fondu"
-msgstr[1] "Recibíos %d ficheros más de fondu"
+msgstr[0] "Recibíu %(files)d ficheru más de fondu"
+msgstr[1] "Recibíos %(files)d ficheros más de fondu"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3472,9 +3472,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Desconeutando..."
+msgstr "Desconeutando %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3507,9 +3507,8 @@ msgid "Discoverable… %ss"
 msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
 msgid "Discoverable…"
-msgstr "Desconeutando..."
+msgstr "Desconeutando…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
