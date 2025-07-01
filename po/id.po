@@ -13,13 +13,15 @@
 # Willy Sudiarto Raharjo <willysr@slackware-id.org>, 2014
 # zk, 2015
 # Reza Almanda <rezaalmanda27@gmail.com>, 2021, 2024.
+# Iqbal Rifai <iqbalrifai@163.com>, 2024.
+# darwin t <darwintandi55@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
-"POT-Creation-Date: 2024-03-19 21:49+0000\n"
-"PO-Revision-Date: 2024-04-30 12:04+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"POT-Creation-Date: 2024-12-03 18:48+0000\n"
+"PO-Revision-Date: 2025-01-09 17:58+0000\n"
+"Last-Translator: darwin t <darwintandi55@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/blueman/"
 "blueman/id/>\n"
 "Language: id\n"
@@ -27,13 +29,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.3-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
 msgstr "<b>Setelan keterlihatan</b>"
 
-#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:162
+#: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
 msgstr "Tersembunyi"
 
@@ -65,134 +67,138 @@ msgstr "Ini mesti ditimpa"
 msgid "Show input"
 msgstr "Tampilkan masukan"
 
-#: data/ui/manager-main.ui:62
+#: data/ui/manager-main.ui:48
+msgid "Bluetooth Devices"
+msgstr "Perangkat bluetooth"
+
+#: data/ui/manager-main.ui:63
 msgid "_Adapter"
 msgstr "_Adapte"
 
-#: data/ui/manager-main.ui:70
+#: data/ui/manager-main.ui:71
 msgid "_Search"
 msgstr "_Cari"
 
-#: data/ui/manager-main.ui:91
+#: data/ui/manager-main.ui:92
 msgid "_Preferences"
 msgstr "_Preferensi"
 
-#: data/ui/manager-main.ui:106 blueman/plugins/applet/ExitItem.py:12
+#: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
 msgstr "_Keluar"
 
-#: data/ui/manager-main.ui:123
+#: data/ui/manager-main.ui:124
 msgid "_Device"
 msgstr "_Perangkat"
 
-#: data/ui/manager-main.ui:131
+#: data/ui/manager-main.ui:132
 msgid "_View"
 msgstr "_Lihat"
 
-#: data/ui/manager-main.ui:141
+#: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
 msgstr "Tampilkan Ba_tang Alat"
 
-#: data/ui/manager-main.ui:149
+#: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
 msgstr "Tampilkan Batang _Status"
 
-#: data/ui/manager-main.ui:157
+#: data/ui/manager-main.ui:158
 msgid "Hide _unnamed devices"
 msgstr "Sembunyikan _perangkat tanpa nama"
 
-#: data/ui/manager-main.ui:171
+#: data/ui/manager-main.ui:172
 msgid "S_ort By"
 msgstr "_Urutkan Berdasarkan"
 
-#: data/ui/manager-main.ui:181
+#: data/ui/manager-main.ui:182
 msgid "_Name"
 msgstr "_Nama"
 
-#: data/ui/manager-main.ui:190
+#: data/ui/manager-main.ui:191
 msgid "_Added"
 msgstr "Dit_ambahkan"
 
-#: data/ui/manager-main.ui:206
+#: data/ui/manager-main.ui:207
 msgid "_Descending"
 msgstr "Urut _Turun"
 
-#: data/ui/manager-main.ui:216 blueman/plugins/applet/StandardItems.py:54
+#: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
 msgstr "_Plugin"
 
-#: data/ui/manager-main.ui:226 blueman/plugins/applet/StandardItems.py:45
+#: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
 msgstr "Layanan _Lokal"
 
-#: data/ui/manager-main.ui:242 data/ui/manager-main.ui:266
-#: blueman/plugins/applet/StandardItems.py:51
+#: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
+#: blueman/plugins/applet/StandardItems.py:65
 msgid "_Help"
 msgstr "_Bantuan"
 
-#: data/ui/manager-main.ui:250
+#: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
 msgstr "_Laporkan Permasalahan"
 
-#: data/ui/manager-main.ui:293
+#: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
 msgstr "Cari perangkat terdekat"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:295
+#: data/ui/manager-main.ui:296
 msgid "Search"
 msgstr "Cari"
 
-#: data/ui/manager-main.ui:318 blueman/gui/manager/ManagerDeviceMenu.py:367
+#: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:370
 msgid "Create pairing with the device"
 msgstr "Lakukan pemasangan dengan perangkat"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:319
+#: data/ui/manager-main.ui:320
 msgid "Pair"
 msgstr "Pasang"
 
-#: data/ui/manager-main.ui:332 blueman/gui/manager/ManagerDeviceMenu.py:385
+#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "Mark/Unmark this device as trusted"
 msgstr "Tandai/Hapus tanda perangkat ini sebagai terpercaya"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerToolbar.py:39
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Trust"
 msgstr "Dipercaya"
 
-#: data/ui/manager-main.ui:346 blueman/gui/manager/ManagerDeviceMenu.py:430
+#: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:433
 msgid "Remove this device from the known devices list"
 msgstr "Hapus perangkat ini dari daftar perangkat yang dikenali"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:347
+#: data/ui/manager-main.ui:348
 msgid "Remove"
 msgstr "Hapus"
 
-#: data/ui/manager-main.ui:369
+#: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
 msgstr "Kirim berkas ke perangkat"
 
 #. translators: toolbar item: keep it as short as possible
-#: data/ui/manager-main.ui:371
+#: data/ui/manager-main.ui:372
 msgid "Send File"
 msgstr "Kirim Berkas"
 
-#: data/ui/manager-main.ui:491
+#: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
 msgstr "Jumlah data yang dikirim dan laju transmisi"
 
-#: data/ui/manager-main.ui:533
+#: data/ui/manager-main.ui:534
 msgid "Total data received and rate of transmission"
 msgstr "Jumlah data yang diterima dan laju transmisi"
 
-#: data/ui/manager-main.ui:584 data/ui/manager-main.ui:599
+#: data/ui/manager-main.ui:585 data/ui/manager-main.ui:600
 msgid "Data activity indication"
 msgstr "Indikasi aktivitas data"
 
-#: data/ui/manager-main.ui:635
+#: data/ui/manager-main.ui:636
 msgid "More"
 msgstr "Tambahan"
 
@@ -204,13 +210,13 @@ msgstr "Ubah nama perangkat"
 msgid "_Reset"
 msgstr "_Atur Ulang"
 
-#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_Cancel"
 msgstr "_Batal"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
-#: blueman/gui/DeviceSelectorDialog.py:17
+#: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_OK"
 msgstr "_OK"
 
@@ -278,6 +284,14 @@ msgstr "Pilih folder untuk transfer berkas masuk"
 msgid "Accept files from trusted devices"
 msgstr "Terima berkas dari perangkat terpercaya"
 
+#: data/ui/services-window.ui:9
+msgid "Local Services"
+msgstr "Layanan Lokal"
+
+#: data/ui/services-window.ui:49
+msgid "_Apply"
+msgstr ""
+
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
@@ -309,8 +323,8 @@ msgstr "<b>Pembuat:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
-#: blueman/gui/manager/ManagerDeviceList.py:369
-#: blueman/gui/manager/ManagerDeviceList.py:371 blueman/DeviceClass.py:86
+#: blueman/gui/manager/ManagerDeviceList.py:378
+#: blueman/gui/manager/ManagerDeviceList.py:380 blueman/DeviceClass.py:86
 #: blueman/DeviceClass.py:114 blueman/DeviceClass.py:484
 #: blueman/DeviceClass.py:533 blueman/Sdp.py:376
 #: blueman/plugins/applet/NetUsage.py:210
@@ -370,33 +384,33 @@ msgstr "<b>Durasi log:</b>"
 msgid "Send note"
 msgstr "Kirim catatan"
 
-#: blueman/main/Adapter.py:57
+#: blueman/main/Adapter.py:60
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr "Bluetooth perlu diaktifkan agar manager adapter bekerja"
 
-#: blueman/main/Adapter.py:97 data/blueman-adapters.desktop.in:3
+#: blueman/main/Adapter.py:100 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
 msgstr "Adapter Bluetooth"
 
-#: blueman/main/Adapter.py:160
+#: blueman/main/Adapter.py:163
 msgid "Always"
 msgstr "Selalu"
 
-#: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
+#: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
 msgstr[0] "%(minutes)d Menit"
 
-#: blueman/main/Adapter.py:230
+#: blueman/main/Adapter.py:233
 msgid "Adapter"
 msgstr "Adaptor"
 
-#: blueman/main/DBusProxies.py:64
+#: blueman/main/DBusProxies.py:90
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Gagal mengakses blueman-manager."
 
-#: blueman/main/DBusProxies.py:65
+#: blueman/main/DBusProxies.py:91
 msgid ""
 "It seems like blueman-manager could no get activated via D-Bus. A typical "
 "cause for this is a broken graphical setup in the D-Bus activation "
@@ -404,12 +418,17 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Tampaknya blueman-manager tidak dapat diaktifkan melalui D-Bus. Penyebab "
+"umum untuk masalah ini adalah konfigurasi grafis yang rusak dalam lingkungan "
+"aktivasi D-Bus. Hal ini biasanya dapat diatasi dengan menjalankan perintah "
+"dbus-update-activation-environment, yang biasanya dimasukkan dalam file "
+"startup seperti xinitrc (atau dalam konfigurasi Sway atau yang serupa)."
 
-#: blueman/main/Manager.py:104
+#: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
 msgstr "Koneksi ke BlueZ gagal"
 
-#: blueman/main/Manager.py:105
+#: blueman/main/Manager.py:114
 msgid ""
 "Bluez daemon is not running, blueman-manager cannot continue.\n"
 "This probably means that there were no Bluetooth adapters detected or "
@@ -419,24 +438,24 @@ msgstr ""
 "Hal ini berarti tidak ada adapter Bluetooth yang terdeteksi atau daemon "
 "Bluetooth belum dijalankan."
 
-#: blueman/main/Manager.py:163
+#: blueman/main/Manager.py:172
 msgid "Click to disable."
-msgstr ""
+msgstr "Klik untuk menonaktifkan."
 
-#: blueman/main/Manager.py:166
+#: blueman/main/Manager.py:175
 msgid "Click to enable."
-msgstr ""
+msgstr "Klik untuk mengaktifkan."
 
-#: blueman/main/Manager.py:199
+#: blueman/main/Manager.py:208
 msgid "Searching"
 msgstr "Mencari"
 
-#: blueman/main/Manager.py:261 blueman/plugins/applet/StandardItems.py:82
+#: blueman/main/Manager.py:270 blueman/plugins/applet/StandardItems.py:99
 msgid "Adapter Preferences"
 msgstr "Preferensi Adapter"
 
-#: blueman/main/Manager.py:277 blueman/gui/manager/ManagerDeviceList.py:178
-#: blueman/plugins/applet/StandardItems.py:75
+#: blueman/main/Manager.py:286 blueman/gui/manager/ManagerDeviceList.py:179
+#: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
 msgstr "Pengirim Berkas"
 
@@ -444,113 +463,113 @@ msgstr "Pengirim Berkas"
 msgid "Bluetooth File Transfer"
 msgstr "Transfer Berkas Bluetooth"
 
-#: blueman/main/Sendto.py:42
+#: blueman/main/Sendto.py:44
 msgid "_Stop"
 msgstr ""
 
-#: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
+#: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
 msgstr "Menyambung"
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "obexd not available"
 msgstr "obexd tidak tersedia"
 
-#: blueman/main/Sendto.py:111
+#: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
 "Gagal memulai otomatis layanan obex. Pastikan bahwa daemon obex berjalan"
 
-#: blueman/main/Sendto.py:142
+#: blueman/main/Sendto.py:144
 msgid "Cancelling"
 msgstr "Membatalkan"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "Sending File"
 msgstr "Mengirimkan Berkas"
 
-#: blueman/main/Sendto.py:154
+#: blueman/main/Sendto.py:156
 msgid "ETA:"
 msgstr "Waktu Perkiraan:"
 
-#: blueman/main/Sendto.py:192
+#: blueman/main/Sendto.py:194
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
 msgstr[0] "%(seconds)d Detik"
 
-#: blueman/main/Sendto.py:225
+#: blueman/main/Sendto.py:227
 #, python-format
 msgid "Error occurred while sending file %s"
 msgstr "Terjadi galat ketika mengirimkan berkas %s"
 
-#: blueman/main/Sendto.py:229
+#: blueman/main/Sendto.py:231
 msgid "Skip"
 msgstr "Lewati"
 
-#: blueman/main/Sendto.py:230
+#: blueman/main/Sendto.py:232
 msgid "Retry"
 msgstr "Coba kembali"
 
-#: blueman/main/Sendto.py:281
+#: blueman/main/Sendto.py:283
 msgid "Error occurred"
 msgstr "Terjadi galat"
 
-#: blueman/main/applet/BluezAgent.py:123
+#: blueman/main/applet/BluezAgent.py:142
 #, python-format
 msgid "Pairing request for %s"
 msgstr "Permintaan penyambungan untuk %s"
 
-#: blueman/main/applet/BluezAgent.py:134 blueman/main/applet/BluezAgent.py:246
+#: blueman/main/applet/BluezAgent.py:153 blueman/main/applet/BluezAgent.py:265
 msgid "Bluetooth Authentication"
 msgstr "Otentikasi Bluetooth "
 
-#: blueman/main/applet/BluezAgent.py:165
+#: blueman/main/applet/BluezAgent.py:184
 msgid "Enter PIN code for authentication:"
 msgstr "Masukan kode PIN untuk otentikasi:"
 
-#: blueman/main/applet/BluezAgent.py:174
+#: blueman/main/applet/BluezAgent.py:193
 msgid "Enter passkey for authentication:"
 msgstr "Masukan passkey untuk otentikasi:"
 
-#: blueman/main/applet/BluezAgent.py:185
+#: blueman/main/applet/BluezAgent.py:204
 msgid "Pairing passkey for"
 msgstr "Permintaan passkey untu"
 
-#: blueman/main/applet/BluezAgent.py:196
+#: blueman/main/applet/BluezAgent.py:215
 msgid "Pairing PIN code for"
 msgstr "Permintaan kode PIN untuk"
 
-#: blueman/main/applet/BluezAgent.py:209
+#: blueman/main/applet/BluezAgent.py:228
 msgid "Pairing request for:"
 msgstr "Permintaan sambungan untuk:"
 
-#: blueman/main/applet/BluezAgent.py:212
+#: blueman/main/applet/BluezAgent.py:231
 msgid "Confirm value for authentication:"
 msgstr "Konfirmasi nilai untuk otentikasi:"
 
-#: blueman/main/applet/BluezAgent.py:213
+#: blueman/main/applet/BluezAgent.py:232
 msgid "Confirm"
 msgstr "Konfirmasi"
 
-#: blueman/main/applet/BluezAgent.py:213 blueman/main/applet/BluezAgent.py:244
+#: blueman/main/applet/BluezAgent.py:232 blueman/main/applet/BluezAgent.py:263
 msgid "Deny"
 msgstr "Abaikan"
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Authorization request for:"
 msgstr "Permintaan otorisasi untuk:"
 
-#: blueman/main/applet/BluezAgent.py:241
+#: blueman/main/applet/BluezAgent.py:260
 msgid "Service:"
 msgstr "Layanan:"
 
-#: blueman/main/applet/BluezAgent.py:242
+#: blueman/main/applet/BluezAgent.py:261
 msgid "Always accept"
 msgstr "Selalu terima"
 
-#: blueman/main/applet/BluezAgent.py:243
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/main/applet/BluezAgent.py:262
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Accept"
 msgstr "Terima"
 
@@ -570,257 +589,257 @@ msgstr ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">situs web kami."
 "</a>"
 
-#: blueman/Functions.py:70
+#: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
 msgstr "Bluetooth Mati"
 
-#: blueman/Functions.py:71
+#: blueman/Functions.py:72
 msgid "Exit"
 msgstr "Keluar"
 
-#: blueman/Functions.py:72
+#: blueman/Functions.py:73
 msgid "Enable Bluetooth"
 msgstr "Aktifkan Bluetooth"
 
-#: blueman/Functions.py:166
+#: blueman/Functions.py:167
 msgid "B"
 msgstr "B"
 
-#: blueman/Functions.py:169
+#: blueman/Functions.py:170
 msgid "KB"
 msgstr "KB"
 
-#: blueman/Functions.py:172
+#: blueman/Functions.py:173
 msgid "MB"
 msgstr "MB"
 
-#: blueman/Functions.py:175
+#: blueman/Functions.py:176
 msgid "GB"
 msgstr "GB"
 
-#: blueman/gui/manager/ManagerMenu.py:47
+#: blueman/gui/manager/ManagerMenu.py:48
 msgid "Device Manager"
 msgstr "Manajer Perangkat"
 
-#: blueman/gui/manager/ManagerMenu.py:80
-#: blueman/plugins/applet/StandardItems.py:85
+#: blueman/gui/manager/ManagerMenu.py:81
+#: blueman/plugins/applet/StandardItems.py:102
 msgid "Service Preferences"
 msgstr "Preferensi Layanan"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
 msgid "Keyboard"
 msgstr "Keyboard"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
+#: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:127
 msgid "Combo"
 msgstr "Combo"
 
-#: blueman/gui/manager/ManagerDeviceList.py:333
+#: blueman/gui/manager/ManagerDeviceList.py:342
 #, fuzzy
 #| msgid "Rename device"
 msgid "Unnamed device"
 msgstr "Ubah nama perangkat"
 
 #. translators: device class
-#: blueman/gui/manager/ManagerDeviceList.py:340
-#: blueman/gui/manager/ManagerDeviceList.py:369 blueman/DeviceClass.py:24
+#: blueman/gui/manager/ManagerDeviceList.py:349
+#: blueman/gui/manager/ManagerDeviceList.py:378 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
 msgid "Uncategorized"
 msgstr "Tidak terkategori"
 
 #. https://github.com/python/mypy/issues/2608
-#: blueman/gui/manager/ManagerDeviceList.py:560
-#: blueman/plugins/applet/AutoConnect.py:50
-#: blueman/plugins/applet/ConnectionNotifier.py:31
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/gui/manager/ManagerDeviceList.py:569
+#: blueman/plugins/applet/AutoConnect.py:68
+#: blueman/plugins/applet/ConnectionNotifier.py:32
+#: blueman/plugins/applet/RecentConns.py:157
 #: blueman/plugins/applet/PPPSupport.py:77
 msgid "Connected"
 msgstr "Tersambung"
 
-#: blueman/gui/manager/ManagerDeviceList.py:562
+#: blueman/gui/manager/ManagerDeviceList.py:571
 #, fuzzy
 #| msgid "Trust"
 msgid "Trusted"
 msgstr "Dipercaya"
 
-#: blueman/gui/manager/ManagerDeviceList.py:564
+#: blueman/gui/manager/ManagerDeviceList.py:573
 #, fuzzy
 #| msgid "Pair"
 msgid "Paired"
 msgstr "Pasang"
 
-#: blueman/gui/manager/ManagerDeviceList.py:566
+#: blueman/gui/manager/ManagerDeviceList.py:575
 msgid "Blocked"
-msgstr ""
+msgstr "Diblokir"
 
-#: blueman/gui/manager/ManagerDeviceList.py:588
+#: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "<b>Connected</b>"
 msgstr "<b>Terhubung</b>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:602
+#: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Poor"
 msgstr "Jelek"
 
-#: blueman/gui/manager/ManagerDeviceList.py:604
-#: blueman/gui/manager/ManagerDeviceList.py:623
+#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:632
 msgid "Sub-optimal"
 msgstr "Sub-Optimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:606
-#: blueman/gui/manager/ManagerDeviceList.py:625
+#: blueman/gui/manager/ManagerDeviceList.py:615
+#: blueman/gui/manager/ManagerDeviceList.py:634
 msgid "Optimal"
 msgstr "Optimal"
 
-#: blueman/gui/manager/ManagerDeviceList.py:608
+#: blueman/gui/manager/ManagerDeviceList.py:617
 msgid "Much"
 msgstr "Banyak"
 
-#: blueman/gui/manager/ManagerDeviceList.py:610
+#: blueman/gui/manager/ManagerDeviceList.py:619
 msgid "Too much"
 msgstr "Terlalu banyak"
 
-#: blueman/gui/manager/ManagerDeviceList.py:613
+#: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 msgstr ""
 "<b>Kekuatan Sinyal yang Diterima: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:616
+#: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 msgstr "Kekuatan Sinyal yang Diterima: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:621
+#: blueman/gui/manager/ManagerDeviceList.py:630
 msgid "Low"
 msgstr "Rendah"
 
-#: blueman/gui/manager/ManagerDeviceList.py:627
+#: blueman/gui/manager/ManagerDeviceList.py:636
 msgid "High"
 msgstr "Tinggi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:629
+#: blueman/gui/manager/ManagerDeviceList.py:638
 msgid "Very High"
 msgstr "Sangat Tinggi"
 
-#: blueman/gui/manager/ManagerDeviceList.py:632
+#: blueman/gui/manager/ManagerDeviceList.py:641
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 msgstr "<b>Tingkat Daya Transmisi: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceList.py:635
+#: blueman/gui/manager/ManagerDeviceList.py:644
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 msgstr "Tingkat Daya Transmisi: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:137
+#: blueman/gui/manager/ManagerDeviceMenu.py:139
 msgid "Success!"
 msgstr "Berhasil!"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:142
+#: blueman/gui/manager/ManagerDeviceMenu.py:144
 msgid "Failed"
 msgstr "Gagal"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:148
+#: blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting…"
 msgstr "Menyambung…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:171
+#: blueman/gui/manager/ManagerDeviceMenu.py:173
 msgid "Disconnection Failed: "
 msgstr "Pemutusan Gagal: "
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:195
+#: blueman/gui/manager/ManagerDeviceMenu.py:197
 msgid "No audio endpoints registered"
 msgstr "Tidak ada audio endpoint yang terdaftar"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:198
+#: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "Input/output error"
 msgstr "Galat input/output"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:200
+#: blueman/gui/manager/ManagerDeviceMenu.py:202
 msgid "Device did not respond"
 msgstr "Perangkat tidak merespons"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:204
+#: blueman/gui/manager/ManagerDeviceMenu.py:206
 #, fuzzy
 #| msgid "Unknown"
 msgid "Unknown error"
 msgstr "Tidak Dikenali"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:209
+#: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
 msgstr "Sambungan Gagal"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:295
+#: blueman/gui/manager/ManagerDeviceMenu.py:297
 #, fuzzy
 #| msgid "_<b>_Connect</b>"
 msgid "<b>_Connect</b>"
 msgstr "_<b>_Hubungkan</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:297
+#: blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
 msgstr "Menyambungkan profil sambungan otomatis A2DP, A2DP sink, dan HID"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:301
+#: blueman/gui/manager/ManagerDeviceMenu.py:303
 #, fuzzy
 #| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
 msgstr "_<b>Putuskan sambungan</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:302
+#: blueman/gui/manager/ManagerDeviceMenu.py:304
 msgid "Forcefully disconnect the device"
 msgstr "Memaksa pemutusan perangkat"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:318
+#: blueman/gui/manager/ManagerDeviceMenu.py:320
 msgid "<b>Connect To:</b>"
 msgstr "<b>Terhubung ke:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:323
+#: blueman/gui/manager/ManagerDeviceMenu.py:325
 msgid "<b>Disconnect:</b>"
 msgstr "<b>Terputus:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:333
+#: blueman/gui/manager/ManagerDeviceMenu.py:336
 msgid "<b>Auto-connect:</b>"
 msgstr "<b>Sambung otomatis:</b>"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:353
+#: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "Send a _File…"
 msgstr "Kirim _Berkas…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:366
+#: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Pair"
 msgstr "_Menyambung"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:376
+#: blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Trust"
 msgstr "_Terpercaya"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:381
+#: blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "_Untrust"
 msgstr "_Tidak Terpercaya"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:388
+#: blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "_Block"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:393
+#: blueman/gui/manager/ManagerDeviceMenu.py:396
 msgid "_Unblock"
 msgstr ""
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:397
+#: blueman/gui/manager/ManagerDeviceMenu.py:400
 #, fuzzy
 #| msgid "Send files to this device"
 msgid "Block/Unblock this device"
 msgstr "Kirim berkas pada perangkat ini"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:417
+#: blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "R_ename device…"
 msgstr "U_bah nama perangkat…"
 
-#: blueman/gui/manager/ManagerDeviceMenu.py:426
+#: blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "_Remove…"
 msgstr "_Hapus…"
 
@@ -829,11 +848,11 @@ msgid "Cancel Operation"
 msgstr "Batalkan Operasi"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
-#: blueman/gui/manager/ManagerToolbar.py:96
+#: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Untrust"
 msgstr "Tidak terpercaya"
 
-#: blueman/gui/DeviceSelectorDialog.py:14
+#: blueman/gui/DeviceSelectorDialog.py:16
 msgid "Select Device"
 msgstr "Pilih Perangkat"
 
@@ -846,7 +865,7 @@ msgid "GSM Settings"
 msgstr "Settingan GSM"
 
 #: blueman/gui/applet/PluginDialog.py:121
-#: blueman/plugins/applet/StandardItems.py:91
+#: blueman/plugins/applet/StandardItems.py:108
 msgid "Plugins"
 msgstr "Pengaya"
 
@@ -880,9 +899,9 @@ msgstr "Masalah ketergantungan"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Tidak ada konflik"
 
-#: blueman/gui/applet/PluginDialog.py:349
+#: blueman/gui/applet/PluginDialog.py:351
 msgid "Dependency issue"
 msgstr "Masalah ketergantungan"
 
@@ -1227,15 +1246,15 @@ msgstr "Komputer Biasa"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "PC/PDA Genggam (clamshell)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "PC/PDA seukuran telapak tangan"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Komputer yang dapat dikenakan (ukuran jam tangan)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
@@ -1257,13 +1276,11 @@ msgstr "Server"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Dapat dikonversi"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Wearable"
+msgstr "Dapat dipakai"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
@@ -1365,7 +1382,7 @@ msgstr "Tekanan Darah Generik"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "Perangkat Antarmuka Manusia Generik"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -1545,7 +1562,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Sensor kualitas udara"
 
 #: blueman/DeviceClass.py:247
 #, fuzzy
@@ -1555,15 +1572,15 @@ msgstr "Sensor Detak Jantung Generik"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Sensor Kelembaban"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Sensor kebocoran"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Sensor asap"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
@@ -1575,11 +1592,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Sensor Karbon Monoksida"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Sensor Karbon Dioksida"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
@@ -3195,21 +3212,21 @@ msgstr "Memilih profil audio untuk PulseAudio"
 msgid "Unspecified"
 msgstr "Tidak ditentukan"
 
-#: blueman/plugins/applet/AutoConnect.py:20
+#: blueman/plugins/applet/AutoConnect.py:22
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
 
-#: blueman/plugins/applet/AutoConnect.py:50
+#: blueman/plugins/applet/AutoConnect.py:68
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
 msgstr "Secara otomatis tersambung ke %(service)s pada %(device)s"
 
-#: blueman/plugins/applet/ConnectionNotifier.py:15
+#: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
-#: blueman/plugins/applet/ConnectionNotifier.py:36
+#: blueman/plugins/applet/ConnectionNotifier.py:37
 msgid "Disconnected"
 msgstr "Memutuskan"
 
@@ -3279,12 +3296,22 @@ msgid "Shows network traffic usage"
 msgstr "Tampilkan penggunaan beban jaringan"
 
 #: blueman/plugins/applet/StatusIcon.py:38
-#: blueman/plugins/applet/ShowConnected.py:79
-#: blueman/plugins/applet/PowerManager.py:171
+msgid "Force symbolic status icons"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:39
+msgid ""
+"When enabled this will force the use of a symbolic version of the blueman "
+"statusicon"
+msgstr ""
+
+#: blueman/plugins/applet/StatusIcon.py:51
+#: blueman/plugins/applet/ShowConnected.py:80
+#: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Enabled"
 msgstr "Bluetooth Aktif"
 
-#: blueman/plugins/applet/Networking.py:18
+#: blueman/plugins/applet/Networking.py:19
 msgid "Manages local network services, like NAP bridges"
 msgstr "Mengelola layanan jaringan lokal, seperti NAP bridge"
 
@@ -3296,7 +3323,7 @@ msgstr ""
 "Sediakan dukungan untuk Jaringan Dial Up (DUN) dengan ModemManager dan "
 "NetworkManager"
 
-#: blueman/plugins/applet/RecentConns.py:42
+#: blueman/plugins/applet/RecentConns.py:44
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
@@ -3304,35 +3331,36 @@ msgstr ""
 "cepat"
 
 #. the maximum number of items RecentConns menu will display
-#: blueman/plugins/applet/RecentConns.py:53
+#: blueman/plugins/applet/RecentConns.py:55
 msgid "Maximum items"
 msgstr "Item maksimal"
 
-#: blueman/plugins/applet/RecentConns.py:54
+#: blueman/plugins/applet/RecentConns.py:56
 msgid "The maximum number of items recent connections menu will display."
 msgstr "Jumlah maksimal pada menu koneksi yang akan ditampilkan."
 
-#: blueman/plugins/applet/RecentConns.py:155
+#: blueman/plugins/applet/RecentConns.py:157
 #, python-format
 msgid "Connected to %s"
 msgstr "Tersambung ke %s"
 
-#: blueman/plugins/applet/RecentConns.py:161
+#: blueman/plugins/applet/RecentConns.py:163
 msgid "Failed to connect"
 msgstr "Gagal terhubung"
 
-#: blueman/plugins/applet/RecentConns.py:171
+#: blueman/plugins/applet/RecentConns.py:174
 #, python-format
 msgid "%(service)s on %(device)s"
 msgstr "%(service)s pada %(device)s"
 
-#: blueman/plugins/applet/RecentConns.py:175
+#: blueman/plugins/applet/RecentConns.py:178
 msgid "Adapter for this connection is not available"
 msgstr "Adapter untuk koneksi ini tidak tersedia"
 
-#: blueman/plugins/applet/RecentConns.py:188
-msgid "Recent _Connections"
-msgstr "_Koneksi Terkini"
+#: blueman/plugins/applet/RecentConns.py:191
+#, fuzzy
+msgid "Reconnect to…"
+msgstr "Memutuskan..."
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3342,41 +3370,41 @@ msgstr ""
 "Menyediakan dukungan untuk Personal Area Networking (PAN) diperkenalkan pada "
 "NetworkManager 0.8"
 
-#: blueman/plugins/applet/DBusService.py:46
+#: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
 msgstr "Menyediakan DBus API untuk komponen Blueman lainnya"
 
-#: blueman/plugins/applet/TransferService.py:126
+#: blueman/plugins/applet/TransferService.py:127
 msgid "Incoming file over Bluetooth"
 msgstr "Menerima berkas dari Bluetooth"
 
-#: blueman/plugins/applet/TransferService.py:127
+#: blueman/plugins/applet/TransferService.py:128
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
 msgstr "Menerima berkas %(0)s dari %(1)s"
 
-#: blueman/plugins/applet/TransferService.py:129
+#: blueman/plugins/applet/TransferService.py:130
 msgid "Reject"
 msgstr "Tolak"
 
-#: blueman/plugins/applet/TransferService.py:136
+#: blueman/plugins/applet/TransferService.py:137
 msgid "Receiving file"
 msgstr "Menerima berkas"
 
-#: blueman/plugins/applet/TransferService.py:137
+#: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
 msgstr "Menerima berkas %(0)s dari %(1)s"
 
-#: blueman/plugins/applet/TransferService.py:156
+#: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"
 msgstr "Menyediakan kemampuan transfer berkas OBEX"
 
-#: blueman/plugins/applet/TransferService.py:179
+#: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
 msgstr "Direktori terkonfigurasi untuk berkas yang datang tidak ada"
 
-#: blueman/plugins/applet/TransferService.py:180
+#: blueman/plugins/applet/TransferService.py:181
 #, python-format
 msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
@@ -3385,45 +3413,45 @@ msgstr ""
 "Mohon pastikan direktori \"<b>%s</b>\" ada atau konfigurasikan dengan "
 "blueman-services. Sebelum itu dilakukan baku \"%s\" akan dipakai"
 
-#: blueman/plugins/applet/TransferService.py:302
+#: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
 msgstr "Berkas diterima"
 
-#: blueman/plugins/applet/TransferService.py:303
+#: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
 msgstr "Berkas %(0)s dari %(1)s sukses diterima"
 
-#: blueman/plugins/applet/TransferService.py:307
+#: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:311
+#: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
 msgstr "Pengiriman gagal"
 
-#: blueman/plugins/applet/TransferService.py:312
+#: blueman/plugins/applet/TransferService.py:313
 #, python-format
 msgid "Transfer of file %(0)s failed"
 msgstr "Pengiriman berkas %(0)s gagal"
 
-#: blueman/plugins/applet/TransferService.py:332
-#: blueman/plugins/applet/TransferService.py:341
+#: blueman/plugins/applet/TransferService.py:333
+#: blueman/plugins/applet/TransferService.py:342
 msgid "Files received"
 msgstr "Berkas diterima"
 
-#: blueman/plugins/applet/TransferService.py:333
+#: blueman/plugins/applet/TransferService.py:334
 #, fuzzy, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
 msgstr[0] "Menerima %d berkas dibelakang layar"
 
-#: blueman/plugins/applet/TransferService.py:338
-#: blueman/plugins/applet/TransferService.py:346
+#: blueman/plugins/applet/TransferService.py:339
+#: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
 msgstr ""
 
-#: blueman/plugins/applet/TransferService.py:342
+#: blueman/plugins/applet/TransferService.py:343
 #, fuzzy, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
@@ -3440,19 +3468,29 @@ msgstr ""
 msgid "Adds standard menu items to the status icon menu"
 msgstr "Menambahkan menu standar pada menu ikon status"
 
-#: blueman/plugins/applet/StandardItems.py:32
+#: blueman/plugins/applet/StandardItems.py:34
+msgid "Toggle the manager on clicking the system tray icon"
+msgstr ""
+
+#: blueman/plugins/applet/StandardItems.py:35
+msgid ""
+"Clicking the system tray icon will toggle the manager instead of focusing on "
+"it."
+msgstr ""
+
+#: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
 msgstr "Kirim _Berkas ke Perangkat"
 
-#: blueman/plugins/applet/StandardItems.py:37
+#: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
 msgstr "_Perangkat"
 
-#: blueman/plugins/applet/StandardItems.py:41
+#: blueman/plugins/applet/StandardItems.py:55
 msgid "Adap_ters"
 msgstr "Adap_ter"
 
-#: blueman/plugins/applet/StandardItems.py:88
+#: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
 msgstr "applet"
 
@@ -3464,27 +3502,27 @@ msgstr "Menyediakan passkey, layanan otentikasi untuk daemon BlueZ"
 msgid "Adds an exit menu item to quit the applet"
 msgstr "Menambahkan menu keluar untuk menghentikan applet"
 
-#: blueman/plugins/applet/DhcpClient.py:14
+#: blueman/plugins/applet/DhcpClient.py:15
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
 msgstr "Menyediakan klien dhcp dasar untuk koneksi PAN Bluetooth."
 
-#: blueman/plugins/applet/DhcpClient.py:47
-#: blueman/plugins/applet/DhcpClient.py:55
-#: blueman/plugins/applet/DhcpClient.py:60
+#: blueman/plugins/applet/DhcpClient.py:48
+#: blueman/plugins/applet/DhcpClient.py:56
+#: blueman/plugins/applet/DhcpClient.py:61
 msgid "Bluetooth Network"
 msgstr "Jaringan Bluetooth"
 
-#: blueman/plugins/applet/DhcpClient.py:48
+#: blueman/plugins/applet/DhcpClient.py:49
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
 msgstr "Antarmuka %(0)s terikat pada alamat IP %(1)s"
 
-#: blueman/plugins/applet/DhcpClient.py:55
+#: blueman/plugins/applet/DhcpClient.py:56
 #, python-format
 msgid "Failed to obtain an IP address on %s"
 msgstr "Gagal mendapatkan alamat IP pada %s"
 
-#: blueman/plugins/applet/DhcpClient.py:60
+#: blueman/plugins/applet/DhcpClient.py:61
 #, python-format
 msgid ""
 "Trying to obtain an IP address on %s\n"
@@ -3493,7 +3531,7 @@ msgstr ""
 "Mencoba mendapatkan suatu alamat IP pada %s\n"
 "Harap tunggu..."
 
-#: blueman/plugins/applet/ShowConnected.py:21
+#: blueman/plugins/applet/ShowConnected.py:22
 #, fuzzy
 #| msgid ""
 #| "Adds an indication on the status icon when Bluetooth is active and shows "
@@ -3505,12 +3543,12 @@ msgstr ""
 "Menambahkan indikasi ikon status ketika Bluetooth sedang aktif dan "
 "menampilkan jumlah koneksi pada tooltip."
 
-#: blueman/plugins/applet/ShowConnected.py:72
+#: blueman/plugins/applet/ShowConnected.py:73
 msgid "Bluetooth Active"
 msgstr "Bluetooth Aktif"
 
-#: blueman/plugins/applet/ShowConnected.py:81
-#: blueman/plugins/applet/PowerManager.py:174
+#: blueman/plugins/applet/ShowConnected.py:82
+#: blueman/plugins/applet/PowerManager.py:177
 msgid "Bluetooth Disabled"
 msgstr "Bluetooth Nonaktif"
 
@@ -3579,16 +3617,16 @@ msgid "Provides basic support for connecting to the internet via DUN profile."
 msgstr ""
 "Menyediakan dukungan dasar untuk menghubungkan ke Internet via profil DUN."
 
-#: blueman/plugins/applet/SerialManager.py:22
+#: blueman/plugins/applet/SerialManager.py:23
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr "Standar koneksi profil SPP, mengijinkan eksekusi aksi kustom"
 
-#: blueman/plugins/applet/SerialManager.py:31
+#: blueman/plugins/applet/SerialManager.py:32
 msgid "Script to execute on connection"
 msgstr "Script yang dieksekusi pada saat koneksi"
 
-#: blueman/plugins/applet/SerialManager.py:32
+#: blueman/plugins/applet/SerialManager.py:33
 #, fuzzy
 #| msgid ""
 #| "<span size=\"small\">The following arguments will be passed:\n"
@@ -3615,22 +3653,22 @@ msgstr ""
 "\n"
 "Saat pemutusan perangkat, script akan mengirimkan sinyal HUP</span>"
 
-#: blueman/plugins/applet/SerialManager.py:63
+#: blueman/plugins/applet/SerialManager.py:64
 msgid "Serial port connected"
 msgstr "Port serial tersambung"
 
-#: blueman/plugins/applet/SerialManager.py:64
+#: blueman/plugins/applet/SerialManager.py:65
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
 "Layanan port serial pada perangkat <b>%s</b> akan tersedia via <b>%s</b>"
 
-#: blueman/plugins/applet/SerialManager.py:114
+#: blueman/plugins/applet/SerialManager.py:115
 msgid "Serial port connection script failed"
 msgstr "Script koneksi port serial gagal"
 
-#: blueman/plugins/applet/SerialManager.py:115
+#: blueman/plugins/applet/SerialManager.py:116
 #, python-format
 msgid ""
 "There was a problem launching script %s\n"
@@ -3639,29 +3677,29 @@ msgstr ""
 "Terdapat masalah menjalankan script %s\n"
 "%s"
 
-#: blueman/plugins/applet/PowerManager.py:31
+#: blueman/plugins/applet/PowerManager.py:32
 msgid "Controls Bluetooth adapter power states"
 msgstr "Mengendalikan status sumber daya adapter Bluetooth"
 
-#: blueman/plugins/applet/PowerManager.py:41
-#: blueman/plugins/applet/PowerManager.py:153
+#: blueman/plugins/applet/PowerManager.py:42
+#: blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _Off</b>"
 msgstr "<b>_Nonaktifkan Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:43
-#: blueman/plugins/applet/PowerManager.py:155
+#: blueman/plugins/applet/PowerManager.py:44
+#: blueman/plugins/applet/PowerManager.py:157
 msgid "Turn off all adapters"
 msgstr "Menonaktifkan semua adapter"
 
-#: blueman/plugins/applet/PowerManager.py:144
+#: blueman/plugins/applet/PowerManager.py:146
 msgid "<b>Turn Bluetooth _On</b>"
 msgstr "<b>_Aktifkan Bluetooth</b>"
 
-#: blueman/plugins/applet/PowerManager.py:146
+#: blueman/plugins/applet/PowerManager.py:148
 msgid "Turn on all adapters"
 msgstr "Mengaktifkan semua adapte"
 
-#: blueman/plugins/applet/GameControllerWakelock.py:26
+#: blueman/plugins/applet/GameControllerWakelock.py:27
 msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
@@ -3673,6 +3711,18 @@ msgstr ""
 #, fuzzy
 msgid "Provides a StatusNotifierItem to show a statusicon"
 msgstr "Menggunakan libappindicator untuk menampilkan ikon status"
+
+#: blueman/plugins/applet/PulseAudioProfile.py:19
+#, fuzzy
+#| msgid "Adds standard menu items to the status icon menu"
+msgid "Adds audio profile selector to the status icon menu"
+msgstr "Menambahkan menu standar pada menu ikon status"
+
+#: blueman/plugins/applet/PulseAudioProfile.py:83
+#, fuzzy, python-format
+#| msgid "Audio Profile"
+msgid "Audio Profiles for %s"
+msgstr "Profil Audio"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
@@ -3780,6 +3830,9 @@ msgstr "Atur Keadaan RfKill"
 msgid "Setting RfKill State requires privileges"
 msgstr "Mengatur Keadaan RfKill memerlukan hak khusus"
 
+#~ msgid "Recent _Connections"
+#~ msgstr "_Koneksi Terkini"
+
 #, fuzzy
 #~| msgid "<b>Turn Bluetooth _On</b>"
 #~ msgid "Turn Bluetooth _On"
@@ -3804,9 +3857,6 @@ msgstr "Mengatur Keadaan RfKill memerlukan hak khusus"
 
 #~ msgid "<b>Plugin description:</b>"
 #~ msgstr "<b>Deskripsi plugin</b>"
-
-#~ msgid "Local Services"
-#~ msgstr "Layanan Lokal"
 
 #, fuzzy, python-format
 #~ msgid "<b>%(connections)d Active Connection</b>"
@@ -3842,9 +3892,6 @@ msgstr "Mengatur Keadaan RfKill memerlukan hak khusus"
 #~ msgid "Automatically power on adapters"
 #~ msgstr "Otomatis menyalakan adapter"
 
-#~ msgid "Bluetooth Devices"
-#~ msgstr "Perangkat bluetooth"
-
 #~ msgid "Isdn"
 #~ msgstr "Isdn"
 
@@ -3862,10 +3909,6 @@ msgstr "Mengatur Keadaan RfKill memerlukan hak khusus"
 
 #~ msgid "<b>Friendly Name</b>"
 #~ msgstr "<b>Nama yang mudah diingat</b>"
-
-#, fuzzy
-#~ msgid "Disconnecting…"
-#~ msgstr "Memutuskan..."
 
 #~ msgid "Serial Ports"
 #~ msgstr "Port Serial"
