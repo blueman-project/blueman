@@ -1,6 +1,6 @@
 AC_PREREQ(2.61)
 
-AC_INIT([blueman], [2.4.4], [https://github.com/blueman-project/blueman/issues])
+AC_INIT([blueman], [2.4.5], [https://github.com/blueman-project/blueman/issues])
 AC_CONFIG_HEADERS(config.h)
 AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([1.16.3 foreign dist-xz])

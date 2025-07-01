@@ -1,8 +1,21 @@
 # Changelog
 
+## 2.4.5
+
+### Bugs fixed
+
+* Handling for new StatusNotifierWatcher
+
+### Changes
+
+* Make connection notifications transient (@merlinz01)
+* StatusNotifierItem: announce children-display (@rilian-la-te)
+* Manager: Hide bt status switch when PowerManager is not available
+
 ## 2.4.4
 
 ### Bugs fixed
+
 * Fix Rfcom plugin dbus signature
 * Set an initial selected device in blueman-sendto
 * AutoConnect: Store bluetooth address instead of object path
@@ -11,6 +24,7 @@
 * Fatal LoadException
 
 ### Changes
+
 * Terminate applet on manager termination if it was started by manager
 * Add Galic and Esperanto translations
 * AutoConnect: Automatically convert path to address
