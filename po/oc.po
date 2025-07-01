@@ -7,14 +7,14 @@
 # Cédric Valmary<cvalmary@yahoo.fr>
 # Cédric VALMARY (Tot en òc) https://launchpad.net/~cvalmary
 # Christopher Schramm <blueman@cschramm.eu>, 2020.
-# Quentin PAGÈS <quentinantonin@free.fr>, 2020, 2021, 2022, 2023, 2024.
+# Quentin PAGÈS <quentinantonin@free.fr>, 2020, 2021, 2022, 2023, 2024, 2025.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman 2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-12-19 20:58+0000\n"
+"PO-Revision-Date: 2025-05-09 15:00+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/2-4/oc/"
 ">\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9.2-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -1579,10 +1579,8 @@ msgid "Vehicle Tire Pressure Sensor"
 msgstr ""
 
 #: blueman/DeviceClass.py:270
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Fixtures"
-msgstr "Balança generica"
+msgstr "Luminaris generics"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
@@ -1678,11 +1676,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Lum de nautor bassa"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Lum de nautor elevada"
 
 #: blueman/DeviceClass.py:296
 #, fuzzy
@@ -1732,7 +1730,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Desumidificador"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
@@ -1752,49 +1750,39 @@ msgstr ""
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Calfatge infraroge"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "Calfatge de panèl radiant"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "radiator bofadís"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Ridèl d’aire"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Air Conditioning"
-msgstr "Àudio generic"
+msgstr "Climatizacion generica"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
-#| msgid "Generic Audio"
 msgid "Generic Humidifier"
-msgstr "Àudio generic"
+msgstr "Umidificador generic"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
-#| msgid "Generic Keyring"
 msgid "Generic Heating"
-msgstr "Pòrtaclaus generic"
+msgstr "Calfatge generic"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
-#| msgid "Generic Access"
 msgid "Generic Access Control"
-msgstr "Accès generic"
+msgstr "Contraròtle d’accès generic"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
-#| msgid "Access point"
 msgid "Access Door"
-msgstr "Punt d’accès"
+msgstr "Pòrta d’accès"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
@@ -1802,7 +1790,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Sortida de secors"
 
 #: blueman/DeviceClass.py:329
 #, fuzzy
@@ -1833,10 +1821,8 @@ msgid "Locker"
 msgstr "Blocat"
 
 #: blueman/DeviceClass.py:335
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Motorized Device"
-msgstr "Aparelh de mobilitat personala generic"
+msgstr "Aparelh motorizat generic"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
@@ -1844,11 +1830,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Contravent rotlant"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Persianas o contravent rotlant"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
@@ -1859,28 +1845,26 @@ msgid "Screen"
 msgstr ""
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
-#| msgid "Generic Personal Mobility Device"
 msgid "Generic Power Device"
-msgstr "Aparelh de mobilitat personala generic"
+msgstr "Aparelh generic d’alimentacion"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "Presa de corrent"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Barra d’alimentacion"
 
 #: blueman/DeviceClass.py:344
 #, fuzzy
 #| msgid "Plugins"
 msgid "Plug"
-msgstr "Extensions"
+msgstr "Ficha"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Font d’alimentacion"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
@@ -1896,17 +1880,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "Estug de carga"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Batariá extèrna"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
-#| msgid "Generic: Weight Scale"
 msgid "Generic Light Source"
-msgstr "Balança generica"
+msgstr "Font luminosa generica"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
@@ -1914,7 +1896,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "Lampa LED"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
@@ -2030,17 +2012,15 @@ msgstr "Servici :"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Quiòsc"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "Sala de difusion"
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Perfil àudio"
+msgstr "Auditòri"
 
 #: blueman/DeviceClass.py:383
 #, fuzzy
@@ -2064,13 +2044,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Moto"
 
 #: blueman/DeviceClass.py:388
-#, fuzzy
-#| msgid "Mobility Scooter"
 msgid "Scooter"
-msgstr "Escotèr de mobilitat"
+msgstr "Escotèr"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
@@ -2092,7 +2070,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Minibús"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
@@ -2100,7 +2078,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Carreton"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
@@ -2148,7 +2126,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Secador"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"

@@ -61,14 +61,16 @@
 # Sander Sweers <infirit@gmail.com>, 2022.
 # Benjamin Loison <benjamin.loison@orange.fr>, 2023.
 # TKF <clanking.feather@gmail.com>, 2024.
-# "David D." <david.ducassou@free.fr>, 2024.
+# "David D." <david.ducassou@free.fr>, 2024, 2025.
 # bakrav <bkrav@protonmail.com>, 2024.
+# Quentin <mrbydix@users.noreply.hosted.weblate.org>, 2025.
+# Mathéo <matheo.lemarie49@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-12-06 02:52+0000\n"
+"PO-Revision-Date: 2025-06-25 20:01+0000\n"
 "Last-Translator: \"David D.\" <david.ducassou@free.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/blueman/2-4/fr/>\n"
 "Language: fr\n"
@@ -76,7 +78,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -308,10 +310,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Point d'accès réseau (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Support du profil PAN</b>"
+msgstr "<b>Support du profil NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -480,12 +480,10 @@ msgstr ""
 "que le démon Bluetooth n'a pas été démarré."
 
 #: blueman/main/Manager.py:163
-#, fuzzy
 msgid "Click to disable."
 msgstr "Cliquez pour désactiver."
 
 #: blueman/main/Manager.py:166
-#, fuzzy
 msgid "Click to enable."
 msgstr "Cliquez pour activer."
 
@@ -1240,7 +1238,6 @@ msgid "Generic Computer"
 msgstr "Ordinateur générique"
 
 #: blueman/DeviceClass.py:171
-#, fuzzy
 msgid "Desktop Workstation"
 msgstr "Poste de travail de bureau"
 
@@ -1553,9 +1550,8 @@ msgid "Smoke Sensor"
 msgstr "Capteur de fumée"
 
 #: blueman/DeviceClass.py:251
-#, fuzzy
 msgid "Occupancy Sensor"
-msgstr "Capteur d'occupation"
+msgstr "Détecteur de présence"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
@@ -1871,11 +1867,11 @@ msgstr "Portail motorisé"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr "Store"
+msgstr "Auvent"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Stores"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
@@ -1899,7 +1895,7 @@ msgstr "Barre d'alimentation"
 
 #: blueman/DeviceClass.py:344
 msgid "Plug"
-msgstr "Greffon"
+msgstr "Prise"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
@@ -1923,7 +1919,7 @@ msgstr "Étui de chargement"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Batterie"
 
 #: blueman/DeviceClass.py:351
 msgid "Generic Light Source"
@@ -1947,11 +1943,11 @@ msgstr "Lampe fluorescente"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr "Zone LED"
+msgstr "Réseau de LED"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr "Zone LED multicolore"
+msgstr "Réseau de LED multicolore"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
@@ -1975,7 +1971,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Auvent de fenêtre"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
@@ -2003,7 +1999,7 @@ msgstr "Barre de son"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Enceinte bibliothèque"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
@@ -2039,7 +2035,7 @@ msgstr "Service d'assistance"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Kiosque"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
@@ -2059,7 +2055,7 @@ msgstr "Automobile"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Grand véhicule utilitaire"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
@@ -2075,7 +2071,7 @@ msgstr "Scooter"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Vélomoteur"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
@@ -2099,7 +2095,7 @@ msgstr "Bus"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Chariot"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
@@ -2107,11 +2103,11 @@ msgstr "Véhicule agricole"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "Camping-car / Caravane"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "Véhicule récréatif / Camping-car"
 
 #: blueman/DeviceClass.py:399
 msgid "Generic Domestic Appliance"
@@ -2123,7 +2119,7 @@ msgstr "Réfrigérateur"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Congélateur"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
@@ -2139,11 +2135,11 @@ msgstr "Grille-pain"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Lave linge"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Séchoir"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
@@ -2175,7 +2171,7 @@ msgstr "Cuiseur à riz"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "Défroisseur à vapeur"
 
 #: blueman/DeviceClass.py:415
 msgid "Generic Wearable Audio Device"
@@ -2183,11 +2179,11 @@ msgstr "Appareil audio portable générique"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Écouteur"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "Tour de cou"
 
 #: blueman/DeviceClass.py:420
 msgid "Generic Aircraft"
@@ -2199,7 +2195,7 @@ msgstr "Avion léger"
 
 #: blueman/DeviceClass.py:422
 msgid "Microlight"
-msgstr ""
+msgstr "ULM"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
@@ -2231,7 +2227,7 @@ msgstr "Tuner"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Platine"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
@@ -2250,8 +2246,6 @@ msgid "Optical Disc Player"
 msgstr "Lecteur de disque optique"
 
 #: blueman/DeviceClass.py:435
-#, fuzzy
-#| msgid "Set-top box"
 msgid "Set-Top Box"
 msgstr "Décodeur numérique"
 
@@ -2285,7 +2279,7 @@ msgstr "Aide auditive derrière oreille"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Implant cochléaire"
 
 #: blueman/DeviceClass.py:444
 msgid "Generic Gaming"
@@ -2316,10 +2310,8 @@ msgid "Generic Pulse Oximeter"
 msgstr "Oxymètre de pouls générique"
 
 #: blueman/DeviceClass.py:451
-#, fuzzy
-#| msgid "Generic: Pulse Oximeter"
 msgid "Fingertip Pulse Oximeter"
-msgstr "Générique : Oxymètre de Pouls"
+msgstr "Oxymètre de pouls de bout de doigt"
 
 #: blueman/DeviceClass.py:452
 msgid "Wrist Worn Pulse Oximeter"
@@ -2374,10 +2366,8 @@ msgid "Handheld Spirometer"
 msgstr "Spiromètre à main"
 
 #: blueman/DeviceClass.py:465
-#, fuzzy
-#| msgid "Generic: Outdoor Sports Activity"
 msgid "Generic Outdoor Sports Activity"
-msgstr "Générique : activité sportive de plein air"
+msgstr "Activité sportive en plein air générique"
 
 #: blueman/DeviceClass.py:466
 msgid "Location Display"
@@ -2568,9 +2558,8 @@ msgid "Fax"
 msgstr "Fax"
 
 #: blueman/Sdp.py:133
-#, fuzzy
 msgid "Headset Audio Gateway"
-msgstr "Passerelle des oreillettes audio"
+msgstr "Passerelle audio pour casque"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
@@ -3233,10 +3222,8 @@ msgid "Adapter for this connection is not available"
 msgstr "L'adaptateur pour cette connexion n'est pas disponible"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
-#| msgid "Disconnecting…"
 msgid "Reconnect to…"
-msgstr "Déconnexion …"
+msgstr "Reconnecte à…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3343,7 +3330,7 @@ msgid ""
 msgstr ""
 "Permute le commutateur matériel Bluetooth pour qu'il corresponde à l'état du "
 "Bluetooth. Permet de rallumer le Bluetooth à partir de l’icône qui montre "
-"son état; à condition que l'adaptateur ne soit pas déconnecté physiquement "
+"son état ; à condition que l'adaptateur ne soit pas déconnecté physiquement "
 "du système."
 
 #: blueman/plugins/applet/StandardItems.py:22

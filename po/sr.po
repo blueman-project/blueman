@@ -5,7 +5,7 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2014-2015
 # Мирослав Николић <miroslavnikolic@rocketmail.com>, 2020
-# Саша Петровић <salepetronije@gmail.com>, 2012,2016-2017, 2023.
+# Саша Петровић <salepetronije@gmail.com>, 2012,2016-2017, 2023, 2025.
 # Kowski <kowskistillplays@gmail.com>, 2022.
 # Reno Tx <renotx@users.noreply.hosted.weblate.org>, 2025.
 # Christopher Schramm <github@cschramm.eu>, 2025.
@@ -14,17 +14,17 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2025-02-03 13:12+0000\n"
-"Last-Translator: Christopher Schramm <github@cschramm.eu>\n"
-"Language-Team: Serbian <https://hosted.weblate.org/projects/blueman/2-4/sr/>"
-"\n"
+"PO-Revision-Date: 2025-06-25 20:01+0000\n"
+"Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
+"Language-Team: Serbian <https://hosted.weblate.org/projects/blueman/2-4/sr/"
+">\n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -480,9 +480,9 @@ msgstr "Процењено време пријема:"
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%(seconds)d секунда"
+msgstr[1] "%(seconds)d секунде"
+msgstr[2] "%(seconds)d секунди"
 
 #: blueman/main/Sendto.py:225
 #, python-format
@@ -861,9 +861,8 @@ msgid "No dependencies"
 msgstr "Нема зависности"
 
 #: blueman/gui/applet/PluginDialog.py:272
-#, fuzzy
 msgid "No conflicts"
-msgstr "Нема конфликата"
+msgstr "Нема сукоба"
 
 #: blueman/gui/applet/PluginDialog.py:349
 msgid "Dependency issue"
@@ -899,31 +898,26 @@ msgstr "Приступна тачка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
-#, fuzzy
 msgid "Audio/video"
-msgstr "Аудио/видео"
+msgstr "Звук/видео"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
-#, fuzzy
 msgid "Peripheral"
-msgstr "Перферни"
+msgstr "Крајњи"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:518
-#, fuzzy
 msgid "Imaging"
 msgstr "Сликање"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
-#, fuzzy
 msgid "Wearable"
 msgstr "Носив"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
-#, fuzzy
 msgid "Toy"
 msgstr "Играчка"
 
@@ -949,7 +943,6 @@ msgstr "Ручни рачунар"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
-#, fuzzy
 msgid "Palm"
 msgstr "Длан"
 
@@ -975,51 +968,43 @@ msgstr "Модем"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
-#, fuzzy
 msgid "ISDN"
-msgstr "ISDN"
+msgstr "ИСДН"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
-#, fuzzy
 msgid "Fully"
 msgstr "Потпуно"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
-#, fuzzy
 msgid "1–17 percent"
-msgstr "1–17 процената"
+msgstr "1–17 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
-#, fuzzy
 msgid "17–33 percent"
-msgstr "17–33 процената"
+msgstr "17–33 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
-#, fuzzy
 msgid "33–50 percent"
-msgstr "33–50 процената"
+msgstr "33–50 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
-#, fuzzy
 msgid "50–67 percent"
-msgstr "50–67 процената"
+msgstr "50–67 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
-#, fuzzy
 msgid "67–83 percent"
-msgstr "67–83 процената"
+msgstr "67–83 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
-#, fuzzy
 msgid "83–99 percent"
-msgstr "83–99 процената"
+msgstr "83–99 постотка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
@@ -1044,209 +1029,199 @@ msgstr "Микрофон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
-#, fuzzy
 msgid "Loudspeaker"
 msgstr "Звучник"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
 msgid "Headphones"
-msgstr ""
+msgstr "Слушалице"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Преносни звучни уређај"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Колски звучни уређај"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Телевизијска кутијица"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Истанчани звучни уређај"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "Снимач видеа"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Извор звука"
+msgstr "Видео-камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Снимачка камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Извор звука"
+msgstr "Прегледник видеа"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Заслон за видео и звучник"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Извор звука"
+msgstr "Позивање са сликом"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Играње/играчка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "показивач"
+msgstr "Показивач"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Заслон"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Камера"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Скенер"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Штампач"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Ручни часовник"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Страничник"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Јакна"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Кацига"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Наочари"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Робот"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Возило"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Лутка"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Управљач"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Игра"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
 msgid "Generic Unknown"
-msgstr "Повежи"
+msgstr "Опште непознато"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Повежи"
+msgstr "Опште телефон"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Повежи"
+msgstr "Опште рачунар"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Радна станица"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
 msgid "Server-class Computer"
-msgstr "Повежи"
+msgstr "Рачунар служитељ"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Ручни рачунар/ПДА (ручна шкољка)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Рачунар величине длана/ПДА"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Преносни рачунар (величине часовника)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Таблица"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Приступна радна станица"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Све у једном"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Blade Server"
-msgstr "сервер"
+msgstr "Уметни рачунар служитељ"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Претварачки"
 
 #: blueman/DeviceClass.py:182
 msgid "Detachable"
-msgstr ""
+msgstr "Уклоњив"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
@@ -1254,394 +1229,367 @@ msgstr ""
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Мали рачунар"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Рачунар уметак"
 
 #: blueman/DeviceClass.py:186
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Повежи"
+msgstr "Општи часовник"
 
 #: blueman/DeviceClass.py:187
 msgid "Sports Watch"
-msgstr ""
+msgstr "Спортски часовник"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
 msgid "Smartwatch"
-msgstr "паметни телефон"
+msgstr "Паметни часовник"
 
 #: blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Повежи"
+msgstr "Општи часовник"
 
 #: blueman/DeviceClass.py:190
-#, fuzzy
 msgid "Generic Display"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи заслон"
 
 #: blueman/DeviceClass.py:191
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "Повежи"
+msgstr "Општи даљински управљач"
 
 #: blueman/DeviceClass.py:192
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "Пренос датотека Блутутом"
+msgstr "Опште наочари"
 
 #: blueman/DeviceClass.py:193
-#, fuzzy
 msgid "Generic Tag"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општа ознака"
 
 #: blueman/DeviceClass.py:194
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "Групна мрежа"
+msgstr "Општи привезак за кључеве"
 
 #: blueman/DeviceClass.py:195
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи извођач медија"
 
 #: blueman/DeviceClass.py:196
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "Повежи"
+msgstr "Општи скенер тракастих кодова"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "Повежи"
+msgstr "Општи топломер"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
 msgid "Ear Thermometer"
-msgstr "Повежи"
+msgstr "Ушни топломер"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
 msgid "Generic Heart Rate Sensor"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи пријемник откуцаја срца"
 
 #: blueman/DeviceClass.py:200
 msgid "Heart Rate Belt"
-msgstr ""
+msgstr "Појас мерач откуцаја срца"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Општи мерач притиска"
 
 #: blueman/DeviceClass.py:202
 msgid "Arm Blood Pressure"
-msgstr ""
+msgstr "Ручни мерач притиска"
 
 #: blueman/DeviceClass.py:203
 msgid "Wrist Blood Pressure"
-msgstr ""
+msgstr "Зглобни мерач притиска"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "Општи уређај сучеља"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
-msgstr ""
+msgstr "Миш"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "Џојстик"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
-msgstr ""
+msgstr "Играчки уређај"
 
 #: blueman/DeviceClass.py:209
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Таблица за цртање"
 
 #: blueman/DeviceClass.py:210
 msgid "Card Reader"
-msgstr ""
+msgstr "Читач картица"
 
 #: blueman/DeviceClass.py:211
 msgid "Digital Pen"
-msgstr ""
+msgstr "Електронска оловка"
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Скенер тракастих кодова"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Додирна плочица"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Даљински уређај за представе"
 
 #: blueman/DeviceClass.py:215
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "Повежи"
+msgstr "Општи мерач шећера"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
 msgid "Generic Running Walking Sensor"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи пријемник трчања и ходања"
 
 #: blueman/DeviceClass.py:217
 msgid "In-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Пријемник трчања и ходања у патици"
 
 #: blueman/DeviceClass.py:218
 msgid "On-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Пријемник трчања и ходања на патици"
 
 #: blueman/DeviceClass.py:219
 msgid "On-Hip Running Walking Sensor"
-msgstr ""
+msgstr "Пријемник трчања и ходања на куку"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
 msgid "Generic Cycling"
-msgstr "Групна мрежа"
+msgstr "Општи точак"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
 msgid "Cycling Computer"
-msgstr "Повежи"
+msgstr "Рачунар на точку"
 
 #: blueman/DeviceClass.py:222
 msgid "Speed Sensor"
-msgstr ""
+msgstr "Пријемник брзине"
 
 #: blueman/DeviceClass.py:223
 msgid "Cadence Sensor"
-msgstr ""
+msgstr "Пријемник учесталости"
 
 #: blueman/DeviceClass.py:224
 msgid "Power Sensor"
-msgstr ""
+msgstr "Пријемник снаге"
 
 #: blueman/DeviceClass.py:225
 msgid "Speed and Cadence Sensor"
-msgstr ""
+msgstr "Пријемник брзине и учесталости"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
 msgid "Generic Control Device"
-msgstr "Повежи"
+msgstr "Општи управљачки уређај"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Прекидач"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Вишеструки прекидач"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Дугме"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Клизач"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Кружни прекидач"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Додирна површ"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Јединачни прекидач"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Двоструки прекидач"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Троструки прекидач"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
 msgid "Battery Switch"
-msgstr "Месне услуге"
+msgstr "Прекидач батерије"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Прекидач скупљача снаге"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Притисно дугме"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Куцање"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
 msgid "Generic Network Device"
-msgstr "Групна мрежа"
+msgstr "Општи мрежни уређај"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
 msgid "Access Point"
-msgstr "Мрежна приступна тачка"
+msgstr "Приступна тачка"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Уређај"
+msgstr "Мрежни уређај"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Прикључник мрежног развођења"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
 msgid "Generic Sensor"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи пријемник"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Пријемник кретања"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Пријемник каквоће ваздуха"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
 msgid "Temperature Sensor"
-msgstr "Пренос датотека Блутутом"
+msgstr "Пријемник топлоте"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Пријемник влаге"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Пријемник влажности"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Пријемник дима"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Пријемник присутности"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Пријемник познаника"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Пријемник угљеног моноксида"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Пријемник угљеног диоксида"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Пријемник унутрашњег осветљења"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Пријемник снаге"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Пријемник боје светлости"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Пријемник кише"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Пошиљалац датотеке"
+msgstr "Пријемник пожара"
 
 #: blueman/DeviceClass.py:260
 msgid "Wind Sensor"
-msgstr ""
+msgstr "Пријемник ветра"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Пријемник близине"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Вишеструки пријемник"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "Пријемник приљубљен уз зид"
 
 #: blueman/DeviceClass.py:264
 msgid "Ceiling Mounted Sensor"
-msgstr ""
+msgstr "Пријемник окачен о таваницу"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Пријемник окачен уза зид"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Вишеструки пријемник"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Мерач снаге"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Пријемник пламена"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Пријемник притиска у гумама"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
-msgstr ""
+msgstr "Опште украсне сијалице"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Зидно освељење"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Осветљење са таванице"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Осветљење са пода"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Кухињско осветљење"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Стоно осветљење"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
@@ -1661,7 +1609,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "Подводно осветљење"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
@@ -1669,11 +1617,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "Осветљење путање"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "Осветљење врта"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
@@ -1681,39 +1629,39 @@ msgstr ""
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "Тачкасто осветљење"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "Линијско осветљење"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "Улично светло"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "Осветљење полица"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "Светло луке"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "Осветљење излаза у случају опасности"
 
 #: blueman/DeviceClass.py:291
 msgid "Light Controller"
-msgstr ""
+msgstr "Управљач осветљењем"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "Управљач осветљењем"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Сијалица"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
@@ -1724,33 +1672,32 @@ msgid "High-bay Light"
 msgstr ""
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
 msgid "Generic Fan"
-msgstr "Пренос датотека Блутутом"
+msgstr "Општи мех"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Тавански мех"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "Осовински мех"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "Издувни мех"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "Мех са постољем"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "Столни мех"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "Зидни мех"
 
 #: blueman/DeviceClass.py:303
 #, fuzzy
@@ -1763,31 +1710,31 @@ msgstr ""
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Овлаживач"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Сушара ваздуха"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Грејач"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Топлотни радијатор"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Грејач воде"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Топлотна црпка"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Подцрвени грејач"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
@@ -1795,11 +1742,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "Мех грејач"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Ваздушна завеса"
 
 #: blueman/DeviceClass.py:315
 #, fuzzy
@@ -1822,46 +1769,44 @@ msgid "Generic Access Control"
 msgstr "Повежи"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
 msgid "Access Door"
-msgstr "Мрежна приступна тачка"
+msgstr "Улазна врата"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Гаражна врата"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Врата излаза у случају опасности"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
 msgid "Access Lock"
-msgstr "Мрежна приступна тачка"
+msgstr "Улазна брава"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Подизач"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Прозор"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "Улазна врата"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Брава врата"
 
 #: blueman/DeviceClass.py:334
 msgid "Locker"
-msgstr ""
+msgstr "Ковчег"
 
 #: blueman/DeviceClass.py:335
 msgid "Generic Motorized Device"
-msgstr ""
+msgstr "Општи уређај са мотором"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
@@ -1877,16 +1822,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "Завесе"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Заслон"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
 msgid "Generic Power Device"
-msgstr "Повежи"
+msgstr "Општи уређај напајања"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
@@ -1897,18 +1841,16 @@ msgid "Power Strip"
 msgstr ""
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Прикључци"
+msgstr "Прикључак"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Напајање"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "Управљач ЛЕД сијалицама"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
@@ -1924,12 +1866,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Преносно напајање"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
 msgid "Generic Light Source"
-msgstr "Повежи"
+msgstr "Општи извор светлости"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
@@ -1937,7 +1878,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "Лампа ЛЕД"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
@@ -1964,9 +1905,8 @@ msgid "Organic light emitting diode (OLED)"
 msgstr ""
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
 msgid "Generic Window Covering"
-msgstr "Групна мрежа"
+msgstr "Општи заслон прозора"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
@@ -1990,17 +1930,15 @@ msgstr ""
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Спољњи заслон"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Generic Audio Sink"
-msgstr "Усклађивање звука"
+msgstr "Опште усклађивање звука"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "Самостални звучник"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
@@ -2008,30 +1946,27 @@ msgstr ""
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Звучник за полице"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
 msgstr ""
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
 msgid "Speakerphone"
-msgstr "паметни телефон"
+msgstr "Телефонски вучник"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Generic Audio Source"
-msgstr "Извор звука"
+msgstr "Општи извор звука"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "Ларма"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Звоно"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
@@ -2044,14 +1979,12 @@ msgid "Broadcasting Device"
 msgstr "Упари уређај"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Услуга:"
+msgstr "Сто за поправке"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Кош"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
@@ -2070,7 +2003,7 @@ msgstr "Пренос датотека Блутутом"
 
 #: blueman/DeviceClass.py:384
 msgid "Car"
-msgstr ""
+msgstr "Кола"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
@@ -2139,7 +2072,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Замрзивач"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
@@ -3147,9 +3080,8 @@ msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
 
 #: blueman/plugins/applet/ConnectionNotifier.py:36
-#, fuzzy
 msgid "Disconnected"
-msgstr "Прекидам везу..."
+msgstr "Одвезан"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
@@ -3275,9 +3207,8 @@ msgid "Adapter for this connection is not available"
 msgstr "Примопредајник за ову везу није доступан"
 
 #: blueman/plugins/applet/RecentConns.py:188
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Прекидам везу..."
+msgstr "Поново се повежи са…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3358,12 +3289,12 @@ msgid "Files received"
 msgstr "Датотеке су примљене"
 
 #: blueman/plugins/applet/TransferService.py:333
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Примљена је %d датотека у позадини"
-msgstr[1] "Примљене су %d датотеке у позадини"
-msgstr[2] "Примљено је %d датотека у позадини"
+msgstr[0] "Примљена је %(files)d датотека у позадини"
+msgstr[1] "Примљене су %(files)d датотеке у позадини"
+msgstr[2] "Примљено је %(files)d датотека у позадини"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
@@ -3371,12 +3302,12 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:342
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Примљена је још %d датотека у позадини"
-msgstr[1] "Примљене су још %d датотеке у позадини"
-msgstr[2] "Примљено је још %d датотека у позадини"
+msgstr[0] "Примљена је још %(files)d датотека у позадини"
+msgstr[1] "Примљене су још %(files)d датотеке у позадини"
+msgstr[2] "Примљено је још %(files)d датотека у позадини"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3478,9 +3409,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Прекидам везу..."
+msgstr "Прекини везу са %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3513,10 +3444,8 @@ msgid "Discoverable… %ss"
 msgstr "Проналажљив… %ss"
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discoverable…"
-msgstr "Проналажљив… %ss"
+msgstr "Проналажљив…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
@@ -3725,7 +3654,7 @@ msgstr "Покрени клијента ДХЦП-а"
 
 #: data/configs/org.blueman.policy.in:20
 msgid "Launching DHCP client requires privileges"
-msgstr "За покретање клијента  ДХЦП-а су потребна овлашћења"
+msgstr "За покретање клијента ДХЦП-а су потребна овлашћења"
 
 #: data/configs/org.blueman.policy.in:28
 msgid "Launch PPP daemon"

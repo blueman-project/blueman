@@ -6,13 +6,14 @@
 # André Rivero Castillo <hab130@gmail.com>, 2016
 # Miguel Anxo Bouzada <mbouzada@gmail.com>, 2014,2018-2019
 # Sander Sweers <infirit@gmail.com>, 2024.
+# Yago Raña Gayoso <yago.rana.gayoso@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-10-17 19:55+0000\n"
-"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"PO-Revision-Date: 2025-06-25 20:01+0000\n"
+"Last-Translator: Yago Raña Gayoso <yago.rana.gayoso@gmail.com>\n"
 "Language-Team: Galician <https://hosted.weblate.org/projects/blueman/2-4/gl/"
 ">\n"
 "Language: gl\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-rc\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -39,9 +40,8 @@ msgid "Temporarily visible"
 msgstr "Visíbel temporalmente"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Emparellados</b>"
+msgstr "<b>Nome</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
@@ -72,14 +72,12 @@ msgid "_Search"
 msgstr "_Buscar"
 
 #: data/ui/manager-main.ui:92
-#, fuzzy
 msgid "_Preferences"
-msgstr "Preferencias do adaptador"
+msgstr "_Preferencias"
 
 #: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
-msgstr "Saír"
+msgstr "_Saír"
 
 #: data/ui/manager-main.ui:124
 msgid "_Device"
@@ -98,9 +96,8 @@ msgid "Show _Statusbar"
 msgstr "Amosar a barra de e_stado"
 
 #: data/ui/manager-main.ui:158
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Renomear dispositivo"
+msgstr "Agochar dispositivos _sen nome"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
@@ -207,15 +204,13 @@ msgstr "_Restabelecer"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Cancelando"
+msgstr "_Cancelar"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:17
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
@@ -239,17 +234,15 @@ msgstr "<b>Axustes de NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Rede de área persoal"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Compatibilidade con PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Rede de acceso telefónico (DUN)"
+msgstr "Rede de acceso telefónico"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -260,10 +253,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Punto de acceso á rede (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Compatibilidade con PAN</b>"
+msgstr "<b>Compatibilidade con NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -562,11 +553,6 @@ msgid "Accept"
 msgstr "Aceptar"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
@@ -590,19 +576,19 @@ msgstr "Activar o Bluetooth"
 
 #: blueman/Functions.py:166
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:169
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:172
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:175
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:47
 msgid "Device Manager"
@@ -616,9 +602,8 @@ msgstr "Preferencias do servizo"
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
-#, fuzzy
 msgid "Keyboard"
-msgstr "teclado"
+msgstr "Teclado"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:158 blueman/DeviceClass.py:127
@@ -626,19 +611,16 @@ msgid "Combo"
 msgstr ""
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Renomear dispositivo"
+msgstr "Dispositivo sen nome"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
 #: blueman/gui/manager/ManagerDeviceList.py:377 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "sen categoría"
+msgstr "Sen categoría"
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/gui/manager/ManagerDeviceList.py:568
@@ -650,25 +632,20 @@ msgid "Connected"
 msgstr "Conectado"
 
 #: blueman/gui/manager/ManagerDeviceList.py:570
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
-msgstr "Confianza"
+msgstr "Confiable"
 
 #: blueman/gui/manager/ManagerDeviceList.py:572
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Emparellar"
+msgstr "Emparellado"
 
 #: blueman/gui/manager/ManagerDeviceList.py:574
 msgid "Blocked"
-msgstr ""
+msgstr "Bloqueado"
 
 #: blueman/gui/manager/ManagerDeviceList.py:596
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "<b>Conectar a:</b>"
+msgstr "<b>Conectado</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:610
 msgid "Poor"
@@ -695,12 +672,12 @@ msgstr "Bastante bo"
 #: blueman/gui/manager/ManagerDeviceList.py:621
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Forza da sinal recibida: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:624
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Forza da sinal recibida: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:629
 msgid "Low"
@@ -1474,7 +1451,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Botón"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"

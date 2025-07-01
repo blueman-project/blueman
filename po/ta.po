@@ -6,13 +6,13 @@
 # bhuvi https://launchpad.net/~bhuvanesh
 # Kamala Kannan, 2016
 # Mooglie <mooglietech@gmail.com>, 2017
-# தமிழ்நேரம் <anishprabu.t@gmail.com>, 2024.
+# தமிழ்நேரம் <anishprabu.t@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-12-16 15:00+0000\n"
+"PO-Revision-Date: 2025-05-31 05:52+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/blueman/2-4/ta/>\n"
 "Language: ta\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -72,7 +72,7 @@ msgstr "_S தேடுக"
 
 #: data/ui/manager-main.ui:92
 msgid "_Preferences"
-msgstr "_ முனைகள்"
+msgstr "விருப்பத்தேர்வுகள்"
 
 #: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
 msgid "_Exit"
@@ -133,7 +133,7 @@ msgstr "ஒரு சிக்கலைப் புகாரளிக்கவ�
 
 #: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr "அருகில் உள்ள சாதனத்தை தேடுக "
+msgstr "அருகில் உள்ள சாதனத்தைத் தேடுக"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:296
@@ -161,7 +161,7 @@ msgstr "நம்பு"
 
 #: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:430
 msgid "Remove this device from the known devices list"
-msgstr "இச்சாதனத்தை தெரிந்த சாதனங்கள் பட்டியலில் இருந்து நீக்கு "
+msgstr "இச்சாதனத்தை தெரிந்த சாதனங்கள் பட்டியலிலிருந்து நீக்கு"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:348
@@ -170,7 +170,7 @@ msgstr "நீக்கு"
 
 #: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
-msgstr "கோப்பினை மற்றோரு சாதனத்திற்கு அனுப்ப "
+msgstr "கோப்பினை மற்றோரு சாதனத்திற்கு அனுப்பு"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:372
@@ -199,7 +199,7 @@ msgstr "சாதனத்திற்கு மறுபெயரிடு"
 
 #: data/ui/rename-device.ui:28 data/ui/net-usage.ui:244
 msgid "_Reset"
-msgstr "நிலை மீள் "
+msgstr "மீட்டமை"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:231
 #: blueman/gui/DeviceSelectorDialog.py:17
@@ -229,7 +229,7 @@ msgstr "IP முகவரி:"
 
 #: data/ui/services-network.ui:180
 msgid "<b>NAP Settings</b>"
-msgstr "<b> தூக்க அமைப்புகள் </b>"
+msgstr "<b> NAP அமைப்புகள் </b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
@@ -413,8 +413,8 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"புளூச் டீமான் இயங்கவில்லை, புளூமேன்-மேலாளர் தொடர முடியாது.\n"
-" இதன் பொருள் ஊடலை அடாப்டர்கள் கண்டறியப்படவில்லை அல்லது ஊடலை டீமான் தொடங்கப்படவில்லை."
+"புளூச் டீமான் இயங்கவில்லை, புளூமேன்-மேலாளர் தொடர முடியாது. \n"
+"இதன் பொருள் ஊடலை அடாப்டர்கள் கண்டறியப்படவில்லை அல்லது ஊடலை டீமான் தொடங்கப்படவில்லை."
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
@@ -508,7 +508,7 @@ msgstr "அங்கீகாரத்திற்கு முள் குற�
 
 #: blueman/main/applet/BluezAgent.py:174
 msgid "Enter passkey for authentication:"
-msgstr "அங்கீகாரத்திற்கு பாச்கியை உள்ளிடவும்:"
+msgstr "அங்கீகாரத்திற்காக பாச்கியை உள்ளிடவும்:"
 
 #: blueman/main/applet/BluezAgent.py:185
 msgid "Pairing passkey for"
@@ -558,9 +558,8 @@ msgid ""
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 "<b> ஒரு சொருகி ஏற்றும்போது பிழை ஏற்பட்டது. இந்த செய்தியின் உள்ளடக்கத்துடன் "
-"டெவலப்பர்களுக்கு எங்கள் </b> க்கு அறிவிக்கவும்\n"
-" <a href = \"http://github.com/blueman-project/blueman/issues\"> வலைத்தளம். </"
-"a>"
+"டெவலப்பர்களுக்கு எங்கள் </b> க்கு அறிவிக்கவும் \n"
+"<a href = \"http://github.com/blueman-project/blueman/issues\"> வலைத்தளம். </a>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -654,7 +653,7 @@ msgstr "மோசம்"
 #: blueman/gui/manager/ManagerDeviceList.py:612
 #: blueman/gui/manager/ManagerDeviceList.py:631
 msgid "Sub-optimal"
-msgstr "துணை உகந்த"
+msgstr "துணை-உகந்த"
 
 #: blueman/gui/manager/ManagerDeviceList.py:614
 #: blueman/gui/manager/ManagerDeviceList.py:633
@@ -1166,7 +1165,7 @@ msgstr "பொதுவான தெரியவில்லை"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
-msgstr "பொதுவான பேசி"
+msgstr "பொது பேசி"
 
 #: blueman/DeviceClass.py:170
 msgid "Generic Computer"
@@ -1558,7 +1557,7 @@ msgstr "சுடர் கண்டறிதல்"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr "வாகன டயர் அழுத்தம் சென்சார்"
+msgstr "வாகன டயர் பிரசர் சென்சார்"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
@@ -1590,7 +1589,7 @@ msgstr "டிராஃபர் லைட்"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr "பதக்கத்தில் ஒளி"
+msgstr "பதக்க ஒளி"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
@@ -1642,7 +1641,7 @@ msgstr "விரிகுடா ஒளி"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr "அவசரகால வெளியேறும் ஒளி"
+msgstr "அவசரநிலை வெளியேறும் ஒளி"
 
 #: blueman/DeviceClass.py:291
 msgid "Light Controller"
@@ -2546,7 +2545,7 @@ msgstr "ஏண்ட்ச்ஃப்ரீ ஆடியோ நுழைவா�
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr "நேரடிஅச்சிடும்குறிப்புபொருள்கள்சேவை (BPP)"
+msgstr "நேரடிஅச்சிடுதல்குறிப்புபொருள்கள்சேவை (பிபீபீ)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
@@ -2582,7 +2581,7 @@ msgstr "பொதுவான ஐ.எச்.டி.என் அணுகல் 
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr "வீடியோகான்பரன்சிங்சிடபிள்யூ (VCP)"
+msgstr "காணொளிசந்திப்புசீய (விசிபி)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
@@ -2718,7 +2717,7 @@ msgstr "பொதுவான பண்புக்கூறு"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr "உடனடி எச்சரிக்கை"
+msgstr "உடனடி முன்னறிவிப்பு"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
@@ -2758,7 +2757,7 @@ msgstr "இதய துடிப்பு"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr "தொலைபேசி எச்சரிக்கை நிலை பணி"
+msgstr "தொலைபேசி முன்னறிவிப்பு நிலை பணி"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -2770,7 +2769,7 @@ msgstr "இரத்த அழுத்தம்"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr "எச்சரிக்கை அறிவிப்பு பணி"
+msgstr "முன்னறிவிப்பு அறிவிப்பு பணி"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
@@ -2778,7 +2777,7 @@ msgstr "மனித இடைமுக சாதனம்"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr "ச்கேன் அளவுருக்கள்"
+msgstr "வருடு அளவுருக்கள்"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
@@ -2894,7 +2893,7 @@ msgstr "பணி மாற்றப்பட்டது"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr "கணினி ஐடி"
+msgstr "கணினி அடையாளம்"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
@@ -2922,7 +2921,7 @@ msgstr "உற்பத்தியாளர் பெயர் சரம்"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr "பி.என்.பி ஐடி"
+msgstr "பி.என்.பி அடையாளம்"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
@@ -3081,7 +3080,7 @@ msgstr "%d %s %d %s மற்றும் %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:243
 msgid "Are you sure you want to reset the counter?"
-msgstr "நீங்கள் கவுண்டரை மீட்டமைக்க விரும்புகிறீர்களா?"
+msgstr "நீங்கள் நிச்சயமாக கவுண்டரை மீட்டமைக்க விரும்புகிறீர்களா?"
 
 #: blueman/plugins/applet/NetUsage.py:289
 msgid ""
@@ -3145,7 +3144,7 @@ msgstr "இணைக்கத் தவறிவிட்டது"
 #: blueman/plugins/applet/RecentConns.py:171
 #, python-format
 msgid "%(service)s on %(device)s"
-msgstr "%(service)s %(device)s"
+msgstr "%(service)s மீது %(device)s"
 
 #: blueman/plugins/applet/RecentConns.py:175
 msgid "Adapter for this connection is not available"
@@ -3221,7 +3220,7 @@ msgstr "திற"
 
 #: blueman/plugins/applet/TransferService.py:311
 msgid "Transfer failed"
-msgstr "இடமாற்றம்  தோல்வியுற்றது"
+msgstr "இடமாற்றம் தோல்வியுற்றது"
 
 #: blueman/plugins/applet/TransferService.py:312
 #, python-format
@@ -3291,7 +3290,7 @@ msgstr "அடாப்டர்ச்"
 
 #: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
-msgstr "Applet"
+msgstr "applet"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
@@ -3327,8 +3326,8 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
-"%s மீது ஐபி முகவரியைப் பெற முயற்சிக்கிறது\n"
-" தயவுசெய்து காத்திருங்கள்…"
+"%s மீது ஐபி முகவரியைப் பெற முயற்சிக்கிறது \n"
+"தயவுசெய்து காத்திருங்கள்…"
 
 #: blueman/plugins/applet/ShowConnected.py:21
 msgid ""
@@ -3361,7 +3360,7 @@ msgid ""
 "Provides a menu item for making the default adapter temporarily visible when "
 "it is set to hidden by default"
 msgstr ""
-"இயல்புநிலை அடாப்டரை இயல்புநிலையாக மறைக்கும்போது தற்காலிகமாகக் காண ஒரு பட்டியல் "
+"இயல்புநிலை அடாப்டர் இயல்புநிலையாக மறைக்கப்படும் போது தற்காலிகமாகக் காணக்கூடிய பட்டியல் "
 "உருப்படியை வழங்குகிறது"
 
 #: blueman/plugins/applet/DiscvManager.py:26
@@ -3406,7 +3405,7 @@ msgstr ""
 
 #: blueman/plugins/applet/PPPSupport.py:82
 msgid "Provides basic support for connecting to the internet via DUN profile."
-msgstr "DUN சுயவிவரம் வழியாக இணையத்துடன் இணைப்பதற்கான அடிப்படை ஆதரவை வழங்குகிறது."
+msgstr "டன் சுயவிவரம் வழியாக இணையத்துடன் இணைப்பதற்கான அடிப்படை ஆதரவை வழங்குகிறது."
 
 #: blueman/plugins/applet/SerialManager.py:22
 msgid ""
@@ -3457,8 +3456,8 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
-"ச்கிரிப்ட் %s தொடங்குவதில் சிக்கல் இருந்தது\n"
-" %s"
+"ச்கிரிப்ட் %s தொடங்குவதில் சிக்கல் இருந்தது \n"
+"%s"
 
 #: blueman/plugins/applet/PowerManager.py:31
 msgid "Controls Bluetooth adapter power states"
@@ -3476,7 +3475,7 @@ msgstr "அனைத்து அடாப்டர்களையும் அ�
 
 #: blueman/plugins/applet/PowerManager.py:145
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr "<b> புளூடூத்தை மாற்றவும் _on </b>"
+msgstr "<b> புளூடூத்தை இயக்கவும் </b>"
 
 #: blueman/plugins/applet/PowerManager.py:147
 msgid "Turn on all adapters"
@@ -3487,7 +3486,7 @@ msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
-"ஊடலை விளையாட்டு கட்டுப்படுத்தி இணைக்கப்படும்போது ச்கிரீன்சேவரை தற்காலிகமாக "
+"ஊடலை விளையாட்டு கட்டுப்படுத்தி இணைக்கப்படும்போது தற்காலிகமாக ச்கிரீன்சேவரை "
 "இடைநிறுத்துகிறது."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
@@ -3515,8 +3514,8 @@ msgid ""
 "This may cause incorrect network behavior"
 msgstr ""
 "%s இன் சப்நெட் உடன் ஐபி முகவரி ஒன்றுடன் ஒன்று, இது பின்வரும் உள்ளமைவு %s/ %s ஐக் "
-"கொண்டுள்ளது\n"
-" இது தவறான பிணைய நடத்தையை ஏற்படுத்தக்கூடும்"
+"கொண்டுள்ளது \n"
+"இது தவறான பிணைய நடத்தையை ஏற்படுத்தக்கூடும்"
 
 #: blueman/plugins/services/Network.py:228
 #: blueman/plugins/services/Network.py:237
