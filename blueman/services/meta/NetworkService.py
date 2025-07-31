@@ -16,9 +16,9 @@ class NetworkService(Service):
 
     @property
     def available(self) -> bool:
-        # This interface is only available after pairing
-        paired: bool = self.device["Paired"]
-        return paired
+        # This interface is only available after pairing and blocked
+        available: bool = self.device["Paired"] and not self.device["Blocked"]
+        return available
 
     @property
     def connectable(self) -> bool:
