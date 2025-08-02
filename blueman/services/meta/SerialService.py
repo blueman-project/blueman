@@ -21,9 +21,7 @@ class SerialService(Service):
 
     @property
     def available(self) -> bool:
-        # It will ask to pair anyway so not make it available
-        paired: bool = self.device["Paired"]
-        return paired
+        return super().available
 
     @property
     def connectable(self) -> bool:
