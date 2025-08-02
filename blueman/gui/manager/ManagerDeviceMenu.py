@@ -303,12 +303,19 @@ class ManagerDeviceMenu(Gtk.Menu):
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
 
         powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
+        blocked = self.SelectedDevice["Blocked"]
 
         if not row["connected"] and show_generic_connect and powered:
+            if blocked:
+                tooltip = _("Not available (Blocked)")
+            else:
+                tooltip = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
+
             connect_item = self._add_menu_item(
                 label=_("<b>_Connect</b>"),
                 icon_name="bluetooth-symbolic",
-                tooltip=_("Connects auto connect profiles A2DP source, A2DP sink, and HID")
+                tooltip=tooltip,
+                sensitive=not blocked
             )
             connect_item.connect("activate", lambda _item: self.connect_service(self.SelectedDevice))
         elif row["connected"] and show_generic_connect:
@@ -329,7 +336,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         autoconnect_items = [item for item in items if item.group == DeviceMenuItem.Group.AUTOCONNECT]
         action_items = [i for i in items if i.group == DeviceMenuItem.Group.ACTIONS]
 
-        if connect_items:
+        if connect_items and not blocked:
             self.append(self._create_header(_("<b>Connect To:</b>")))
             for it in sorted(connect_items, key=attrgetter("position")):
                 self.append(it.item)
@@ -363,7 +370,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         for it in sorted(action_items, key=attrgetter("position")):
             self.append(it.item)
 
-        if powered and row["objpush"]:
+        if powered and row["objpush"] and not blocked:
             send_item = self._add_menu_item(
                 label=_("Send a _File…"),
                 icon_name="blueman-send-symbolic"
@@ -375,8 +382,8 @@ class ManagerDeviceMenu(Gtk.Menu):
         self._add_menu_item(
             label=_("_Pair"),
             icon_name="blueman-pair-symbolic",
-            tooltip=_("Create pairing with the device"),
-            sensitive=not row["paired"]
+            tooltip=_("Create pairing with the device") if not blocked else _("Not available (Blocked)"),
+            sensitive=False if blocked else not row["paired"]
         )
 
         trust_item = self._add_menu_item(
