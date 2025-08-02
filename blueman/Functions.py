@@ -186,6 +186,7 @@ def create_menuitem(
     icon_name: str | None = None,
     pixbuf: GdkPixbuf.Pixbuf | None = None,
     surface: cairo.Surface | None = None,
+    action_name: str | None = None,
 ) -> Gtk.ImageMenuItem:
     if icon_name:
         image = Gtk.Image(icon_name=icon_name, icon_size=Gtk.IconSize.MENU, pixel_size=16)
