@@ -256,6 +256,19 @@ class ManagerDeviceMenu(Gtk.Menu):
         # LE devices do not appear to expose certain properties like uuids until connect to at least once.
         return not device_uuids
 
+    def _add_seperator(self) -> None:
+        sep_item = Gtk.SeparatorMenuItem(visible=True)
+        self.append(sep_item)
+
+    def _add_menu_item(self, label: str, icon_name: str | None = None, sensitive: bool = True,
+                       tooltip: str | None = None) -> Gtk.ImageMenuItem:
+        item = create_menuitem(text=label, icon_name=icon_name)
+        item.set_sensitive(sensitive)
+        if tooltip is not None:
+            item.set_tooltip_text(tooltip)
+        self.append(item)
+        return item
+
     def generate(self) -> None:
         self.clear()
 
@@ -284,10 +297,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         op = self.get_op(self.SelectedDevice)
 
         if op is not None:
-            item: Gtk.MenuItem = create_menuitem(op, "network-transmit-receive-symbolic")
-            item.props.sensitive = False
-            item.show()
-            self.append(item)
+            self._add_menu_item(label=op, icon_name="network-transmit-receive-symbolic", sensitive=False)
             return
 
         show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
@@ -295,17 +305,19 @@ class ManagerDeviceMenu(Gtk.Menu):
         powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
 
         if not row["connected"] and show_generic_connect and powered:
-            connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
+            connect_item = self._add_menu_item(
+                label=_("<b>_Connect</b>"),
+                icon_name="bluetooth-symbolic",
+                tooltip=_("Connects auto connect profiles A2DP source, A2DP sink, and HID")
+            )
             connect_item.connect("activate", lambda _item: self.connect_service(self.SelectedDevice))
-            connect_item.props.tooltip_text = _("Connects auto connect profiles A2DP source, A2DP sink, and HID")
-            connect_item.show()
-            self.append(connect_item)
         elif row["connected"] and show_generic_connect:
-            connect_item = create_menuitem(_("<b>_Disconnect</b>"), "bluetooth-disabled-symbolic")
-            connect_item.props.tooltip_text = _("Forcefully disconnect the device")
+            connect_item = self._add_menu_item(
+                label=_("<b>_Disconnect</b>"),
+                icon_name="bluetooth-disabled-symbolic",
+                tooltip=_("Forcefully disconnect the device")
+            )
             connect_item.connect("activate", lambda _item: self.disconnect_service(self.SelectedDevice))
-            connect_item.show()
-            self.append(connect_item)
 
         logging.debug(row["alias"])
 
@@ -346,52 +358,40 @@ class ManagerDeviceMenu(Gtk.Menu):
                 self.append(it.item)
 
         if (powered and show_generic_connect) or connect_items or disconnect_items or autoconnect_items:
-            sep_item = Gtk.SeparatorMenuItem()
-            sep_item.show()
-            self.append(sep_item)
+            self._add_seperator()
 
         for it in sorted(action_items, key=attrgetter("position")):
             self.append(it.item)
 
         if powered and row["objpush"]:
-            send_item = create_menuitem(_("Send a _File…"), "blueman-send-symbolic")
+            send_item = self._add_menu_item(
+                label=_("Send a _File…"),
+                icon_name="blueman-send-symbolic"
+            )
             send_item.connect("activate", lambda _: self.Blueman.send(self.SelectedDevice))
-            self.append(send_item)
-            send_item.show()
 
-            sep_item = Gtk.SeparatorMenuItem()
-            sep_item.show()
-            self.append(sep_item)
+            self._add_seperator()
 
-        pair_item = create_menuitem(_("_Pair"), "blueman-pair-symbolic")
-        pair_item.props.tooltip_text = _("Create pairing with the device")
-        self.append(pair_item)
-        pair_item.show()
-        if row["paired"]:
-            pair_item.props.sensitive = False
+        self._add_menu_item(
+            label=_("_Pair"),
+            icon_name="blueman-pair-symbolic",
+            tooltip=_("Create pairing with the device"),
+            sensitive=not row["paired"]
+        )
 
-        if not row["trusted"]:
-            trust_icon_name = "blueman-trust-symbolic"
-            trust_label = _("_Trust")
-        else:
-            trust_icon_name = "blueman-untrust-symbolic"
-            trust_label = _("_Untrust")
-
-        trust_item = create_menuitem(trust_label, trust_icon_name)
+        trust_item = self._add_menu_item(
+            label=_("_Untrust") if row["trusted"] else _("_Trust"),
+            icon_name="blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic",
+            tooltip=_("Mark/Unmark this device as trusted"),
+        )
         trust_item.connect("activate", lambda _: self.Blueman.toggle_trust(self.SelectedDevice))
-        trust_item.props.tooltip_text = _("Mark/Unmark this device as trusted")
-        trust_item.show()
-        self.append(trust_item)
 
-        if not row["blocked"]:
-            block_label = _("_Block")
-        else:
-            block_label = _("_Unblock")
-        block_item = create_menuitem(block_label, "blueman-block-symbolic")
+        block_item = self._add_menu_item(
+            label=_("_Unblock") if row["blocked"] else _("_Block"),
+            icon_name="blueman-block-symbolic",
+            tooltip=_("Block/Unblock this device")
+        )
         block_item.connect("activate", lambda _: self.Blueman.toggle_blocked(self.SelectedDevice))
-        block_item.props.tooltip_text = _("Block/Unblock this device")
-        block_item.show()
-        self.append(block_item)
 
         def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
             def on_response(rename_dialog: Gtk.Dialog, response_id: int) -> None:
@@ -411,20 +411,17 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.connect("response", on_response)
             dialog.present()
 
-        rename_item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device…"))
+        rename_item = self._add_menu_item(label=_("R_ename device…"))
         rename_item.connect('activate', on_rename, self.SelectedDevice)
-        self.append(rename_item)
-        rename_item.show()
 
-        sep_item = Gtk.SeparatorMenuItem()
-        sep_item.show()
-        self.append(sep_item)
+        self._add_seperator()
 
-        remove_item = create_menuitem(_("_Remove…"), "list-remove-symbolic")
+        remove_item = self._add_menu_item(
+            label=_("_Remove…"),
+            icon_name="list-remove-symbolic",
+            tooltip=_("Remove this device from the known devices list")
+        )
         remove_item.connect("activate", lambda _: self.Blueman.remove(self.SelectedDevice))
-        self.append(remove_item)
-        remove_item.show()
-        remove_item.props.tooltip_text = _("Remove this device from the known devices list")
 
     @staticmethod
     def _create_header(text: str) -> Gtk.MenuItem:
