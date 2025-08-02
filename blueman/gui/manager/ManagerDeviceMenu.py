@@ -13,7 +13,6 @@ from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
 from blueman.config.AutoConnectConfig import AutoConnectConfig
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.main.Builder import Builder
 from blueman.main.DBusProxies import AppletService, DBusProxyFailed
 from blueman.Sdp import (
     ServiceUUID,
@@ -88,6 +87,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         except DBusProxyFailed:
             logging.error("** Failed to connect to applet", exc_info=True)
             self._appl = None
+
+        # Popup is not associated with our window which has the Gio.Action
+        assert isinstance(blueman.window, Gtk.Widget)
+        self.attach_to_widget(blueman.window, None)
 
         self.generate()
 
@@ -261,8 +264,8 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(sep_item)
 
     def _add_menu_item(self, label: str, icon_name: str | None = None, sensitive: bool = True,
-                       tooltip: str | None = None) -> Gtk.ImageMenuItem:
-        item = create_menuitem(text=label, icon_name=icon_name)
+                       tooltip: str | None = None, action_name: str | None = None) -> Gtk.ImageMenuItem:
+        item = create_menuitem(text=label, icon_name=icon_name, action_name=action_name)
         item.set_sensitive(sensitive)
         if tooltip is not None:
             item.set_tooltip_text(tooltip)
@@ -364,11 +367,11 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(it.item)
 
         if powered and row["objpush"]:
-            send_item = self._add_menu_item(
+            self._add_menu_item(
                 label=_("Send a _File…"),
-                icon_name="blueman-send-symbolic"
+                icon_name="blueman-send-symbolic",
+                action_name="app.send"
             )
-            send_item.connect("activate", lambda _: self.Blueman.send(self.SelectedDevice))
 
             self._add_seperator()
 
@@ -376,52 +379,34 @@ class ManagerDeviceMenu(Gtk.Menu):
             label=_("_Pair"),
             icon_name="blueman-pair-symbolic",
             tooltip=_("Create pairing with the device"),
-            sensitive=not row["paired"]
+            sensitive=not row["paired"],
+            action_name="app.bond"
         )
 
-        trust_item = self._add_menu_item(
+        self._add_menu_item(
             label=_("_Untrust") if row["trusted"] else _("_Trust"),
             icon_name="blueman-untrust-symbolic" if row["trusted"] else "blueman-trust-symbolic",
             tooltip=_("Mark/Unmark this device as trusted"),
+            action_name="app.trust-toggle"
         )
-        trust_item.connect("activate", lambda _: self.Blueman.toggle_trust(self.SelectedDevice))
 
-        block_item = self._add_menu_item(
+        self._add_menu_item(
             label=_("_Unblock") if row["blocked"] else _("_Block"),
             icon_name="blueman-block-symbolic",
-            tooltip=_("Block/Unblock this device")
+            tooltip=_("Block/Unblock this device"),
+            action_name="app.block-toggle"
         )
-        block_item.connect("activate", lambda _: self.Blueman.toggle_blocked(self.SelectedDevice))
 
-        def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
-            def on_response(rename_dialog: Gtk.Dialog, response_id: int) -> None:
-                if response_id == Gtk.ResponseType.ACCEPT:
-                    assert isinstance(alias_entry, Gtk.Entry)  # https://github.com/python/mypy/issues/2608
-                    device.set('Alias', alias_entry.get_text())
-                elif response_id == 1:
-                    device.set('Alias', '')
-                rename_dialog.destroy()
-
-            builder = Builder("rename-device.ui")
-            dialog = builder.get_widget("dialog", Gtk.Dialog)
-            dialog.set_transient_for(self.Blueman.window)
-
-            alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
-            alias_entry.set_text(device['Alias'])
-            dialog.connect("response", on_response)
-            dialog.present()
-
-        rename_item = self._add_menu_item(label=_("R_ename device…"))
-        rename_item.connect('activate', on_rename, self.SelectedDevice)
+        self._add_menu_item(label=_("R_ename device…"), action_name="app.rename")
 
         self._add_seperator()
 
-        remove_item = self._add_menu_item(
+        self._add_menu_item(
             label=_("_Remove…"),
             icon_name="list-remove-symbolic",
-            tooltip=_("Remove this device from the known devices list")
+            tooltip=_("Remove this device from the known devices list"),
+            action_name="app.remove"
         )
-        remove_item.connect("activate", lambda _: self.Blueman.remove(self.SelectedDevice))
 
     @staticmethod
     def _create_header(text: str) -> Gtk.MenuItem:
