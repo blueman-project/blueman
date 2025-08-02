@@ -405,7 +405,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             builder = Builder("rename-device.ui")
             dialog = builder.get_widget("dialog", Gtk.Dialog)
             dialog.set_transient_for(self.Blueman.window)
-            dialog.props.icon_name = "blueman"
+
             alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
             alias_entry.set_text(device['Alias'])
             dialog.connect("response", on_response)
