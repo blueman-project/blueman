@@ -1,34 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name adapters-tab.ui -->
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkRadioButton" id="radiogroup">
-    <property name="label">radiobutton</property>
-    <property name="visible">True</property>
-    <property name="can-focus">True</property>
-    <property name="receives-default">False</property>
     <property name="active">True</property>
+    <property name="can-focus">True</property>
     <property name="draw-indicator">True</property>
     <property name="group">radiogroup</property>
+    <property name="label">radiobutton</property>
+    <property name="receives-default">False</property>
+    <property name="visible">True</property>
   </object>
   <!-- n-columns=1 n-rows=7 -->
   <object class="GtkGrid" id="grid">
-    <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="margin-start">12</property>
-    <property name="margin-end">12</property>
-    <property name="margin-top">12</property>
     <property name="margin-bottom">12</property>
+    <property name="margin-end">12</property>
+    <property name="margin-start">12</property>
+    <property name="margin-top">12</property>
     <property name="orientation">vertical</property>
     <property name="row-spacing">3</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkLabel" id="label_visibility">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
-        <property name="valign">start</property>
         <property name="label" translatable="yes">&lt;b&gt;Visibility Setting&lt;/b&gt;</property>
         <property name="use-markup">True</property>
+        <property name="valign">start</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -37,15 +38,15 @@
     </child>
     <child>
       <object class="GtkRadioButton" id="hidden">
-        <property name="label" translatable="yes">Hidden</property>
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
-        <property name="halign">start</property>
-        <property name="margin-left">3</property>
-        <property name="margin-right">3</property>
         <property name="draw-indicator">True</property>
         <property name="group">radiogroup</property>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">Hidden</property>
+        <property name="margin-left">3</property>
+        <property name="margin-right">3</property>
+        <property name="receives-default">False</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -54,16 +55,16 @@
     </child>
     <child>
       <object class="GtkRadioButton" id="always">
-        <property name="label" translatable="yes">Always visible</property>
-        <property name="visible">True</property>
-        <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
-        <property name="halign">start</property>
-        <property name="margin-left">3</property>
-        <property name="margin-right">3</property>
         <property name="active">True</property>
+        <property name="can-focus">True</property>
         <property name="draw-indicator">True</property>
         <property name="group">radiogroup</property>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">Always visible</property>
+        <property name="margin-left">3</property>
+        <property name="margin-right">3</property>
+        <property name="receives-default">False</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -72,15 +73,15 @@
     </child>
     <child>
       <object class="GtkRadioButton" id="temporary">
-        <property name="label" translatable="yes">Temporarily visible</property>
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
-        <property name="halign">start</property>
-        <property name="margin-left">3</property>
-        <property name="margin-right">3</property>
         <property name="draw-indicator">True</property>
         <property name="group">radiogroup</property>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">Temporarily visible</property>
+        <property name="margin-left">3</property>
+        <property name="margin-right">3</property>
+        <property name="receives-default">False</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -89,13 +90,13 @@
     </child>
     <child>
       <object class="GtkScale" id="hscale">
-        <property name="visible">True</property>
-        <property name="sensitive">False</property>
         <property name="can-focus">True</property>
+        <property name="digits">0</property>
         <property name="margin-left">10</property>
         <property name="margin-right">10</property>
-        <property name="digits">0</property>
+        <property name="sensitive">False</property>
         <property name="value-pos">bottom</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -104,11 +105,11 @@
     </child>
     <child>
       <object class="GtkLabel" id="label_name">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
         <property name="label" translatable="yes">&lt;b&gt;Name&lt;/b&gt;</property>
         <property name="use-markup">True</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -117,12 +118,12 @@
     </child>
     <child>
       <object class="GtkEntry" id="name_entry">
-        <property name="width-request">280</property>
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="margin-start">3</property>
         <property name="margin-end">3</property>
+        <property name="margin-start">3</property>
         <property name="max-length">248</property>
+        <property name="visible">True</property>
+        <property name="width-request">280</property>
       </object>
       <packing>
         <property name="left-attach">0</property>

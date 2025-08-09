@@ -1,26 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name gsm-settings.ui -->
   <requires lib="gtk+" version="3.24"/>
   <!-- n-columns=2 n-rows=3 -->
   <object class="GtkGrid" id="gsm_grid">
-    <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="row-spacing">2</property>
     <property name="column-spacing">6</property>
+    <property name="row-spacing">2</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkBox" id="gsm_top">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="margin-top">4</property>
         <property name="margin-bottom">4</property>
+        <property name="margin-top">4</property>
         <property name="spacing">12</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkImage" id="image1">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixel-size">24</property>
             <property name="icon-name">network-wireless</property>
+            <property name="pixel-size">24</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -30,10 +31,10 @@
         </child>
         <child>
           <object class="GtkLabel" id="label1">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;GSM settings&lt;/b&gt;</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -50,10 +51,10 @@
     </child>
     <child>
       <object class="GtkLabel" id="l_number">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
         <property name="label" translatable="yes">Number:</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -62,9 +63,9 @@
     </child>
     <child>
       <object class="GtkEntry" id="e_number">
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="invisible-char">●</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">1</property>
@@ -73,10 +74,10 @@
     </child>
     <child>
       <object class="GtkLabel" id="l_apn">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
         <property name="label" translatable="yes">APN:</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -85,9 +86,9 @@
     </child>
     <child>
       <object class="GtkEntry" id="e_apn">
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="invisible-char">●</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">1</property>

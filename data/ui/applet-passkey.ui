@@ -1,33 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name applet-passkey.ui -->
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkDialog" id="dialog">
-    <property name="can-focus">False</property>
     <property name="border-width">5</property>
-    <property name="title" translatable="yes">Pairing request</property>
+    <property name="can-focus">False</property>
     <property name="resizable">False</property>
-    <property name="window-position">center</property>
+    <property name="title" translatable="yes">Pairing request</property>
     <property name="type-hint">dialog</property>
     <property name="urgency-hint">True</property>
+    <property name="window-position">center</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
+        <property name="visible">True</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="layout-style">end</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkButton" id="reject">
-                <property name="label">_Stop</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
+                <property name="label">_Stop</property>
                 <property name="receives-default">False</property>
                 <property name="use-underline">True</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -37,14 +38,14 @@
             </child>
             <child>
               <object class="GtkButton" id="accept">
-                <property name="label">_OK</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can-focus">True</property>
                 <property name="can-default">True</property>
+                <property name="can-focus">True</property>
                 <property name="has-default">True</property>
+                <property name="label">_OK</property>
                 <property name="receives-default">True</property>
+                <property name="sensitive">False</property>
                 <property name="use-underline">True</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -63,35 +64,35 @@
         <child>
           <!-- n-columns=2 n-rows=5 -->
           <object class="GtkGrid" id="grid">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="margin-start">5</property>
-            <property name="margin-end">5</property>
-            <property name="margin-top">10</property>
             <property name="margin-bottom">10</property>
+            <property name="margin-end">5</property>
+            <property name="margin-start">5</property>
+            <property name="margin-top">10</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkImage" id="pairing_image">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
+                <property name="icon-name">dialog-password</property>
+                <property name="icon-size">6</property>
                 <property name="margin-end">10</property>
                 <property name="pixel-size">48</property>
-                <property name="icon-name">dialog-password</property>
-                <property name="icon_size">6</property>
+                <property name="visible">True</property>
               </object>
               <packing>
+                <property name="height">5</property>
                 <property name="left-attach">0</property>
                 <property name="top-attach">0</property>
-                <property name="height">5</property>
               </packing>
             </child>
             <child>
               <object class="GtkLabel" id="pairing_label">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
-                <property name="valign">start</property>
                 <property name="label" translatable="yes">Pairing request for device:</property>
+                <property name="valign">start</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -100,14 +101,14 @@
             </child>
             <child>
               <object class="GtkLabel" id="device_name">
-                <property name="width-request">280</property>
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
-                <property name="valign">start</property>
-                <property name="use-markup">True</property>
-                <property name="wrap">True</property>
                 <property name="selectable">True</property>
+                <property name="use-markup">True</property>
+                <property name="valign">start</property>
+                <property name="visible">True</property>
+                <property name="width-request">280</property>
+                <property name="wrap">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -116,11 +117,11 @@
             </child>
             <child>
               <object class="GtkLabel" id="message">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
-                <property name="valign">start</property>
                 <property name="label" translatable="yes">This should be overwritten</property>
+                <property name="valign">start</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -129,9 +130,9 @@
             </child>
             <child>
               <object class="GtkEntry" id="pin_entry">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
                 <property name="activates-default">True</property>
+                <property name="can-focus">True</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -140,12 +141,12 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="show_input_check">
-                <property name="label" translatable="yes">Show input</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="halign">start</property>
                 <property name="draw-indicator">True</property>
+                <property name="halign">start</property>
+                <property name="label" translatable="yes">Show input</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
