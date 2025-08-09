@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name send-dialog.ui -->
   <requires lib="gtk+" version="3.24"/>
   <!-- n-columns=1 n-rows=4 -->
   <object class="GtkGrid" id="sendto">
-    <property name="visible">True</property>
-    <property name="can-focus">False</property>
     <property name="border-width">6</property>
+    <property name="can-focus">False</property>
     <property name="row-spacing">6</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkBox" id="sendto_top">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkImage" id="i_top">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixel-size">48</property>
             <property name="icon-name">blueman</property>
+            <property name="pixel-size">48</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -27,12 +28,12 @@
         </child>
         <child>
           <object class="GtkLabel" id="l_top">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="ellipsize">end</property>
             <property name="halign">start</property>
             <property name="label" translatable="yes">&lt;span weight="bold" size="large"&gt;Sending files via Bluetooth&lt;/span&gt;</property>
             <property name="use-markup">True</property>
-            <property name="ellipsize">end</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -48,10 +49,10 @@
     </child>
     <child>
       <object class="GtkProgressBar" id="pb">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="margin-start">10</property>
         <property name="show-text">True</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -60,16 +61,16 @@
     </child>
     <child>
       <object class="GtkBox" id="dest_box">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="margin-start">10</property>
         <property name="spacing">6</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkLabel" id="l_dest_hdr">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;To:&lt;/b&gt;</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -79,10 +80,10 @@
         </child>
         <child>
           <object class="GtkLabel" id="l_dest">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">start</property>
             <property name="ellipsize">end</property>
+            <property name="halign">start</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -98,16 +99,16 @@
     </child>
     <child>
       <object class="GtkBox" id="file_box">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="margin-start">10</property>
         <property name="spacing">6</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkLabel" id="l_file_hdr">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;File:&lt;/b&gt;</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -117,9 +118,9 @@
         </child>
         <child>
           <object class="GtkLabel" id="l_file">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="ellipsize">middle</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>

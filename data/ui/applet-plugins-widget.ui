@@ -1,57 +1,58 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name applet-plugins-widget.ui -->
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkImage" id="config_im">
-    <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="pixel-size">16</property>
     <property name="icon-name">preferences-desktop</property>
+    <property name="pixel-size">16</property>
+    <property name="visible">True</property>
   </object>
   <!-- n-columns=2 n-rows=2 -->
   <object class="GtkGrid" id="all">
-    <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkScrolledWindow" id="plugin_list">
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
         <property name="hscrollbar-policy">never</property>
         <property name="shadow-type">in</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkViewport">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkListBox" id="plugin_listbox">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="visible">True</property>
               </object>
             </child>
           </object>
         </child>
       </object>
       <packing>
+        <property name="height">2</property>
         <property name="left-attach">0</property>
         <property name="top-attach">0</property>
-        <property name="height">2</property>
       </packing>
     </child>
     <child>
       <object class="GtkBox" id="hbox_top">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="valign">start</property>
+        <property name="margin-bottom">6</property>
         <property name="margin-start">10</property>
         <property name="margin-top">6</property>
-        <property name="margin-bottom">6</property>
+        <property name="valign">start</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkImage" id="icon">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixel-size">24</property>
             <property name="icon-name">blueman</property>
-            <property name="icon_size">3</property>
+            <property name="icon-size">3</property>
+            <property name="pixel-size">24</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -61,12 +62,12 @@
         </child>
         <child>
           <object class="GtkLabel" id="name">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">start</property>
-            <property name="margin-start">5</property>
             <property name="margin-end">5</property>
+            <property name="margin-start">5</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -76,14 +77,14 @@
         </child>
         <child>
           <object class="GtkToggleButton" id="b_prefs">
-            <property name="label" translatable="yes">Configuration</property>
-            <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="tooltip-text" translatable="yes">Configure selected plugin's preferences</property>
             <property name="halign">end</property>
             <property name="hexpand">True</property>
             <property name="image">config_im</property>
+            <property name="label" translatable="yes">Configuration</property>
+            <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Configure selected plugin's preferences</property>
+            <property name="visible">True</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -99,37 +100,37 @@
     </child>
     <child>
       <object class="GtkScrolledWindow" id="main_scrolled_window">
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="margin-start">10</property>
-        <property name="margin-end">6</property>
-        <property name="margin-top">6</property>
-        <property name="margin-bottom">6</property>
-        <property name="vexpand">True</property>
         <property name="hscrollbar-policy">never</property>
+        <property name="margin-bottom">6</property>
+        <property name="margin-end">6</property>
+        <property name="margin-start">10</property>
+        <property name="margin-top">6</property>
+        <property name="vexpand">True</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkViewport" id="main_container">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="shadow-type">none</property>
+            <property name="visible">True</property>
             <child>
               <!-- n-columns=1 n-rows=4 -->
               <object class="GtkGrid" id="content">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="row-spacing">2</property>
+                <property name="visible">True</property>
                 <child>
                   <object class="GtkLabel" id="description">
-                    <property name="width-request">360</property>
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
+                    <property name="label" translatable="yes">Not specified</property>
+                    <property name="selectable">True</property>
+                    <property name="use-markup">True</property>
                     <property name="valign">start</property>
                     <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">Not specified</property>
-                    <property name="use-markup">True</property>
+                    <property name="visible">True</property>
+                    <property name="width-request">360</property>
                     <property name="wrap">True</property>
-                    <property name="selectable">True</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -139,17 +140,17 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="authorbox">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="spacing">5</property>
+                    <property name="visible">True</property>
                     <child>
                       <object class="GtkLabel" id="author_hdr">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label" translatable="yes">&lt;b&gt;Author:&lt;/b&gt;</property>
                         <property name="use-markup">True</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                         <property name="wrap">True</property>
                       </object>
                       <packing>
@@ -160,12 +161,12 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="author_txt">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label" translatable="yes">Unknown</property>
                         <property name="use-markup">True</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -181,17 +182,17 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="dependsbox">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="spacing">5</property>
+                    <property name="visible">True</property>
                     <child>
                       <object class="GtkLabel" id="depends_hdr">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label" translatable="yes">&lt;b&gt;Depends on:&lt;/b&gt;</property>
                         <property name="use-markup">True</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -201,12 +202,12 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="depends_txt">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label">dependlist</property>
                         <property name="use-markup">True</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                         <property name="wrap">True</property>
                       </object>
                       <packing>
@@ -223,17 +224,17 @@
                 </child>
                 <child>
                   <object class="GtkBox" id="conflictsbox">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="spacing">5</property>
+                    <property name="visible">True</property>
                     <child>
                       <object class="GtkLabel" id="conflicts_hdr">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label" translatable="yes">&lt;b&gt;Conflicts with:&lt;/b&gt;</property>
                         <property name="use-markup">True</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -243,11 +244,11 @@
                     </child>
                     <child>
                       <object class="GtkLabel" id="conflicts_txt">
-                        <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
-                        <property name="valign">start</property>
                         <property name="label">conflictlist</property>
+                        <property name="valign">start</property>
+                        <property name="visible">True</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

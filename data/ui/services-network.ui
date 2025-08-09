@@ -1,35 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name services-network.ui -->
   <requires lib="gtk+" version="3.24"/>
   <!-- n-columns=3 n-rows=3 -->
   <object class="GtkGrid" id="network">
-    <property name="visible">True</property>
+    <property name="border-width">6</property>
     <property name="can-focus">False</property>
     <property name="margin-start">12</property>
     <property name="margin-top">10</property>
-    <property name="border-width">6</property>
     <property name="row-spacing">12</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkFrame" id="nap_frame">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label-xalign">0</property>
         <property name="shadow-type">none</property>
+        <property name="visible">True</property>
         <child>
           <!-- n-columns=4 n-rows=3 -->
           <object class="GtkGrid" id="nap_grid">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-start">4</property>
             <property name="margin-top">2</property>
             <property name="row-spacing">6</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkLabel" id="dhcp_server_label">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">start</property>
                 <property name="label" translatable="yes">DHCP server type:</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">0</property>
@@ -38,13 +39,13 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="r_dhcpd">
-                <property name="label">dhcpd(3)</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="halign">center</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">r_dnsmasq</property>
+                <property name="halign">center</property>
+                <property name="label">dhcpd(3)</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">2</property>
@@ -53,20 +54,20 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="r_dnsmasq">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="tooltip-text" translatable="yes">Recommended</property>
-                <property name="halign">center</property>
                 <property name="active">True</property>
+                <property name="can-focus">True</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">r_dhcpd</property>
+                <property name="halign">center</property>
+                <property name="receives-default">False</property>
+                <property name="tooltip-text" translatable="yes">Recommended</property>
+                <property name="visible">True</property>
                 <child>
                   <object class="GtkLabel" id="label2">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label">&lt;b&gt;dnsmasq&lt;/b&gt;</property>
                     <property name="use-markup">True</property>
+                    <property name="visible">True</property>
                   </object>
                 </child>
               </object>
@@ -82,11 +83,11 @@
                 <property name="spacing">2</property>
                 <child>
                   <object class="GtkImage" id="no_dhcp_image">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="pixel-size">16</property>
                     <property name="icon-name">dialog-warning</property>
-                    <property name="icon_size">1</property>
+                    <property name="icon-size">1</property>
+                    <property name="pixel-size">16</property>
+                    <property name="visible">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -97,10 +98,10 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="no_dhcp_label">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="label" translatable="yes">&lt;b&gt;No DHCP servers installed&lt;/b&gt;</property>
                     <property name="use-markup">True</property>
+                    <property name="visible">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -117,13 +118,13 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="r_udhcpd">
-                <property name="label">udhcpd</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
-                <property name="halign">center</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">r_dhcpd</property>
+                <property name="halign">center</property>
+                <property name="label">udhcpd</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -132,15 +133,15 @@
             </child>
             <child>
               <object class="GtkBox">
-                <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="spacing">6</property>
+                <property name="visible">True</property>
                 <child>
                   <object class="GtkLabel" id="dhcp_ip_label">
-                    <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="halign">start</property>
                     <property name="label" translatable="yes">IP Address:</property>
+                    <property name="visible">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -150,13 +151,13 @@
                 </child>
                 <child>
                   <object class="GtkEntry" id="net_ip">
-                    <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="halign">start</property>
                     <property name="has-frame">False</property>
-                    <property name="width-chars">15</property>
                     <property name="max-width-chars">15</property>
                     <property name="text">192.168.20.1</property>
+                    <property name="visible">True</property>
+                    <property name="width-chars">15</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -175,10 +176,10 @@
         </child>
         <child type="label">
           <object class="GtkLabel" id="nap_label">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;NAP Settings&lt;/b&gt;</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
         </child>
       </object>
@@ -190,27 +191,27 @@
     </child>
     <child>
       <object class="GtkFrame" id="pan_frame">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
+        <property name="label-xalign">0</property>
         <property name="margin-start">5</property>
         <property name="margin-top">2</property>
-        <property name="label-xalign">0</property>
         <property name="shadow-type">none</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkBox" id="pan_box">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-top">2</property>
             <property name="orientation">vertical</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkRadioButton" id="rb_nm">
-                <property name="label">NetworkManager</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
                 <property name="active">True</property>
+                <property name="can-focus">True</property>
                 <property name="draw-indicator">True</property>
+                <property name="label">NetworkManager</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -220,12 +221,12 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="rb_blueman">
-                <property name="label">Blueman (dhclient)</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">rb_nm</property>
+                <property name="label">Blueman (dhclient)</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -237,11 +238,11 @@
         </child>
         <child type="label">
           <object class="GtkLabel" id="pan_label">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="tooltip-text" translatable="yes">Personal Area Network</property>
             <property name="label" translatable="yes">&lt;b&gt;PAN Support&lt;/b&gt;</property>
+            <property name="tooltip-text" translatable="yes">Personal Area Network</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
         </child>
       </object>
@@ -252,12 +253,12 @@
     </child>
     <child>
       <object class="GtkSeparator" id="vseparator1">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">center</property>
-        <property name="margin-start">10</property>
         <property name="margin-end">10</property>
+        <property name="margin-start">10</property>
         <property name="orientation">vertical</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">1</property>
@@ -266,26 +267,26 @@
     </child>
     <child>
       <object class="GtkFrame" id="dun_frame">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
-        <property name="margin-top">2</property>
         <property name="label-xalign">0</property>
+        <property name="margin-top">2</property>
         <property name="shadow-type">none</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkBox" id="dun_box">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="margin-top">2</property>
             <property name="orientation">vertical</property>
+            <property name="visible">True</property>
             <child>
               <object class="GtkRadioButton" id="rb_dun_nm">
-                <property name="label">NetworkManager</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
                 <property name="active">True</property>
+                <property name="can-focus">True</property>
                 <property name="draw-indicator">True</property>
+                <property name="label">NetworkManager</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -295,12 +296,12 @@
             </child>
             <child>
               <object class="GtkRadioButton" id="rb_dun_blueman">
-                <property name="label">Blueman</property>
-                <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="receives-default">False</property>
                 <property name="draw-indicator">True</property>
                 <property name="group">rb_dun_nm</property>
+                <property name="label">Blueman</property>
+                <property name="receives-default">False</property>
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -312,11 +313,11 @@
         </child>
         <child type="label">
           <object class="GtkLabel" id="dun_label">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="tooltip-text" translatable="yes">Dial-up Networking</property>
             <property name="label" translatable="yes">&lt;b&gt;DUN Support&lt;/b&gt;</property>
+            <property name="tooltip-text" translatable="yes">Dial-up Networking</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
         </child>
       </object>
@@ -327,26 +328,26 @@
     </child>
     <child>
       <object class="GtkFrame" id="na_frame">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="label-xalign">0</property>
         <property name="shadow-type">none</property>
+        <property name="visible">True</property>
         <child>
           <object class="GtkCheckButton" id="nap-enable">
-            <property name="label" translatable="yes">Network Access Point (NAP)</property>
-            <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="receives-default">False</property>
-            <property name="margin-top">2</property>
             <property name="draw-indicator">True</property>
+            <property name="label" translatable="yes">Network Access Point (NAP)</property>
+            <property name="margin-top">2</property>
+            <property name="receives-default">False</property>
+            <property name="visible">True</property>
           </object>
         </child>
         <child type="label">
           <object class="GtkLabel" id="services_label">
-            <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">&lt;b&gt;NAP Support&lt;/b&gt;</property>
             <property name="use-markup">True</property>
+            <property name="visible">True</property>
           </object>
         </child>
       </object>

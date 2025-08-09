@@ -1,22 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.40.0 -->
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.1 -->
 <interface>
+  <!-- interface-name services-transfer.ui -->
   <requires lib="gtk+" version="3.24"/>
   <!-- n-columns=2 n-rows=3 -->
   <object class="GtkGrid" id="transfer">
-    <property name="visible">True</property>
     <property name="can-focus">False</property>
+    <property name="column-spacing">6</property>
     <property name="margin-start">12</property>
     <property name="margin-top">10</property>
     <property name="row-spacing">12</property>
-    <property name="column-spacing">6</property>
+    <property name="visible">True</property>
     <child>
       <object class="GtkLabel" id="push_label">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
         <property name="label" translatable="yes">&lt;b&gt;File Receiving (Object Push)&lt;/b&gt;</property>
         <property name="use-markup">True</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -26,10 +27,10 @@
     </child>
     <child>
       <object class="GtkLabel" id="incoming_label">
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
         <property name="label" translatable="yes">Incoming Folder:</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
@@ -38,11 +39,11 @@
     </child>
     <child>
       <object class="GtkFileChooserButton" id="shared-path">
-        <property name="visible">True</property>
+        <property name="action">select-folder</property>
         <property name="can-focus">False</property>
         <property name="halign">start</property>
-        <property name="action">select-folder</property>
         <property name="title" translatable="yes">Select folder for incoming file transfers</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">1</property>
@@ -51,12 +52,12 @@
     </child>
     <child>
       <object class="GtkCheckButton" id="opp-accept">
-        <property name="label" translatable="yes">Accept files from trusted devices</property>
-        <property name="visible">True</property>
         <property name="can-focus">True</property>
-        <property name="receives-default">False</property>
-        <property name="halign">start</property>
         <property name="draw-indicator">True</property>
+        <property name="halign">start</property>
+        <property name="label" translatable="yes">Accept files from trusted devices</property>
+        <property name="receives-default">False</property>
+        <property name="visible">True</property>
       </object>
       <packing>
         <property name="left-attach">0</property>
