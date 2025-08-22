@@ -185,14 +185,14 @@ class Network(ServicePlugin):
             r_udhcpd.props.sensitive = False
             r_udhcpd.props.active = False
 
+        self.Config.bind("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
+
         r_dnsmasq.connect("toggled", lambda x: self.option_changed_notify("dnsmasq"))
         r_dhcpd.connect("toggled", lambda x: self.option_changed_notify("dhcpd"))
         r_udhcpd.connect("toggled", lambda x: self.option_changed_notify("udhcpd"))
 
         net_ip.connect("changed", lambda x: self.option_changed_notify("ip", False))
         nap_enable.connect("toggled", lambda x: self.option_changed_notify("nap_enable"))
-
-        self.Config.bind("nap-enable", nap_enable, "active", Gio.SettingsBindFlags.GET)
 
         nap_enable.bind_property("active", nap_frame, "sensitive", GObject.BindingFlags.DEFAULT)
 
