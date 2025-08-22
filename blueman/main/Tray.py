@@ -4,7 +4,7 @@ import os
 import signal
 import sys
 from blueman.Functions import log_system_info
-from blueman.main.DBusProxies import AppletMenuService
+from blueman.main.DBusProxies import AppletMenuService, AppletStatusIconService
 from gi.repository import Gio, GLib
 
 from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
@@ -38,6 +38,7 @@ class BluemanTray(Gio.Application):
     def _on_name_appeared(self, _connection: Gio.DBusConnection, name: str, _owner: str) -> None:
         logging.debug(f"Applet started on name {name}, showing indicator")
 
+        trayicon_service = AppletStatusIconService()
         menu_service = AppletMenuService()
         for indicator_name in menu_service.get_statusicon_implementations():
             indicator_class = getattr(import_module('blueman.main.indicators.' + indicator_name), indicator_name)
@@ -49,6 +50,7 @@ class BluemanTray(Gio.Application):
         logging.info(f'Using indicator "{self.indicator.__class__.__name__}"')
 
         menu_service.connect('g-signal', self.on_signal)
+        trayicon_service.connect('g-signal', self.on_signal)
 
         self.indicator.set_tooltip_title(menu_service.get_tooltip_title())
         self.indicator.set_tooltip_text(menu_service.get_tooltip_text())
@@ -67,7 +69,9 @@ class BluemanTray(Gio.Application):
     def activate_status_icon(self) -> None:
         AppletMenuService().Activate()
 
-    def on_signal(self, _applet: AppletMenuService, _sender_name: str, signal_name: str, args: GLib.Variant) -> None:
+    def on_signal(self, _applet: AppletMenuService | AppletStatusIconService, _sender_name: str, signal_name: str,
+                  args: GLib.Variant) -> None:
+        logging.debug(f"{signal_name}")
         if signal_name == 'IconNameChanged':
             self.indicator.set_icon(*args)
         elif signal_name == 'ToolTipTitleChanged':
