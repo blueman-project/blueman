@@ -130,6 +130,12 @@ class AppletMenuService(ProxyBase):
         return value
 
 
+class AppletStatusIconService(ProxyBase):
+    def __init__(self) -> None:
+        super().__init__(name=AppletService.NAME, interface_name="org.blueman.Applet.StatusIcon",
+                         object_path=AppletService.PATH)
+
+
 class AppletServiceApplication(ProxyBase):
     def __init__(self) -> None:
         super().__init__(name=AppletService.NAME, interface_name="org.freedesktop.Application",
