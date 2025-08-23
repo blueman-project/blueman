@@ -78,9 +78,11 @@ class Blueman(Gtk.Application):
         self._infobar_bt: str = ""
 
         self.register_action("inquiry", self.simple_action)
+        self.register_action("block-toggle", self.simple_action)
         self.register_action("bond", self.simple_action)
         self.register_action("trust-toggle", self.simple_action)
         self.register_action("remove", self.simple_action)
+        self.register_action("rename", self.simple_action)
         self.register_action("send", self.simple_action)
         self.register_action("report", self.simple_action)
         self.register_action("help", self.simple_action)
@@ -226,6 +228,10 @@ class Blueman(Gtk.Application):
                 self.quit()
             case "inquiry":
                 self.inquiry()
+            case "block-toggle":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.toggle_blocked(device)
             case "bond":
                 device = self.List.get_selected_device()
                 if device is not None:
@@ -238,6 +244,10 @@ class Blueman(Gtk.Application):
                 device = self.List.get_selected_device()
                 if device is not None:
                     self.remove(device)
+            case "rename":
+                device = self.List.get_selected_device()
+                if device is not None:
+                    self.rename(device)
             case "send":
                 device = self.List.get_selected_device()
                 if device is not None:
@@ -360,3 +370,21 @@ class Blueman(Gtk.Application):
     def remove(self, device: Device) -> None:
         assert self.List.Adapter
         self.List.Adapter.remove_device(device)
+
+    def rename(self, device: Device) -> None:
+        def on_response(rename_dialog: Gtk.Dialog, response_id: int) -> None:
+            if response_id == Gtk.ResponseType.ACCEPT:
+                assert isinstance(alias_entry, Gtk.Entry)  # https://github.com/python/mypy/issues/2608
+                device.set('Alias', alias_entry.get_text())
+            elif response_id == 1:
+                device.set('Alias', '')
+            rename_dialog.destroy()
+
+        builder = Builder("rename-device.ui")
+        dialog = builder.get_widget("dialog", Gtk.Dialog)
+        dialog.set_transient_for(self.window)
+
+        alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
+        alias_entry.set_text(device['Alias'])
+        dialog.connect("response", on_response)
+        dialog.present()
