@@ -89,7 +89,6 @@ class ManagerDeviceMenu(Gtk.Menu):
             self._appl = None
 
         # Popup is not associated with our window which has the Gio.Action
-        assert isinstance(blueman.window, Gtk.Widget)
         self.attach_to_widget(blueman.window, None)
 
         self.generate()

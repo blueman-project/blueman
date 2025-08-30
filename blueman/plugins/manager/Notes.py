@@ -57,7 +57,6 @@ class Notes(ManagerPlugin, MenuItemsProvider):
 
         item = create_menuitem(_("Send _note"), "dialog-information-symbolic")
         item.props.tooltip_text = _("Send a text note")
-        assert isinstance(manager_menu.Blueman.window, Gtk.ApplicationWindow)
         window = manager_menu.Blueman.window  # https://github.com/python/mypy/issues/2608
         item.connect('activate', lambda x: send_note(device, window))
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 500)]

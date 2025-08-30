@@ -35,8 +35,6 @@ from gi.repository import Gtk, Gio, Gdk, GLib
 
 
 class Blueman(Gtk.Application):
-    window: Gtk.ApplicationWindow | None
-
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
         self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
@@ -65,17 +63,26 @@ class Blueman(Gtk.Application):
         self.Plugins = PluginManager(ManagerPlugin, blueman.plugins.manager, self)
         self.Plugins.load_plugin()
 
-    def do_startup(self) -> None:
-        Gtk.Application.do_startup(self)
-        self.window = None
-
         self.Config = Gio.Settings(schema_id="org.blueman.general")
 
         self.builder = Builder("manager-main.ui")
 
+        self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
+        w, h, x, y = self.Config["window-properties"]
+        if w and h:
+            self.window.resize(w, h)
+        if x and y:
+            self.window.move(x, y)
+
+        # Connect to configure event to store new window position and size
+        self.window.connect("configure-event", self._on_configure)
+
         self._infobar = self.builder.get_widget("message_area", Gtk.InfoBar)
         self._infobar.connect("response", self._infobar_response)
         self._infobar_bt: str = ""
+
+    def do_startup(self) -> None:
+        Gtk.Application.do_startup(self)
 
         self.register_action("inquiry", self.simple_action)
         self.register_action("block-toggle", self.simple_action)
@@ -112,18 +119,7 @@ class Blueman(Gtk.Application):
             AppletServiceApplication().stop()
 
     def do_activate(self) -> None:
-        if not self.window:
-            self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
-            self.window.set_application(self)
-            w, h, x, y = self.Config["window-properties"]
-            if w and h:
-                self.window.resize(w, h)
-            if x and y:
-                self.window.move(x, y)
-
-            # Connect to configure event to store new window position and size
-            self.window.connect("configure-event", self._on_configure)
-
+        self.window.set_application(self)
         self.window.present_with_time(Gtk.get_current_event_time())
 
     def on_applet_signal(self, _proxy: AppletService | AppletPowerManagerService, _sender: str, signal_name: str,
@@ -170,8 +166,7 @@ class Blueman(Gtk.Application):
     def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)
 
-        if self.window is not None:
-            self.window.hide()
+        self.window.hide()
 
         d = ErrorDialog(
             _("Connection to BlueZ failed"),
@@ -255,9 +250,7 @@ class Blueman(Gtk.Application):
             case "report":
                 launch(f"xdg-open {WEBSITE}/issues", system=True)
             case "about":
-                widget = self.window.get_toplevel() if self.window else None
-                assert isinstance(widget, Gtk.Window)
-                show_about_dialog('Blueman ' + _('Device Manager'), parent=widget)
+                show_about_dialog('Blueman ' + _('Device Manager'), parent=self.window)
             case "plugins":
                 self.Applet.OpenPluginDialog()
             case "services":
