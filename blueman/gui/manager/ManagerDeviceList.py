@@ -161,8 +161,8 @@ class ManagerDeviceList(DeviceList):
         else:
             return True
 
-    def drag_recv(self, _widget: Gtk.Widget, context: Gdk.DragContext, x: int, y: int, selection: Gtk.SelectionData,
-                  _info: int, time: int) -> None:
+    def drag_recv(self, _list: "ManagerDeviceList", context: Gdk.DragContext, x: int, y: int,
+                  selection: Gtk.SelectionData, _info: int, time: int) -> None:
 
         uris = list(selection.get_uris())
 
@@ -180,7 +180,8 @@ class ManagerDeviceList(DeviceList):
         else:
             context.finish(False, False, time)
 
-    def drag_motion(self, _widget: Gtk.Widget, drag_context: Gdk.DragContext, x: int, y: int, timestamp: int) -> bool:
+    def drag_motion(self, _list: "ManagerDeviceList", drag_context: Gdk.DragContext, x: int, y: int,
+                    timestamp: int) -> bool:
         result = self.get_path_at_pos(x, y)
         if result is not None:
             path = result[0]
@@ -205,7 +206,8 @@ class ManagerDeviceList(DeviceList):
             Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
             return False
 
-    def _on_popup_menu(self, _widget: Gtk.Widget) -> bool:
+    def _on_popup_menu(self, _list: "ManagerDeviceList") -> bool:
+
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
 
@@ -218,7 +220,7 @@ class ManagerDeviceList(DeviceList):
 
         return True
 
-    def _on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
+    def _on_event_clicked(self, _list: "ManagerDeviceList", event: Gdk.Event) -> bool:
         if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
             return False
 
@@ -252,7 +254,7 @@ class ManagerDeviceList(DeviceList):
 
         return False
 
-    def _on_key_pressed(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+    def _on_key_pressed(self, _list: "ManagerDeviceList", event: Gdk.EventKey) -> bool:
         if not (event.state & Gdk.ModifierType.CONTROL_MASK and event.keyval == Gdk.KEY_c):
             return False
 
@@ -550,7 +552,7 @@ class ManagerDeviceList(DeviceList):
         handler = fader.connect("animation-finished", on_finished)
         return fader
 
-    def tooltip_query(self, _tw: Gtk.Widget, x: int, y: int, _kb: bool, tooltip: Gtk.Tooltip) -> bool:
+    def tooltip_query(self, _list: "ManagerDeviceList", x: int, y: int, _kb: bool, tooltip: Gtk.Tooltip) -> bool:
         path = self.get_path_at_pos(x, y)
         if path is None:
             return False
