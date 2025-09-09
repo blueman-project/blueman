@@ -187,15 +187,14 @@ def create_menuitem(
     pixbuf: GdkPixbuf.Pixbuf | None = None,
     surface: cairo.Surface | None = None,
 ) -> Gtk.ImageMenuItem:
-    image = Gtk.Image(pixel_size=16)
     if icon_name:
-        image.set_from_icon_name(icon_name, Gtk.IconSize.MENU)
+        image = Gtk.Image(icon_name=icon_name, icon_size=Gtk.IconSize.MENU, pixel_size=16)
     elif surface:
-        image.set_from_surface(surface)
+        image = Gtk.Image(surface=surface, icon_size=Gtk.IconSize.MENU, pixel_size=16)
     elif pixbuf:
-        image.set_from_pixbuf(pixbuf)
+        image = Gtk.Image(pixbuf=pixbuf, icon_size=Gtk.IconSize.MENU, pixel_size=16)
     else:
-        raise ValueError("At least provide one of, icon name, surface or pixbuf")
+        image = None
 
     item = Gtk.ImageMenuItem(label=text, image=image, use_underline=True)
     child = item.get_child()
