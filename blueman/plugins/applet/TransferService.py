@@ -75,7 +75,7 @@ class Agent(DbusService):
     def _release(self) -> None:
         raise Exception(self.__agent_path + " was released unexpectedly")
 
-    def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[Path], None],
+    def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[str], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
         def on_action(action: str) -> None:
             logging.info(f"Action {action}")
@@ -88,7 +88,7 @@ class Agent(DbusService):
                     'name': self._pending_transfer['name']
                 }
 
-                ok(self.transfers[self._pending_transfer['transfer_path']]['path'])
+                ok(self.transfers[self._pending_transfer['transfer_path']]['path'].as_posix())
 
                 self._allowed_devices.append(self._pending_transfer['address'])
 
