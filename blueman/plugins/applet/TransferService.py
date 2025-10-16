@@ -109,7 +109,7 @@ class Agent(DbusService):
         size = transfer.size
 
         try:
-            adapter = self._applet.Manager.get_adapter()
+            adapter = self._applet.Manager.get_adapter(session.source)
             device = self._applet.Manager.find_device(address, adapter.get_object_path())
             assert device is not None
             name = device.display_name
