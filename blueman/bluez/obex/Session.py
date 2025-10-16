@@ -17,3 +17,8 @@ class Session(Base):
     def root(self) -> str:
         root: str = self.get('Root')
         return root
+
+    @property
+    def source(self) -> BtAddress:
+        source: BtAddress = self.get('Source')
+        return source
