@@ -85,7 +85,8 @@ class ManagerToolbar:
             self.b_bond.props.sensitive = powered and not row["paired"]
             self.b_bond.props.opacity = 1.0 if powered and not row["paired"] else opacity
             self.b_trust.props.sensitive = True
-            self.b_remove.props.sensitive = True
+            self.b_remove.props.sensitive = True if powered else False
+            self.b_remove.props.opacity = 1.0 if powered else opacity
             self.b_send.props.sensitive = powered and row["objpush"]
             self.b_bluetooth_status.props.sensitive = True
             self.b_send.props.opacity = 1.0 if powered and row["objpush"] else opacity
