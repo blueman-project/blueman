@@ -427,15 +427,16 @@ class ManagerDeviceMenu(Gtk.Menu):
         self.append(item)
         item.show()
 
-        item = Gtk.SeparatorMenuItem()
-        item.show()
-        self.append(item)
+        if powered:
+            item = Gtk.SeparatorMenuItem()
+            item.show()
+            self.append(item)
 
-        item = create_menuitem(_("_Remove…"), "list-remove-symbolic")
-        item.connect("activate", lambda x: self.Blueman.remove(self.SelectedDevice))
-        self.append(item)
-        item.show()
-        item.props.tooltip_text = _("Remove this device from the known devices list")
+            item = create_menuitem(_("_Remove…"), "list-remove-symbolic")
+            item.connect("activate", lambda x: self.Blueman.remove(self.SelectedDevice))
+            self.append(item)
+            item.show()
+            item.props.tooltip_text = _("Remove this device from the known devices list")
 
     @staticmethod
     def _create_header(text: str) -> Gtk.MenuItem:
