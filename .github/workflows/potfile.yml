@@ -9,7 +9,7 @@ jobs:
   update-pot:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: sudo apt-get update
       - run: sudo apt-get install -y -qq --no-install-recommends autopoint gettext cython3 libglib2.0-dev python-gi-dev libbluetooth-dev
       - run: CYTHONEXEC=cython3 ./autogen.sh
