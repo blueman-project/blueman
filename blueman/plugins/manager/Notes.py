@@ -52,7 +52,7 @@ class Notes(ManagerPlugin, MenuItemsProvider):
         device: Device,
         powered: bool,
     ) -> list[DeviceMenuItem]:
-        if not powered:
+        if not powered or device["Blocked"]:
             return []
 
         item = create_menuitem(_("Send _note"), "dialog-information-symbolic")
