@@ -234,7 +234,12 @@ class TransferService(AppletPlugin):
     def _on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} {owner}")
 
-        self._manager = Manager()
+        try:
+            self._manager = Manager()
+        except GLib.Error:
+            logging.error("Failed to start Obex Manager, transfers are disabled.", exc_info=True)
+            return
+
         self._handlerids.append(self._manager.connect("transfer-started", self._on_transfer_started))
         self._handlerids.append(self._manager.connect("transfer-completed", self._on_transfer_completed))
         self._handlerids.append(self._manager.connect('session-removed', self._on_session_removed))
