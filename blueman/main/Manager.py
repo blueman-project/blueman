@@ -289,29 +289,23 @@ class Blueman(Gtk.Application):
         s1 = self.List.connect("discovery-progress", on_progress)
         s2 = self.List.connect("adapter-property-changed", prop_changed)
 
-    def infobar_update(self, message: str, bt: str | None = None, info: str | None = None, icon_name: str = "dialog-warning") -> None:
-        more_button = self.builder.get_widget("ib_backtrace_button", Gtk.Button)
-        if icon_name == "dialog-warning":
-            self._infobar.set_message_type(Gtk.MessageType.WARNING)
-        else:
-            self._infobar.set_message_type(Gtk.MessageType.INFO)
-
-        more_button = self.builder.get_widget("ib_more_button", Gtk.Button)
-        image = self.builder.get_widget("ib_icon", Gtk.Image)
+    def infobar_update(self, message: str, bt: str | None = None, info: str | None = None) -> None:
+        backtace_button = self.builder.get_widget("ib_backtrace_button", Gtk.Button)
         msg_lbl = self.builder.get_widget("ib_message", Gtk.Label)
         info_image = self.builder.get_widget("ib_info_image", Gtk.Image)
 
         info_image.set_visible(False if info is None else True)
         info_image.set_tooltip_text("" if info is None else info)
-        image.set_from_icon_name(icon_name, 16)
 
         if bt is not None:
             msg_lbl.set_text(f"{message}…")
             self._infobar_bt = f"{message}\n{bt}"
-            more_button.show()
+            backtace_button.show()
+            self._infobar.set_message_type(Gtk.MessageType.ERROR)
         else:
-            more_button.hide()
+            backtace_button.hide()
             msg_lbl.set_text(f"{message}")
+            self._infobar.set_message_type(Gtk.MessageType.INFO)
 
         self._infobar.set_visible(True)
         self._infobar.set_revealed(True)
