@@ -217,6 +217,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             case self._BluezError.UNKNOWN:
                 info = "bluetoothd reported an unknown error. \nRetry or check its logs for context."
                 msg = _("Unknown error")
+            case self._BluezError.NMBTFAILED:
+                msg = _("could not create bluetooth connection for NetworkManager")
             case _:
                 msg = error.message.split(":", 3)[-1].strip()
 
@@ -234,6 +236,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         ABORTED = auto()
         RESET = auto()
         UNKNOWN = auto()
+        NMBTFAILED = auto()
 
     # BlueZ 5.62 introduced machine-readable error strings while earlier versions
     # used strerror() so that the messages depend on the libc implementation:
@@ -256,6 +259,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         "le-connection-abort-by-local": _BluezError.ABORTED,
         "br-connection-abort-by-remote": _BluezError.RESET,
         "le-connection-abort-by-remote": _BluezError.RESET,
+        "Connection failed with reason: bt-failed": _BluezError.NMBTFAILED,
     }
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
