@@ -196,21 +196,22 @@ class ManagerDeviceMenu(Gtk.Menu):
     def _handle_error_message(self, error: GLib.Error) -> None:
         err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
 
-        if err == self._BluezError.PROFILE_UNAVAILABLE:
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
-            msg = _("No audio endpoints registered")
-        elif err == self._BluezError.CREATE_SOCKET:
-            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
-            msg = _("Input/output error")
-        elif err == self._BluezError.PAGE_TIMEOUT:
-            msg = _("Device did not respond")
-        elif err == self._BluezError.UNKNOWN:
-            logging.warning("bluetoothd reported an unknown error. "
-                            "Retry or check its logs for context.")
-            msg = _("Unknown error")
-        else:
-            msg = error.message.split(":", 3)[-1].strip()
+        match err:
+            case self._BluezError.PROFILE_UNAVAILABLE:
+                logging.warning("No audio endpoints registered to bluetoothd. "
+                                "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
+                msg = _("No audio endpoints registered")
+            case self._BluezError.CREATE_SOCKET:
+                logging.warning("bluetoothd reported input/output error. Check its logs for context.")
+                msg = _("Input/output error")
+            case self._BluezError.PAGE_TIMEOUT:
+                msg = _("Device did not respond")
+            case self._BluezError.UNKNOWN:
+                logging.warning("bluetoothd reported an unknown error. "
+                                "Retry or check its logs for context.")
+                msg = _("Unknown error")
+            case _:
+                msg = error.message.split(":", 3)[-1].strip()
 
         if err != self._BluezError.CANCELED:
             self.Blueman.infobar_update(_("Connection Failed: ") + msg)
