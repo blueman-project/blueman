@@ -206,6 +206,10 @@ class ManagerDeviceMenu(Gtk.Menu):
                 msg = _("Input/output error")
             case self._BluezError.PAGE_TIMEOUT:
                 msg = _("Device did not respond")
+            case self._BluezError.ABORTED:
+                msg = _("Aborted")
+            case self._BluezError.RESET:
+                msg = _("Reset")
             case self._BluezError.UNKNOWN:
                 logging.warning("bluetoothd reported an unknown error. "
                                 "Retry or check its logs for context.")
@@ -221,6 +225,8 @@ class ManagerDeviceMenu(Gtk.Menu):
         PROFILE_UNAVAILABLE = auto()
         CREATE_SOCKET = auto()
         CANCELED = auto()
+        ABORTED = auto()
+        RESET = auto()
         UNKNOWN = auto()
 
     # BlueZ 5.62 introduced machine-readable error strings while earlier versions
@@ -240,6 +246,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         "br-connection-unknown": _BluezError.UNKNOWN,
         "Cancelled": _BluezError.CANCELED,
         "br-connection-canceled": _BluezError.CANCELED,
+        "br-connection-abort-by-local": _BluezError.ABORTED,
+        "le-connection-abort-by-local": _BluezError.ABORTED,
+        "br-connection-abort-by-remote": _BluezError.RESET,
+        "le-connection-abort-by-remote": _BluezError.RESET,
     }
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
