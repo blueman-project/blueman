@@ -99,7 +99,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
             if value:
                 self._connections.add(path)
             else:
-                self._connections.remove(path)
+                self._connections.discard(path)
 
             if (self._connections and not self.active) or (not self._connections and self.active):
                 self.parent.Plugins.StatusIcon.icon_should_change()
