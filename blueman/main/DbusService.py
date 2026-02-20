@@ -105,7 +105,10 @@ class DbusService:
 
         node_info = Gio.DBusNodeInfo.new_for_xml(node_xml)
 
-        regid = self._bus.register_object(
+        # register_object_with_closures2 requires GLib 2.84.0 (released 2025-03-06).
+        # Keep a fallback for older runtimes that only provide register_object().
+        register_object = getattr(self._bus, "register_object_with_closures2", self._bus.register_object)
+        regid = register_object(
             self._path,
             node_info.interfaces[0],
             self._handle_method_call,
