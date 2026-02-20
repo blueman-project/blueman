@@ -95,15 +95,31 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             self.emit('battery-removed', object_path)
 
     def get_adapters(self) -> list[Adapter]:
+        paths = self.get_adapter_paths()
+        return [Adapter(obj_path=path) for path in paths]
+
+    def find_adapter(self, adapter_name: str | None) -> ObjectPath | None:
+        '''Returns the requested adapter or the first available if name is None'''
+        adapter_paths = self.get_adapter_paths()
+        if not adapter_paths:
+            return None
+
+        if adapter_name is None:
+            return adapter_paths[0]
+
+        for path in adapter_paths:
+            if path.endswith(adapter_name):
+                return path
+        return None
+
+    def get_adapter_paths(self) -> list[ObjectPath]:
         paths: list[ObjectPath] = []
         for obj_proxy in self._object_manager.get_objects():
             proxy = obj_proxy.get_interface('org.bluez.Adapter1')
-
             if proxy:
                 assert isinstance(proxy, Gio.DBusProxy)
                 paths.append(ObjectPath(proxy.get_object_path()))
-
-        return [Adapter(obj_path=path) for path in paths]
+        return paths
 
     def get_adapter(self, pattern: str | None = None) -> Adapter:
         adapters = self.get_adapters()
