@@ -83,7 +83,7 @@ class Blueman(Gtk.Application):
         self.register_action("remove", self.simple_action)
         self.register_action("send", self.simple_action)
         self.register_action("report", self.simple_action)
-        self.register_action("help", self.simple_action)
+        self.register_action("about", self.simple_action)
         self.register_action("plugins", self.simple_action)
         self.register_action("services", self.simple_action)
         self.register_action("preferences", self.simple_action)
@@ -244,7 +244,7 @@ class Blueman(Gtk.Application):
                     self.send(device)
             case "report":
                 launch(f"xdg-open {WEBSITE}/issues", system=True)
-            case "help":
+            case "about":
                 widget = self.window.get_toplevel() if self.window else None
                 assert isinstance(widget, Gtk.Window)
                 show_about_dialog('Blueman ' + _('Device Manager'), parent=widget)

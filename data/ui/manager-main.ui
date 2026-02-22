@@ -13,7 +13,7 @@
     <property name="icon-name">application-exit-symbolic</property>
     <property name="visible">True</property>
   </object>
-  <object class="GtkImage" id="im_help">
+  <object class="GtkImage" id="im_about">
     <property name="can-focus">False</property>
     <property name="icon-name">help-about-symbolic</property>
     <property name="visible">True</property>
@@ -102,6 +102,17 @@
                     <child>
                       <object class="GtkSeparatorMenuItem">
                         <property name="can-focus">False</property>
+                        <property name="visible">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="help">
+                        <property name="action-name">app.about</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">im_about</property>
+                        <property name="label" translatable="yes">A_bout</property>
+                        <property name="use-stock">False</property>
+                        <property name="use-underline">True</property>
                         <property name="visible">True</property>
                       </object>
                     </child>
@@ -237,48 +248,6 @@
                         <property name="can-focus">False</property>
                         <property name="image">im_services</property>
                         <property name="label" translatable="yes">_Local Services</property>
-                        <property name="use-stock">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="visible">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="item_help">
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">_Help</property>
-                <property name="use-underline">True</property>
-                <property name="visible">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu">
-                    <property name="can-focus">False</property>
-                    <property name="visible">True</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="report">
-                        <property name="action-name">app.report</property>
-                        <property name="can-focus">False</property>
-                        <property name="image">im_report</property>
-                        <property name="label" translatable="yes">_Report a Problem</property>
-                        <property name="use-stock">False</property>
-                        <property name="use-underline">True</property>
-                        <property name="visible">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparatorMenuItem" id="sep_help">
-                        <property name="can-focus">False</property>
-                        <property name="visible">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="help">
-                        <property name="action-name">app.help</property>
-                        <property name="can-focus">False</property>
-                        <property name="image">im_help</property>
-                        <property name="label" translatable="yes">_Help</property>
                         <property name="use-stock">False</property>
                         <property name="use-underline">True</property>
                         <property name="visible">True</property>
