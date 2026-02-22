@@ -61,7 +61,7 @@ class StandardItems(AppletPlugin, PowerStateListener):
 
         self.parent.Plugins.Menu.add(self, 81)
 
-        self.parent.Plugins.Menu.add(self, 90, text=_("_Help"), icon_name='help-about-symbolic',
+        self.parent.Plugins.Menu.add(self, 90, text=_("_About"), icon_name='help-about-symbolic',
                                      callback=self.on_about)
 
         self.parent.Plugins.Menu.add(self, 85, text=_("_Plugins"), icon_name="application-x-addon-symbolic",
