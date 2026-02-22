@@ -100,11 +100,11 @@ class DeviceList(GenericList):
 
     def __on_manager_signal(self, _manager: Manager, path: ObjectPath, signal_name: str) -> None:
         if signal_name == 'adapter-removed':
-            self.emit("adapter-removed", path)
             if path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
                 self.set_adapter()
+            self.emit("adapter-removed", path)
 
         if signal_name == 'adapter-added':
             if self.Adapter is None:
