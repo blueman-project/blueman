@@ -5,7 +5,6 @@ from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
-from blueman.bluez.Manager import Manager
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.Functions import adapter_path_to_name
@@ -47,13 +46,11 @@ class ManagerMenu:
 
         self._adapter_settings = blueman.builder.get_widget("prefs_item", Gtk.ImageMenuItem)
 
-        self._manager = Manager()
-        self._manager.connect_signal("adapter-added", self.on_adapter_added)
-        self._manager.connect_signal("adapter-removed", self.on_adapter_removed)
+        self.blueman.List.connect("adapter-added", self.on_adapter_added)
+        self.blueman.List.connect("adapter-removed", self.on_adapter_removed)
+        self.blueman.List.connect("device-selected", self.on_device_selected)
 
-        blueman.List.connect("device-selected", self.on_device_selected)
-
-        for adapter in self._manager.get_adapters():
+        for adapter in self.blueman.List.manager.get_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
 
         self.Config.connect("changed", self._on_settings_changed)
@@ -122,7 +119,7 @@ class ManagerMenu:
                 self.blueman.Config["last-adapter"] = adapter_path_to_name(adapter_path)
                 self.blueman.List.set_adapter(adapter_path)
 
-    def on_adapter_added(self, _manager: Manager | None, adapter_path: ObjectPath) -> None:
+    def on_adapter_added(self, _devicelist: ManagerDeviceList | None, adapter_path: ObjectPath) -> None:
         adapter = Adapter(obj_path=adapter_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)
@@ -145,7 +142,7 @@ class ManagerMenu:
 
         self._update_power()
 
-    def on_adapter_removed(self, _manager: Manager, adapter_path: str) -> None:
+    def on_adapter_removed(self, _devicelist: ManagerDeviceList, adapter_path: str) -> None:
         item, adapter = self.adapter_items.pop(adapter_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)
