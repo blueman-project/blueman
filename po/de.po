@@ -45,7 +45,7 @@
 # bambuhle <politik@philippoi.de>, 2014
 # qazwsxedc <qazwsxedc@gmx.net>, 2014
 # Tim Schulz <timschulz19980312@gmail.com>, 2015
-# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017, 2023, 2024.
+# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017, 2023, 2024, 2025.
 # jugendhacker <jugendhacker@gmail.com>, 2020.
 # Christopher Schramm <github@cschramm.eu>, 2020, 2021, 2022, 2023.
 # J. Lavoie <j.lavoie@net-c.ca>
@@ -62,8 +62,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-02-16 21:26+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2025-07-25 04:48+0000\n"
+"Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/blueman/blueman/"
 "de/>\n"
 "Language: de\n"
@@ -71,7 +71,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -308,7 +308,7 @@ msgstr "<b>NAP-Unterstützung</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Datei empfangen (Object Push)</b>"
+msgstr "<b>Datei wird empfangen (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
@@ -333,7 +333,8 @@ msgstr "_Anwenden"
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Dateien über Bluetooth versenden</span>"
+"<span weight=\"bold\" size=\"large\">Dateien werden über Bluetooth "
+"versendet</span>"
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
@@ -510,7 +511,7 @@ msgstr "_Stopp"
 
 #: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "Verbinde"
+msgstr "wird verbunden"
 
 #: blueman/main/Sendto.py:113
 msgid "obexd not available"
@@ -524,11 +525,11 @@ msgstr ""
 
 #: blueman/main/Sendto.py:144
 msgid "Cancelling"
-msgstr "Abbruch"
+msgstr "wird abgebrochen"
 
 #: blueman/main/Sendto.py:156
 msgid "Sending File"
-msgstr "Sende Datei"
+msgstr "Datei wird gesendet"
 
 #: blueman/main/Sendto.py:156
 msgid "ETA:"
@@ -775,7 +776,7 @@ msgstr "Fehlgeschlagen"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:150
 msgid "Connecting…"
-msgstr "Verbinde…"
+msgstr "wird verbunden …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:173
 msgid "Disconnection Failed: "
@@ -832,7 +833,7 @@ msgstr "<b>Automatisch verbinden:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
 msgid "Send a _File…"
-msgstr "_Datei senden…"
+msgstr "_Datei wird gesendet …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Pair"
@@ -860,11 +861,11 @@ msgstr "Dieses Gerät blockieren/entblocken"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:420
 msgid "R_ename device…"
-msgstr "G_erät umbenennen…"
+msgstr "G_erät umbenennen …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "_Remove…"
-msgstr "Entfe_rnen…"
+msgstr "Entfe_rnen …"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -933,7 +934,7 @@ msgstr "Adapterauswahl"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr "Suche…"
+msgstr "wird gesucht …"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -3231,7 +3232,7 @@ msgstr "Adapter für diese Verbindung ist nicht verfügbar"
 
 #: blueman/plugins/applet/RecentConns.py:191
 msgid "Reconnect to…"
-msgstr "Wiederverbinden mit…"
+msgstr "Wiederverbinden mit …"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3260,12 +3261,12 @@ msgstr "Ablehnen"
 
 #: blueman/plugins/applet/TransferService.py:137
 msgid "Receiving file"
-msgstr "empfange Datei"
+msgstr "Datei wird empfangen"
 
 #: blueman/plugins/applet/TransferService.py:138
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Empfange Datei %(0)s von %(1)s"
+msgstr "Datei %(0)s von %(1)s wird empfangen"
 
 #: blueman/plugins/applet/TransferService.py:157
 msgid "Provides OBEX file transfer capabilities"

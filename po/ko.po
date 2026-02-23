@@ -12,13 +12,14 @@
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2014,2019
 # Youngbin Han <sukso96100@gmail.com>, 2014
 # 이정희 <daemul72@gmail.com>, 2022, 2023.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2023-08-04 12:59+0000\n"
-"Last-Translator: 이정희 <daemul72@gmail.com>\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/blueman/blueman/"
 "ko/>\n"
 "Language: ko\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -870,7 +871,7 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
-"<b>%(0)s</b> 플러그인이 <b>%(1)s</b>와(과) 충돌합니다.  <b>%(1)s</b> 불러오기"
+"<b>%(0)s</b> 플러그인이 <b>%(1)s</b>와(과) 충돌합니다. <b>%(1)s</b> 불러오기"
 "를 취소하면 <b>%(0)s</b> 불러오기도 취소합니다.\n"
 "계속할까요?"
 
@@ -3382,10 +3383,10 @@ msgid "Files received"
 msgstr "파일 수신함"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "파일 %d개를 백그라운드에서 수신함"
+msgstr[0] "파일 %(files)d 개를 백그라운드에서 수신함"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3393,10 +3394,10 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "파일 %d개 이상을 백그라운드에서 수신함"
+msgstr[0] "파일 %(files)d 개 이상을 백그라운드에서 수신함"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3498,9 +3499,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "연결 끊는 중..."
+msgstr "연결 끊는 중 %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3541,7 +3542,7 @@ msgstr "탐색 가능… %ss"
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
-msgstr "애플릿과 다른 플러그인을 다룬  API에서 메뉴를 제공합니다"
+msgstr "애플릿과 다른 플러그인을 다룬 API에서 메뉴를 제공합니다"
 
 #: blueman/plugins/applet/PPPSupport.py:73
 #, python-format
@@ -3656,10 +3657,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "상태 아이콘 메뉴에 표준 메뉴 항목을 추가합니다"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "오디오 프로파일"
+msgstr "오디오 프로파일 %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
