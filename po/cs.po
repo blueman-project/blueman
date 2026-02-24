@@ -25,7 +25,7 @@
 # Lukáš Kvídera <lukas.kvidera@seznam.cz>, 2014
 # Michal Procházka <mich.procha@seznam.cz>, 2014
 # Michal <sinope@seznam.cz>, 2014
-# Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022, 2026.
 # Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
 # Vojtěch Otáhal <vojta.otahal@seznam.cz>, 2022.
 # zenobit <zenobit@users.noreply.hosted.weblate.org>, 2025.
@@ -34,8 +34,8 @@ msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2025-02-28 23:37+0000\n"
-"Last-Translator: zenobit <zenobit@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-02-24 15:09+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/blueman/2-4/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.16.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -646,10 +646,8 @@ msgid "Combo"
 msgstr "Kombo"
 
 #: blueman/gui/manager/ManagerDeviceList.py:341
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Přejmenovat zařízení"
+msgstr "Nenazvané zařízení"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:348
@@ -767,10 +765,8 @@ msgid "Device did not respond"
 msgstr "Zařízení neodpovědělo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:204
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Neznámé"
+msgstr "Neznámá chyba"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:209
 msgid "Connection Failed: "
@@ -889,10 +885,8 @@ msgstr ""
 "Provést?"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Problém se součástmi, na kterých závisí"
+msgstr "Žádné součásti, na kterých závisí"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
@@ -1364,10 +1358,8 @@ msgid "Wrist Blood Pressure"
 msgstr "Krevní tlak"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "Zařízení rozhraní mezi člověkem a počítačem (HID)"
+msgstr "Obecné zařízení rozhraní mezi člověkem a počítačem (HID)"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -3307,11 +3299,6 @@ msgid "Are you sure you want to reset the counter?"
 msgstr "Opravdu chcete resetovat počítadlo?"
 
 #: blueman/plugins/applet/NetUsage.py:289
-#, fuzzy
-#| msgid ""
-#| "Allows you to monitor your (mobile broadband) network traffic usage. "
-#| "Useful for limited data access plans. This plugin tracks every device "
-#| "seperately."
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
@@ -3560,15 +3547,11 @@ msgstr ""
 "Prosím čekejte…"
 
 #: blueman/plugins/applet/ShowConnected.py:21
-#, fuzzy
-#| msgid ""
-#| "Adds an indication on the status icon when Bluetooth is active and shows "
-#| "the number of connections in the tooltip."
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
-"Přidá údaj na stavovou ikonu, pokud je Bluetooth aktivní a zobrazuje počet "
+"Přidá údaj na stavovou ikonu, pokud je Bluetooth aktivní a zobrazuje "
 "připojení v popisu."
 
 #: blueman/plugins/applet/ShowConnected.py:72
@@ -3620,10 +3603,8 @@ msgid "Discoverable… %ss"
 msgstr "Viditelné… %ss"
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discoverable…"
-msgstr "Viditelné… %ss"
+msgstr "Objevitelné…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
@@ -3801,9 +3782,8 @@ msgid "Blueman Applet"
 msgstr "applet"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman je správce Bluetooth založený na GTK+"
+msgstr "Blueman – správce Bluetooth"
 
 #: data/blueman-manager.desktop.in:3
 #, fuzzy

@@ -1,22 +1,23 @@
 # Icelandic translation for blueman.
 # This file is distributed under the same license as the blueman package.
 #
-# Sveinn í Felli <sv1@fellsnet.is>, 2023, 2024, 2025.
+# Sveinn í Felli <sv1@fellsnet.is>, 2023, 2024, 2025, 2026.
+# Ashley <theboi2017@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2025-02-18 12:33+0000\n"
+"PO-Revision-Date: 2026-01-25 06:52+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <https://hosted.weblate.org/projects/blueman/2-4/is/"
-">\n"
+"Language-Team: Icelandic <https://hosted.weblate.org/projects/blueman/2-4/"
+"is/>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 5.10.1-dev\n"
+"X-Generator: Weblate 5.16-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -394,6 +395,11 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Það virðist sem ekki hafi tekist að virkja blueman-manager í gegnum D-Bus. "
+"Algeng orsök þessa er bilun í grafískri uppsetningu í D-Bus "
+"virkjunarumhverfinu sem hægt er að leysa með kalli á dbus-update-activation-"
+"environment, sem venjulega er sent frá xinitrc (þ.e. Sway stillingunum eða "
+"svipuðum)."
 
 #: blueman/main/Manager.py:104
 msgid "Connection to BlueZ failed"
@@ -405,6 +411,9 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
+"Bluez-þjónninn keyrir ekki, blueman-manager getur ekki haldið áfram.\n"
+"Þetta þýðir líklega að engir Bluetooth-millistykki fundust eða að Bluetooth-"
+"þjónninn var ekki ræstur."
 
 #: blueman/main/Manager.py:163
 msgid "Click to disable."
@@ -549,6 +558,10 @@ msgid ""
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
+"<b>Villa kom upp við að hlaða inn viðbót. Vinsamlegast látið forritarana "
+"vita af innihaldi þessa skilaboða á\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">vefsíðu</a> "
+"okkar.</b>"
 
 #: blueman/Functions.py:70
 msgid "Bluetooth Turned Off"
@@ -1606,7 +1619,7 @@ msgstr "Garðljós"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "Ljósastaur"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
@@ -1646,11 +1659,11 @@ msgstr "Pera"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Lágt hangandi vinnuljós"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Hátt hangandi vinnuljós"
 
 #: blueman/DeviceClass.py:296
 msgid "Generic Fan"
@@ -1726,7 +1739,7 @@ msgstr "Hitablásari"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Blásturshurð"
 
 #: blueman/DeviceClass.py:315
 msgid "Generic Air Conditioning"
@@ -1886,7 +1899,7 @@ msgstr "Algeng gerð gluggahlera"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr "Gluggatjöld"
+msgstr "Sólartjöld"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
@@ -2190,7 +2203,7 @@ msgstr "Skjávarpi"
 
 #: blueman/DeviceClass.py:440
 msgid "Generic Hearing aid"
-msgstr "Almennt heyrnartæki"
+msgstr "Algengt heyrnartæki"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
@@ -2206,7 +2219,7 @@ msgstr "Cochlear-ígræði"
 
 #: blueman/DeviceClass.py:444
 msgid "Generic Gaming"
-msgstr "Almennt leikjatæki"
+msgstr "Algengt leikjatæki"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
@@ -2246,7 +2259,7 @@ msgstr "Algeng vigt"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Almennt ferlihjálpartæki"
 
 #: blueman/DeviceClass.py:455
 msgid "Powered Wheelchair"
@@ -2254,11 +2267,11 @@ msgstr "Vélknúinn hjólastóll"
 
 #: blueman/DeviceClass.py:456
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Hjálparskutla"
 
 #: blueman/DeviceClass.py:457
 msgid "Generic Continuous Glucose Monitor"
-msgstr "Almenn samfelld vöktun glúkósa"
+msgstr "Almennur glúkósasíriti"
 
 #: blueman/DeviceClass.py:458
 msgid "Generic Insulin Pump"
@@ -2370,15 +2383,15 @@ msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Stýrirás prentunar"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Gagnarás prentunar"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Tilkynning prentunar"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
@@ -2414,7 +2427,7 @@ msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Opinber vafurhópur"
 
 #: blueman/Sdp.py:116
 msgid "Serial Port"
@@ -2746,7 +2759,7 @@ msgstr "Hjartsláttur"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Stöðuþjónusta símaviðvarana"
 
 #: blueman/Sdp.py:202
 msgid "Battery Service"
@@ -2758,7 +2771,7 @@ msgstr "Blóðþrýstingur"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Tilkynningaþjónusta fyrir viðvaranir"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
@@ -2866,7 +2879,7 @@ msgstr "Útlit"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Persónuverndarfáni ytri eininga"
 
 #: blueman/Sdp.py:232
 msgid "Reconnection Address"
@@ -2874,7 +2887,7 @@ msgstr "Vistfang endurtengingar"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Viðföng ákjósanlegrar ytri tengingar"
 
 #: blueman/Sdp.py:234
 msgid "Service Changed"
@@ -3243,6 +3256,9 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Skiptir um stöðu Bluetooth-rofa til að passa við aflgjafastöðu Bluetooth. "
+"Leyfir að kveikja aftur á Bluetooth með tákni sem sýnir stöðu þess; að því "
+"tilskildu að það sé ekki aftengt af kerfinu eða handvirkt."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
@@ -3398,6 +3414,8 @@ msgstr ""
 msgid ""
 "Standard SPP profile connection handler, allows executing custom actions"
 msgstr ""
+"Meðhöndlun tenginga með stöðluðu SPP-sniði, gefur kleift að framkvæma "
+"sérsniðnar aðgerðir"
 
 #: blueman/plugins/applet/SerialManager.py:31
 msgid "Script to execute on connection"
