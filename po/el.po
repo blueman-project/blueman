@@ -21,21 +21,21 @@
 # Νίκος Κοντ. <nkontopos@gmail.com>, 2016
 # george k <norhorn@gmail.com>
 # Michalis <michalisntovas@yahoo.gr>, 2021.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2021-02-17 22:44+0000\n"
-"Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
-"Language-Team: Greek <https://hosted.weblate.org/projects/blueman/blueman/el/"
-">\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/blueman/2-4/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -403,11 +403,11 @@ msgid "Always"
 msgstr "Πάντα"
 
 #: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Λεπτό"
-msgstr[1] "%d Λεπτά"
+msgstr[0] "%(minutes)d Λεπτό"
+msgstr[1] "%(minutes)d Λεπτά"
 
 #: blueman/main/Adapter.py:230
 msgid "Adapter"
@@ -3402,11 +3402,11 @@ msgid "Files received"
 msgstr "Ελήφθησαν αρχεία"
 
 #: blueman/plugins/applet/TransferService.py:333
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Ελήφθη %d αρχείο στο παρασκήνιο"
-msgstr[1] "Ελήφθησαν %d αρχεία στο παρασκήνιο"
+msgstr[0] "Ελήφθη %(files)d αρχείο στο παρασκήνιο"
+msgstr[1] "Ελήφθησαν %(files)d αρχεία στο παρασκήνιο"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
@@ -3414,11 +3414,11 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:342
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Ελήφθη άλλο %d αρχείο στο παρασκήνιο"
-msgstr[1] "Ελήφθησαν άλλα %d αρχεία στο παρασκήνιο"
+msgstr[0] "Ελήφθη άλλο %(files)d αρχείο στο παρασκήνιο"
+msgstr[1] "Ελήφθησαν άλλα %(files)d αρχεία στο παρασκήνιο"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3525,9 +3525,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Γίνεται αποσύνδεση..."
+msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
