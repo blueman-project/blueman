@@ -7150,6 +7150,7 @@ class Label(Misc):
         selectable: bool
         single_line_mode: bool
         use_markup: bool
+        width_chars: int
         wrap: bool
         xalign: float
 
@@ -7180,6 +7181,7 @@ class Label(Misc):
         valign: Align = Align.FILL,
         vexpand: bool = False,
         visible: bool = False,
+        width_chars: int = -1,
         width_request: int = -1,
     ) -> None: ...
 
