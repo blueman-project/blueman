@@ -11,6 +11,7 @@ from blueman.plugins.ServicePlugin import ServicePlugin
 
 import gi
 gi.require_version("Gtk", "3.0")
+gi.require_version("GLibUnix", "2.0")
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gio

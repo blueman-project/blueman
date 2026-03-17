@@ -31,7 +31,11 @@ from blueman.plugins.ManagerPlugin import ManagerPlugin
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gtk, Gio, Gdk, GLib
+gi.require_version("GLibUnix", "2.0")
+from gi.repository import Gtk
+from gi.repository import Gio
+from gi.repository import Gdk
+from gi.repository import GLib
 
 
 class Blueman(Gtk.Application):
