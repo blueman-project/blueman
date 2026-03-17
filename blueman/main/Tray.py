@@ -5,9 +5,12 @@ import signal
 import sys
 from blueman.Functions import log_system_info
 from blueman.main.DBusProxies import AppletMenuService, AppletStatusIconService
-from gi.repository import Gio, GLib
-
 from blueman.main.indicators.IndicatorInterface import IndicatorNotAvailable
+
+import gi
+gi.require_version("GLibUnix", "2.0")
+from gi.repository import Gio
+from gi.repository import GLib
 
 
 class BluemanTray(Gio.Application):
