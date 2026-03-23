@@ -13,7 +13,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("GLibUnix", "2.0")
 from gi.repository import Gtk
-from gi.repository import GLib
+from gi.repository import GLibUnix
 from gi.repository import Gio
 
 
@@ -30,7 +30,7 @@ class BluemanServices(Gtk.Application):
 
         log_system_info()
 
-        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s = GLibUnix.signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
 
