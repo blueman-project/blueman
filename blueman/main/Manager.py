@@ -36,6 +36,7 @@ from gi.repository import Gtk
 from gi.repository import Gio
 from gi.repository import Gdk
 from gi.repository import GLib
+from gi.repository import GLibUnix
 
 
 class Blueman(Gtk.Application):
@@ -51,7 +52,7 @@ class Blueman(Gtk.Application):
 
         log_system_info()
 
-        s = GLib.unix_signal_source_new(signal.SIGINT)
+        s = GLibUnix.signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
 
