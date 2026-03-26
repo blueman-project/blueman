@@ -18,6 +18,10 @@ class NMConnectionError(Exception):
     pass
 
 
+class NMConnectionNotSupported(Exception):
+    pass
+
+
 class NMConnectionBase:
     conntype: str
 
@@ -25,7 +29,7 @@ class NMConnectionBase:
                  error_handler: Callable[[NMConnectionError | GLib.Error], None]):
         if self.conntype not in ('dun', 'panu'):
             error_handler(
-                NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
+                NMConnectionNotSupported(f"Invalid connection type {self.conntype}, should be panu or dun")
             )
         self.device = service.device
         self.bdaddr: BtAddress = self.device['Address']

@@ -195,32 +195,48 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def _handle_error_message(self, error: GLib.Error) -> None:
         err = self._BLUEZ_ERROR_MAP.get(error.message.split(":", 3)[-1].strip())
+        info: str | None = None
+        match err:
+            case self._BluezError.PROFILE_UNAVAILABLE:
+                info = \
+                "No audio endpoints registered to bluetoothd. "
+                "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing."
+                msg = _("No audio endpoints registered")
+            case self._BluezError.CREATE_SOCKET:
+                info = "bluetoothd reported input/output error. Check its logs for context."
+                msg = _("Input/output error")
+            case self._BluezError.PAGE_TIMEOUT:
+                msg = _("Device did not respond")
+                info = "Is the device turned on?"
+            case self._BluezError.ABORTED:
+                msg = _("Aborted")
+                info = "Is the device turned on?"
+            case self._BluezError.RESET:
+                msg = _("Reset")
+                info = "Check the device for more info."
+            case self._BluezError.UNKNOWN:
+                info = "bluetoothd reported an unknown error. \nRetry or check its logs for context."
+                msg = _("Unknown error")
+            case self._BluezError.NMBTFAILED:
+                msg = _("could not create bluetooth connection for NetworkManager")
+            case _:
+                msg = error.message.split(":", 3)[-1].strip()
 
-        if err == self._BluezError.PROFILE_UNAVAILABLE:
-            logging.warning("No audio endpoints registered to bluetoothd. "
-                            "Pulseaudio Bluetooth module, bluez-alsa, PipeWire or other audio support missing.")
-            msg = _("No audio endpoints registered")
-        elif err == self._BluezError.CREATE_SOCKET:
-            logging.warning("bluetoothd reported input/output error. Check its logs for context.")
-            msg = _("Input/output error")
-        elif err == self._BluezError.PAGE_TIMEOUT:
-            msg = _("Device did not respond")
-        elif err == self._BluezError.UNKNOWN:
-            logging.warning("bluetoothd reported an unknown error. "
-                            "Retry or check its logs for context.")
-            msg = _("Unknown error")
-        else:
-            msg = error.message.split(":", 3)[-1].strip()
+        if info is not None:
+            logging.warning(info)
 
         if err != self._BluezError.CANCELED:
-            self.Blueman.infobar_update(_("Connection Failed: ") + msg)
+            self.Blueman.infobar_update(_("Connection Failed: ") + msg, info=info)
 
     class _BluezError(Enum):
         PAGE_TIMEOUT = auto()
         PROFILE_UNAVAILABLE = auto()
         CREATE_SOCKET = auto()
         CANCELED = auto()
+        ABORTED = auto()
+        RESET = auto()
         UNKNOWN = auto()
+        NMBTFAILED = auto()
 
     # BlueZ 5.62 introduced machine-readable error strings while earlier versions
     # used strerror() so that the messages depend on the libc implementation:
@@ -239,6 +255,11 @@ class ManagerDeviceMenu(Gtk.Menu):
         "br-connection-unknown": _BluezError.UNKNOWN,
         "Cancelled": _BluezError.CANCELED,
         "br-connection-canceled": _BluezError.CANCELED,
+        "br-connection-abort-by-local": _BluezError.ABORTED,
+        "le-connection-abort-by-local": _BluezError.ABORTED,
+        "br-connection-abort-by-remote": _BluezError.RESET,
+        "le-connection-abort-by-remote": _BluezError.RESET,
+        "Connection failed with reason: bt-failed": _BluezError.NMBTFAILED,
     }
 
     def show_generic_connect_calc(self, device_uuids: Iterable[str]) -> bool:
