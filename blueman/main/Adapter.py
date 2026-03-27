@@ -13,9 +13,8 @@ from blueman.main.Builder import Builder
 import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-gi.require_version("GLibUnix", "2.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import Gtk, Gio, Gdk, GLibUnix
+from gi.repository import Gtk, Gio, Gdk, GLib
 from gi.repository import Pango
 
 
@@ -39,7 +38,7 @@ class BluemanAdapters(Gtk.Application):
 
         log_system_info()
 
-        s = GLibUnix.signal_source_new(signal.SIGINT)
+        s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
 

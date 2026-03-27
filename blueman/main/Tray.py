@@ -11,7 +11,6 @@ import gi
 gi.require_version("GLibUnix", "2.0")
 from gi.repository import Gio
 from gi.repository import GLib
-from gi.repository import GLibUnix
 
 
 class BluemanTray(Gio.Application):
@@ -25,7 +24,7 @@ class BluemanTray(Gio.Application):
 
         log_system_info()
 
-        s = GLibUnix.signal_source_new(signal.SIGINT)
+        s = GLib.unix_signal_source_new(signal.SIGINT)
         s.set_callback(do_quit)
         s.attach()
 
