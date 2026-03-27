@@ -1,3 +1,7 @@
+import gi
+gi.require_version("Gtk", "3.0")
+
+from gi.repository import Gio, GLib, Gtk
 import logging
 import signal
 from typing import Any, cast
@@ -16,14 +20,6 @@ from blueman.plugins.applet.PowerManager import PowerManager
 from blueman.plugins.applet.RecentConns import RecentConns
 from blueman.plugins.applet.StandardItems import StandardItems
 from blueman.plugins.applet.StatusIcon import StatusIcon
-
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("GLibUnix", "2.0")
-
-from gi.repository import Gio
-from gi.repository import GLib
-from gi.repository import Gtk
 
 
 class BluemanApplet(Gtk.Application):
