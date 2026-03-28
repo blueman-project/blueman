@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.96.3 -->
+<interface>
+  <!-- interface-name manager-info.ui -->
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkGrid" id="info_grid">
+    <property name="border-width">3</property>
+    <property name="visible">True</property>
+    <child>
+      <object class="GtkLabel">
+        <property name="halign">start</property>
+        <property name="label">&lt;big&gt;Select the rows you want to copy&lt;/big&gt;</property>
+        <property name="margin">5</property>
+        <property name="margin-end">3</property>
+        <property name="margin-start">3</property>
+        <property name="use-markup">True</property>
+        <property name="visible">True</property>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkBox">
+        <property name="margin">5</property>
+        <property name="margin-end">3</property>
+        <property name="margin-start">3</property>
+        <property name="spacing">3</property>
+        <property name="valign">start</property>
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkButton" id="bt_copy">
+            <property name="label">Copy </property>
+            <property name="visible">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="bt_values_only">
+            <property name="active">True</property>
+            <property name="label" translatable="yes">Values only</property>
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="pack-type">end</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkComboBoxText" id="cb_format">
+            <property name="active">0</property>
+            <property name="sensitive" bind-source="bt_values_only" bind-property="active" bind-flags="invert-boolean | sync-create"/>
+            <property name="visible">True</property>
+            <items>
+              <item id="plain" translatable="yes">Plain text</item>
+              <item translatable="yes"/>
+              <item id="json" translatable="yes">JSON</item>
+            </items>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkScrolledWindow">
+        <property name="expand">True</property>
+        <property name="margin">5</property>
+        <property name="margin-end">3</property>
+        <property name="margin-start">3</property>
+        <property name="propagate-natural-height">True</property>
+        <property name="propagate-natural-width">True</property>
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkViewport">
+            <property name="expand">True</property>
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkListBox" id="info_listbox">
+                <property name="activate-on-single-click">False</property>
+                <property name="expand">True</property>
+                <property name="hexpand">True</property>
+                <property name="margin">3</property>
+                <property name="selection-mode">multiple</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="left-attach">0</property>
+        <property name="top-attach">2</property>
+      </packing>
+    </child>
+  </object>
+</interface>
