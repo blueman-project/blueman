@@ -109,10 +109,17 @@ class ManagerDeviceMenu(Gtk.Menu):
 
     def set_op(self, device: Device, message: str) -> None:
         ManagerDeviceMenu.__ops__[device.get_object_path()] = message
+        GLib.timeout_add(60000, self._op_timeout, device)
         for inst in ManagerDeviceMenu.__instances__:
             logging.info(f"op: regenerating instance {inst}")
             if inst.SelectedDevice == self.SelectedDevice and not (inst.is_popup and not inst.props.visible):
                 inst.generate()
+
+    def _op_timeout(self, device: Device) -> bool:
+        if device.get_object_path() in ManagerDeviceMenu.__ops__:
+            logging.warning(f"Operation timed out for {device.get_object_path()}")
+            self.unset_op(device)
+        return GLib.SOURCE_REMOVE
 
     def get_op(self, device: Device) -> str | None:
         try:
@@ -163,7 +170,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self._appl.ConnectService('(os)', device.get_object_path(), uuid,
                                   result_handler=success, error_handler=fail,
-                                  timeout=GLib.MAXINT)
+                                  timeout=45000)
 
         prog.start()
 
@@ -183,7 +190,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             return
 
         self._appl.DisconnectService('(osd)', device.get_object_path(), uuid, port,
-                                     result_handler=ok, error_handler=err, timeout=GLib.MAXINT)
+                                     result_handler=ok, error_handler=err, timeout=45000)
 
     def on_device_property_changed(self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter,
                                    key_value: tuple[str, object]) -> None:
