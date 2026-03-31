@@ -1,3 +1,4 @@
+import logging
 from gettext import gettext as _
 from typing import TYPE_CHECKING, Any
 from blueman.bluemantyping import ObjectPath, BtAddress
@@ -69,8 +70,9 @@ class AutoConnect(AppletPlugin):
                              {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
-            def err(_reason: Exception | str) -> None:
-                pass
+            def err(_reason: Exception | str, dev: Device | None = device) -> None:
+                assert isinstance(dev, Device)
+                logging.warning(f"AutoConnect failed for {dev.display_name}: {_reason}")
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)
 
