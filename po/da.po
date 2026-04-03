@@ -5,13 +5,14 @@
 # Dansk-gruppen <dansk@dansk-gruppen.dk>
 # Allan Nordhøy <epost@anotheragency.no>, 2016, 2022.
 # Joe Hansen <joedalton2@yahoo.dk>, 2014-2017,2019
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2022, 2023, 2024.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2022, 2023, 2024, 2025.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2024-09-27 20:29+0000\n"
+"PO-Revision-Date: 2025-11-26 15:37+0000\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/blueman/blueman/"
 "da/>\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3108,13 +3109,15 @@ msgstr "Viser forbrug af netværkstrafik"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 msgid "Force symbolic status icons"
-msgstr ""
+msgstr "Gennemtving symbolske statusikoner"
 
 #: blueman/plugins/applet/StatusIcon.py:39
 msgid ""
 "When enabled this will force the use of a symbolic version of the blueman "
 "statusicon"
 msgstr ""
+"Når denne funktion er aktiveret, vil den gennemtvinge brugen af en symbolsk "
+"version af bluemans statusikon"
 
 #: blueman/plugins/applet/StatusIcon.py:51
 #: blueman/plugins/applet/ShowConnected.py:80
@@ -3168,9 +3171,8 @@ msgid "Adapter for this connection is not available"
 msgstr "En adapter for denne forbindelse er ikke tilgængelig"
 
 #: blueman/plugins/applet/RecentConns.py:191
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Afbryder …"
+msgstr "Forbind igen til …"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3518,16 +3520,13 @@ msgid "Provides a StatusNotifierItem to show a statusicon"
 msgstr "Leverer et StatusNotifierItem til visning af statusikon"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:19
-#, fuzzy
-#| msgid "Adds standard menu items to the status icon menu"
 msgid "Adds audio profile selector to the status icon menu"
-msgstr "Tilføjer standardmenupunkter til statusikonmenuen"
+msgstr "Tilføjer lydprofilvælger til statusikonmenuen"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Lydprofil"
+msgstr "Lydprofil %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
