@@ -25,26 +25,27 @@
 # Lukáš Kvídera <lukas.kvidera@seznam.cz>, 2014
 # Michal Procházka <mich.procha@seznam.cz>, 2014
 # Michal <sinope@seznam.cz>, 2014
-# Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2019, 2022, 2026.
 # Stanislav Kučera <inactive+kacernator@transifex.com>, 2015
 # Vojtěch Otáhal <vojta.otahal@seznam.cz>, 2022.
 # zenobit <zenobit@users.noreply.hosted.weblate.org>, 2025.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-02-28 23:37+0000\n"
-"Last-Translator: zenobit <zenobit@users.noreply.hosted.weblate.org>\n"
-"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/blueman/cs/"
-">\n"
+"PO-Revision-Date: 2026-04-03 15:09+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/blueman/blueman/"
+"cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 5.10.3-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -591,18 +592,13 @@ msgid "Accept"
 msgstr "Přijmout"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
 "<b>Během načítání zásuvného modulu došlo k chybě. Prosím informujte vývojáře "
-"o obsahu této zprávy na našich</b>\n"
+"o obsahu této zprávy na našich </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">webových "
 "stránkách.</a>"
 
@@ -655,10 +651,8 @@ msgid "Combo"
 msgstr "Kombo"
 
 #: blueman/gui/manager/ManagerDeviceList.py:342
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Přejmenovat zařízení"
+msgstr "Nenazvané zařízení"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:349
@@ -691,7 +685,7 @@ msgstr "Blokováno"
 
 #: blueman/gui/manager/ManagerDeviceList.py:597
 msgid "<b>Connected</b>"
-msgstr "<b>Připojeno k:</b>"
+msgstr "<b>Připojeno</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Poor"
@@ -776,10 +770,8 @@ msgid "Device did not respond"
 msgstr "Zařízení neodpovědělo"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:206
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Neznámé"
+msgstr "Neznámá chyba"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
@@ -787,7 +779,7 @@ msgstr "Spojení se nezdařilo: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
 msgid "<b>_Connect</b>"
-msgstr "<b>Připojit k:</b>"
+msgstr "<b>_Připojit</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
@@ -795,7 +787,7 @@ msgstr "Připojuje profily automatického připojení A2DP source, A2DP sink a H
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:303
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Odpojit</b>"
+msgstr "<b>O_dpojit</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:304
 msgid "Forcefully disconnect the device"
@@ -882,8 +874,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"Modul <b>„%(0)s“</b> závisí na <b>%(1)s</b>. Jeho zrušením<b>%(1)s</b> se "
-"také zruší <b>„%(0)s“</b>.\n"
+"Modul <b>„%(0)s“</b> závisí na <b>%(1)s</b>. Zrušením jeho načtení <b>%(1)s</"
+"b> se také zruší načtení <b>„%(0)s“</b>.\n"
 "Pokračovat?"
 
 #: blueman/gui/applet/PluginDialog.py:241
@@ -898,10 +890,8 @@ msgstr ""
 "Provést?"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Problém se součástmi, na kterých závisí"
+msgstr "Žádné součásti, na kterých závisí"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
@@ -1373,10 +1363,8 @@ msgid "Wrist Blood Pressure"
 msgstr "Krevní tlak"
 
 #: blueman/DeviceClass.py:204
-#, fuzzy
-#| msgid "Human Interface Device"
 msgid "Generic Human Interface Device"
-msgstr "Zařízení rozhraní mezi člověkem a počítačem (HID)"
+msgstr "Obecné zařízení rozhraní mezi člověkem a počítačem (HID)"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
@@ -2120,10 +2108,8 @@ msgid "Broadcasting Device"
 msgstr "Zařízení pro zobrazování polohy"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Služba:"
+msgstr "Service Desk"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
@@ -3316,11 +3302,6 @@ msgid "Are you sure you want to reset the counter?"
 msgstr "Opravdu chcete resetovat počítadlo?"
 
 #: blueman/plugins/applet/NetUsage.py:289
-#, fuzzy
-#| msgid ""
-#| "Allows you to monitor your (mobile broadband) network traffic usage. "
-#| "Useful for limited data access plans. This plugin tracks every device "
-#| "seperately."
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
@@ -3579,15 +3560,11 @@ msgstr ""
 "Prosím čekejte…"
 
 #: blueman/plugins/applet/ShowConnected.py:22
-#, fuzzy
-#| msgid ""
-#| "Adds an indication on the status icon when Bluetooth is active and shows "
-#| "the number of connections in the tooltip."
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
-"Přidá údaj na stavovou ikonu, pokud je Bluetooth aktivní a zobrazuje počet "
+"Přidá údaj na stavovou ikonu, pokud je Bluetooth aktivní a zobrazuje "
 "připojení v popisu."
 
 #: blueman/plugins/applet/ShowConnected.py:73
@@ -3639,10 +3616,8 @@ msgid "Discoverable… %ss"
 msgstr "Viditelné… %ss"
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discoverable…"
-msgstr "Viditelné… %ss"
+msgstr "Objevitelné…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
@@ -3766,10 +3741,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "Přidá standardní položky nabídky do nabídky stavové ikony"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Profil zvuku"
+msgstr ""
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
@@ -3832,9 +3806,8 @@ msgid "Blueman Applet"
 msgstr "applet"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
-#, fuzzy
 msgid "Blueman Bluetooth Manager"
-msgstr "Blueman je správce Bluetooth založený na GTK+"
+msgstr "Blueman – správce Bluetooth"
 
 #: data/blueman-manager.desktop.in:3
 #, fuzzy
