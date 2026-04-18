@@ -2,7 +2,7 @@ on: pull_request
 
 jobs:
   releasebuild:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - run: sudo apt-get update
@@ -26,11 +26,10 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
-          - "3.14-rc"
+          - "3.14"
     runs-on: ubuntu-latest
     container:
       image: python:${{ matrix.python }}
@@ -44,12 +43,11 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
-          - "3.14-rc"
-    runs-on: ubuntu-22.04
+          - "3.14"
+    runs-on: ubuntu-24.04
     container:
       image: python:${{ matrix.python }}
     steps:
@@ -67,11 +65,10 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - "3.10"
           - "3.11"
           - "3.12"
           - "3.13"
-          - "3.14-rc"
+          - "3.14"
     runs-on: ubuntu-22.04
     container:
       image: python:${{ matrix.python }}
