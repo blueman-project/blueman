@@ -27,13 +27,15 @@
 # Rezső Páder <rezso@rezso.net>, 2014-2015,2017
 # Zoltán Rápolthy <real_zolee@hotmail.com>, 2017
 # Ács Zoltán <acszoltan111@gmail.com>, 2020, 2021, 2022.
+# Sander Sweers <infirit@gmail.com>, 2025.
+# Hetényi Domonkos <hetenyidoma@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2023-11-13 16:38+0000\n"
-"Last-Translator: KAMI <kami911@gmail.com>\n"
+"PO-Revision-Date: 2026-01-09 02:01+0000\n"
+"Last-Translator: Hetényi Domonkos <hetenyidoma@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/blueman/"
 "blueman/hu/>\n"
 "Language: hu\n"
@@ -41,7 +43,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -254,17 +256,15 @@ msgstr "<b>NAP beállítások</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Személyi hálózat"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>PAN támogatás</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Betárcsázós hálózat (DUN)"
+msgstr "Betárcsázós hálózat"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -275,10 +275,8 @@ msgid "Network Access Point (NAP)"
 msgstr "Hálózati hozzáférési pont (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>PAN támogatás</b>"
+msgstr "<b>NAP támogatás</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
@@ -422,7 +420,7 @@ msgstr "Csatoló"
 
 #: blueman/main/DBusProxies.py:90
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Sikertelen kapcsolódás a blueman-managerhez"
 
 #: blueman/main/DBusProxies.py:91
 msgid ""
@@ -432,6 +430,11 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Úgy tűnik, a blueman-manager nem aktiválható a D-Bus-on keresztül. Ennek "
+"jellemző oka a D-Bus aktiválási környezet hibás grafikus beállítása, amely "
+"orvosolható a dbus-update-activation-environment meghívásával. Ezt általában "
+"az xinitrc-ből (illetve a Sway konfigurációjából vagy hasonló helyről) "
+"szokás futtatni."
 
 #: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
@@ -444,16 +447,16 @@ msgid ""
 "Bluetooth daemon was not started."
 msgstr ""
 "A Bluez démon nem fut, a blueman-manager nem tudja folytatni.\n"
-"Ez azt jelentheti, hogy nincs elérhető Bluetooth csatoló, vagy a  Bluetooth "
+"Ez azt jelentheti, hogy nincs elérhető Bluetooth csatoló, vagy a Bluetooth "
 "démon nem indult el."
 
 #: blueman/main/Manager.py:172
 msgid "Click to disable."
-msgstr ""
+msgstr "Kattintson a kikapcsoláshoz."
 
 #: blueman/main/Manager.py:175
 msgid "Click to enable."
-msgstr ""
+msgstr "Kattintson a bekapcsoláshoz."
 
 #: blueman/main/Manager.py:208
 msgid "Searching"
@@ -585,18 +588,13 @@ msgid "Accept"
 msgstr "Elfogadás"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-"<b>Hiba lépett fel a bővítmény betöltésekor. Jelezze a fejlesztőknek, ennek "
-"az üzenetnek a tartalmával </b>\n"
+"<b>Hiba lépett fel egy bővítmény betöltése közben. Jelezze a fejlesztőknek, "
+"ennek az üzenetnek a tartalmával </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">weboldalunkon.</"
 "a>"
 
@@ -649,10 +647,8 @@ msgid "Combo"
 msgstr "Kombinált"
 
 #: blueman/gui/manager/ManagerDeviceList.py:342
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Eszköz átnevezése"
+msgstr "Névtelen eszköz"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:349
@@ -770,10 +766,8 @@ msgid "Device did not respond"
 msgstr "Az eszköz nem válaszolt"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:206
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Ismeretlen"
+msgstr "Ismeretlen hiba"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
@@ -897,11 +891,11 @@ msgstr ""
 #, fuzzy
 #| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Függőségi probléma"
+msgstr "Nincsenek függőségek"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Nincs ütközés"
 
 #: blueman/gui/applet/PluginDialog.py:351
 msgid "Dependency issue"
@@ -1207,10 +1201,8 @@ msgid "Game"
 msgstr "Játék"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
-#| msgid "Generic Phone"
 msgid "Generic Unknown"
-msgstr "Általános telefon"
+msgstr "Általános Ismeretlen"
 
 #: blueman/DeviceClass.py:169
 msgid "Generic Phone"
@@ -1222,21 +1214,19 @@ msgstr "Általános számítógép"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Asztali munkaállomás"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
-#| msgid "Generic Computer"
 msgid "Server-class Computer"
-msgstr "Általános számítógép"
+msgstr "Szerver számítógép"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Kézi számítógép/PDA (összecsukható)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Kézi számítógép/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
@@ -1244,39 +1234,35 @@ msgstr ""
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Dokkolóállomás"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Egybegép"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
-#| msgid "Server"
 msgid "Blade Server"
-msgstr "Szerver"
+msgstr "Blade szerver"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Átalakítható"
 
 #: blueman/DeviceClass.py:182
-#, fuzzy
-#| msgid "Wearable"
 msgid "Detachable"
-msgstr "Viselhető"
+msgstr "Leválasztható"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "IoT-átjáró"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Mini PC"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
@@ -1488,7 +1474,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Gomb"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
@@ -1500,7 +1486,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Érintőpanel"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
@@ -3736,10 +3722,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "A szokásos menüpontok hozzáadása az állapotikon menüjéhez"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Hangprofil"
+msgstr "Hangprofil %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
