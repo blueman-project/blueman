@@ -7,6 +7,8 @@ from gi.types import GObjectMeta
 from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
 
+DBUS_TIMEOUT = 10 * 1_000
+
 
 class BaseMeta(GObjectMeta):
     def __call__(cls, *args: object, **kwargs: str) -> "Base":
@@ -92,7 +94,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 else:
                     logging.error(f"Unhandled error for {self.__proxy.get_interface_name()}.{method}", exc_info=True)
 
-        self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
+        self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, DBUS_TIMEOUT, None,
                           callback, reply_handler, error_handler)
 
     def get(self, name: str) -> Any:
@@ -101,7 +103,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 'org.freedesktop.DBus.Properties.Get',
                 GLib.Variant('(ss)', (self._interface_name, name)),
                 Gio.DBusCallFlags.NONE,
-                GLib.MAXINT,
+                DBUS_TIMEOUT,
                 None)
             return prop.unpack()[0]
         except GLib.Error as e:
@@ -119,7 +121,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
         self.__proxy.call('org.freedesktop.DBus.Properties.Set',
                           param,
                           Gio.DBusCallFlags.NONE,
-                          GLib.MAXINT,
+                          DBUS_TIMEOUT,
                           None)
 
     def get_object_path(self) -> ObjectPath:
@@ -130,7 +132,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
         res = self.__proxy.call_sync('org.freedesktop.DBus.Properties.GetAll',
                                      param,
                                      Gio.DBusCallFlags.NONE,
-                                     GLib.MAXINT,
+                                     DBUS_TIMEOUT,
                                      None)
 
         props: dict[str, Any] = res.unpack()[0]
