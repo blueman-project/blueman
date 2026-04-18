@@ -70,8 +70,9 @@ class BluemanTray(Gio.Application):
         AppletMenuService().Activate()
 
     def on_signal(self, _applet: AppletMenuService | AppletStatusIconService, _sender_name: str, signal_name: str,
-                  args: GLib.Variant) -> None:
+                  vargs: GLib.Variant) -> None:
         logging.debug(f"{signal_name}")
+        args = vargs.unpack()
         if signal_name == 'IconNameChanged':
             self.indicator.set_icon(*args)
         elif signal_name == 'ToolTipTitleChanged':
