@@ -1,7 +1,7 @@
 import logging
 import weakref
 from gettext import gettext as _
-from typing import Any, TypeVar, TypedDict
+from typing import Any, Self, TypedDict
 
 from gi.repository import Gio
 
@@ -34,7 +34,7 @@ class BasePlugin:
     __unloadable__ = True
     __autoload__ = True
 
-    __instance__ = None
+    __instance__: Self | None = None
 
     __gsettings__: GSettings
 
@@ -49,10 +49,8 @@ class BasePlugin:
 
         weakref.finalize(self, self._on_plugin_delete)
 
-    _T = TypeVar("_T", bound="BasePlugin")
-
     @classmethod
-    def get_instance(cls: type[_T]) -> _T | None:
+    def get_instance(cls: type[Self]) -> Self | None:
         return cls.__instance__
 
     def _on_plugin_delete(self) -> None:
