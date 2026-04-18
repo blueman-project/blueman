@@ -13,7 +13,7 @@ class AgentManager(Base):
 
     def register_agent(self, agent_path: str, capability: str = "", default: bool = False) -> None:
         param = GLib.Variant('(os)', (agent_path, capability))
-        self._call('RegisterAgent', param)
+        self._call_sync('RegisterAgent', param)
         if default:
             default_param = GLib.Variant('(o)', (agent_path,))
             self._call('RequestDefaultAgent', default_param)
