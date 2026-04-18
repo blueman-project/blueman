@@ -30,7 +30,7 @@ class BluezErrorRejected(DbusError):
 
 
 class BluezAgent(DbusService):
-    __agent_path = '/org/bluez/agent/blueman'
+    __agent_path = ObjectPath('/org/bluez/agent/blueman')
 
     def __init__(self) -> None:
         super().__init__(None, "org.bluez.Agent1", self.__agent_path, Gio.BusType.SYSTEM)
@@ -52,12 +52,12 @@ class BluezAgent(DbusService):
         self._service_notifications: list[_NotificationBubble | _NotificationDialog] = []
 
     def register_agent(self) -> None:
-        logging.info("Register Agent")
+        logging.debug(self.__agent_path)
         self.register()
-        AgentManager().register_agent(self.__agent_path, "KeyboardDisplay", default=True)
+        AgentManager().register_agent(self.__agent_path, "KeyboardDisplay")
 
     def unregister_agent(self) -> None:
-        logging.info("Unregister Agent")
+        logging.debug(self.__agent_path)
         self.unregister()
         AgentManager().unregister_agent(self.__agent_path)
 
