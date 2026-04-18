@@ -32,6 +32,7 @@ class AutoConnect(AppletPlugin):
 
     def __init__(self, parent: "BluemanApplet"):
         super().__init__(parent)
+        self._last_err: dict[str, str] = {}
         GLib.timeout_add(60000, self._run)
 
     def on_manager_state_changed(self, state: bool) -> None:
@@ -66,13 +67,19 @@ class AutoConnect(AppletPlugin):
 
             def reply(dev: Device | None = device, service_name: str = ServiceUUID(uuid).name) -> None:
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
+                self._last_err.pop(dev["Address"], None)
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
-            def err(_reason: Exception | str, dev: Device | None = device) -> None:
+            def err(reason: Exception | str, dev: Device | None = device) -> None:
                 assert isinstance(dev, Device)
-                logging.warning(f"AutoConnect failed for {dev.display_name}: {_reason}")
+                reason_str = str(reason)
+                address = dev["Address"]
+                if self._last_err.get(address) == reason_str:
+                    return
+                self._last_err[address] = reason_str
+                logging.warning(f"AutoConnect failed for {dev.display_name}: {reason_str}")
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)
 
