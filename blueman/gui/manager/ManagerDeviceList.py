@@ -225,9 +225,8 @@ class ManagerDeviceList(DeviceList):
         posdata = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
         if posdata is None:
             return False
-        else:
-            path = posdata[0]
-            assert path is not None
+        path = posdata[0]
+        assert path is not None
 
         tree_iter = self.filter.get_iter(path)
         assert tree_iter is not None
