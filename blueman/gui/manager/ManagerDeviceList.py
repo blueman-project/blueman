@@ -240,10 +240,11 @@ class ManagerDeviceList(DeviceList):
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
 
+        if self.menu.get_op(row["device"]):
+            return False
+
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
-                if self.menu.get_op(row["device"]):
-                    return False
                 if row["connected"]:
                     self.menu.disconnect_service(row["device"])
                 elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
