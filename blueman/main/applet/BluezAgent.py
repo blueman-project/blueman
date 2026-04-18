@@ -52,12 +52,12 @@ class BluezAgent(DbusService):
         self._service_notifications: list[_NotificationBubble | _NotificationDialog] = []
 
     def register_agent(self) -> None:
-        logging.info("Register Agent")
+        logging.debug(self.__agent_path)
         self.register()
         AgentManager().register_agent(self.__agent_path, "KeyboardDisplay")
 
     def unregister_agent(self) -> None:
-        logging.info("Unregister Agent")
+        logging.debug(self.__agent_path)
         self.unregister()
         AgentManager().unregister_agent(self.__agent_path)
 
