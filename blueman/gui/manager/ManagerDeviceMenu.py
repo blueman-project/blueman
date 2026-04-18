@@ -35,6 +35,8 @@ if TYPE_CHECKING:
     from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
     from blueman.main.Manager import Blueman
 
+DBUS_TIMEOUT = 10 * 1_000
+
 
 class DeviceMenuItem:
     class Group(Enum):
@@ -163,7 +165,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self._appl.ConnectService('(os)', device.get_object_path(), uuid,
                                   result_handler=success, error_handler=fail,
-                                  timeout=GLib.MAXINT)
+                                  timeout=DBUS_TIMEOUT)
 
         prog.start()
 
@@ -183,7 +185,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             return
 
         self._appl.DisconnectService('(osd)', device.get_object_path(), uuid, port,
-                                     result_handler=ok, error_handler=err, timeout=GLib.MAXINT)
+                                     result_handler=ok, error_handler=err, timeout=DBUS_TIMEOUT)
 
     def on_device_property_changed(self, lst: "ManagerDeviceList", _device: Device, tree_iter: Gtk.TreeIter,
                                    key_value: tuple[str, object]) -> None:
