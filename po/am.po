@@ -4,22 +4,22 @@
 # Translators:
 # samson <sambelet@yahoo.com>, 2014-2015,2017
 # Teamir Dellelegn <jop.oppeth@gmail.com>, 2024.
-# Sander Sweers <infirit@gmail.com>, 2024.
+# Sander Sweers <infirit@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2024-09-30 04:51+0000\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
-"Language-Team: Amharic <https://hosted.weblate.org/projects/blueman/2-4/am/"
-">\n"
+"Language-Team: Amharic <https://hosted.weblate.org/projects/blueman/2-4/am/>"
+"\n"
 "Language: am\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -383,11 +383,11 @@ msgid "Always"
 msgstr "ሁልጊዜ "
 
 #: blueman/main/Adapter.py:164 blueman/main/Sendto.py:190
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d ደቂቃ"
-msgstr[1] "%d ደቂቆች "
+msgstr[0] "%(minutes)d ደቂቃ"
+msgstr[1] "%(minutes)d ደቂቆች"
 
 #: blueman/main/Adapter.py:230
 msgid "Adapter"
@@ -3218,17 +3218,12 @@ msgid "Are you sure you want to reset the counter?"
 msgstr "በ እርግጥ መቁጠሪያውን እንደ ነበር መመለስ ይፈልጋሉ? "
 
 #: blueman/plugins/applet/NetUsage.py:289
-#, fuzzy
-#| msgid ""
-#| "Allows you to monitor your (mobile broadband) network traffic usage. "
-#| "Useful for limited data access plans. This plugin tracks every device "
-#| "seperately."
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
 msgstr ""
-"እርስዎን መቆጣጠር ያስችሎታል  (ተንቀሳቃሽ broadband) ኔትዎርክ ትራፊክ አጠቃቀም: ለ ተወሰነ ዳታ ተጠቃሚዎች "
-"በጣም ጠቃሚ ነው: ይህ ተሰኪ እያንዳንዱን አካል ይከታተላል"
+"እርስዎን መቆጣጠር ያስችሎታል (ተንቀሳቃሽ broadband) ኔትዎርክ ትራፊክ አጠቃቀም: ለ ተወሰነ ዳታ ተጠቃሚዎች በጣም "
+"ጠቃሚ ነው: ይህ ተሰኪ እያንዳንዱን አካል ይከታተላል"
 
 #: blueman/plugins/applet/NetUsage.py:309
 msgid "Network _Usage"
@@ -3258,7 +3253,7 @@ msgstr ""
 #: blueman/plugins/applet/RecentConns.py:42
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
-msgstr "ዝርዝር እቃዎችን ያቀርባል መጨረሻ የ ተጠቀሙበትን ግኑኘነቶች ጋር  በፍጥነት ለ መድረስ"
+msgstr "ዝርዝር እቃዎችን ያቀርባል መጨረሻ የ ተጠቀሙበትን ግኑኘነቶች ጋር በፍጥነት ለ መድረስ"
 
 #. the maximum number of items RecentConns menu will display
 #: blueman/plugins/applet/RecentConns.py:53
@@ -3310,7 +3305,7 @@ msgstr "በ ብሉቱዝ የሚመጣ ፋይል "
 #: blueman/plugins/applet/TransferService.py:127
 #, python-format
 msgid "Incoming file %(0)s from %(1)s"
-msgstr "የሚመጣ ፋይል  %(0)s ከ %(1)s"
+msgstr "የሚመጣ ፋይል %(0)s ከ %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:129
 msgid "Reject"
@@ -3368,11 +3363,11 @@ msgid "Files received"
 msgstr "የተቀበሉዋቸው ፋይሎች"
 
 #: blueman/plugins/applet/TransferService.py:333
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "ተቀብለዋል %d ፋይሎች ከ በስተ ጀርባ"
-msgstr[1] "ተቀብለዋል %d ፋይሎች ከ በስተ ጀርባ "
+msgstr[0] "ተቀብለዋል %(files)d ፋይሎች ከ በስተ ጀርባ"
+msgstr[1] "ተቀብለዋል %(files)d ፋይሎች ከ በስተ ጀርባ"
 
 #: blueman/plugins/applet/TransferService.py:338
 #: blueman/plugins/applet/TransferService.py:346
@@ -3380,11 +3375,11 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:342
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "ተቀብለዋል %d ተጨማሪ ፋይሎች ከ በስተ ጀርባ"
-msgstr[1] "ተቀብለዋል %d ተጨማሪ ፋይሎች ከ በስተ ጀርባ "
+msgstr[0] "ተቀብለዋል %(files)d ተጨማሪ ፋይሎች ከ በስተ ጀርባ"
+msgstr[1] "ተቀብለዋል %(files)d ተጨማሪ ፋይሎች ከ በስተ ጀርባ"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3484,9 +3479,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "በ መለያየት ላይ..."
+msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3584,7 +3579,7 @@ msgstr "Serial port ተገናኝቷል"
 #, python-format
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
-msgstr "Serial port ግልጋሎት በ አካሉ ላይ <b>%s</b> አሁን ዝግጁ ይሆናል በ  <b>%s</b>"
+msgstr "Serial port ግልጋሎት በ አካሉ ላይ <b>%s</b> አሁን ዝግጁ ይሆናል በ <b>%s</b>"
 
 #: blueman/plugins/applet/SerialManager.py:114
 msgid "Serial port connection script failed"
