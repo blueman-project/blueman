@@ -67,9 +67,9 @@ class ManagerDeviceList(DeviceList):
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "trusted", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "objpush", "type": bool},  # used to set Send File button
-            {"id": "battery", "type": float},
-            {"id": "rssi", "type": float},
-            {"id": "tpl", "type": float},
+            {"id": "battery", "type": int},
+            {"id": "rssi", "type": int},
+            {"id": "tpl", "type": int},
             {"id": "cell_fader", "type": CellFade},
             {"id": "row_fader", "type": TreeRowFade},
             {"id": "initial_anim", "type": bool},
@@ -498,7 +498,7 @@ class ManagerDeviceList(DeviceList):
     def _update_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, cinfo: conn_info) -> None:
         row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
 
-        bars = {}
+        bars: dict[str, int] = {}
 
         obj_path = device.get_object_path()
         if obj_path in self._batteries:
@@ -507,14 +507,16 @@ class ManagerDeviceList(DeviceList):
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
         if cinfo.failed:
-            bars.update({"rssi": 100.0, "tpl": 100.0})
+            bars.update({"rssi": 100, "tpl": 100})
         else:
             try:
-                bars["rssi"] = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10)
+                rssi = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10.0)
+                bars["rssi"] = int(round(rssi, -1))
             except ConnInfoReadError:
                 bars["rssi"] = 50
             try:
-                bars["tpl"] = max(50 + float(cinfo.get_tpl()) / 127 * 50, 10)
+                tpl = max(50 + float(cinfo.get_tpl()) / 127 * 50, 10.0)
+                bars["tpl"] = int(round(tpl, -1))
             except ConnInfoReadError:
                 bars["tpl"] = 50
 
@@ -525,8 +527,8 @@ class ManagerDeviceList(DeviceList):
         h = 48 * self.get_scale_factor()
 
         for (name, perc) in bars.items():
-            if round(row[name], -1) != round(perc, -1):
-                path = PIXMAP_PATH / f"blueman-{name}-{int(round(perc, -1))}.png"
+            if row[name] != perc:
+                path = PIXMAP_PATH / f"blueman-{name}-{perc}.png"
                 icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(path.as_posix(), w, h, True)
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
