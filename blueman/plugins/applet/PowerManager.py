@@ -72,7 +72,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     def get_adapter_state(self) -> bool:
         adapters = self.parent.Manager.get_adapters()
         for adapter in adapters:
-            if not adapter["Powered"]:
+            if not adapter.powered:
                 return False
         return bool(adapters)
 

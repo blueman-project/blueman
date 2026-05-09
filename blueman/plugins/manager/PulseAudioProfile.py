@@ -29,14 +29,14 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def on_pa_ready(self, _utils: PulseAudioUtils) -> None:
         logging.info("connected")
         for dev in self.deferred:
-            self.regenerate_with_device(dev['Address'])
+            self.regenerate_with_device(dev.address)
 
         self.deferred = []
 
     # updates all menu instances with the following device address
     def regenerate_with_device(self, device_addr: str) -> None:
         for inst in ManagerDeviceMenu.__instances__:
-            if inst.SelectedDevice['Address'] == device_addr and not inst.is_popup:
+            if inst.SelectedDevice.address == device_addr and not inst.is_popup:
                 inst.generate()
 
     def on_pa_event(self, utils: PulseAudioUtils, event: int, idx: int) -> None:
@@ -65,8 +65,8 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
     def query_pa(self, device: Device, item: Gtk.MenuItem) -> None:
         def list_cb(cards: Mapping[str, CardInfo]) -> None:
             for c in cards.values():
-                if c["proplist"]["device.string"] == device['Address']:
-                    self.devices[device['Address']] = c
+                if c["proplist"]["device.string"] == device.address:
+                    self.devices[device.address] = c
                     self.generate_menu(device, item)
                     return
 
@@ -77,7 +77,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         if item.get_active():
             pa = PulseAudioUtils()
 
-            c = self.devices[device['Address']]
+            c = self.devices[device.address]
 
             def on_result(res: int) -> None:
                 if not res:
@@ -86,7 +86,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             pa.set_card_profile(c["index"], profile, on_result)
 
     def generate_menu(self, device: Device, item: Gtk.MenuItem) -> None:
-        info = self.devices[device['Address']]
+        info = self.devices[device.address]
         group: Sequence[Gtk.RadioMenuItem] = []
 
         sub = Gtk.Menu()
@@ -115,12 +115,12 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
         _powered: bool,
     ) -> list[DeviceMenuItem]:
         audio_source = False
-        for uuid in device['UUIDs']:
+        for uuid in device.uuids:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
                 audio_source = True
                 break
 
-        if device['Connected'] and audio_source:
+        if device.connected and audio_source:
 
             pa = PulseAudioUtils()
             if not pa.connected:
@@ -130,7 +130,7 @@ class PulseAudioProfile(ManagerPlugin, MenuItemsProvider):
             item = create_menuitem(_("Audio Profile"), "audio-card-symbolic")
             item.props.tooltip_text = _("Select audio profile for PulseAudio")
 
-            if not device['Address'] in self.devices:
+            if device.address not in self.devices:
                 self.query_pa(device, item)
             else:
                 self.generate_menu(device, item)

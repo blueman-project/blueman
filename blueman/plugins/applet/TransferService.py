@@ -113,7 +113,7 @@ class Agent(DbusService):
             device = self._applet.Manager.find_device(address, adapter.get_object_path())
             assert device is not None
             name = device.display_name
-            trusted = device["Trusted"]
+            trusted = device.trusted
         except Exception as e:
             logging.exception(e)
             name = address

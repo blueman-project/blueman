@@ -60,14 +60,14 @@ class AutoConnect(AppletPlugin):
                 btaddress = self.__fix_settings(btaddress, uuid)
 
             device = self.parent.Manager.find_device(btaddress)
-            if device is None or device.get("Connected"):
+            if device is None or device.connected:
                 continue
 
             def reply(dev: Device | None = device, service_name: str = ServiceUUID(uuid).name) -> None:
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},
-                             icon_name=dev["Icon"]).show()
+                             icon_name=dev.icon).show()
 
             def err(_reason: Exception | str) -> None:
                 pass

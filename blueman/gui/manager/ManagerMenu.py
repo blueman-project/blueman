@@ -124,7 +124,7 @@ class ManagerMenu:
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)
 
-        item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter.get_name())
+        item = Gtk.RadioMenuItem.new_with_label(self._adapters_group, adapter.alias)
         item.show()
         self._adapters_group = item.get_group()
 
@@ -159,7 +159,7 @@ class ManagerMenu:
         if self.device_menu is not None:
             self.device_menu.generate()
 
-        if any(adapter["Powered"] for (_, adapter) in self.adapter_items.values()):
+        if any(adapter.powered for (_, adapter) in self.adapter_items.values()):
             self.Search.props.visible = True
             self._adapter_settings.props.visible = True
         else:

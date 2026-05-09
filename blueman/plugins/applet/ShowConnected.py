@@ -51,7 +51,7 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     def enumerate_connections(self) -> bool:
         self._connections = {device.get_object_path()
                              for device in self.parent.Manager.get_devices()
-                             if device["Connected"]}
+                             if device.connected}
 
         logging.info(f"Found {len(self._connections):d} existing connections")
         if (self._connections and not self.active) or (not self._connections and self.active):
@@ -64,9 +64,9 @@ class ShowConnected(AppletPlugin, StatusIconProvider):
     def update_statusicon(self) -> None:
         if self._connections:
             def build_line(obj_path: ObjectPath) -> str:
-                line: str = Device(obj_path=obj_path)["Alias"]
+                line: str = Device(obj_path=obj_path).alias
                 try:
-                    return f"{line} 🔋{Battery(obj_path=obj_path)['Percentage']}%"
+                    return f"{line} 🔋{Battery(obj_path=obj_path).percentage}%"
                 except BluezDBusException:
                     return line
 

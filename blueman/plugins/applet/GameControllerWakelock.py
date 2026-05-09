@@ -43,7 +43,7 @@ class GameControllerWakelock(AppletPlugin):
 
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
-            klass = Device(obj_path=path)["Class"] & 0x1fff
+            klass = Device(obj_path=path).klass & 0x1fff
 
             if klass == 0x504 or klass == 0x508:
                 if value:

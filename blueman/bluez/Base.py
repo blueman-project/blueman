@@ -145,12 +145,3 @@ class Base(GObject.Object, metaclass=BaseMeta):
     def destroy(self) -> None:
         if self.__proxy:
             del self.__proxy
-
-    def __getitem__(self, key: str) -> Any:
-        return self.get(key)
-
-    def __setitem__(self, key: str, value: str | int | bool) -> None:
-        self.set(key, value)
-
-    def __contains__(self, key: str) -> bool:
-        return key in self.get_properties()

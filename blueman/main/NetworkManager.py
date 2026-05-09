@@ -28,7 +28,7 @@ class NMConnectionBase:
                 NMConnectionError(f"Invalid connection type {self.conntype}, should be panu or dun")
             )
         self.device = service.device
-        self.bdaddr: BtAddress = self.device['Address']
+        self.bdaddr: BtAddress = self.device.address
         self.error_handler = error_handler
         self.reply_handler = reply_handler
         self.connection = None
@@ -175,7 +175,7 @@ class NMPANConnection(NMConnectionBase):
 
     def create_connection(self) -> None:
         conn = NM.SimpleConnection()
-        conn_id = f"{self.device['Name']} Network"
+        conn_id = f"{self.device.name} Network"
         conn_uuid = str(uuid.uuid4())
 
         conn_sett = NM.SettingConnection(type='bluetooth', id=conn_id, uuid=conn_uuid, autoconnect=False)

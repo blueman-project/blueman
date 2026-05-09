@@ -15,7 +15,7 @@ class BatteryWatcher:
             manager.disconnect_signal,
             manager.connect_signal(
                 "battery-created",
-                lambda _manager, obj_path: callback(obj_path, Battery(obj_path=obj_path)["Percentage"])
+                lambda _manager, obj_path: callback(obj_path, Battery(obj_path=obj_path).percentage)
             )
         )
 

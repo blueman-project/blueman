@@ -22,7 +22,7 @@ class SerialService(Service):
     @property
     def available(self) -> bool:
         # It will ask to pair anyway so not make it available
-        paired: bool = self.device["Paired"]
+        paired = self.device.paired
         return paired
 
     @property
@@ -43,7 +43,7 @@ class SerialService(Service):
             return []
 
         return [Instance(_("Serial Port %s") % "rfcomm%d" % dev["id"], dev["id"]) for dev in lst
-                if dev["dst"] == self.device['Address'] and dev["state"] == "connected"]
+                if dev["dst"] == self.device.address and dev["state"] == "connected"]
 
     def on_file_changed(
         self,
@@ -87,7 +87,7 @@ class SerialService(Service):
         # We expect this service to have a reserved UUID
         uuid = self.short_uuid
         assert uuid
-        channel = get_rfcomm_channel(uuid, self.device['Address'])
+        channel = get_rfcomm_channel(uuid, self.device.address)
         if channel is None or channel == 0:
             error = RFCOMMError("Failed to get rfcomm channel")
             if error_handler:
@@ -97,7 +97,7 @@ class SerialService(Service):
                 raise error
 
         try:
-            port_id = create_rfcomm_device(Adapter(obj_path=self.device["Adapter"])['Address'], self.device["Address"],
+            port_id = create_rfcomm_device(Adapter(obj_path=self.device.adapter).address, self.device.address,
                                            channel)
             filename = f"/dev/rfcomm{port_id:d}"
             logging.info('Starting rfcomm watcher as root')

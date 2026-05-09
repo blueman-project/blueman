@@ -109,16 +109,16 @@ class RecentConns(AppletPlugin, PowerStateListener):
         device = Device(obj_path=object_path)
         logging.info(f"{device} {uuid}")
         try:
-            adapter = self.parent.Manager.get_adapter(device['Adapter'])
+            adapter = self.parent.Manager.get_adapter(device.adapter)
         except DBusNoSuchAdapterError:
             logging.warning("adapter not found")
             return
 
         item = {
-            "adapter": adapter["Address"],
-            "address": BtAddress(device['Address']),
+            "adapter": adapter.address,
+            "address": device.address,
             "alias": device.display_name,
-            "icon": device['Icon'],
+            "icon": device.icon,
             "name": ServiceUUID(uuid).name,
             "uuid": uuid,
             "time": str(time.time()),

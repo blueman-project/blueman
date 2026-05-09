@@ -26,13 +26,13 @@ class ConnectionNotifier(AppletPlugin):
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
-            if device["Blocked"]:
+            if device.blocked:
                 return
             if value:
                 self._notifications[path] = notification = Notification(
                     device.display_name,
                     _('Connected'),
-                    icon_name=device["Icon"],
+                    icon_name=device.icon,
                     transient=True,
                 )
                 notification.show()
@@ -40,7 +40,7 @@ class ConnectionNotifier(AppletPlugin):
                 Notification(
                     device.display_name,
                     _('Disconnected'),
-                    icon_name=device["Icon"],
+                    icon_name=device.icon,
                     transient=True,
                 ).show()
 

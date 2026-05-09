@@ -121,7 +121,7 @@ class DiscvManager(AppletPlugin):
         if self.adapter is None:
             logging.warning("warning: Adapter is None")
             self.item.set_visible(False)
-        elif (not self.adapter["Discoverable"] or self.adapter["DiscoverableTimeout"] > 0) and self.adapter["Powered"]:
+        elif (not self.adapter.discoverable or self.adapter.discoverable_timeout > 0) and self.adapter.powered:
             self.item.set_visible(True)
             self.item.set_text(_("_Make Discoverable"))
             self.item.set_sensitive(True)

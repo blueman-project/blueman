@@ -63,8 +63,8 @@ class ManagerToolbar:
         self._update_buttons(dev_list.Adapter)
 
     def _update_buttons(self, adapter: Adapter | None) -> None:
-        powered = adapter is not None and adapter["Powered"]
-        self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
+        powered = adapter is not None and adapter.powered
+        self.b_search.props.sensitive = powered and not (adapter and adapter.discovering)
 
         pm_enabled = "PowerManager" in self.blueman.Applet.QueryPlugins()
         bt_status_box = self.blueman.builder.get_widget("bt_status_box", Gtk.Box)

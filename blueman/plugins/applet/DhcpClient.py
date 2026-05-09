@@ -36,7 +36,7 @@ class DhcpClient(AppletPlugin):
                 self.dhcp_acquire(object_path)
 
     def dhcp_acquire(self, object_path: ObjectPath) -> None:
-        device = Network(obj_path=object_path)["Interface"]
+        device = Network(obj_path=object_path).interface
 
         if device not in self.querying:
             self.querying.append(device)
