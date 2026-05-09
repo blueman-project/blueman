@@ -507,7 +507,7 @@ class ManagerDeviceList(DeviceList):
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
         if cinfo.failed:
-            bars.update({"rssi": 100, "tpl": 100})
+            bars.update({"rssi": 50, "tpl": 50})
         else:
             try:
                 rssi = max(50 + float(cinfo.get_rssi()) / 127 * 50, 10.0)
