@@ -8,6 +8,7 @@ from blueman.bluez.errors import BluezDBusException
 
 class Device(Base):
     _interface_name = 'org.bluez.Device1'
+    _fallbacks: dict[str, int | str] = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
     def __init__(self, obj_path: ObjectPath):
         super().__init__(obj_path=obj_path)

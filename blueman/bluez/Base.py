@@ -37,6 +37,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     __instances__: dict[str, "Base"]
 
     _interface_name: str
+    _fallbacks: dict[str, Any] = {}
 
     connect_signal = GObject.GObject.connect
     disconnect_signal = GObject.GObject.disconnect
@@ -55,8 +56,6 @@ class Base(GObject.Object, metaclass=BaseMeta):
         )
 
         self.__proxy.connect("g-properties-changed", self._properties_changed)
-
-        self.__fallback = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
@@ -108,8 +107,8 @@ class Base(GObject.Object, metaclass=BaseMeta):
             property = self.__proxy.get_cached_property(name)
             if property is not None:
                 return property.unpack()
-            elif name in self.__fallback:
-                return self.__fallback[name]
+            elif self._fallbacks is not None and name in self._fallbacks:
+                return self._fallbacks[name]
             else:
                 raise parse_dbus_error(e)
 
@@ -134,7 +133,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
                                      None)
 
         props: dict[str, Any] = res.unpack()[0]
-        for k, v in self.__fallback.items():
+        for k, v in self._fallbacks.items():
             if k in props:
                 continue
             else:
