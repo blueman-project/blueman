@@ -158,6 +158,10 @@
         <default>true</default>
         <summary>Show notification on successful autoconnect</summary>
     </key>
+    <key type="i" name="interval">
+      <default>60</default>
+      <summary>Connect interval</summary>
+    </key>
   </schema>
   <schema id="org.blueman.plugins.recentconns" path="/org/blueman/plugins/recentconns/">
     <key type="i" name="max-items">
