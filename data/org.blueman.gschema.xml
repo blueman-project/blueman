@@ -200,4 +200,12 @@
       <description>If this is set to true clicking the system tray icon will toggle the manager instead of focusing on it.</description>
     </key>
   </schema>
+  <schema id="org.blueman.plugins.powermanager" path="/org/blueman/plugins/powermanager/">
+    <key type="b" name="last-power-state">
+      <default>false</default>
+    </key>
+    <key type="mb" name="restore-power-state">
+      <default>nothing</default>
+    </key>
+</schema>
 </schemalist>
