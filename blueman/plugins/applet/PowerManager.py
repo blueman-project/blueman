@@ -109,7 +109,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
             self.adapter_state = state
         except Exception:
-            logging.error("Exception occurred", exc_info=True)
+            logging.error(f"Failed to set new power state: {state}", exc_info=True)
 
     class Callback:
         def __init__(self, parent: "PowerManager", state: bool):
