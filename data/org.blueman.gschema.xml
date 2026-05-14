@@ -154,6 +154,10 @@
       <summary>Services to connect to automatically</summary>
       <description>A list of services to connect to stored as tuples with the address and the UUID</description>
     </key>
+    <key type="b" name="notification">
+        <default>true</default>
+        <summary>Show notification on successful autoconnect</summary>
+    </key>
   </schema>
   <schema id="org.blueman.plugins.recentconns" path="/org/blueman/plugins/recentconns/">
     <key type="i" name="max-items">

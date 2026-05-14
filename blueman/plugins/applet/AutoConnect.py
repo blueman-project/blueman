@@ -26,7 +26,16 @@ class AutoConnect(AppletPlugin):
         "path": None
     }
     __options__ = {
-        "services": {"type": list, "default": "[]"}
+        "services": {
+            "type": list,
+            "default": "[]"
+        },
+        "notification": {
+            "type": bool,
+            "default": True,
+            "name": "Show notification",
+            "desc": "Show a notification on successful autoconnect."
+        },
     }
 
     def __init__(self, parent: "BluemanApplet"):
@@ -64,6 +73,9 @@ class AutoConnect(AppletPlugin):
                 continue
 
             def reply(dev: Device | None = device, service_name: str = ServiceUUID(uuid).name) -> None:
+                if not self.get_option("notification"):
+                    return
+
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},
