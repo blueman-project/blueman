@@ -195,8 +195,9 @@ class BluezAgent(DbusService):
 
     def _on_display_passkey(self, object_path: ObjectPath, passkey: int, entered: int) -> None:
         logging.info(f"DisplayPasskey ({object_path}, {passkey:d} {entered:d})")
-        dev = Device(obj_path=object_path)
-        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
+        if object_path not in self._devhandlerids:
+            dev = Device(obj_path=object_path)
+            self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         key = f"{passkey:06}"
         notify_message = _("Pairing passkey for") + f" {self.get_device_string(object_path)}: " \
