@@ -155,7 +155,7 @@ class BluezAgent(DbusService):
 
     # Workaround BlueZ not calling the Cancel method, see #164
     def _on_device_property_changed(self, device: Device, key: str, value: Any, path: str) -> None:
-        if (key == "Paired" and value) or (key == "Connected" and not value):
+        if (key in ("Paired", "Bonded") and value) or (key == "Connected" and not value):
             handlerid = self._devhandlerids.pop(path)
             device.disconnect_signal(handlerid)
             self._on_cancel()
