@@ -202,9 +202,11 @@ class BluezAgent(DbusService):
         key = f"{passkey:06}"
         notify_message = _("Pairing passkey for") + f" {self.get_device_string(object_path)}: " \
                                                     f"{key[:entered]}<b>{key[entered]}</b>{key[entered + 1:]}"
-        self._close()
-        self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
-        self._notification.show()
+        if self._notification is None:
+            self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
+            self._notification.show()
+        else:
+            self._notification.set_message(notify_message)
 
     def _on_display_pin_code(self, object_path: ObjectPath, pin_code: str) -> None:
         logging.info(f'DisplayPinCode ({object_path}, {pin_code})')
