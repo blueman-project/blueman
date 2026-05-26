@@ -27,14 +27,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
     def __init__(self) -> None:
         super().__init__()
-        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
-            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
-            self.__bus_name, '/', None, None, None)
-
-        self._object_manager.connect("object-added", self._on_object_added)
-        self._object_manager.connect("object-removed", self._on_object_removed)
-        self._object_manager.connect("interface-added", self._on_interface_added)
-        self._object_manager.connect("interface-removed", self._on_interface_removed)
+        self.reconnect()
 
     def _on_object_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
@@ -162,6 +155,15 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             if device['Address'] == address:
                 return device
         return None
+
+    def reconnect(self) -> None:
+        self._object_manager = Gio.DBusObjectManagerClient.new_for_bus_sync(
+            Gio.BusType.SYSTEM, Gio.DBusObjectManagerClientFlags.DO_NOT_AUTO_START,
+            self.__bus_name, '/', None, None, None)
+        self._object_manager.connect("object-added", self._on_object_added)
+        self._object_manager.connect("object-removed", self._on_object_removed)
+        self._object_manager.connect("interface-added", self._on_interface_added)
+        self._object_manager.connect("interface-removed", self._on_interface_removed)
 
     def destroy(self) -> None:
         if self._object_manager:
