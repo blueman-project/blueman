@@ -56,9 +56,10 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
         return False
 
     clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
-    dialog = Gtk.Dialog(icon_name="blueman", title="blueman")
-    dialog.set_transient_for(parent)
-    dialog_content_area = dialog.get_content_area()
+    dialog = Gtk.Window(icon_name="blueman", title="blueman", transient_for=parent)
+
+    dialog_content_area = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+    dialog.add(dialog_content_area)
 
     label = Gtk.Label()
     label.set_markup(_("<big>Select row(s) and use <i>Control + C</i> to copy</big>"))
@@ -120,8 +121,7 @@ def show_info(device: Device, parent: Gtk.Window) -> None:
             logging.info(f"Could not add property {name}")
             pass
 
-    dialog.run()
-    dialog.destroy()
+    dialog.show_all()
 
 
 class Info(ManagerPlugin, MenuItemsProvider):
