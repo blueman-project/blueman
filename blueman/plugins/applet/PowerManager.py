@@ -75,10 +75,6 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)
 
-    @property
-    def CurrentState(self) -> bool:
-        return self.current_state
-
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             def timeout() -> bool:
