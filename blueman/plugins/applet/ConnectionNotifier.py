@@ -26,8 +26,6 @@ class ConnectionNotifier(AppletPlugin):
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
-            if device["Blocked"]:
-                return
             if value:
                 self._notifications[path] = notification = Notification(
                     device.display_name,
