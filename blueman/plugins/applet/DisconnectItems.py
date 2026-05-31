@@ -37,7 +37,7 @@ class DisconnectItems(AppletPlugin):
 
     def _render(self) -> None:
         for idx, device in enumerate(self.parent.Manager.get_devices()):
-            if device["Connected"]:
+            if device.connected:
                 self._menu.add(self, (25, idx), text=_("Disconnect %s") % device.display_name,
                                icon_name="bluetooth-disconnected-symbolic",
                                callback=cast(Callable[[], None], lambda dev=device: dev.disconnect()))

@@ -41,7 +41,7 @@ def send_note(device: Device, parent: Gtk.ApplicationWindow) -> None:
     dialog.set_transient_for(parent)
     dialog.props.icon_name = 'blueman'
     note = builder.get_widget("note", Gtk.Entry)
-    dialog.connect('response', send_note_cb, device['Address'], note)
+    dialog.connect('response', send_note_cb, device.address, note)
     dialog.present()
 
 

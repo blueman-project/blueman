@@ -332,7 +332,7 @@ class Blueman(Gtk.Application):
     def bond(device: Device) -> None:
         def error_handler(e: Exception) -> None:
             logging.exception(e)
-            message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
+            message = f"Pairing failed for:\n{device.display_name} ({device.address})"
             Notification('Bluetooth', message, icon_name="blueman").show()
 
         device.pair(error_handler=error_handler)
@@ -343,18 +343,18 @@ class Blueman(Gtk.Application):
 
     @staticmethod
     def toggle_trust(device: Device) -> None:
-        device['Trusted'] = not device['Trusted']
+        device.trusted = not device.trusted
 
     @staticmethod
     def toggle_blocked(device: Device) -> None:
-        device['Blocked'] = not device['Blocked']
+        device.blocked = not device.blocked
 
     def send(self, device: Device) -> None:
         adapter = self.List.Adapter
 
         assert adapter
 
-        command = f"blueman-sendto --source={adapter['Address']} --device={device['Address']}"
+        command = f"blueman-sendto --source={adapter.address} --device={device.address}"
         launch(command, name=_("File Sender"))
 
     def remove(self, device: Device) -> None:

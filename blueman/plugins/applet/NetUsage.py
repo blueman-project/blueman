@@ -37,7 +37,7 @@ class MonitorBase(GObject.GObject):
         self.device = device
         self.general_config = Gio.Settings(schema_id="org.blueman.general")
         self.config = Gio.Settings(schema_id="org.blueman.plugins.netusage",
-                                   path=f"/org/blueman/plugins/netusages/{device['Address']}/")
+                                   path=f"/org/blueman/plugins/netusages/{device.address}/")
 
         self.last_tx = 0
         self.last_rx = 0
@@ -61,8 +61,8 @@ class MonitorBase(GObject.GObject):
 
         self.emit("stats", self.config["tx"], self.config["rx"])
 
-        if not self.device["Address"] in self.general_config["netusage-dev-list"]:
-            self.general_config["netusage-dev-list"] += [self.device["Address"]]
+        if self.device.address not in self.general_config["netusage-dev-list"]:
+            self.general_config["netusage-dev-list"] += [self.device.address]
 
     def disconnect_monitor(self) -> None:
         self.emit("disconnected")
@@ -149,9 +149,9 @@ class Dialog:
         added = False
         for d in general_config["netusage-dev-list"]:
             for m in plugin.monitors:
-                if d == m.device["Address"]:
+                if d == m.device.address:
                     titer = self.liststore.append(
-                        [d, self.get_caption(m.device.display_name, m.device["Address"]),
+                        [d, self.get_caption(m.device.display_name, m.device.address),
                          _("Connected:") + " " + m.interface, m])
                     if self.cb_device.get_active() == -1:
                         self.cb_device.set_active_iter(titer)
@@ -164,7 +164,7 @@ class Dialog:
                     if device is None:
                         pass
                     else:
-                        name = self.get_caption(device.display_name, device["Address"])
+                        name = self.get_caption(device.display_name, device.address)
 
                 self.liststore.append([d, name, _("Not Connected"), None])
             added = False
@@ -262,13 +262,13 @@ class Dialog:
             titer = row.iter
             (val,) = self.liststore.get(titer, 0)
 
-            if val == monitor.device["Address"]:
-                caption = self.get_caption(monitor.device.display_name, monitor.device["Address"])
+            if val == monitor.device.address:
+                caption = self.get_caption(monitor.device.display_name, monitor.device.address)
                 self.liststore.set(titer, 1, caption, 2, _("Connected:") + " " + monitor.interface, 3, monitor)
                 return
 
         self.liststore.append(
-            [monitor.device["Address"], self.get_caption(monitor.device.display_name, monitor.device["Address"]),
+            [monitor.device.address, self.get_caption(monitor.device.display_name, monitor.device.address),
              _("Connected:") + " " + monitor.interface, monitor]
         )
 
@@ -277,8 +277,8 @@ class Dialog:
             titer = row.iter
             (val,) = self.liststore.get(titer, 0)
 
-            if val == monitor.device["Address"]:
-                caption = self.get_caption(monitor.device.display_name, monitor.device["Address"])
+            if val == monitor.device.address:
+                caption = self.get_caption(monitor.device.display_name, monitor.device.address)
                 self.liststore.set(titer, 1, caption, 2, _("Not Connected"), 3, None)
                 return
 

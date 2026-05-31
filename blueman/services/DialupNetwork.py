@@ -14,7 +14,7 @@ class DialupNetwork(SerialService):
     @property
     def common_actions(self) -> set[Action]:
         def open_settings() -> None:
-            d = GsmSettings(self.device['Address'])
+            d = GsmSettings(self.device.address)
             d.run()
             d.destroy()
 

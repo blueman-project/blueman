@@ -1,5 +1,6 @@
 from collections.abc import Callable
-from blueman.bluemantyping import ObjectPath
+from typing import cast
+from blueman.bluemantyping import ObjectPath, BtAddress
 
 from gi.repository import GLib
 
@@ -25,12 +26,49 @@ class Adapter(Base):
         param = GLib.Variant('(o)', (device.get_object_path(),))
         self._call('RemoveDevice', param)
 
-    def get_name(self) -> str:
-        name: str = self['Alias']
-        return name
+    @property
+    def address(self) -> BtAddress:
+        return cast(BtAddress, self.get("Address"))
 
-    def set_name(self, name: str) -> None:
-        self.set('Alias', name)
+    @property
+    def alias(self) -> str:
+        return cast(str, self.get("Alias"))
+
+    @alias.setter
+    def alias(self, alias: str) -> None:
+        self.set("Alias", alias)
+
+    @property
+    def discoverable(self) -> bool:
+        return cast(bool, self.get("Discoverable"))
+
+    @discoverable.setter
+    def discoverable(self, v: bool) -> None:
+        self.set("Discoverable", v)
+
+    @property
+    def discoverable_timeout(self) -> int:
+        return cast(int, self.get("DiscoverableTimeout"))
+
+    @discoverable_timeout.setter
+    def discoverable_timeout(self, timeout: int) -> None:
+        self.set("DiscoverableTimeout", timeout)
+
+    @property
+    def discovering(self) -> bool:
+        return cast(bool, self.get("Discovering"))
+
+    @property
+    def klass(self) -> int:
+        return cast(int, self.get("Class"))
+
+    @property
+    def name(self) -> str:
+        return cast(str, self.get("Name"))
+
+    @property
+    def powered(self) -> bool:
+        return cast(bool, self.get("Powered"))
 
 
 class AnyAdapter(AnyBase):

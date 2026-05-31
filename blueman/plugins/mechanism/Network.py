@@ -38,7 +38,7 @@ class Network(MechanismPlugin):
             ok(ip)
             self.timer.resume()
 
-        dh = DhcpClient(BluezNetwork(obj_path=object_path)["Interface"])
+        dh = DhcpClient(BluezNetwork(obj_path=object_path).interface)
         dh.connect("error-occurred", dh_error)
         dh.connect("connected", dh_connected)
         try:

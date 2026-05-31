@@ -37,10 +37,10 @@ class DeviceSelectorList(DeviceList):
             self.row_setup_event(row.iter, device)
 
     def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
-        self.row_update_event(tree_iter, "Trusted", device['Trusted'])
-        self.row_update_event(tree_iter, "Paired", device['Paired'])
+        self.row_update_event(tree_iter, "Trusted", device.trusted)
+        self.row_update_event(tree_iter, "Paired", device.paired)
         self.row_update_event(tree_iter, "Alias", device.display_name)
-        self.row_update_event(tree_iter, "Icon", device['Icon'])
+        self.row_update_event(tree_iter, "Icon", device.icon)
 
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         if key == "Trusted":

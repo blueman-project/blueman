@@ -4,7 +4,6 @@ from gettext import gettext as _
 from operator import attrgetter
 from typing import TYPE_CHECKING
 from collections.abc import Iterable
-from blueman.bluemantyping import BtAddress
 
 from blueman.bluemantyping import ObjectPath
 from blueman.Functions import create_menuitem, e_
@@ -294,9 +293,9 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(item)
             return
 
-        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
+        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice.uuids)
 
-        powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
+        powered = Adapter(obj_path=self.SelectedDevice.adapter).powered
 
         if not row["connected"] and show_generic_connect and powered:
             connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
@@ -334,7 +333,6 @@ class ManagerDeviceMenu(Gtk.Menu):
         config = AutoConnectConfig()
         generic_service = ServiceUUID("00000000-0000-0000-0000-000000000000")
         object_path = self.SelectedDevice.get_object_path()
-        btaddress: BtAddress = self.SelectedDevice["Address"]
         generic_autoconnect = (object_path, str(generic_service)) in set(config["services"])
 
         if row["connected"] or generic_autoconnect or autoconnect_items:
@@ -342,7 +340,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
             if row["connected"] or generic_autoconnect:
                 item = Gtk.CheckMenuItem(label=generic_service.name)
-                config.bind_to_menuitem(item, (btaddress, str(generic_service)))
+                config.bind_to_menuitem(item, (self.SelectedDevice.address, str(generic_service)))
                 item.show()
                 self.append(item)
 
@@ -418,7 +416,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             dialog.set_transient_for(self.Blueman.window)
             dialog.props.icon_name = "blueman"
             alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
-            alias_entry.set_text(device['Alias'])
+            alias_entry.set_text(device.alias)
             dialog.connect("response", on_response)
             dialog.present()
 

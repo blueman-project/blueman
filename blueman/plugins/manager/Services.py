@@ -1,5 +1,4 @@
 from collections.abc import Callable
-from blueman.bluemantyping import BtAddress
 
 import cairo
 
@@ -74,7 +73,7 @@ class Services(ManagerPlugin, MenuItemsProvider):
                 items.append(DeviceMenuItem(item, DeviceMenuItem.Group.DISCONNECT, service.priority + 100))
                 item.show()
 
-        btaddress: BtAddress = device["Address"]
+        btaddress = device.address
         if services:
             config = AutoConnectConfig()
             autoconnect_services = set(config["services"])

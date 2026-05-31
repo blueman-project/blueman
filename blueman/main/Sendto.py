@@ -137,14 +137,14 @@ class SendTo:
 
     def _has_objpush(self, object_path: ObjectPath) -> bool:
         device = Device(obj_path=object_path)
-        for uuid in device["UUIDs"]:
+        for uuid in device.uuids:
             if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
                 return True
         return False
 
     def _start_discovery(self, from_timer: bool = False) -> bool:
         for adapter in self._manager.get_adapters():
-            if not adapter["Discovering"]:
+            if not adapter.discovering:
                 adapter.start_discovery()
         if from_timer:
             return False
@@ -301,11 +301,11 @@ class Sender(Gtk.Dialog):
 
         self.client.connect('session-failed', self.on_session_failed)
 
-        logging.info(f"Sending to {device['Address']}")
+        logging.info(f"Sending to {device.address}")
         self.l_dest.props.label = device.display_name
 
         # Stop discovery if discovering and let adapter settle for a second
-        if self.adapter["Discovering"]:
+        if self.adapter.discovering:
             self.adapter.stop_discovery()
             time.sleep(1)
 
@@ -314,7 +314,7 @@ class Sender(Gtk.Dialog):
         self.show()
 
     def create_session(self) -> None:
-        self.client.create_session(self.device['Address'], self.adapter["Address"])
+        self.client.create_session(self.device.address, self.adapter.address)
 
     def on_cancel(self, button: Gtk.Button | None) -> None:
         self.pb.props.text = _("Cancelling")

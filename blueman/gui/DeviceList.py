@@ -223,7 +223,7 @@ class DeviceList(GenericList):
     def add_device(self, object_path: ObjectPath) -> None:
         device = Device(obj_path=object_path)
         # device belongs to another adapter
-        if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
+        if not self.Adapter or not device.adapter == self.Adapter.get_object_path():
             return
 
         logging.info("adding new device")
@@ -232,7 +232,7 @@ class DeviceList(GenericList):
             "device": device,
             "dbus_path": object_path,
             "timestamp": float(datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')),
-            "no_name": "Name" not in device
+            "no_name": device.name is None
         }
 
         tree_iter = self.append(**colls)

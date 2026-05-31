@@ -30,22 +30,22 @@ class AudioProfiles(AppletPlugin):
     def generate_menu(self) -> None:
         devices = self.parent.Manager.get_devices()
         for device in devices:
-            if device['Connected']:
+            if device.connected:
                 self.request_device_profile_menu(device)
 
     def request_device_profile_menu(self, device: Device) -> None:
         audio_source = False
-        for uuid in device['UUIDs']:
+        for uuid in device.uuids:
             if ServiceUUID(uuid).short_uuid in (AUDIO_SOURCE_SVCLASS_ID, AUDIO_SINK_SVCLASS_ID):
                 audio_source = True
                 break
 
-        if device['Connected'] and audio_source:
+        if device.connected and audio_source:
             pa = PulseAudioUtils()
             if not pa.connected:
                 return
 
-            if not device['Address'] in self._devices:
+            if device.address not in self._devices:
                 self.query_pa(device)
             else:
                 self.add_device_profile_menu(device)
@@ -76,18 +76,18 @@ class AudioProfiles(AppletPlugin):
                 })
             return items
 
-        info = self._devices[device['Address']]
+        info = self._devices[device.address]
         idx = max((item.priority[1] for item in self._device_menus.values()), default=-1) + 1
         menu = self._menu.add(self, (42, idx), _("Audio Profiles for %s") % device.display_name,
                               icon_name="audio-card-symbolic",
                               submenu_function=lambda: _generate_profiles_menu(info))
-        self._device_menus[device['Address']] = menu
+        self._device_menus[device.address] = menu
 
     def query_pa(self, device: Device) -> None:
         def list_cb(cards: Mapping[str, CardInfo]) -> None:
             for c in cards.values():
-                if c["proplist"]["device.string"] == device['Address']:
-                    self._devices[device['Address']] = c
+                if c["proplist"]["device.string"] == device.address:
+                    self._devices[device.address] = c
                     self.add_device_profile_menu(device)
                     return
 
@@ -97,7 +97,7 @@ class AudioProfiles(AppletPlugin):
     def on_activate_profile(self, device: Device, profile: CardProfileInfo) -> None:
         pa = PulseAudioUtils()
 
-        c = self._devices[device['Address']]
+        c = self._devices[device.address]
 
         def on_result(res: int) -> None:
             if not res:

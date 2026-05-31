@@ -117,8 +117,8 @@ class DeviceSelector:
         device = Device(obj_path=object_path)
         row = DeviceRow(
             device_path=object_path,
-            adapter_path=device["Adapter"],
-            device_icon=f"{device['Icon']}-symbolic",
+            adapter_path=device.adapter,
+            device_icon=f"{device.icon}-symbolic",
             alias=device.display_name,
             warning=show_warning
         )

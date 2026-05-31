@@ -17,12 +17,12 @@ class NetworkService(Service):
     @property
     def available(self) -> bool:
         # This interface is only available after pairing
-        paired: bool = self.device["Paired"]
+        paired: bool = self.device.paired
         return paired
 
     @property
     def connectable(self) -> bool:
-        return not self.available or not self._service["Connected"]
+        return not self.available or not self._service.connected
 
     @property
     def connected_instances(self) -> list[Instance]:

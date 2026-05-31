@@ -55,7 +55,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected" and not value:
             device = Device(obj_path=path)
-            self.terminate_all_scripts(device["Address"])
+            self.terminate_all_scripts(device.address)
             self.on_device_disconnect(device)
 
     def on_rfcomm_connected(self, service: SerialService, port: str) -> None:
@@ -66,7 +66,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
                          device.display_name, port),
                          icon_name="blueman-serial").show()
 
-            self.call_script(device['Address'],
+            self.call_script(device.address,
                              device.display_name,
                              service.name,
                              service.short_uuid,
@@ -131,7 +131,7 @@ class SerialManager(AppletPlugin, RFCOMMConnectedListener):
             return
 
         try:
-            active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device['Address']]
+            active_ports = [rfcomm['id'] for rfcomm in rfcomm_list() if rfcomm['dst'] == device.address]
         except RFCOMMError as e:
             logging.error(f"rfcomm_list failed with: {e}")
             return

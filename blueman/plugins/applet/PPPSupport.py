@@ -47,7 +47,7 @@ class Connection:
 
     def connect(self) -> bool:
         c = Gio.Settings(schema_id="org.blueman.gsmsetting",
-                         path=f"/org/blueman/gsmsettings/{self.service.device['Address']}/")
+                         path=f"/org/blueman/gsmsettings/{self.service.device.address}/")
 
         m = Mechanism()
         m.PPPConnect('(uss)', self.port, c["number"], c["apn"], result_handler=self.on_connected,

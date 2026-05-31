@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from typing import cast
 from blueman.bluemantyping import ObjectPath
 
 from blueman.bluez.Base import Base
@@ -29,6 +30,14 @@ class Network(Base):
         error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
         self._call('Disconnect', reply_handler=reply_handler, error_handler=error_handler)
+
+    @property
+    def connected(self) -> bool:
+        return cast(bool, self.get("Connected"))
+
+    @property
+    def interface(self) -> str:
+        return cast(str, self.get("Interface"))
 
 
 class AnyNetwork(AnyBase):
