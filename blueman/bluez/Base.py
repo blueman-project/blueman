@@ -94,6 +94,9 @@ class Base(GObject.Object, metaclass=BaseMeta):
 
         self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, GLib.MAXINT, None,
                           callback, reply_handler, error_handler)
+        
+    def _call_sync(self, method: str, param: GLib.Variant | None = None) -> GLib.Variant | None:
+        return self.__proxy.call_sync(method, param, Gio.DBusCallFlags.NONE, -1, None)
 
     def get(self, name: str) -> Any:
         try:
