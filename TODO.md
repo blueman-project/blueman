@@ -26,13 +26,10 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | perf-5 | open | M | `blueman/bluez/Manager.py:115-149` `get_adapter_paths`/`get_devices` iterate `_object_manager.get_objects()` per call | cache, invalidate on object-added/removed |
 | perf-6 | open | S | `blueman/gui/manager/ManagerDeviceList.py:384-388,456-497` `row_setup_event`/`row_update_event` re-read same `device[k]` props | read once, reuse |
 | perf-7 | open | M | `blueman/gui/manager/ManagerDeviceList.py:353-407` row setup pulls 8+ props via individual `Get` calls | single `GetAll` per row |
-| perf-8 | open | S | `blueman/gui/manager/ManagerStats.py:36-37` two `SpeedCalc` instances keep unbounded log lists | cap log size to N samples |
 | perf-9 | open | S | `blueman/main/DhcpClient.py:48-50,68` `subprocess.poll()` blocking in 1s `GLib.timeout` | use `Gio.Subprocess` + `wait_check_async` or `GLib.child_watch_add` |
 | perf-10 | open | S | `blueman/gui/manager/ManagerMenu.py:53` creates Adapter proxies for all adapters in `__init__` | lazy-instantiate on selection |
 | perf-11 | open | S | `blueman/main/Manager.py:161-164` `find_device()` linear scan over all objects | address-indexed dict |
-| perf-12 | open | S | `blueman/gui/manager/ManagerProgressbar.py:132-138` reverse-iterate cleanup → O(n²) | track via deque or set |
 | perf-13 | open | S | `blueman/main/Applet.py:93-118` plugin broadcast loop runs full plugin set per property change → O(plugins × props × devices) | debounce/batch property events |
-| perf-14 | open | S | `blueman/gui/GtkAnimation.py:85` per-animation 41ms timer; multiple animations stack | unify tick clock |
 
 ## scalability
 
@@ -350,7 +347,13 @@ _(none open)_
 
 ## Open — parked
 
-_(none yet)_
+- **perf-12** (`ManagerProgressbar` instance cleanup) — the loop is GTK-widget-bound
+  (`finalize()` touches builder/window/hbox/Stats) and is actually O(n), not O(n²); no real
+  perf win and not unit-testable without a full Manager app. Park until reworked alongside the
+  rob-1/rob-2 source-id fixes in the same file.
+- **perf-14** (`GtkAnimation` per-animation timer) — the fix ("unify tick clock") is a
+  shared-timer architecture change, not a low-risk edit, and can't reach genuine coverage
+  headless. Park for a dedicated animation-scheduler change.
 
 ## Audit picks deliberately rejected
 
