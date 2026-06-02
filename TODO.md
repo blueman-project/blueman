@@ -106,16 +106,11 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| rel-1 | open | S | `blueman/main/NetConf.py:91` `next(...)` without default → `StopIteration` aborts cleanup | `next(..., None)` |
 | rel-2 | open | S | `blueman/main/PPPConnection.py:121` `self.file` not initialized in `__init__`; touched in exception paths | init `self.file = None` |
 | rel-3 | open | S | `blueman/main/PPPConnection.py:159` `self.pppd` not initialized before `connect_callback`; `poll()` crashes on early error | init `self.pppd = None` |
-| rel-4 | open | S | `blueman/main/DhcpClient.py:48` `self._client` undefined until `run()`; `_check_client()` crashes if not called | init `self._client = None` |
 | rel-5 | open | S | `blueman/main/PPPConnection.py:76-77` `os.close(self.file)` without fd validity check | guard with try/except `OSError` |
-| rel-6 | open | S | `blueman/plugins/mechanism/Network.py:52` `DHCPDHANDLERS[dhcp_handler]` `KeyError` on untrusted input | validate against allowed keys |
 | rel-7 | open | S | `blueman/main/PPPConnection.py:222-224` `io_watch`/`timeout` not removed on exception path | try/finally `GLib.source_remove` |
-| rel-8 | open | S | `blueman/plugins/mechanism/Rfcomm.py:14` `subprocess.Popen` failure silently swallowed | log + propagate |
 | rel-9 | open | S | `blueman/main/Services.py:86` bare `except: pass` hides errors | narrow exception types |
-| rel-10 | open | S | `blueman/main/DhcpClient.py:53` `poll()` returns `0` on success but truthy check fails | compare `is not None` or `== 0` explicitly |
 
 ## observability
 
@@ -156,7 +151,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | stride-1 | open | M | `blueman/main/DbusService.py:162-170` unhandled exceptions return full traceback in DBus errors, leaking internal paths to any caller | sanitize error messages on the bus; detailed traces to daemon log only |
-| stride-2 | open | S | `blueman/plugins/mechanism/Network.py:52` attacker-supplied `dhcp_handler` indexes `DHCPDHANDLERS` dict with no whitelist (DoS / EoP) | validate against allowed keys before lookup (dup of rel-6, security framing) |
 | stride-4 | open | M | `blueman/main/MechanismApplication.py:50` if `POLKIT=False` at build, PolicyKit auth skipped silently (Elevation of privilege) | fail-closed; never silently skip authorization; log when disabled |
 
 ## data governance
