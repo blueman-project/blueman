@@ -50,8 +50,15 @@ class PPPConnection(GObject.GObject):
         'error-occurred': (GObject.SignalFlags.NO_HOOKS, None, (str,))
     }
 
+    # 3GPP APN labels are alphanumerics separated by dots/dashes (TS 23.003).
+    # Anything else could break out of the quoted AT+CGDCONT argument below.
+    _APN_RE = re.compile(r"^[A-Za-z0-9.-]*$")
+
     def __init__(self, port: str, number: str = "*99#", apn: str = "", user: str = "", pwd: str = "") -> None:
         super().__init__()
+
+        if not self._APN_RE.match(apn):
+            raise PPPException(f"Invalid APN: {apn!r}")
 
         self.apn = apn
         self.number = number
