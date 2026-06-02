@@ -28,6 +28,7 @@ class DhcpClient(GObject.GObject):
 
         self._interface = interface
         self._timeout = timeout
+        self._client: "subprocess.Popen[bytes] | None" = None
 
         self._command = None
         for command in self.COMMANDS:
@@ -50,12 +51,18 @@ class DhcpClient(GObject.GObject):
         GLib.timeout_add(self._timeout * 1000, self._on_timeout)
 
     def _on_timeout(self) -> bool:
-        if not self._client.poll():
+        # poll() returns None only while the client is still running; an exit
+        # code of 0 previously also matched `not poll()` and wrongly triggered a
+        # terminate of an already-finished client.
+        if self._client is not None and self._client.poll() is None:
             logging.warning("Timeout reached, terminating DHCP client")
             self._client.terminate()
         return False
 
     def _check_client(self) -> bool:
+        if self._client is None:
+            return False
+
         netifs = get_local_interfaces()
         status = self._client.poll()
         if status == 0:

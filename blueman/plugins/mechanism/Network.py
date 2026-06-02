@@ -49,7 +49,10 @@ class Network(MechanismPlugin):
     def _enable_network(self, ip_address: str, netmask: str, dhcp_handler: str, address_changed: bool,
                         caller: str) -> None:
         self.confirm_authorization(caller, "org.blueman.network.setup")
-        NetConf.apply_settings(ip_address, netmask, DHCPDHANDLERS[dhcp_handler], address_changed)
+        handler = DHCPDHANDLERS.get(dhcp_handler)
+        if handler is None:
+            raise ValueError(f"Unknown DHCP handler: {dhcp_handler!r}")
+        NetConf.apply_settings(ip_address, netmask, handler, address_changed)
 
     def _disable_network(self, caller: str) -> None:
         self.confirm_authorization(caller, "org.blueman.network.setup")

@@ -251,3 +251,51 @@ class TestNetConf(TestCase):
 
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
+
+
+class TestDhcpHandlerCleanup(TestCase):
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf.NetConf.unlock")
+    def test_no_running_binary_does_not_raise(self, unlock_mock: Mock, kill_mock: Mock) -> None:
+        # next() over an empty match must not raise StopIteration and abort
+        # the rest of clean_up().
+        handler = DnsMasqHandler()
+        handler._pid = 1234
+        with patch.object(NetConf, "locked", return_value=True), \
+                patch("blueman.main.NetConf._is_running", return_value=False):
+            handler.clean_up()
+        kill_mock.assert_not_called()
+        unlock_mock.assert_called_once_with("dhcp")
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf.NetConf.unlock")
+    def test_running_binary_is_terminated(self, unlock_mock: Mock, kill_mock: Mock) -> None:
+        handler = DnsMasqHandler()
+        handler._pid = 4321
+        with patch.object(NetConf, "locked", return_value=True), \
+                patch("blueman.main.NetConf._is_running", return_value=True):
+            handler.clean_up()
+        kill_mock.assert_called_once()
+        self.assertEqual(kill_mock.call_args.args[0], 4321)
+        unlock_mock.assert_called_once_with("dhcp")
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf.NetConf.unlock")
+    def test_fuzz_is_running_combinations(self, unlock_mock: Mock, kill_mock: Mock) -> None:
+        # Multi-binary handler so the generator iterates more than once.
+        class MultiHandler(DnsMasqHandler):
+            _BINARIES = ["alpha", "beta", "gamma"]
+
+        for pattern in [
+            lambda b, p: False,
+            lambda b, p: True,
+            lambda b, p: b == "gamma",
+            lambda b, p: b in ("alpha", "beta"),
+        ]:
+            with self.subTest(pattern=pattern):
+                kill_mock.reset_mock()
+                handler = MultiHandler()
+                handler._pid = 777
+                with patch.object(NetConf, "locked", return_value=True), \
+                        patch("blueman.main.NetConf._is_running", side_effect=pattern):
+                    handler.clean_up()  # must never raise
