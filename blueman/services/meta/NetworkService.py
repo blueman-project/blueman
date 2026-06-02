@@ -1,7 +1,7 @@
 from gettext import gettext as _
 from collections.abc import Callable
 
-from blueman.main.DBusProxies import AppletService
+from blueman.main.DBusProxies import AppletDhcpClientService
 
 from blueman.Service import Service, Action, Instance
 from blueman.bluez.Device import Device
@@ -45,7 +45,7 @@ class NetworkService(Service):
     @property
     def common_actions(self) -> set[Action]:
         def renew() -> None:
-            AppletService().dchp_client(self.device.get_object_path())
+            AppletDhcpClientService().dchp_client(self.device.get_object_path())
 
         return {Action(
             _("Renew IP Address"),
