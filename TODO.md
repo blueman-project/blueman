@@ -10,10 +10,8 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| sec-1 | open | S | `blueman/main/NetConf.py:268` iptables rule split on space without bounds checking — arbitrary args via IP/netmask containing spaces | use `shlex.split()` or pass args as list to subprocess |
-| sec-2 | open | S | `blueman/plugins/mechanism/Rfcomm.py:17-21` ps output parsing has no bounds checking; malformed line → `IndexError` | wrap split in try/except or validate line shape |
-| sec-3 | open | S | `blueman/plugins/mechanism/Rfcomm.py:19` `int(pid)` without validation; malformed ps output crashes mechanism | validate numeric before `int()` |
-| sec-4 | open | S | `blueman/main/PPPConnection.py:74` AT command built via f-string with unvalidated `apn` | validate apn against `[A-Za-z0-9.\-]+` or escape |
+
+_(none open)_
 
 ## performance
 
@@ -159,7 +157,6 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | stride-1 | open | M | `blueman/main/DbusService.py:162-170` unhandled exceptions return full traceback in DBus errors, leaking internal paths to any caller | sanitize error messages on the bus; detailed traces to daemon log only |
 | stride-2 | open | S | `blueman/plugins/mechanism/Network.py:52` attacker-supplied `dhcp_handler` indexes `DHCPDHANDLERS` dict with no whitelist (DoS / EoP) | validate against allowed keys before lookup (dup of rel-6, security framing) |
-| stride-3 | open | M | `blueman/main/NetConf.py:268,276` IPv4 addr/netmask split on space then passed to iptables; malformed CIDR unvalidated (Tampering) | validate IP/netmask format; pass structured args (dup of sec-1) |
 | stride-4 | open | M | `blueman/main/MechanismApplication.py:50` if `POLKIT=False` at build, PolicyKit auth skipped silently (Elevation of privilege) | fail-closed; never silently skip authorization; log when disabled |
 
 ## data governance
