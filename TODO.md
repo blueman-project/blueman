@@ -145,9 +145,8 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| wire-1 | open | S | `blueman/services/meta/NetworkService.py:48` calls `AppletService().dchp_client()` but `AppletService` has no such method | route to `AppletDhcpClientService().dchp_client()` |
-| wire-2 | open | S | `blueman/main/DBusProxies.py:86` `AppletDhcpClientService` class never instantiated in production | wire into dispatcher or delete |
-| wire-3 | open | S | `blueman/main/DBusProxies.py:133` `AppletStatusIconService` has no public methods beyond `__init__` | inline its only call site in `Tray.py` |
+
+_(none open)_
 
 ## unused functions/methods
 
@@ -355,4 +354,9 @@ _(none yet)_
 
 ## Audit picks deliberately rejected
 
-_(none yet)_
+- **wire-3** (`AppletStatusIconService` "has no public methods") — false positive. It is a
+  signal-only `Gio.DBusProxy` for the `org.blueman.Applet.StatusIcon` interface. A proxy emits
+  `g-signal` only for its own interface, so `Tray.py` needs this distinct proxy to receive
+  `IconNameChanged`/`VisibilityChanged`/`ToolTipTitleChanged`/`ToolTipTextChanged`
+  (`AppletMenuService` only delivers `MenuChanged` on the Menu interface). Deleting/inlining it
+  would silence tray-icon updates. Kept; guarded by a test in `test/main/test_dbus_proxies.py`.
