@@ -17,7 +17,7 @@ class TestPPPConnectionApn(TestCase):
         self.assertIn('AT+CGDCONT=1,"IP","internet"', conn.commands)
 
     def test_valid_apns_accepted(self):
-        for apn in ["internet", "web.provider.com", "a-b.c", "APN123", "3g.example", ""]:
+        for apn in ["internet", "web.provider.com", "a-b.c", "APN123", "3g.example", "123456", "UPPERCASE.APN", "apn.v1-2.test", ""]:
             with self.subTest(apn=apn):
                 PPPConnection("/dev/rfcomm0", apn=apn)
 
@@ -32,6 +32,14 @@ class TestPPPConnectionApn(TestCase):
             "café",
             "foo\tbar",
             "foo,bar",
+            "apn'quote",
+            "apn$variable",
+            "apn&background",
+            "apn(parens)",
+            "apn#hash",
+            "apn!bang",
+            "apn@at",
+            "apn\rtrailer"
         ]:
             with self.subTest(apn=apn):
                 with self.assertRaises(PPPException):
