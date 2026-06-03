@@ -66,7 +66,8 @@ class Service(ABC):
     @property
     @abstractmethod
     def available(self) -> bool:
-        ...
+        # Most services fail if device is not paired or blocked.
+        return self.device["Paired"] and not self.device["Blocked"]
 
     @property
     @abstractmethod
