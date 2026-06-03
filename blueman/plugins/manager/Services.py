@@ -22,8 +22,6 @@ class Services(ManagerPlugin, MenuItemsProvider):
         self.icon_theme = Gtk.IconTheme.get_default()
 
     def _make_x_icon(self, icon_name: str, size: int) -> cairo.ImageSurface:
-        assert self.parent.window is not None
-
         scale = self.parent.window.get_scale_factor()
         window = self.parent.window.get_window()
 

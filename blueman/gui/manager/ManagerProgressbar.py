@@ -70,7 +70,6 @@ class ManagerProgressbar(GObject.GObject):
         ManagerProgressbar.__instances__.append(self)
 
     def _get_window(self) -> Gdk.Window:
-        assert self.Blueman.window is not None
         window = self.Blueman.window.get_window()
         assert window is not None
         return window
@@ -81,7 +80,6 @@ class ManagerProgressbar(GObject.GObject):
         return False
 
     def _on_leave(self, _evbox: Gtk.EventBox, _event: Gdk.Event) -> bool:
-        assert self.Blueman.window is not None
         self._get_window().set_cursor(None)
         return False
 
