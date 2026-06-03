@@ -15,7 +15,7 @@ class Rfcomm(MechanismPlugin):
         try:
             subprocess.Popen([RFCOMM_WATCHER_PATH, f"/dev/rfcomm{port_id:d}"])
         except OSError:
-            logging.error(f"Failed to start rfcomm watcher for /dev/rfcomm{port_id:d}", exc_info=True)
+            logging.exception(f"Failed to start rfcomm watcher for /dev/rfcomm{port_id:d}")
             raise
 
     def _close_rfcomm(self, port_id: int) -> None:
