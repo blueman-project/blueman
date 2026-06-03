@@ -251,3 +251,87 @@ class TestNetConf(TestCase):
 
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
+
+
+class TestValidateIpv4(TestCase):
+    def test_valid_addresses_pass(self) -> None:
+        for addr, mask in [
+            ("203.0.113.1", "255.255.255.0"),
+            ("10.0.0.1", "255.0.0.0"),
+            ("192.168.1.254", "255.255.255.252"),
+            ("0.0.0.0", "0.0.0.0"),
+            ("255.255.255.255", "255.255.255.255"),
+        ]:
+            with self.subTest(addr=addr, mask=mask):
+                # Must not raise.
+                NetConf._validate_ipv4(addr, mask)
+
+    def test_invalid_address_raises(self) -> None:
+        for bad in [
+            "203.0.113.1 -j ACCEPT",      # argument injection via space
+            "203.0.113.1/24",             # CIDR, not a bare address
+            "203.0.113.256",              # octet out of range
+            "203.0.113",                  # too few octets
+            "::1",                        # IPv6
+            "hostname",
+            "",
+            " ",
+            "203.0.113.1\n-j ACCEPT",     # newline injection
+            "0x7f.0.0.1",
+        ]:
+            with self.subTest(bad=bad):
+                with self.assertRaises(NetworkSetupError):
+                    NetConf._validate_ipv4(bad, "255.255.255.0")
+
+    def test_invalid_mask_raises(self) -> None:
+        for bad in ["255.255.255.0 extra", "notamask", "", "255.255.255"]:
+            with self.subTest(bad=bad):
+                with self.assertRaises(NetworkSetupError):
+                    NetConf._validate_ipv4("203.0.113.1", bad)
+
+    def test_fuzz_never_other_exception(self) -> None:
+        # Whatever the input, validation either passes or raises
+        # NetworkSetupError -- never a raw ValueError/TypeError.
+        samples = [
+            "1.2.3.4", "1.2.3.4 ", " 1.2.3.4", "1.2.3.4;rm -rf", "a.b.c.d",
+            "999.999.999.999", "1.2.3.4/255.255.255.0", "\t", "1.2.3.4\x00",
+            "12345", "-1.-1.-1.-1", "1.2.3.4 5.6.7.8",
+        ]
+        for s in samples:
+            with self.subTest(s=s):
+                try:
+                    NetConf._validate_ipv4(s, "255.255.255.0")
+                except NetworkSetupError:
+                    pass
+
+
+class TestIptablesRuleArgs(TestCase):
+    def setUp(self) -> None:
+        NetConf._ipt_rules = []
+        self.addCleanup(lambda: setattr(NetConf, "_ipt_rules", []))
+
+    @patch("blueman.main.NetConf.call", return_value=0)
+    def test_args_passed_without_splitting(self, call_mock: Mock) -> None:
+        NetConf._add_ipt_rule("nat", "POSTROUTING", "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE")
+        call_mock.assert_called_once_with(
+            ["/sbin/iptables", "-t", "nat", "-A", "POSTROUTING",
+             "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE"])
+
+    @patch("blueman.main.NetConf.call", return_value=0)
+    def test_value_with_space_stays_single_arg(self, call_mock: Mock) -> None:
+        # A value containing a space must remain one argument, not get split
+        # into extra iptables arguments.
+        NetConf._add_ipt_rule("filter", "FORWARD", "-s", "1.2.3.4 -j ACCEPT")
+        args = call_mock.call_args.args[0]
+        self.assertIn("1.2.3.4 -j ACCEPT", args)
+        self.assertEqual(args.count("-j"), 0)
+
+    @patch("blueman.main.NetConf.call", return_value=0)
+    def test_delete_uses_same_args(self, call_mock: Mock) -> None:
+        NetConf._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+        call_mock.reset_mock()
+        NetConf.unlock("iptables")
+        NetConf._del_ipt_rules()
+        call_mock.assert_called_once_with(
+            ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
+        self.assertEqual(NetConf._ipt_rules, [])
