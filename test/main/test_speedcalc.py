@@ -1,7 +1,9 @@
 from unittest import TestCase
 from unittest.mock import patch
 
-from blueman.main.SpeedCalc import SpeedCalc
+from collections import deque
+
+from blueman.main.SpeedCalc import SAMPLE_RESOLUTION, SpeedCalc
 
 
 class TestSpeedCalc(TestCase):
@@ -52,7 +54,7 @@ class TestSpeedCalc(TestCase):
         self._advance(1.0)
         sc.calc(100.0)
         sc.reset()
-        self.assertEqual(sc.log, [])
+        self.assertEqual(list(sc.log), [])
         # After reset the next sample becomes a fresh reference.
         self.assertEqual(sc.calc(5000.0), 0)
         self.assertEqual(sc.reference, 5000.0)
@@ -70,6 +72,20 @@ class TestSpeedCalc(TestCase):
             max_len = max(max_len, len(sc.log))
         # window 3.0s at 0.1s spacing -> ~31 samples; allow a small margin.
         self.assertLessEqual(max_len, 35)
+
+    def test_log_uses_bounded_deque(self):
+        sc = SpeedCalc(moving_avg=0.03)
+        self.assertIsInstance(sc.log, deque)
+        self.assertEqual(sc.log.maxlen, 5)
+
+        for amount in range(10):
+            self._advance(SAMPLE_RESOLUTION)
+            sc.calc(float(amount))
+
+        max_log_length = sc.log.maxlen
+        assert max_log_length is not None
+        self.assertLessEqual(len(sc.log), max_log_length)
+
 
     def test_log_bounded_with_irregular_gaps(self):
         sc = SpeedCalc(moving_avg=2.0)
@@ -89,6 +105,7 @@ class TestSpeedCalc(TestCase):
         sc.calc(0.0)
         # Constant 100/s for well beyond the window.
         amount = 0.0
+        speed = 0.0
         for _ in range(20):
             self._advance(1.0)
             amount += 100.0
@@ -109,3 +126,6 @@ class TestSpeedCalc(TestCase):
             self.assertIsInstance(speed, (int, float))
             self.assertFalse(math.isnan(float(speed)))
             self.assertFalse(math.isinf(float(speed)))
+            max_log_length = sc.log.maxlen
+            assert max_log_length is not None
+            self.assertLessEqual(len(sc.log), max_log_length)

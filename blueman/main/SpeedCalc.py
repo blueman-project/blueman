@@ -1,10 +1,16 @@
+import math
 import time
+from collections import deque
+
+
+SAMPLE_RESOLUTION = 0.01
 
 
 class SpeedCalc:
     def __init__(self, moving_avg: float = 3.0) -> None:
         self.moving_avg = moving_avg
-        self.log: list[tuple[float, float]] = []
+        max_log_length = max(2, math.ceil(self.moving_avg / SAMPLE_RESOLUTION) + 2)
+        self.log: deque[tuple[float, float]] = deque(maxlen=max_log_length)
 
         self.reference: float = 0
 
@@ -20,7 +26,7 @@ class SpeedCalc:
         # the log length to the window regardless of the sampling rate (the
         # previous code only dropped a single sample per call).
         while len(self.log) > 2 and curtime - self.log[1][0] >= self.moving_avg:
-            del self.log[0]
+            self.log.popleft()
 
         if len(self.log) < 2:
             return 0
@@ -35,4 +41,4 @@ class SpeedCalc:
         return total_amount / total_time
 
     def reset(self) -> None:
-        self.log = []
+        self.log.clear()
