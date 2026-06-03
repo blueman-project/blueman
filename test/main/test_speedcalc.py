@@ -86,7 +86,6 @@ class TestSpeedCalc(TestCase):
         assert max_log_length is not None
         self.assertLessEqual(len(sc.log), max_log_length)
 
-
     def test_log_bounded_with_irregular_gaps(self):
         sc = SpeedCalc(moving_avg=2.0)
         amount = 0.0
