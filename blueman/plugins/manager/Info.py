@@ -86,10 +86,11 @@ Properties: dict[str, tuple[int, Callable[[Any], str]]] = {
     "ManufacturerData": (190, str),
     "ServiceData": (200, str),
     "AdvertisingFlags": (210, format_advflags),
-    "ServicesResolved": (220, format_boolean),
-    "WakeAllowed": (230, format_boolean),
-    "PreferredBearer": (240, str),
-    "CablePairing": (250, format_boolean)
+    "AdvertisingData": (220, str),
+    "ServicesResolved": (230, format_boolean),
+    "WakeAllowed": (240, format_boolean),
+    "PreferredBearer": (250, str),
+    "CablePairing": (260, format_boolean)
 }
 
 
