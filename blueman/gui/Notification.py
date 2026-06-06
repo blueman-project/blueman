@@ -32,18 +32,19 @@ class _NotificationDialog(Gtk.MessageDialog):
                          buttons=Gtk.ButtonsType.NONE, text=None)
 
         self.set_name("NotificationDialog")
-        i = 100
         self.actions_supported = True
         self.actions: dict[int, str] = {}
         self.callback = actions_cb
-        if actions:
-            for a in actions:
-                action_id = a[0]
-                action_name = a[1]
 
-                self.actions[i] = action_id
-                self.add_button(action_name, i)
-                i += 1
+        if actions is None:
+            actions = [("close", _("_Close"))]
+
+        for i, action in enumerate(actions, 100):
+            action_id = action[0]
+            action_name = action[1]
+
+            self.actions[i] = action_id
+            self.add_button(action_name, i)
 
         self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
 
