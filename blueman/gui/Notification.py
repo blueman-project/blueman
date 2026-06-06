@@ -94,7 +94,7 @@ class _NotificationDialog(Gtk.MessageDialog):
     def dialog_response(self, _dialog: Gtk.Dialog, response: int) -> None:
         if self.callback:
             self.callback(self.actions[response])
-        self.hide()
+        self.destroy()
 
     def show(self) -> None:
         self.set_opacity(OPACITY_START)
@@ -102,7 +102,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.set_opacity(OPACITY_START)
 
     def close(self) -> None:
-        self.hide()
+        self.destroy()
 
     def add_action(self, _action_id: str, _label: str, _callback: Callable[[str], None] | None = None) -> None:
         logging.warning("stub")
