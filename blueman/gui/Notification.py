@@ -46,7 +46,6 @@ class _NotificationDialog(Gtk.MessageDialog):
             self.actions[i] = action_id
             self.add_button(action_name, i)
 
-        self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
 
         self.props.secondary_use_markup = True
         self.resize(350, 50)
