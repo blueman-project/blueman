@@ -4,23 +4,10 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk
-from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
-from blueman.gui.GtkAnimation import AnimBase
 import logging
-
-OPACITY_START = 0.7
-
-
-class Fade(AnimBase):
-    def __init__(self, window: Gtk.Window) -> None:
-        super().__init__(state=OPACITY_START)
-        self.window = window
-
-    def state_changed(self, state: float) -> None:
-        self.window.props.opacity = state
 
 
 class _NotificationDialog(Gtk.MessageDialog):
@@ -50,8 +37,6 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.props.secondary_use_markup = True
         self.resize(350, 50)
 
-        self.fader = Fade(self)
-
         self.props.skip_taskbar_hint = False
 
         self.props.title = summary
@@ -68,23 +53,6 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.connect("response", self.dialog_response)
         self.props.icon_name = "blueman"
 
-        self.entered = False
-
-        def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
-                self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
-                self.entered = True
-            return False
-
-        def on_leave(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if not Gdk.Window.at_pointer():
-                self.entered = False
-                self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
-            return False
-
-        self.connect("enter-notify-event", on_enter)
-        self.connect("leave-notify-event", on_leave)
-
     def set_message(self, message: str) -> None:
         self.props.secondary_text = message
 
@@ -97,9 +65,7 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.destroy()
 
     def show(self) -> None:
-        self.set_opacity(OPACITY_START)
         self.present()
-        self.set_opacity(OPACITY_START)
 
     def close(self) -> None:
         self.destroy()
