@@ -1,4 +1,6 @@
 from collections.abc import Callable, Iterable
+from gettext import gettext as _
+from typing import NamedTuple
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -10,29 +12,28 @@ from gi.repository import Gio
 import logging
 
 
+class NotificationAction(NamedTuple):
+    id: str
+    name: str
+    callback: Callable[[str], None] | None = None
+
+
 class _NotificationDialog(Gtk.MessageDialog):
     def __init__(self, summary: str, message: str, _timeout: int = -1, _transient: bool = False,
-                 actions: Iterable[tuple[str, str]] | None = None,
-                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
+                 actions: Iterable[NotificationAction] | None = None, icon_name: str | None = None,
                  image_data: GdkPixbuf.Pixbuf | None = None) -> None:
         super().__init__(parent=None, type=Gtk.MessageType.QUESTION,
                          buttons=Gtk.ButtonsType.NONE, text=None)
 
         self.set_name("NotificationDialog")
         self.actions_supported = True
-        self.actions: dict[int, str] = {}
-        self.callback = actions_cb
+        self.actions: dict[int, NotificationAction] = {}
 
         if actions is None:
-            actions = [("close", _("_Close"))]
+            actions = [NotificationAction("close", _("_Close"), lambda s: self.close())]
 
-        for i, action in enumerate(actions, 100):
-            action_id = action[0]
-            action_name = action[1]
-
-            self.actions[i] = action_id
-            self.add_button(action_name, i)
-
+        for action in actions:
+            self.add_action(action)
 
         self.props.secondary_use_markup = True
         self.resize(350, 50)
@@ -60,8 +61,13 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.set_icon_from_icon_name(icon_name, 48)
 
     def dialog_response(self, _dialog: Gtk.Dialog, response: int) -> None:
-        if self.callback:
-            self.callback(self.actions[response])
+        action = self.actions.pop(response, None)
+        if action is None:
+            logging.error(f"Unhandled response {response}")
+            return
+
+        if action.callback is not None:
+            action.callback(action.id)
         self.destroy()
 
     def show(self) -> None:
@@ -70,8 +76,14 @@ class _NotificationDialog(Gtk.MessageDialog):
     def close(self) -> None:
         self.destroy()
 
-    def add_action(self, _action_id: str, _label: str, _callback: Callable[[str], None] | None = None) -> None:
-        logging.warning("stub")
+    def add_action(self, action: NotificationAction) -> None:
+        if not self.actions:
+            response_id = 100
+        else:
+            response_id = max(self.actions.keys()) + 1
+
+        self.actions[response_id] = action
+        self.add_button(action.name, response_id)
 
     def set_icon_from_pixbuf(self, pixbuf: GdkPixbuf.Pixbuf) -> None:
         im = Gtk.Image.new_from_pixbuf(pixbuf)
@@ -86,8 +98,7 @@ class _NotificationDialog(Gtk.MessageDialog):
 
 class _NotificationBubble(Gio.DBusProxy):
     def __init__(self, summary: str, message: str, timeout: int = -1, transient: bool = False,
-                 actions: Iterable[tuple[str, str]] | None = None,
-                 actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
+                 actions: Iterable[NotificationAction] | None = None, icon_name: str | None = None,
                  image_data: GdkPixbuf.Pixbuf | None = None) -> None:
         super().__init__(
             g_name='org.freedesktop.Notifications',
@@ -100,8 +111,8 @@ class _NotificationBubble(Gio.DBusProxy):
 
         self._app_name = 'blueman'
         self._app_icon = ''
-        self._actions: list[str] = []
-        self._callbacks: dict[str, Callable[[str], None]] = {}
+        self._actions: dict[str, NotificationAction] = {}
+        self._notification_actions: list[str] = []
         self._hints: dict[str, GLib.Variant] = {}
 
         # hint : (variant format, spec version)
@@ -156,9 +167,9 @@ class _NotificationBubble(Gio.DBusProxy):
 
             self.set_hint(key, (w, h, stride, alpha, bits, channel, data))
 
-        if actions:
+        if actions is not None:
             for action in actions:
-                self.add_action(action[0], action[1], actions_cb)
+                self.add_action(action)
 
         self._capabilities = self.GetCapabilities()
 
@@ -197,14 +208,13 @@ class _NotificationBubble(Gio.DBusProxy):
     def clear_hints(self) -> None:
         self._hints = {}
 
-    def add_action(self, action_id: str, label: str, callback: Callable[[str], None] | None = None) -> None:
-        self._actions.extend([action_id, label])
-        if callback:
-            self._callbacks[action_id] = callback
+    def add_action(self, action: NotificationAction) -> None:
+        self._actions[action.id] = action
+        self._notification_actions.extend([action.id, action.name])
 
     def clear_actions(self) -> None:
-        self._actions = []
-        self._callbacks = {}
+        self._actions.clear()
+        self._notification_actions.clear()
 
     def do_g_signal(self, _sender_name: str, signal_name: str, params: GLib.Variant) -> None:
         notif_id, signal_val = params.unpack()
@@ -223,13 +233,18 @@ class _NotificationBubble(Gio.DBusProxy):
             elif signal_val == 4:
                 logging.debug('Undefined/reserved reasons.')
         elif signal_name == 'ActionInvoked':
-            if signal_val in self._callbacks:
-                self._callbacks[signal_val](signal_val)
+            action = self._actions.pop(signal_val, None)
+            if action is None:
+                logging.error(f"Unhandled action {signal_val}")
+                return
+
+            if action.callback is not None:
+                action.callback(action.id)
 
     def show(self) -> None:
         replace_id = self._return_id if self._return_id else 0
         return_id = self.Notify('(susssasa{sv}i)', self._app_name, replace_id, self._app_icon,
-                                self._summary, self._body, self._actions, self._hints,
+                                self._summary, self._body, self._notification_actions, self._hints,
                                 self._timeout)
         self._return_id = return_id
 
@@ -244,8 +259,7 @@ def Notification(
     message: str,
     timeout: int = -1,
     transient: bool = False,
-    actions: Iterable[tuple[str, str]] | None = None,
-    actions_cb: Callable[[str], None] | None = None,
+    actions: Iterable[NotificationAction] | None = None,
     icon_name: str | None = None,
     image_data: GdkPixbuf.Pixbuf | None = None
 ) -> _NotificationBubble | _NotificationDialog:
@@ -268,4 +282,4 @@ def Notification(
     else:
         klass = _NotificationBubble
 
-    return klass(summary, message, timeout, transient, actions, actions_cb, icon_name, image_data)
+    return klass(summary, message, timeout, transient, actions, icon_name, image_data)

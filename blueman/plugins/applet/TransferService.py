@@ -13,7 +13,7 @@ from blueman.bluez.obex.Manager import Manager
 from blueman.bluez.obex.Transfer import Transfer
 from blueman.bluez.obex.Session import Session
 from blueman.Functions import launch
-from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
+from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog, NotificationAction
 from blueman.main.Applet import BluemanApplet
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
@@ -124,12 +124,17 @@ class Agent(DbusService):
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
+            actions = [
+                NotificationAction("accept", _("Accept"), on_action),
+                NotificationAction("reject", _("Reject"), on_action)
+            ]
             self._notification = notification = Notification(
                 _("Incoming file over Bluetooth"),
                 _("Incoming file %(0)s from %(1)s") % {"0": "<b>" + escape(filename) + "</b>",
                                                        "1": "<b>" + escape(name) + "</b>"},
                 30000,
-                actions=[("accept", _("Accept")), ("reject", _("Reject"))], actions_cb=on_action, icon_name="blueman"
+                actions=actions,
+                icon_name="blueman"
             )
             notification.show()
         # Device is trusted or was already allowed, larger file -> display a notification, but auto-accept
@@ -178,12 +183,12 @@ class TransferService(AppletPlugin):
         share_path, invalid_share_path = self._make_share_path()
 
         if invalid_share_path:
+            action = NotificationAction("reset", _("Reset to default"), on_reset)
             text = _('Configured directory for incoming files does not exist')
             secondary_text = _('Please make sure that directory "<b>%s</b>" exists or '
                                'configure it with blueman-services. Until then the default "%s" will be used')
             self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
-                                              icon_name='blueman', timeout=30000,
-                                              actions=[('reset', 'Reset to default')], actions_cb=on_reset)
+                                              icon_name='blueman', timeout=30000, actions=[action])
             self._notification.show()
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
@@ -280,7 +285,8 @@ class TransferService(AppletPlugin):
                 logging.info("open")
                 launch("xdg-open", paths=[path.as_posix()], system=True)
 
-            n.add_action("open", name, on_open)
+            action = NotificationAction("open", name, on_open)
+            n.add_action(action)
 
     def _on_transfer_completed(self, _manager: Manager, transfer_path: ObjectPath, success: bool) -> None:
         if not self._agent or transfer_path not in self._agent.transfers:
