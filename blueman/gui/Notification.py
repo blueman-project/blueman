@@ -51,7 +51,6 @@ class _NotificationDialog(Gtk.MessageDialog):
         elif image_data:
             self.set_icon_from_pixbuf(image_data)
 
-        self.connect("response", self.dialog_response)
         self.props.icon_name = "blueman"
 
     def set_message(self, message: str) -> None:
@@ -60,7 +59,7 @@ class _NotificationDialog(Gtk.MessageDialog):
     def set_notification_icon(self, icon_name: str) -> None:
         self.set_icon_from_icon_name(icon_name, 48)
 
-    def dialog_response(self, _dialog: Gtk.Dialog, response: int) -> None:
+    def do_response(self, response: int) -> None:
         action = self.actions.pop(response, None)
         if action is None:
             logging.error(f"Unhandled response {response}")
