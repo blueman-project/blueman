@@ -4,20 +4,22 @@
 # Translators:
 # Kristaps https://launchpad.net/~retail
 # duck <voiceofwise1@gmail.com>, 2016
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Latvian (http://www.transifex.com/mate/MATE/language/lv/)\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"Language-Team: Latvian <https://hosted.weblate.org/projects/blueman/blueman/"
+"lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -389,12 +391,12 @@ msgid "Always"
 msgstr "Vienmēr"
 
 #: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Minūtes"
-msgstr[1] "%d Minūte"
-msgstr[2] "%d Minūtes"
+msgstr[0] "%(minutes)d Minūtes"
+msgstr[1] "%(minutes)d Minūte"
+msgstr[2] "%(minutes)d Minūtes"
 
 #: blueman/main/Adapter.py:233
 msgid "Adapter"
@@ -3361,12 +3363,12 @@ msgid "Files received"
 msgstr "Faili saņemti"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Fonā saņemti %d faili"
-msgstr[1] "Fonā saņemts %d fails"
-msgstr[2] "Fonā saņemti %d faili"
+msgstr[0] "Fonā saņemti %(files)d faili"
+msgstr[1] "Fonā saņemts %(files)d fails"
+msgstr[2] "Fonā saņemti %(files)d faili"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3374,12 +3376,12 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Fonā saņemti vēl %d faili"
-msgstr[1] "Fonā saņemts vēl %d fails"
-msgstr[2] "Fonā saņemti vēl %d faili"
+msgstr[0] "Fonā saņemti vēl %(files)d faili"
+msgstr[1] "Fonā saņemts vēl %(files)d fails"
+msgstr[2] "Fonā saņemti vēl %(files)d faili"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3473,9 +3475,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Atvienojas..."
+msgstr "Atvienojas %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3608,10 +3610,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr ""
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Audio Profils"
+msgstr "Audio Profils %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
