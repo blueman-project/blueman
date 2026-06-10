@@ -9,13 +9,14 @@
 # Moo <hazap@hotmail.com>, 2020, 2022, 2024.
 # Džiugas J <dziugas1959@hotmail.com>
 # Andrius Majauskas <komitetas@gmail.com>
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2024-10-28 04:00+0000\n"
-"Last-Translator: Moo <hazap@hotmail.com>\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Lithuanian <https://hosted.weblate.org/projects/blueman/"
 "blueman/lt/>\n"
 "Language: lt\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
 "11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
 "1 : n % 1 != 0 ? 2: 3);\n"
-"X-Generator: Weblate 5.8.2-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3520,9 +3521,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Atsijungiama…"
+msgstr "Atsijungiama %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3684,10 +3685,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "Prideda įprastinius meniu elementus į būsenos ikonos meniu"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Garso profilis"
+msgstr "Garso profilis %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
