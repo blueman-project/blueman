@@ -17,15 +17,13 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| cmd-1 | open | S | `sendto/blueman_sendto.py.in:20-28` builds a shell-style command line by wrapping file paths in double quotes and passing the joined string to `Gio.AppInfo.create_from_commandline`. A filename containing quotes or command separators can break argument boundaries when launched through the desktop shell parser. | Build a `Gio.AppInfo`/`Gio.Subprocess` invocation from an argv vector, or escape with GLib shell-quoting for every path. Add a regression test with spaces, quotes, and semicolons in filenames. Cross-ref test-1. |
 
 ## data integrity
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| data-1 | open | S | `blueman/plugins/applet/TransferService.py:296-303` resolves incoming-file name collisions by prefixing only second-resolution time, then moves without rechecking the timestamped destination. Two same-named transfers completing in the same second can collide and overwrite/fail depending on platform semantics. | Generate a unique destination with an exclusive create/rename loop (`name`, `timestamp_name`, `timestamp_1_name`, ...), and test repeated same-second completions. |
 
 ## performance
 
@@ -56,8 +54,7 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| cache-1 | open | M | `blueman/bluez/Base.py:100-107` caches DBus properties only after a synchronous `Get`, and falls back to the cached value on later `GLib.Error` without freshness metadata. Callers cannot tell whether they received live state or stale state, and no cache invalidation policy is documented per property. | Make cache state explicit: update from `PropertiesChanged`, mark stale on bus errors, and expose/handle stale reads at call sites that need fresh state. Cross-ref perf-4, obs-13. |
 
 ## concurrency
 
@@ -95,8 +92,7 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| api-1 | open | S | `blueman/main/DBusProxies.py:91` exposes the Python proxy method as `dchp_client`, while the DBus method and interface are `DhcpClient`. The typo is now part of the local Python call surface and makes future refactors/API docs error-prone. | Add correctly spelled `dhcp_client()` as the public method, keep `dchp_client()` as a deprecated alias until callers/tests migrate, then remove the alias in a later cleanup. |
 
 ## architecture/modularity/SOLID
 
@@ -351,15 +347,14 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| a11y-1 | open | S | `blueman/gui/applet/PluginDialog.py:87-112` dynamically creates labels next to `Gtk.SpinButton`/`Gtk.Entry` controls but does not set mnemonic widgets or accessible label relationships. Screen readers and keyboard users get weaker context for plugin preference fields. | Use mnemonic labels (`use_underline`) where possible and set label/accessibility relationships for generated controls; add an accessibility smoke test for generated preference widgets. |
 
 ## i18n
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| i18n-1 | open | S | `sendto/blueman_sendto.py.in:46-50` hardcodes Nautilus/Caja/Nemo menu labels and tips in English, and `sendto/blueman_sendto.py.in` is not listed in `po/POTFILES.in`, so translators never see them. | Wrap file-manager extension labels/tips in gettext and add the generated/template source to extraction. |
+| i18n-2 | open | S | `blueman/main/applet/BluezAgent.py:201-229` builds authentication notification sentences by concatenating translated fragments with device names, PINs, and markup. Translators cannot reorder the whole sentence or place punctuation naturally. | Use one format string per complete sentence/message with named placeholders, e.g. `%(device)s` and `%(passkey)s`, preserving markup escaping. |
 
 ## documentation
 
@@ -380,15 +375,15 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| test-1 | open | S | No tests cover `sendto/blueman_sendto.py.in` command construction for selected file paths. The quoting bug in cmd-1 would pass unnoticed for paths with quotes, semicolons, or leading dashes. | Add a small unit test around the file-list-to-launch-command path after extracting it into a pure helper. Cross-ref cmd-1. |
+| test-2 | open | S | No tests cover `BluezAgent._on_display_passkey` boundary values for `entered`. `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]`, so an out-of-range or fully-entered value can crash the agent notification path. | Add focused tests for `entered` values 0, 5, 6, and invalid values; clamp or render without bolding when all digits are entered. |
 
 ## release & deploy engineering
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| releng-1 | open | S | `make_release.sh:3-7` archives `HEAD` using the latest tag name from `git describe --tags --abbrev=0`, without verifying that `HEAD` is exactly that tag or that the working tree is clean. A release tarball can be mislabeled with the previous tag or include unintended worktree attributes. | Require `git describe --tags --exact-match`, fail on dirty status, and print the commit/tag being archived. |
+| releng-2 | open | S | `make_release.sh:9-16` produces `.tar.xz` and `.tar.gz` but no checksums or signatures. Downstream packagers/users have no release-integrity artifact from the script. | Generate SHA256 sums and optionally detached signatures as part of the release script, documenting the expected verification flow. |
 
 ---
 
