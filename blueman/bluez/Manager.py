@@ -60,7 +60,6 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
     def _on_object_removed(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject) -> None:
         device_proxy = dbus_object.get_interface('org.bluez.Device1')
         adapter_proxy = dbus_object.get_interface('org.bluez.Adapter1')
-        battery_proxy = dbus_object.get_interface('org.bluez.Battery1')
 
         if adapter_proxy:
             assert isinstance(adapter_proxy, Gio.DBusProxy)
@@ -72,11 +71,6 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
             object_path = device_proxy.get_object_path()
             logging.debug(object_path)
             self.emit('device-removed', object_path)
-        if battery_proxy:
-            assert isinstance(device_proxy, Gio.DBusProxy)
-            object_path = device_proxy.get_object_path()
-            logging.debug(object_path)
-            self.emit('battery-removed', object_path)
 
     def _on_interface_added(self, _object_manager: Gio.DBusObjectManager, dbus_object: Gio.DBusObject,
                             _dbus_interface: Gio.DBusInterface) -> None:
