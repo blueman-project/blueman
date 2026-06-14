@@ -26,20 +26,61 @@ class AutoConnect(AppletPlugin):
         "path": None
     }
     __options__ = {
-        "services": {"type": list, "default": "[]"}
+        "services": {
+            "type": list,
+            "default": "[]"
+        },
+        "notification": {
+            "type": bool,
+            "default": True,
+            "name": "Show notification",
+            "desc": "Show a notification on successful autoconnect."
+        },
+        "interval": {
+            "type": int,
+            "default": 60,
+            "range": (30, 1800),
+            "name": "Connect interval",
+            "desc": "Set the time in seconds an autoconnect is attempted."
+        }
     }
 
     def __init__(self, parent: "BluemanApplet"):
         super().__init__(parent)
-        GLib.timeout_add(60000, self._run)
+        self.__applet = parent
+        self.__event_source: int | None = None
 
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
-            self._run()
+            self.start_timer()
+        else:
+            self.stop_timer()
+
+    def option_changed(self, key: str, value: Any) -> None:
+        if key == "interval":
+            self.start_timer()
 
     def on_adapter_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
-        if key == "Powered" and value:
-            self._run()
+        if key == "Powered":
+            if any(adapter["Powered"] for adapter in self.parent.Manager.get_adapters()):
+                self.start_timer()
+            else:
+                self.stop_timer()
+
+    def start_timer(self) -> None:
+        if not self.__applet.manager_state:
+            return
+
+        self.stop_timer()
+
+        powered = any(adapter["Powered"] for adapter in self.parent.Manager.get_adapters())
+        if powered:
+            self.__event_source = GLib.timeout_add_seconds(self.get_option("interval"), self._run)
+
+    def stop_timer(self) -> None:
+        if self.__event_source is not None:
+            GLib.Source.remove(self.__event_source)
+            self.__event_source = None
 
     @staticmethod
     def __fix_settings(path: ObjectPath, uuid: str) -> BtAddress:
@@ -64,6 +105,9 @@ class AutoConnect(AppletPlugin):
                 continue
 
             def reply(dev: Device | None = device, service_name: str = ServiceUUID(uuid).name) -> None:
+                if not self.get_option("notification"):
+                    return
+
                 assert isinstance(dev, Device)  # https://github.com/python/mypy/issues/2608
                 Notification(_("Connected"), _("Automatically connected to %(service)s on %(device)s") %
                              {"service": service_name, "device": dev.display_name},

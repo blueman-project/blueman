@@ -250,7 +250,7 @@ class UdhcpdHandler(DHCPHandler):
 
 class NetConf:
     _dhcp_handler: DHCPHandler | None = None
-    _ipt_rules: list[tuple[str, str, str]] = []
+    _ipt_rules: list[tuple[str, str, tuple[str, ...]]] = []
 
     _IPV4_SYS_PATH = pathlib.Path("/proc/sys/net/ipv4")
     _RUN_PATH = pathlib.Path("/var/run")
@@ -263,23 +263,42 @@ class NetConf:
             p.write_text("1")
 
     @classmethod
-    def _add_ipt_rule(cls, table: str, chain: str, rule: str) -> None:
-        cls._ipt_rules.append((table, chain, rule))
-        args = ["/sbin/iptables", "-t", table, "-A", chain] + rule.split(" ")
+    def _add_ipt_rule(cls, table: str, chain: str, *rule_args: str) -> None:
+        # Pass the rule as already-split arguments instead of splitting a single
+        # string on spaces. A value that contains a space (e.g. an address that
+        # was not validated) can no longer smuggle in extra iptables arguments.
+        cls._ipt_rules.append((table, chain, rule_args))
+        args = ["/sbin/iptables", "-t", table, "-A", chain, *rule_args]
         logging.debug(" ".join(args))
         ret = call(args)
         logging.info(f"Return code {ret}")
 
     @classmethod
     def _del_ipt_rules(cls) -> None:
-        for table, chain, rule in cls._ipt_rules:
-            call(["/sbin/iptables", "-t", table, "-D", chain] + rule.split(" "))
+        for table, chain, rule_args in cls._ipt_rules:
+            call(["/sbin/iptables", "-t", table, "-D", chain, *rule_args])
         cls._ipt_rules = []
         cls.unlock("iptables")
+
+    @staticmethod
+    def _validate_ipv4(ip4_address: str, ip4_mask: str) -> None:
+        # Reject anything that is not a plain IPv4 address before it reaches
+        # iptables/ip/ifconfig. This rules out embedded whitespace or other
+        # argument-injection payloads coming from the D-Bus caller.
+        try:
+            ipaddress.IPv4Address(ip4_address)
+        except ValueError:
+            raise NetworkSetupError(f"Invalid IPv4 address: {ip4_address!r}")
+        try:
+            ipaddress.IPv4Address(ip4_mask)
+        except ValueError:
+            raise NetworkSetupError(f"Invalid IPv4 netmask: {ip4_mask!r}")
 
     @classmethod
     def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
                        address_changed: bool) -> None:
+        cls._validate_ipv4(ip4_address, ip4_mask)
+
         if not isinstance(cls._dhcp_handler, handler):
             if cls._dhcp_handler is not None:
                 cls._dhcp_handler.clean_up()
@@ -318,10 +337,10 @@ class NetConf:
         if address_changed or not cls.locked("iptables"):
             cls._del_ipt_rules()
 
-            cls._add_ipt_rule("nat", "POSTROUTING", f"-s {ip4_address}/{ip4_mask} -j MASQUERADE")
-            cls._add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-o pan1 -j ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-i pan1 -j ACCEPT")
+            cls._add_ipt_rule("nat", "POSTROUTING", "-s", f"{ip4_address}/{ip4_mask}", "-j", "MASQUERADE")
+            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+            cls._add_ipt_rule("filter", "FORWARD", "-o", "pan1", "-j", "ACCEPT")
+            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
             cls.lock("iptables")
 
         if address_changed or not NetConf.locked("dhcp"):
