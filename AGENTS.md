@@ -38,6 +38,8 @@ This file defines the expected behavior and usage model for AI agents working in
   Each table should use the format: `id | status | effort | description | notes`.
   - security
   - STRIDE (as in microsoft security framework)
+  - input validation / command safety
+  - data integrity
   - data governance
   - reliability
   - observability
@@ -52,13 +54,18 @@ This file defines the expected behavior and usage model for AI agents working in
   - extensibility
   - legacy
   - configuration
+  - API contract & compatibility
   - data structure
   - vectorization
   - platform
   - ui / ux
+  - accessibility
+  - i18n
   - documentation
+  - test coverage
   - performance
   - scalability
+  - caching strategy
   - concurrency
   - code complexity
   - code duplication
@@ -67,6 +74,7 @@ This file defines the expected behavior and usage model for AI agents working in
   - business/design patterns/DDD
   - reliability/correctness
   - observability when the application has it
+  - release & deploy engineering
   - wiring gaps — modules/helpers/cfg knobs that exist + pass tests but have no real production call site (orphan exports, cfg flags never read, advertised backends not wired in). A shipped feature is only "shipped" when the dispatcher actually invokes it.
   - unused functions/methods — public-shaped callables (no leading `_`) imported by no production code, no tests, no plugins. Different from wiring gaps: these aren't half-wired, they're fully dead. Includes `__init__.py` re-exports that no caller pulls and class methods only ever called from one private site. Each finding: keep / inline / delete decision recorded in `notes`.
 

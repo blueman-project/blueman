@@ -13,6 +13,20 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 _(none open)_
 
+## input validation / command safety
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
+
+## data integrity
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
+
 ## performance
 
 | id | status | effort | description | notes |
@@ -37,6 +51,13 @@ _(none open)_
 | scale-2 | open | S | `blueman/main/PulseAudioUtils.py:216-218` PA subscribe callback fires unthrottled on rapid card changes | debounce |
 | scale-3 | open | S | `blueman/main/BatteryWatcher.py:18` creates `Battery` per creation signal without dedup | check existence before create |
 | scale-4 | open | S | `blueman/gui/manager/ManagerDeviceList.py:658` `device["UUIDs"]` accessed during cell render | cache in row data |
+
+## caching strategy
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
 
 ## concurrency
 
@@ -69,6 +90,13 @@ _(none open)_
 | dup-6 | open | S | `blueman/main/Applet.py:78-90` `_on_dbus_name_appeared/_vanished` repeat plugin notify loop | `_notify_manager_state_change(state)` |
 | dup-7 | open | S | `blueman/main/Sendto.py:47-55` 6× identical `connect_signal` boilerplate | `_setup_signal_handlers(source, handlers)` |
 | dup-8 | open | S | `blueman/main/Services.py:86` bare `except:` with `# noqa: E722` | narrow to expected exceptions |
+
+## API contract & compatibility
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
 
 ## architecture/modularity/SOLID
 
@@ -319,6 +347,20 @@ _(none open)_
 | ux-7 | open | S | `blueman/gui/manager/ManagerDeviceList.py:508` FIXME "horrible workaround" inadequate feedback | proper user feedback |
 | ux-8 | open | S | `blueman/main/Manager.py:183` FIXME BlueZ stop/start not surfaced to user | notification/infobar on daemon loss |
 
+## accessibility
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
+
+## i18n
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
+
 ## documentation
 
 | id | status | effort | description | notes |
@@ -333,6 +375,20 @@ _(none open)_
 | doc-8 | open | S | `blueman/gui/manager/ManagerProgressbar.py` class undocumented (cancellable/text params) | document progress lifecycle |
 | doc-9 | open | M | `blueman/gui/GsmSettings.py` class lacks docstring | document GSM settings binding |
 | doc-10 | open | M | `README` lacks plugin/dev API docs | document plugin loading + extension points |
+
+## test coverage
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
+
+## release & deploy engineering
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+
+_(none open)_
 
 ---
 
