@@ -23,8 +23,7 @@ class SpeedCalc:
 
         # Drop samples that fall outside the moving-average window, always
         # keeping at least two so a speed can still be computed. This bounds
-        # the log length to the window regardless of the sampling rate (the
-        # previous code only dropped a single sample per call).
+        # the log length to the window regardless of the sampling rate.
         while len(self.log) > 2 and curtime - self.log[1][0] >= self.moving_avg:
             self.log.popleft()
 
