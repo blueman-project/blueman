@@ -51,9 +51,6 @@ class DhcpClient(GObject.GObject):
         GLib.timeout_add(self._timeout * 1000, self._on_timeout)
 
     def _on_timeout(self) -> bool:
-        # poll() returns None only while the client is still running; an exit
-        # code of 0 previously also matched `not poll()` and wrongly triggered a
-        # terminate of an already-finished client.
         if self._client is not None and self._client.poll() is None:
             logging.warning("Timeout reached, terminating DHCP client")
             self._client.terminate()
