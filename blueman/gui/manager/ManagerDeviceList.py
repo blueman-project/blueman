@@ -67,6 +67,7 @@ class ManagerDeviceList(DeviceList):
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "trusted", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "objpush", "type": bool},  # used to set Send File button
+            {"id": "uuids", "type": object},
             {"id": "battery", "type": float},
             {"id": "rssi", "type": float},
             {"id": "tpl", "type": float},
@@ -193,7 +194,7 @@ class ManagerDeviceList(DeviceList):
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
                 assert tree_iter is not None
-                has_obj_push = self._has_objpush(self.get(tree_iter, "device")["device"])
+                has_obj_push = self.get(tree_iter, "objpush")["objpush"]
                 if has_obj_push:
                     Gdk.drag_status(drag_context, Gdk.DragAction.COPY, timestamp)
                     self.set_cursor(path)
@@ -234,7 +235,7 @@ class ManagerDeviceList(DeviceList):
         assert tree_iter is not None
         child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
         assert child_iter is not None
-        row = self.get(child_iter, "device", "connected")
+        row = self.get(child_iter, "device", "connected", "uuids")
         if not row:
             return False
 
@@ -242,7 +243,7 @@ class ManagerDeviceList(DeviceList):
             self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
-            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
+            if self.menu.show_generic_connect_calc(row["uuids"]):
                 if row["connected"]:
                     self.menu.disconnect_service(row["device"])
                 elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
@@ -374,7 +375,8 @@ class ManagerDeviceList(DeviceList):
                 else:
                     self.set(tree_iter, initial_anim=False)
 
-        has_objpush = self._has_objpush(properties["UUIDs"])
+        uuids = tuple(cast(Iterable[str], properties["UUIDs"]))
+        has_objpush = self._has_objpush(uuids)
         klass_id = cast(int, properties["Class"])
         klass = get_minor_class(klass_id)
         # Bluetooth >= 4 devices use Appearance property
@@ -393,7 +395,8 @@ class ManagerDeviceList(DeviceList):
         display_name = self.make_display_name(device.display_name, klass_id, address)
         caption = self.make_caption(display_name, description, address)
 
-        self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, device_surface=surface_object)
+        self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, uuids=uuids,
+                 device_surface=surface_object)
         self.set(tree_iter, trusted=properties["Trusted"], paired=properties["Paired"],
                  connected=properties["Connected"], blocked=properties["Blocked"])
 
@@ -478,8 +481,9 @@ class ManagerDeviceList(DeviceList):
             self.set(tree_iter, caption=c, alias=name)
 
         elif key == "UUIDs":
-            has_objpush = self._has_objpush(value)
-            self.set(tree_iter, objpush=has_objpush)
+            uuids = tuple(cast(Iterable[str], value))
+            has_objpush = self._has_objpush(uuids)
+            self.set(tree_iter, objpush=has_objpush, uuids=uuids)
 
         elif key == "Connected":
             self.set(tree_iter, connected=value)

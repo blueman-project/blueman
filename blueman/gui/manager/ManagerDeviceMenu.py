@@ -265,8 +265,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             selected = self.Blueman.List.selected()
             if not selected:
                 return
-            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "device",
-                                        "blocked")
+            row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "uuids",
+                                        "device", "blocked")
         else:
             (x, y) = self.Blueman.List.get_pointer()
             posdata = self.Blueman.List.get_path_at_pos(x, y)
@@ -282,8 +282,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             child_iter = self.Blueman.List.filter.convert_iter_to_child_iter(tree_iter)
             assert child_iter is not None
 
-            row = self.Blueman.List.get(child_iter, "alias", "paired", "connected", "trusted", "objpush", "device",
-                                        "blocked")
+            row = self.Blueman.List.get(child_iter, "alias", "paired", "connected", "trusted", "objpush", "uuids",
+                                        "device", "blocked")
 
         self.SelectedDevice = row["device"]
 
@@ -296,7 +296,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             self.append(item)
             return
 
-        show_generic_connect = self.show_generic_connect_calc(self.SelectedDevice['UUIDs'])
+        show_generic_connect = self.show_generic_connect_calc(row["uuids"])
 
         powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
 

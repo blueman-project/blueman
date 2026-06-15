@@ -50,7 +50,7 @@ class FakeManagerDeviceList:
     Adapter = None
 
     def __init__(self) -> None:
-        self.values = {"initial_anim": True, "device": FakeDevice()}
+        self.values = {"initial_anim": True, "device": FakeDevice(), "objpush": False, "uuids": ()}
         self.set_calls: list[dict[str, object]] = []
         self.monitor_calls = []
         self.disabled = []
@@ -103,6 +103,7 @@ class TestManagerDeviceListProperties(TestCase):
         self.assertEqual(fake.values["paired"], False)
         self.assertEqual(fake.values["connected"], True)
         self.assertEqual(fake.values["blocked"], False)
+        self.assertEqual(fake.values["uuids"], ())
         self.assertEqual(len(fake.monitor_calls), 1)
         self.assertEqual(fake.monitor_calls[0][2]["Address"], device.properties["Address"])
 
@@ -130,6 +131,36 @@ class TestManagerDeviceListProperties(TestCase):
         self.assertEqual(fake.disabled, [tree_iter])
         cinfo.deinit.assert_called_once_with()
         self.assertEqual(fake._monitored_devices, {})
+
+    def test_row_update_uuids_updates_cached_state(self):
+        fake = FakeManagerDeviceList()
+        tree_iter = object()
+        uuids = ["00001105-0000-1000-8000-00805f9b34fb"]
+
+        ManagerDeviceList.row_update_event(fake, tree_iter, "UUIDs", uuids)
+
+        self.assertEqual(fake.values["uuids"], tuple(uuids))
+        self.assertTrue(fake.values["objpush"])
+
+    def test_drag_motion_uses_cached_objpush_state(self):
+        fake = FakeManagerDeviceList()
+        device = fake.values["device"]
+        fake.values["objpush"] = True
+        fake.filter = Mock()
+        fake.filter.convert_path_to_child_path.return_value = Mock()
+        fake.selection = Mock()
+        fake.selection.path_is_selected.return_value = False
+        fake.get_path_at_pos = Mock(return_value=(Mock(), Mock(), Mock(), Mock()))
+        fake.get_iter = Mock(return_value=Mock())
+        fake.set_cursor = Mock()
+
+        with patch("blueman.gui.manager.ManagerDeviceList.Gdk.drag_status") as drag_status:
+            result = ManagerDeviceList.drag_motion(fake, Mock(), Mock(), 1, 2, 3)
+
+        self.assertTrue(result)
+        self.assertEqual(device.item_reads, [])
+        drag_status.assert_called_once()
+        fake.set_cursor.assert_called_once()
 
 
 class TestManagerDeviceListPowerTimer(TestCase):
