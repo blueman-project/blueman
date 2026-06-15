@@ -25,6 +25,7 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 |----|--------|--------|-------------|-------|
 | data-1 | open | S | `blueman/plugins/applet/TransferService.py:296-303` resolves incoming-file name collisions by prefixing only second-resolution time, then moves without rechecking the timestamped destination. Two same-named transfers completing in the same second can collide and overwrite/fail depending on platform semantics. | Generate a unique destination with an exclusive create/rename loop (`name`, `timestamp_name`, `timestamp_1_name`, ...), and test repeated same-second completions. |
 | data-2 | open | S | `blueman/plugins/manager/Notes.py:32-35` creates a `.vnt` temporary file with `delete=False` and relies on the launched sendto process to delete it. If launch fails or the process never starts, the note body remains in `/tmp` indefinitely. | Delete the temp file when `launch()` returns false or raises; consider creating it in an app-owned temp directory with cleanup on startup. Cross-ref gov-5. |
+| data-3 | open | S | `blueman/Functions.py:349-353` parses `/etc/os-release` lines with `line.split("=")`, so valid quoted values containing `=` are rejected and omitted from logged system info. | Use `split("=", 1)` and add a regression test with `PRETTY_NAME="Name=Variant"`. |
 
 ## performance
 
@@ -139,6 +140,7 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | rel-9 | open | S | `blueman/main/Services.py:86` bare `except: pass` hides errors | narrow exception types |
 | rel-10 | open | S | `blueman/plugins/applet/TransferService.py:95-100` schedules removal of an allowed device but the timeout closure reads `self._pending_transfer` later instead of capturing the accepted address. A second pending transfer or cleared state can remove the wrong address or hit the assertion. | Capture `address` in the closure and remove it idempotently (`discard`-style) from the allowed list. Cross-ref sm-8. |
 | rel-11 | open | S | `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]` when displaying a passkey. If BlueZ reports `entered == 6` after all digits are typed, or an invalid value, the notification path raises `IndexError`. | Clamp `entered` to the valid range and render the fully-entered passkey without bolding a missing digit. Cross-ref test-2. |
+| rel-12 | open | S | `blueman/plugins/BasePlugin.py:50` registers `weakref.finalize(self, self._on_plugin_delete)`. Passing a bound method keeps `self` strongly referenced by the finalizer, so plugin instances may not be collected and the delete hook is unreliable. | Register a module-level/static cleanup callback with weak state, or rely on explicit plugin unload and remove the finalizer. |
 
 ## observability
 
@@ -158,6 +160,7 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | obs-12 | open | S | `blueman/plugins/mechanism/Network.py:46` exception only routed to error callback, no local log | add `logging.error` with trace |
 | obs-13 | open | S | `blueman/bluez/Base.py:107` `GLib.Error` falls back to cached property silently | `logging.debug` cache fallback |
 | obs-14 | open | S | `sendto/blueman_sendto.py.in:14,17,29,33` `print()` for user-facing messages | replace with `logging` where plugin host allows |
+| obs-15 | open | S | `blueman/plugins/applet/AutoConnect.py:116-117` ignores automatic connection failures with `pass`, so failed auto-connect attempts leave no log trail and are hard to diagnose. | Log the target service/device and failure reason at debug or warning level, with rate limiting if needed. |
 
 ## wiring gaps
 
@@ -208,6 +211,7 @@ _(none open)_
 | wd-5 | open | M | `blueman/services/meta/SerialService.py:75` `Popen([RFCOMM_WATCHER_PATH])` no exit/return-code monitoring; crash leaves rfcomm broken | child watch + restart/notify |
 | wd-6 | open | S | `blueman/plugins/applet/PPPSupport.py:40` synchronous `Popen(['ps'])` blocks main loop until ps returns | use async `Gio.Subprocess` |
 | wd-7 | open | M | `blueman/main/NetConf.py:122,190,235` Dhcpd/Udhcpd/DnsMasq Popen+communicate with no hang supervision | timeout-guard or async |
+| wd-8 | open | S | `blueman/main/indicators/StatusNotifierItem.py:32-42` starts a repeating revision-advertisement timeout and discards the source id. The menu service cannot remove the source on unregister/teardown, so it can keep emitting after the tray path is gone. | Store the source id and remove it in an explicit `unregister`/delete path; add a test that teardown removes the source. |
 
 ## state machine
 
@@ -221,6 +225,7 @@ _(none open)_
 | sm-6 | open | L | `blueman/plugins/applet/PowerManager.py:97,109` Callback timer source id not tracked; orphan timeout fires on GC'd object | store source id, remove in destructor |
 | sm-7 | open | M | `blueman/main/NetConf.py:84-101` `DHCPHandler.clean_up()` reads/kills `_pid` with no guard; concurrent calls race / SIGTERM wrong pid | idempotent guard on `_pid` |
 | sm-8 | open | M | `blueman/plugins/applet/TransferService.py:78-123` tracks only one `_pending_transfer` for authorization, but multiple incoming pushes can overlap before the user answers. A later request overwrites the pending state used by the first notification action. | Track pending transfers by `transfer_path`; bind notification callbacks to an immutable pending-transfer record. Cross-ref rel-10. |
+| sm-9 | open | S | `blueman/plugins/applet/ShowConnected.py:86-92` schedules delayed `enumerate_connections()` calls on every manager-state-enabled event without storing/canceling the source. A fast state flap can let a stale enumeration update the icon after the manager is disabled. | Store the pending source id, cancel it on manager disable/unload, and ignore callbacks if manager state changed. |
 
 ## composition
 
@@ -335,6 +340,7 @@ _(none open)_
 | rob-5 | open | S | `blueman/main/PPPConnection.py:182-197` OSError path may skip `source_remove(io_watch)` before cleanup → leaked source | remove source in except (overlaps rel-7) |
 | rob-6 | open | S | `blueman/plugins/applet/NetUsage.py:79-80` Monitor `__del__` doesn't remove timeout source | guard + `source_remove(poller)` |
 | rob-7 | open | M | `blueman/main/Sendto.py:351-378` `on_transfer_progress` divides by `spd` without re-guard after ZeroDivisionError | `if spd>0` guard + log |
+| rob-8 | open | S | `blueman/gui/Animation.py:28-35` `start()` is not idempotent: calling it twice overwrites `self.timer` and leaks the first `GLib.timeout_add` source, so `stop()` can remove only the newest timer. | Return early if already started, or stop the existing source before starting a new one; add a start/stop source-id test. Cross-ref test-4. |
 
 ## ui / ux
 
@@ -385,6 +391,7 @@ _(none open)_
 | test-1 | open | S | No tests cover `sendto/blueman_sendto.py.in` command construction for selected file paths. The quoting bug in cmd-1 would pass unnoticed for paths with quotes, semicolons, or leading dashes. | Add a small unit test around the file-list-to-launch-command path after extracting it into a pure helper. Cross-ref cmd-1. |
 | test-2 | open | S | No tests cover `BluezAgent._on_display_passkey` boundary values for `entered`. `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]`, so an out-of-range or fully-entered value can crash the agent notification path. | Add focused tests for `entered` values 0, 5, 6, and invalid values; clamp or render without bolding when all digits are entered. |
 | test-3 | open | M | Incoming OBEX transfer authorization and completion paths in `blueman/plugins/applet/TransferService.py:78-123,286-329` have no focused tests for overlapping requests, allowed-device expiry, filename collisions, or failed final moves. Current coverage would miss data-1, rel-10, and sm-8. | Extract testable helpers for pending-transfer records and destination selection; add unit tests with mocked `Transfer`, `Session`, and notifications. |
+| test-4 | open | S | No tests cover `blueman/gui/Animation.py` timer source lifecycle. The `start()`/`stop()` path can leak sources if `start()` is called repeatedly, and current tests would not detect it. | Add a focused test with mocked `GLib.timeout_add`/`source_remove` for idempotent start and complete cleanup. Cross-ref rob-8. |
 
 ## release & deploy engineering
 
