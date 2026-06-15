@@ -10,20 +10,21 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-
-_(none open)_
+| sec-1 | open | S | `blueman/plugins/applet/TransferService.py:181-186` interpolates the user-configured shared path into notification markup without escaping it. A path containing Pango markup can alter the fallback notification body and may be interpreted by notification daemons that support body markup. | Escape `shared-path` and the fallback path before formatting, or use a plain-text notification path. Add a regression test with `<b>`, `&`, and quote characters. |
 
 ## input validation / command safety
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | cmd-1 | open | S | `sendto/blueman_sendto.py.in:20-28` builds a shell-style command line by wrapping file paths in double quotes and passing the joined string to `Gio.AppInfo.create_from_commandline`. A filename containing quotes or command separators can break argument boundaries when launched through the desktop shell parser. | Build a `Gio.AppInfo`/`Gio.Subprocess` invocation from an argv vector, or escape with GLib shell-quoting for every path. Add a regression test with spaces, quotes, and semicolons in filenames. Cross-ref test-1. |
+| cmd-2 | open | M | `blueman/Functions.py:120-134` exposes `launch(cmd: str, ...)` as a command-line string API and sends it to `Gio.AppInfo.create_from_commandline`. Callers such as `blueman/plugins/manager/Notes.py:35` embed options in `cmd`, so argument boundaries depend on string parsing instead of an argv contract. | Replace or supplement `launch` with an argv-based helper (`program`, `args`, `files`) and migrate command-building call sites. Keep `system=True` uses explicit and reviewed. |
 
 ## data integrity
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | data-1 | open | S | `blueman/plugins/applet/TransferService.py:296-303` resolves incoming-file name collisions by prefixing only second-resolution time, then moves without rechecking the timestamped destination. Two same-named transfers completing in the same second can collide and overwrite/fail depending on platform semantics. | Generate a unique destination with an exclusive create/rename loop (`name`, `timestamp_name`, `timestamp_1_name`, ...), and test repeated same-second completions. |
+| data-2 | open | S | `blueman/plugins/manager/Notes.py:32-35` creates a `.vnt` temporary file with `delete=False` and relies on the launched sendto process to delete it. If launch fails or the process never starts, the note body remains in `/tmp` indefinitely. | Delete the temp file when `launch()` returns false or raises; consider creating it in an app-owned temp directory with cleanup on startup. Cross-ref gov-5. |
 
 ## performance
 
@@ -93,6 +94,7 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | api-1 | open | S | `blueman/main/DBusProxies.py:91` exposes the Python proxy method as `dchp_client`, while the DBus method and interface are `DhcpClient`. The typo is now part of the local Python call surface and makes future refactors/API docs error-prone. | Add correctly spelled `dhcp_client()` as the public method, keep `dchp_client()` as a deprecated alias until callers/tests migrate, then remove the alias in a later cleanup. |
+| api-2 | open | M | `blueman/Functions.py:133` uses `Gio.AppInfo.create_from_commandline` in a shared helper, but its API accepts one opaque command string plus separate `paths`. This makes it hard for callers to express portable argv semantics or safely pass non-file options without depending on GLib command-line parsing. | Define a stable internal process-launch contract around argv and file arguments; deprecate the string form after migrating users. Cross-ref cmd-2. |
 
 ## architecture/modularity/SOLID
 
@@ -135,6 +137,8 @@ _(none open)_
 | rel-5 | open | S | `blueman/main/PPPConnection.py:76-77` `os.close(self.file)` without fd validity check | guard with try/except `OSError` |
 | rel-7 | open | S | `blueman/main/PPPConnection.py:222-224` `io_watch`/`timeout` not removed on exception path | try/finally `GLib.source_remove` |
 | rel-9 | open | S | `blueman/main/Services.py:86` bare `except: pass` hides errors | narrow exception types |
+| rel-10 | open | S | `blueman/plugins/applet/TransferService.py:95-100` schedules removal of an allowed device but the timeout closure reads `self._pending_transfer` later instead of capturing the accepted address. A second pending transfer or cleared state can remove the wrong address or hit the assertion. | Capture `address` in the closure and remove it idempotently (`discard`-style) from the allowed list. Cross-ref sm-8. |
+| rel-11 | open | S | `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]` when displaying a passkey. If BlueZ reports `entered == 6` after all digits are typed, or an invalid value, the notification path raises `IndexError`. | Clamp `entered` to the valid range and render the fully-entered passkey without bolding a missing digit. Cross-ref test-2. |
 
 ## observability
 
@@ -185,6 +189,7 @@ _(none open)_
 | gov-2 | open | S | `blueman/plugins/applet/RecentConns.py:144` BT addresses (quasi-permanent IDs) logged via `logging.info` | redact/rate-limit address logging in production |
 | gov-3 | open | M | `blueman/plugins/applet/NetUsage.py:40,64-65` per-device tx/rx stats persisted at `/org/blueman/plugins/netusages/{Address}/` reveal connection history + volume | document retention; add auto-expire option |
 | gov-4 | open | S | `blueman/plugins/applet/RecentConns.py:120` user device aliases (may contain PII) stored plaintext | document plaintext storage; UI warning |
+| gov-5 | open | S | `blueman/plugins/manager/Notes.py:32-35` can leave plaintext note bodies in temporary `.vnt` files when send launch fails. These notes are user-authored content and can include sensitive data. | Ensure temp-note lifecycle is owned by Blueman until a child process has definitely taken responsibility; clean stale `note*.vnt` files where safe. Cross-ref data-2. |
 
 ## multithreading
 
@@ -211,10 +216,11 @@ _(none open)_
 | sm-1 | open | M | `blueman/main/PPPConnection.py:53-75` `__init__` leaves pppd/file/buffer/timeout/io_watch uninitialized; cleanup/check_pppd crash if hit early | init all attrs in `__init__` (overlaps rel-2,rel-3) |
 | sm-2 | open | M | `blueman/main/PPPConnection.py:181-210` `on_data_ready` can run cleanup while `on_timeout` still pending → double `error-occurred` emit | explicit connection-state guard, single emit |
 | sm-3 | open | L | `blueman/main/PPPConnection.py:213-224` `on_timeout` closure captures stale `command_id` if `send_commands` reused before fire | bind per-command state / cancel prior timeout |
-| sm-4 | open | M | `blueman/main/DhcpClient.py:39-51` no state flag; `_check_client` + `_on_timeout` both call `querying.remove()` → possible `ValueError` | guard with done-flag, single removal (overlaps rel-10) |
+| sm-4 | open | M | `blueman/main/DhcpClient.py:39-51` no state flag; `_check_client` + `_on_timeout` both call `querying.remove()` → possible `ValueError` | guard with done-flag, single removal (overlaps wd-3, rob-3) |
 | sm-5 | open | M | `blueman/main/NetworkManager.py:38,69-70` `_statehandler` asserted not-None but state change can fire before assignment | assign handler before connect / null-guard |
 | sm-6 | open | L | `blueman/plugins/applet/PowerManager.py:97,109` Callback timer source id not tracked; orphan timeout fires on GC'd object | store source id, remove in destructor |
 | sm-7 | open | M | `blueman/main/NetConf.py:84-101` `DHCPHandler.clean_up()` reads/kills `_pid` with no guard; concurrent calls race / SIGTERM wrong pid | idempotent guard on `_pid` |
+| sm-8 | open | M | `blueman/plugins/applet/TransferService.py:78-123` tracks only one `_pending_transfer` for authorization, but multiple incoming pushes can overlap before the user answers. A later request overwrites the pending state used by the first notification action. | Track pending transfers by `transfer_path`; bind notification callbacks to an immutable pending-transfer record. Cross-ref rel-10. |
 
 ## composition
 
@@ -355,6 +361,7 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | i18n-1 | open | S | `sendto/blueman_sendto.py.in:46-50` hardcodes Nautilus/Caja/Nemo menu labels and tips in English, and `sendto/blueman_sendto.py.in` is not listed in `po/POTFILES.in`, so translators never see them. | Wrap file-manager extension labels/tips in gettext and add the generated/template source to extraction. |
 | i18n-2 | open | S | `blueman/main/applet/BluezAgent.py:201-229` builds authentication notification sentences by concatenating translated fragments with device names, PINs, and markup. Translators cannot reorder the whole sentence or place punctuation naturally. | Use one format string per complete sentence/message with named placeholders, e.g. `%(device)s` and `%(passkey)s`, preserving markup escaping. |
+| i18n-3 | open | S | `blueman/plugins/applet/TransferService.py:186` uses the action label `"Reset to default"` without gettext, so the fallback notification action is always English. | Wrap the action label in `_()` and ensure it appears in `po/POTFILES.in`. |
 
 ## documentation
 
@@ -377,6 +384,7 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | test-1 | open | S | No tests cover `sendto/blueman_sendto.py.in` command construction for selected file paths. The quoting bug in cmd-1 would pass unnoticed for paths with quotes, semicolons, or leading dashes. | Add a small unit test around the file-list-to-launch-command path after extracting it into a pure helper. Cross-ref cmd-1. |
 | test-2 | open | S | No tests cover `BluezAgent._on_display_passkey` boundary values for `entered`. `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]`, so an out-of-range or fully-entered value can crash the agent notification path. | Add focused tests for `entered` values 0, 5, 6, and invalid values; clamp or render without bolding when all digits are entered. |
+| test-3 | open | M | Incoming OBEX transfer authorization and completion paths in `blueman/plugins/applet/TransferService.py:78-123,286-329` have no focused tests for overlapping requests, allowed-device expiry, filename collisions, or failed final moves. Current coverage would miss data-1, rel-10, and sm-8. | Extract testable helpers for pending-transfer records and destination selection; add unit tests with mocked `Transfer`, `Session`, and notifications. |
 
 ## release & deploy engineering
 
