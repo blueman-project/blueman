@@ -1,19 +1,20 @@
-from typing import Any
-from collections.abc import Callable
-from blueman.bluemantyping import GSignals, ObjectPath
-
-from gi.repository import Gio, GLib, GObject
-from gi.types import GObjectMeta
-from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
+from collections.abc import Callable
+from typing import Any
+from weakref import WeakValueDictionary
+
+from blueman.bluez.errors import BluezDBusException, parse_dbus_error
+from blueman.bluemantyping import GSignals, ObjectPath
+from gi.repository import GLib, GObject, Gio
+from gi.types import GObjectMeta
 
 DBUS_TIMEOUT = 10 * 1_000
 
 
 class BaseMeta(GObjectMeta):
     def __call__(cls, *args: object, **kwargs: str) -> "Base":
-        if not hasattr(cls, "__instances__"):
-            cls.__instances__: dict[str, "Base"] = {}
+        if "__instances__" not in cls.__dict__:
+            cls.__instances__: WeakValueDictionary[str, "Base"] = WeakValueDictionary()
 
         path = kwargs.get('obj_path')
         if path is None:
@@ -36,7 +37,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     __gsignals__: GSignals = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
-    __instances__: dict[str, "Base"]
+    __instances__: WeakValueDictionary[str, "Base"]
 
     _interface_name: str
 
@@ -61,6 +62,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
         self.__fallback = {'Icon': 'blueman', 'Class': 0, 'Appearance': 0}
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
+        self.__set_cancellables: set[Gio.Cancellable] = set()
 
     def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
                             invalidated_properties: list[str]) -> None:
@@ -115,14 +117,27 @@ class Base(GObject.Object, metaclass=BaseMeta):
             else:
                 raise parse_dbus_error(e)
 
-    def set(self, name: str, value: str | int | bool) -> None:
+    def set(self, name: str, value: str | int | bool, cancellable: Gio.Cancellable | None = None) -> None:
+        def on_set_done(proxy: Gio.DBusProxy, result: Gio.AsyncResult, pending: Gio.Cancellable) -> None:
+            self.__set_cancellables.discard(pending)
+            try:
+                proxy.call_finish(result)
+            except GLib.Error:
+                logging.error(f"Unhandled error for {proxy.get_interface_name()}.Properties.Set", exc_info=True)
+
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
+        if cancellable is None:
+            cancellable = Gio.Cancellable()
+
+        self.__set_cancellables.add(cancellable)
         self.__proxy.call('org.freedesktop.DBus.Properties.Set',
                           param,
                           Gio.DBusCallFlags.NONE,
                           DBUS_TIMEOUT,
-                          None)
+                          cancellable,
+                          on_set_done,
+                          cancellable)
 
     def get_object_path(self) -> ObjectPath:
         return ObjectPath(self.__proxy.get_object_path())
@@ -145,7 +160,13 @@ class Base(GObject.Object, metaclass=BaseMeta):
         return props
 
     def destroy(self) -> None:
+        for cancellable in self.__set_cancellables:
+            cancellable.cancel()
+        self.__set_cancellables.clear()
         if self.__proxy:
+            object_path = self.get_object_path()
+            if self.__class__.__instances__.get(object_path) is self:
+                del self.__class__.__instances__[object_path]
             del self.__proxy
 
     def __getitem__(self, key: str) -> Any:
