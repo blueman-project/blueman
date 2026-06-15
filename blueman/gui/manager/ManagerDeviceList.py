@@ -428,11 +428,12 @@ class ManagerDeviceList(DeviceList):
             self._power_levels_timer = GLib.timeout_add(1000, self._check_power_levels)
 
     def _check_power_levels(self) -> bool:
-        for address, (row_ref, cinfo) in list(self._monitored_devices.items()):
+        remove_addresses = []
+        for address, (row_ref, cinfo) in self._monitored_devices.items():
             if not row_ref.valid():
                 logging.warning("stopping monitor (row does not exist)")
                 cinfo.deinit()
-                del self._monitored_devices[address]
+                remove_addresses.append(address)
                 continue
 
             tree_iter = self.get_iter(row_ref.get_path())
@@ -445,7 +446,10 @@ class ManagerDeviceList(DeviceList):
             else:
                 cinfo.deinit()
                 self._disable_power_levels(tree_iter)
-                del self._monitored_devices[address]
+                remove_addresses.append(address)
+
+        for address in remove_addresses:
+            del self._monitored_devices[address]
 
         if self._monitored_devices:
             return True
