@@ -123,7 +123,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
             try:
                 proxy.call_finish(result)
             except GLib.Error:
-                logging.error(f"Unhandled error for {proxy.get_interface_name()}.Properties.Set", exc_info=True)
+                logging.exception(f"Unhandled error for {proxy.get_interface_name()}.Properties.Set")
 
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
