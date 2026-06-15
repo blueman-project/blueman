@@ -39,6 +39,8 @@ pppd_errors = {
     19: "We failed to authenticate ourselves to the peer."
 }
 
+RFCOMM_FILE_CLOSED = "RFCOMM file descriptor is not open"
+
 
 class PPPException(Exception):
     pass
@@ -206,7 +208,7 @@ class PPPConnection(GObject.GObject):
 
     def send_command(self, command: str) -> None:
         if self.file is None:
-            raise PPPException("RFCOMM file descriptor is not open")
+            raise PPPException(RFCOMM_FILE_CLOSED)
         logging.info(f"--> {command}")
         out = f"{command}\r\n"
         os.write(self.file, out.encode("UTF-8"))
@@ -220,7 +222,7 @@ class PPPConnection(GObject.GObject):
             return False
         try:
             if self.file is None:
-                raise OSError(errno.EBADF, "RFCOMM file descriptor is not open")
+                raise OSError(errno.EBADF, RFCOMM_FILE_CLOSED)
             self.buffer += os.read(self.file, 1).decode('utf-8')
         except OSError as e:
             if e.errno == errno.EAGAIN:
@@ -259,7 +261,7 @@ class PPPConnection(GObject.GObject):
         self.term_found = False
 
         if self.file is None:
-            raise PPPException("RFCOMM file descriptor is not open")
+            raise PPPException(RFCOMM_FILE_CLOSED)
 
         self.io_watch = GLib.io_add_watch(self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready,
                                           command_id)
