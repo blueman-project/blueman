@@ -1,6 +1,6 @@
 import errno
 from unittest import TestCase
-from unittest.mock import patch, Mock
+from unittest.mock import patch
 
 from gi.repository import GLib
 
@@ -150,7 +150,7 @@ class TestPPPConnectionCrashGuards(TestCase):
         errors = _capture_errors(conn)
 
         with self.assertLogs(level="ERROR"):
-            keep = conn.on_data_ready(42, 0, 0)
+            keep = conn.on_data_ready(42, GLib.IOCondition(0), 0)
 
         self.assertFalse(keep)
         read_mock.assert_called_once_with(42, 1)
