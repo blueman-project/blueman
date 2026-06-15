@@ -59,7 +59,8 @@ class TestBaseConcurrency(TestCase):
             obj = TestBaseObject(obj_path=ObjectPath("/org/test/shared"))
             other = OtherTestBaseObject(obj_path=ObjectPath("/org/test/shared"))
 
-        self.assertIsNot(obj, other)
+            self.assertIs(TestBaseObject(obj_path=ObjectPath("/org/test/shared")), obj)
+            self.assertIs(OtherTestBaseObject(obj_path=ObjectPath("/org/test/shared")), other)
 
     def test_destroy_removes_instance_from_cache(self):
         with patch("blueman.bluez.Base.Gio.DBusProxy.new_for_bus_sync") as new_proxy:
