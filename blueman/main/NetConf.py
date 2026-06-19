@@ -3,6 +3,9 @@ import os
 import pathlib
 import ipaddress
 import socket
+import fcntl
+import contextlib
+from collections.abc import Iterator
 from tempfile import mkstemp
 from time import sleep
 import logging
@@ -11,7 +14,7 @@ import signal
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
-from subprocess import call, Popen, PIPE
+from subprocess import call, run, Popen, PIPE, TimeoutExpired
 
 from blueman.main.DNSServerProvider import DNSServerProvider
 
@@ -20,12 +23,38 @@ class NetworkSetupError(Exception):
     pass
 
 
+_PROC_PATH = pathlib.Path("/proc")
+
+
 def _is_running(name: str, pid: int) -> bool:
-    path = pathlib.Path(f"/proc/{pid}")
-    if not path.exists():
+    # A non-positive pid is never a single live process: /proc/0 does not exist
+    # and os.kill(0/-N, ...) targets a whole process group, so a 0 or negative
+    # value parsed from a corrupt pid file must not be treated as running (and
+    # must never reach the SIGTERM in clean_up).
+    if pid <= 0:
         return False
 
-    return name in path.joinpath("cmdline").read_text()
+    if _PROC_PATH.is_dir():
+        path = _PROC_PATH / str(pid)
+        if not path.exists():
+            return False
+        try:
+            return name in path.joinpath("cmdline").read_text()
+        except OSError:
+            return False
+
+    # No procfs (non-Linux): we cannot match the binary name, so fall back to a
+    # liveness check via signal 0. EPERM means the process exists but we may not
+    # signal it, which still counts as running; ESRCH means it is gone.
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    except OSError:
+        return False
+    return True
 
 
 def _read_pid_file(fname: pathlib.Path) -> int | None:
@@ -33,6 +62,38 @@ def _read_pid_file(fname: pathlib.Path) -> int | None:
         return int(fname.read_text())
     except (OSError, ValueError):
         return None
+
+
+# A spawned DHCP daemon may not have written its pid file yet when the launcher
+# returns. Poll for it a bounded number of times, returning as soon as it
+# appears, instead of blocking for a fixed delay or assuming it is present.
+_PID_POLL_ATTEMPTS = 20
+_PID_POLL_DELAY = 0.05
+
+
+def _poll_pid_file(fname: pathlib.Path) -> int | None:
+    for attempt in range(_PID_POLL_ATTEMPTS):
+        pid = _read_pid_file(fname)
+        if pid is not None:
+            return pid
+        if attempt + 1 < _PID_POLL_ATTEMPTS:
+            sleep(_PID_POLL_DELAY)
+    return None
+
+
+# Upper bound for how long to wait on a spawned DHCP daemon's launcher to
+# finish writing to stderr. Well-behaved daemons fork and exit (EOF) quickly;
+# the timeout stops a misbehaving one from blocking the mechanism forever.
+_PROC_START_TIMEOUT = 10
+
+
+def _communicate_stderr(p: "Popen[bytes]") -> bytes:
+    try:
+        return p.communicate(timeout=_PROC_START_TIMEOUT)[1]
+    except TimeoutExpired:
+        logging.warning("Timed out waiting for DHCP daemon to start; killing it")
+        p.kill()
+        return p.communicate()[1] or b"timed out waiting for daemon to start"
 
 
 def _get_binary(*names: str) -> str:
@@ -59,16 +120,23 @@ class DHCPHandler:
 
     @property
     def _pid_path(self) -> pathlib.Path:
-        return pathlib.Path(f"/var/run/{self._key}.pan1.pid")
+        return NetConf._RUN_PATH.joinpath(f"{self._key}.pan1.pid")
 
     def apply(self, ip4_address: str, ip4_mask: str) -> None:
         error = self._start(_get_binary(*self._BINARIES), ip4_address, ip4_mask,
                             [ip4_address if addr.is_loopback else str(addr)
                              for addr in DNSServerProvider.get_servers()])
         if error is None:
-            logging.info(f"{self._key} started correctly")
-            self._pid = _read_pid_file(self._pid_path)
-            logging.info(f"pid {self._pid}")
+            self._pid = _poll_pid_file(self._pid_path)
+            if self._pid is None:
+                # The daemon launched but never produced a pid file, so we have
+                # no way to supervise or stop it later. Treat it as a failed
+                # start and tear down instead of locking a daemon we cannot
+                # track, which would otherwise leak a DHCP server on pan1.
+                logging.warning(f"{self._key} produced no pid file; tearing down")
+                self._clean_up_configuration()
+                raise NetworkSetupError(f"{self._key} started but wrote no pid file")
+            logging.info(f"{self._key} started correctly with pid {self._pid}")
             NetConf.lock("dhcp")
         else:
             error_msg = error.decode("UTF-8").strip()
@@ -81,24 +149,29 @@ class DHCPHandler:
     def clean_up(self) -> None:
         self._clean_up_configuration()
 
-        if NetConf.locked("dhcp"):
-            if not self._pid:
-                pid = _read_pid_file(self._pid_path)
-            else:
-                pid = self._pid
+        if not NetConf.locked("dhcp"):
+            return
 
-            if pid is not None:
-                running_binary: str | None = next(binary for binary in self._BINARIES if _is_running(binary, pid))
-                if running_binary is not None:
-                    print('Terminating ' + running_binary)
+        pid = self._pid if self._pid else _read_pid_file(self._pid_path)
+        # Clear the cached pid up front so a concurrent or repeated clean_up
+        # cannot read it again and signal a now-unrelated (possibly recycled)
+        # pid a second time.
+        self._pid = None
+
+        running_binary: str | None = None
+        if pid is not None:
+            running_binary = next((binary for binary in self._BINARIES if _is_running(binary, pid)), None)
+            if running_binary is not None:
+                logging.info(f"Terminating {running_binary} (pid {pid})")
+                try:
                     os.kill(pid, signal.SIGTERM)
-            else:
-                running_binary = None
+                except ProcessLookupError:
+                    logging.info(f"DHCP daemon pid {pid} already gone")
 
-            if pid is None or running_binary is None:
-                logging.info("Stale dhcp lockfile found")
+        if pid is None or running_binary is None:
+            logging.info("Stale dhcp lockfile found")
 
-            NetConf.unlock("dhcp")
+        NetConf.unlock("dhcp")
 
     def _clean_up_configuration(self) -> None:
         ...
@@ -116,12 +189,18 @@ class DnsMasqHandler(DHCPHandler):
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(("localhost", 53)) == 0:
-                cmd += ["--port=0", f"--dhcp-option=option:dns-server,{', '.join(dns_servers)}"]
+                # A local resolver already owns port 53, so disable dnsmasq's
+                # own DNS. Only advertise dns-server when we actually have
+                # addresses; an empty list would produce a trailing-comma value
+                # that dnsmasq rejects, failing the whole start.
+                cmd.append("--port=0")
+                if dns_servers:
+                    cmd.append(f"--dhcp-option=option:dns-server,{', '.join(dns_servers)}")
 
         logging.info(cmd)
         p = Popen(cmd, stderr=PIPE)
 
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
         return error if error else None
 
@@ -189,7 +268,7 @@ class DhcpdHandler(DHCPHandler):
         cmd = [binary, "-pf", self._pid_path.as_posix(), "pan1"]
         p = Popen(cmd, stderr=PIPE)
 
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
         return None if p.returncode == 0 else error
 
@@ -233,12 +312,11 @@ class UdhcpdHandler(DHCPHandler):
         logging.info(f"Running udhcpd with config file {self._config_file}")
         cmd = [binary, "-S", self._config_file.as_posix()]
         p = Popen(cmd, stderr=PIPE)
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
-        # udhcpd takes time to create pid file
-        sleep(0.1)
-
-        pid = _read_pid_file(self._pid_path)
+        # udhcpd takes time to create its pid file; poll for it (returning as
+        # soon as it appears) instead of blocking on a fixed sleep.
+        pid = _poll_pid_file(self._pid_path)
 
         return None if p.pid and pid is not None and _is_running("udhcpd", pid) else error
 
@@ -252,31 +330,65 @@ class NetConf:
     _dhcp_handler: DHCPHandler | None = None
     _ipt_rules: list[tuple[str, str, tuple[str, ...]]] = []
 
+    # Every rule blueman installs is tagged with this iptables comment so it can
+    # be reconciled against the live kernel ruleset, even after a mechanism
+    # restart that lost the in-memory _ipt_rules list.
+    _IPT_COMMENT = "blueman-pan1"
+    # (table, chain) pairs blueman writes rules into; scanned when flushing.
+    _IPT_TARGETS: tuple[tuple[str, str], ...] = (("nat", "POSTROUTING"), ("filter", "FORWARD"))
+
     _IPV4_SYS_PATH = pathlib.Path("/proc/sys/net/ipv4")
-    _RUN_PATH = pathlib.Path("/var/run")
+    # Prefer the canonical /run; fall back to the legacy /var/run only where
+    # /run is unavailable. Both hold the mechanism's pid and lock files.
+    _RUN_PATH = pathlib.Path("/run") if pathlib.Path("/run").is_dir() else pathlib.Path("/var/run")
 
     @classmethod
     def _enable_ip4_forwarding(cls) -> None:
+        # IPv4 forwarding is controlled through the procfs sysctl tree, which
+        # only exists on Linux. Fail with a clear error rather than an opaque
+        # FileNotFoundError on platforms that lack it.
+        if not cls._IPV4_SYS_PATH.is_dir():
+            raise NetworkSetupError(
+                f"IPv4 forwarding control not available at {cls._IPV4_SYS_PATH}; NAT requires Linux")
+
         cls._IPV4_SYS_PATH.joinpath("ip_forward").write_text("1")
 
         for p in cls._IPV4_SYS_PATH.joinpath("conf").glob("**/forwarding"):
             p.write_text("1")
 
     @classmethod
+    def _iptables(cls) -> str:
+        # Resolve iptables via PATH instead of assuming /sbin/iptables, which
+        # does not hold on all distributions (e.g. usr-merged or nftables-based
+        # layouts that ship it elsewhere).
+        return _get_binary("iptables")
+
+    @classmethod
     def _add_ipt_rule(cls, table: str, chain: str, *rule_args: str) -> None:
         # Pass the rule as already-split arguments instead of splitting a single
         # string on spaces. A value that contains a space (e.g. an address that
         # was not validated) can no longer smuggle in extra iptables arguments.
-        cls._ipt_rules.append((table, chain, rule_args))
-        args = ["/sbin/iptables", "-t", table, "-A", chain, *rule_args]
+        # Tag the rule with a comment so it can later be matched in the kernel.
+        tagged = (*rule_args, "-m", "comment", "--comment", cls._IPT_COMMENT)
+        cls._ipt_rules.append((table, chain, tagged))
+        args = [cls._iptables(), "-t", table, "-A", chain, *tagged]
         logging.debug(" ".join(args))
         ret = call(args)
         logging.info(f"Return code {ret}")
 
     @classmethod
     def _del_ipt_rules(cls) -> None:
-        for table, chain, rule_args in cls._ipt_rules:
-            call(["/sbin/iptables", "-t", table, "-D", chain, *rule_args])
+        # Reconcile against the live kernel ruleset rather than trusting the
+        # in-memory list, which is empty after a mechanism restart while stale
+        # MASQUERADE/FORWARD rules from a previous run may still be installed.
+        iptables = cls._iptables()
+        for table, chain in cls._IPT_TARGETS:
+            result = run([iptables, "-t", table, "-S", chain], stdout=PIPE, text=True, check=False)
+            for line in result.stdout.splitlines():
+                if cls._IPT_COMMENT not in line or not line.startswith(f"-A {chain} "):
+                    continue
+                spec = line.split()[2:]  # drop the leading "-A <chain>"
+                call([iptables, "-t", table, "-D", chain, *spec])
         cls._ipt_rules = []
         cls.unlock("iptables")
 
@@ -295,60 +407,102 @@ class NetConf:
             raise NetworkSetupError(f"Invalid IPv4 netmask: {ip4_mask!r}")
 
     @classmethod
+    @contextlib.contextmanager
+    def _exclusive_lock(cls) -> Iterator[None]:
+        # The mechanism is a system D-Bus service handling concurrent
+        # Enable/Disable/DhcpClient calls. The touch/exists lock markers are not
+        # atomic, so two near-simultaneous applies could both proceed and double
+        # up forwarding, iptables rules and DHCP daemons. Hold a real exclusive
+        # advisory lock across the whole operation to serialize them.
+        fd = os.open(cls._RUN_PATH / "blueman-mechanism.lock", os.O_CREAT | os.O_RDWR, 0o600)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            yield
+        finally:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+            os.close(fd)
+
+    @classmethod
     def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
                        address_changed: bool) -> None:
-        cls._validate_ipv4(ip4_address, ip4_mask)
+        with cls._exclusive_lock():
+            try:
+                cls._apply_settings(ip4_address, ip4_mask, handler, address_changed)
+            except Exception:
+                # apply_settings touches several subsystems (bridge, forwarding,
+                # iptables, DHCP) in sequence; a failure partway leaves the
+                # system half-configured with no DHCP. Tear everything down so
+                # the operation is all-or-nothing, then re-raise. _clean_up is
+                # the unlocked variant because we already hold the lock.
+                logging.exception("apply_settings failed; rolling back")
+                cls._clean_up()
+                raise
 
+    @classmethod
+    def _ensure_handler(cls, handler: type["DHCPHandler"]) -> "DHCPHandler":
         if not isinstance(cls._dhcp_handler, handler):
             if cls._dhcp_handler is not None:
                 cls._dhcp_handler.clean_up()
-
             cls._dhcp_handler = handler()
+        return cls._dhcp_handler
 
+    @staticmethod
+    def _ensure_bridge() -> None:
         try:
             create_bridge("pan1")
         except BridgeException as e:
             if e.errno != errno.EEXIST:
                 raise
 
+    @staticmethod
+    def _configure_interface(ip4_address: str, ip4_mask: str) -> None:
+        if have("ip"):
+            if call(["ip", "link", "set", "dev", "pan1", "up"]) != 0:
+                raise NetworkSetupError("Failed to bring up interface pan1")
+            if call(["ip", "address", "add", "/".join((ip4_address, ip4_mask)), "dev", "pan1"]) != 0:
+                raise NetworkSetupError(f"Failed to add ip address {ip4_address}with netmask {ip4_mask}")
+        elif have('ifconfig'):
+            if call(["ifconfig", "pan1", ip4_address, "netmask", ip4_mask, "up"]) != 0:
+                raise NetworkSetupError(f"Failed to add ip address {ip4_address}with netmask {ip4_mask}")
+        else:
+            raise NetworkSetupError(
+                "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
+
+    @classmethod
+    def _apply_iptables(cls, ip4_address: str, ip4_mask: str) -> None:
+        cls._del_ipt_rules()
+        cls._add_ipt_rule("nat", "POSTROUTING", "-s", f"{ip4_address}/{ip4_mask}", "-j", "MASQUERADE")
+        cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+        cls._add_ipt_rule("filter", "FORWARD", "-o", "pan1", "-j", "ACCEPT")
+        cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+
+    @classmethod
+    def _apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
+                        address_changed: bool) -> None:
+        cls._validate_ipv4(ip4_address, ip4_mask)
+        dhcp_handler = cls._ensure_handler(handler)
+        cls._ensure_bridge()
+
         if address_changed or not cls.locked("netconfig"):
             cls._enable_ip4_forwarding()
-
-            if have("ip"):
-                ret = call(["ip", "link", "set", "dev", "pan1", "up"])
-                if ret != 0:
-                    raise NetworkSetupError("Failed to bring up interface pan1")
-
-                ret = call(["ip", "address", "add", "/".join((ip4_address, ip4_mask)), "dev", "pan1"])
-                if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
-            elif have('ifconfig'):
-                ret = call(["ifconfig", "pan1", ip4_address, "netmask", ip4_mask, "up"])
-                if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
-            else:
-                raise NetworkSetupError(
-                    "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
-
+            cls._configure_interface(ip4_address, ip4_mask)
             cls.lock("netconfig")
 
         if address_changed or not cls.locked("iptables"):
-            cls._del_ipt_rules()
-
-            cls._add_ipt_rule("nat", "POSTROUTING", "-s", f"{ip4_address}/{ip4_mask}", "-j", "MASQUERADE")
-            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-o", "pan1", "-j", "ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+            cls._apply_iptables(ip4_address, ip4_mask)
             cls.lock("iptables")
 
-        if address_changed or not NetConf.locked("dhcp"):
-            cls._dhcp_handler.clean_up()
-            cls._dhcp_handler.apply(ip4_address, ip4_mask)
+        if address_changed or not cls.locked("dhcp"):
+            dhcp_handler.clean_up()
+            dhcp_handler.apply(ip4_address, ip4_mask)
 
     @classmethod
     def clean_up(cls) -> None:
+        with cls._exclusive_lock():
+            cls._clean_up()
+
+    @classmethod
+    def _clean_up(cls) -> None:
         logging.info(cls)
 
         if cls._dhcp_handler:
@@ -356,8 +510,8 @@ class NetConf:
 
         try:
             destroy_bridge("pan1")
-        except BridgeException:
-            pass
+        except BridgeException as e:
+            logging.warning(f"Failed to destroy bridge pan1 (errno {e.errno})")
         cls.unlock("netconfig")
 
         cls._del_ipt_rules()
