@@ -276,6 +276,12 @@ def create_logger(
     date_fmt: str | None = None,
     syslog: bool = False,
 ) -> logging.Logger:
+    """Configure and return the root logger for an entry point.
+
+    Used by every blueman binary (see ``apps/*.in``) to set the process-wide
+    log level, name, and format. With ``syslog`` enabled a SysLogHandler is
+    added when ``/dev/log`` is available, otherwise logging stays on stderr.
+    """
     if log_format is None:
         log_format = logger_format
     if date_fmt is None:
@@ -305,6 +311,11 @@ def create_parser(
     syslog: bool = True,
     loglevel: bool = True,
 ) -> argparse.ArgumentParser:
+    """Build the shared argument parser used by every blueman entry point.
+
+    Adds the common ``--loglevel`` and ``--syslog`` options (each toggleable)
+    so all binaries in ``apps/*.in`` expose a consistent CLI surface.
+    """
     if parser is None:
         parser = argparse.ArgumentParser()
 
