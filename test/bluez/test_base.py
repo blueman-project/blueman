@@ -139,3 +139,48 @@ class TestBaseInstanceCaching(TestCase):
         obj.destroy()
         replacement = make(FakeBase, FakeProxy(object_path="/org/test/dev0"), "/org/test/dev0")
         self.assertIsNot(replacement, obj)
+
+
+class TestBasePropertyCache(TestCase):
+    def setUp(self) -> None:
+        _clear_registries()
+        self.addCleanup(_clear_registries)
+
+    def test_cached_read_avoids_sync_call(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        self.assertIs(obj.get("Connected"), True)
+        self.assertEqual(proxy.sync_get_calls, 0)
+
+    def test_repeated_cached_reads_stay_zero_round_trips(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        for _ in range(50):
+            obj.get("Connected")
+        self.assertEqual(proxy.sync_get_calls, 0)
+
+    def test_cache_miss_falls_back_to_sync_get(self) -> None:
+        proxy = FakeProxy()
+        proxy.props["Address"] = "AA:BB:CC:DD:EE:FF"  # present live, absent from cache
+        obj = make(FakeBase, proxy)
+        self.assertEqual(obj.get("Address"), "AA:BB:CC:DD:EE:FF")
+        self.assertEqual(proxy.sync_get_calls, 1)
+
+    def test_properties_changed_refreshes_cache(self) -> None:
+        proxy = FakeProxy({"Connected": False})
+        obj = make(FakeBase, proxy)
+        self.assertIs(obj.get("Connected"), False)
+        proxy.emit_properties_changed({"Connected": True})
+        self.assertIs(obj.get("Connected"), True)
+        self.assertEqual(proxy.sync_get_calls, 0)
+
+    def test_fallback_used_when_missing_and_sync_fails(self) -> None:
+        proxy = FakeProxy()
+        proxy.get_should_raise = GLib.Error.new_literal(GLib.quark_from_string("x"), "boom", 0)
+        obj = make(FakeBase, proxy)
+        self.assertEqual(obj.get("Icon"), "blueman")  # __fallback default
+
+    def test_getitem_delegates_to_get(self) -> None:
+        proxy = FakeProxy({"Paired": True})
+        obj = make(FakeBase, proxy)
+        self.assertIs(obj["Paired"], True)

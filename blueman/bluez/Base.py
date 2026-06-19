@@ -125,6 +125,14 @@ class Base(GObject.Object, metaclass=BaseMeta):
                           callback, reply_handler, error_handler)
 
     def get(self, name: str) -> Any:
+        # Prefer the proxy's local property cache, which Gio keeps current from
+        # PropertiesChanged signals, over a synchronous Properties.Get round-trip
+        # on every read. Bluez devices expose the same properties repeatedly to
+        # the UI; serving them from cache avoids a blocking D-Bus call each time.
+        cached = self.__proxy.get_cached_property(name)
+        if cached is not None:
+            return cached.unpack()
+
         try:
             prop = self.__proxy.call_sync(
                 'org.freedesktop.DBus.Properties.Get',
@@ -134,13 +142,9 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 None)
             return prop.unpack()[0]
         except GLib.Error as e:
-            property = self.__proxy.get_cached_property(name)
-            if property is not None:
-                return property.unpack()
-            elif name in self.__fallback:
+            if name in self.__fallback:
                 return self.__fallback[name]
-            else:
-                raise parse_dbus_error(e)
+            raise parse_dbus_error(e)
 
     def set(self, name: str, value: str | int | bool) -> None:
         v = GLib.Variant(self.__variant_map[type(value)], value)
