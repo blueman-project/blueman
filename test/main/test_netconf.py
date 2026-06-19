@@ -420,6 +420,16 @@ class TestIptablesRuleArgs(TestCase):
         self.assertEqual(NetConf._ipt_rules, [])
 
 
+class TestPidPath(TestCase):
+    def test_pid_path_derives_from_run_path(self) -> None:
+        with patch.object(NetConf, "_RUN_PATH", Path("/run")):
+            self.assertEqual(DnsMasqHandler()._pid_path, Path("/run/dnsmasq.pan1.pid"))
+
+    def test_pid_path_follows_run_path_override(self) -> None:
+        with patch.object(NetConf, "_RUN_PATH", Path("/var/run")):
+            self.assertEqual(UdhcpdHandler()._pid_path, Path("/var/run/udhcpd.pan1.pid"))
+
+
 class TestIptablesResolution(TestCase):
     @patch("blueman.main.NetConf.have", return_value=Path("/usr/sbin/iptables"))
     def test_resolves_via_have(self, have_mock: Mock) -> None:

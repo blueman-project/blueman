@@ -73,7 +73,7 @@ class DHCPHandler:
 
     @property
     def _pid_path(self) -> pathlib.Path:
-        return pathlib.Path(f"/var/run/{self._key}.pan1.pid")
+        return NetConf._RUN_PATH.joinpath(f"{self._key}.pan1.pid")
 
     def apply(self, ip4_address: str, ip4_mask: str) -> None:
         error = self._start(_get_binary(*self._BINARIES), ip4_address, ip4_mask,
@@ -267,7 +267,9 @@ class NetConf:
     _ipt_rules: list[tuple[str, str, tuple[str, ...]]] = []
 
     _IPV4_SYS_PATH = pathlib.Path("/proc/sys/net/ipv4")
-    _RUN_PATH = pathlib.Path("/var/run")
+    # Prefer the canonical /run; fall back to the legacy /var/run only where
+    # /run is unavailable. Both hold the mechanism's pid and lock files.
+    _RUN_PATH = pathlib.Path("/run") if pathlib.Path("/run").is_dir() else pathlib.Path("/var/run")
 
     @classmethod
     def _enable_ip4_forwarding(cls) -> None:
