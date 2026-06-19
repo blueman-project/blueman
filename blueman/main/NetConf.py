@@ -356,8 +356,8 @@ class NetConf:
 
         try:
             destroy_bridge("pan1")
-        except BridgeException:
-            pass
+        except BridgeException as e:
+            logging.warning(f"Failed to destroy bridge pan1 (errno {e.errno})")
         cls.unlock("netconfig")
 
         cls._del_ipt_rules()

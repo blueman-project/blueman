@@ -1,3 +1,4 @@
+import errno
 import os.path
 import shutil
 import signal
@@ -10,6 +11,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock, PropertyMock
 
 from blueman.main.NetConf import DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler
+from _blueman import BridgeException
 
 
 class FakeSocket:
@@ -252,6 +254,16 @@ class TestNetConf(TestCase):
 
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
+
+    @patch("blueman.main.NetConf.destroy_bridge", side_effect=BridgeException(errno.ENODEV))
+    def test_cleanup_logs_bridge_failure(self, destroy_bridge_mock: Mock, call_mock: Mock,
+                                         _create_bridge_mock: Mock) -> None:
+        NetConf.apply_settings("203.0.113.1", "255.255.255.0", self.TestDHCPHandler2, False)
+        with self.assertLogs(level="WARNING") as logs:
+            NetConf.clean_up()
+        self.assertTrue(any("Failed to destroy bridge pan1" in m for m in logs.output))
+        # The lock must still be released despite the bridge failure.
+        self.assertFalse(NetConf.locked("netconfig"))
 
 
 class _CleanupHandler(DHCPHandler):
