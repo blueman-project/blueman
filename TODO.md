@@ -32,12 +32,9 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | perf-1 | open | M | `blueman/main/ManagerStats.py:107` polls device stats via `GLib.timeout_add(1000, ...)` every second | switch to event-driven update or `timeout_add_seconds` |
-| perf-2 | open | M | `blueman/gui/manager/ManagerDeviceList.py:429` per-device timer for power-level monitoring → O(n) timers | consolidate into single timer batching all devices |
 | perf-3 | open | S | `blueman/gui/DeviceList.py:282-285` `clear()` iterates liststore calling `device_remove_event` per item → O(n²) | call `liststore.clear()` once, drop `path_to_row` in bulk |
 | perf-4 | open | M | `blueman/bluez/Base.py:100` `device["Prop"]` issues sync `Properties.Get` DBus on UI thread | local prop cache + signal-driven invalidation |
 | perf-5 | open | M | `blueman/bluez/Manager.py:115-149` `get_adapter_paths`/`get_devices` iterate `_object_manager.get_objects()` per call | cache, invalidate on object-added/removed |
-| perf-6 | open | S | `blueman/gui/manager/ManagerDeviceList.py:384-388,456-497` `row_setup_event`/`row_update_event` re-read same `device[k]` props | read once, reuse |
-| perf-7 | open | M | `blueman/gui/manager/ManagerDeviceList.py:353-407` row setup pulls 8+ props via individual `Get` calls | single `GetAll` per row |
 | perf-9 | open | S | `blueman/main/DhcpClient.py:48-50,68` `subprocess.poll()` blocking in 1s `GLib.timeout` | use `Gio.Subprocess` + `wait_check_async` or `GLib.child_watch_add` |
 | perf-10 | open | S | `blueman/gui/manager/ManagerMenu.py:53` creates Adapter proxies for all adapters in `__init__` | lazy-instantiate on selection |
 | perf-11 | open | S | `blueman/main/Manager.py:161-164` `find_device()` linear scan over all objects | address-indexed dict |
@@ -50,7 +47,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | scale-1 | open | M | `blueman/main/Manager.py:149-159` `populate_devices` emits per-device add signal serially | single batch signal |
 | scale-2 | open | S | `blueman/main/PulseAudioUtils.py:216-218` PA subscribe callback fires unthrottled on rapid card changes | debounce |
 | scale-3 | open | S | `blueman/main/BatteryWatcher.py:18` creates `Battery` per creation signal without dedup | check existence before create |
-| scale-4 | open | S | `blueman/gui/manager/ManagerDeviceList.py:658` `device["UUIDs"]` accessed during cell render | cache in row data |
 
 ## caching strategy
 
@@ -62,8 +58,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| conc-1 | open | M | `blueman/bluez/Base.py:116-123` async `set()` has no `Gio.Cancellable` plumbing | add cancellable param, store, cancel on teardown |
-| conc-2 | open | M | `blueman/bluez/Base.py:44-57` `BaseMeta` caches instances forever; Device/Adapter never released | weakref store or explicit destroy hook |
 | conc-3 | open | S | `blueman/main/PulseAudioUtils.py:372-379` `weakref.proxy(self)` in callback silently no-ops if GC'd | hold hard ref or explicit lifecycle |
 
 ## code complexity
@@ -83,7 +77,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 |----|--------|--------|-------------|-------|
 | dup-1 | open | M | `blueman/main/Applet.py:92-118` 8× identical plugin broadcast loops | `_broadcast(event, *args)` helper |
 | dup-2 | open | S | `blueman/gui/manager/ManagerDeviceMenu.py:141-188` `connect_service`/`disconnect_service` duplicate nested success/error callbacks | extract async-DBus template |
-| dup-3 | open | S | `blueman/gui/manager/ManagerDeviceList.py:463-496` `Trusted`/`Paired` if/else collapsible to single `set(**{key: value})` | inline boolean |
 | dup-4 | open | S | `blueman/gui/manager/ManagerDeviceList.py:498-540` `_update_power_levels` + `_disable_power_levels` duplicate bar lookup | extract `BarRenderer` |
 | dup-5 | open | S | `blueman/gui/manager/ManagerDeviceList.py:655-677` `_set_cell_data` repeats if/elif for battery/rssi/tpl | polymorphic bar renderers |
 | dup-6 | open | S | `blueman/main/Applet.py:78-90` `_on_dbus_name_appeared/_vanished` repeat plugin notify loop | `_notify_manager_state_change(state)` |
@@ -133,15 +126,10 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| rel-2 | open | S | `blueman/main/PPPConnection.py:121` `self.file` not initialized in `__init__`; touched in exception paths | init `self.file = None` |
-| rel-3 | open | S | `blueman/main/PPPConnection.py:159` `self.pppd` not initialized before `connect_callback`; `poll()` crashes on early error | init `self.pppd = None` |
-| rel-5 | open | S | `blueman/main/PPPConnection.py:76-77` `os.close(self.file)` without fd validity check | guard with try/except `OSError` |
-| rel-7 | open | S | `blueman/main/PPPConnection.py:222-224` `io_watch`/`timeout` not removed on exception path | try/finally `GLib.source_remove` |
 | rel-9 | open | S | `blueman/main/Services.py:86` bare `except: pass` hides errors | narrow exception types |
 | rel-10 | open | S | `blueman/plugins/applet/TransferService.py:95-100` schedules removal of an allowed device but the timeout closure reads `self._pending_transfer` later instead of capturing the accepted address. A second pending transfer or cleared state can remove the wrong address or hit the assertion. | Capture `address` in the closure and remove it idempotently (`discard`-style) from the allowed list. Cross-ref sm-8. |
 | rel-11 | open | S | `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]` when displaying a passkey. If BlueZ reports `entered == 6` after all digits are typed, or an invalid value, the notification path raises `IndexError`. | Clamp `entered` to the valid range and render the fully-entered passkey without bolding a missing digit. Cross-ref test-2. |
 | rel-12 | open | S | `blueman/plugins/BasePlugin.py:50` registers `weakref.finalize(self, self._on_plugin_delete)`. Passing a bound method keeps `self` strongly referenced by the finalizer, so plugin instances may not be collected and the delete hook is unreliable. | Register a module-level/static cleanup callback with weak state, or rely on explicit plugin unload and remove the finalizer. |
-| rel-13 | open | S | `blueman/main/NetConf.py:91` `DHCPHandler.clean_up()` uses `next(b for b in self._BINARIES if _is_running(b, pid))` with no default; if `pid` is live but its cmdline matches no known binary (recycled PID), this raises `StopIteration`, aborting cleanup so the `dhcp` lock is never released and future apply/disable wedge. | Use `next((...), None)` so the existing `running_binary is None` branch runs and `unlock("dhcp")` always executes. Cross-ref sm-7. |
 
 ## observability
 
@@ -218,7 +206,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| sm-1 | open | M | `blueman/main/PPPConnection.py:53-75` `__init__` leaves pppd/file/buffer/timeout/io_watch uninitialized; cleanup/check_pppd crash if hit early | init all attrs in `__init__` (overlaps rel-2,rel-3) |
 | sm-2 | open | M | `blueman/main/PPPConnection.py:181-210` `on_data_ready` can run cleanup while `on_timeout` still pending → double `error-occurred` emit | explicit connection-state guard, single emit |
 | sm-3 | open | L | `blueman/main/PPPConnection.py:213-224` `on_timeout` closure captures stale `command_id` if `send_commands` reused before fire | bind per-command state / cancel prior timeout |
 | sm-4 | open | M | `blueman/main/DhcpClient.py:39-51` no state flag; `_check_client` + `_on_timeout` both call `querying.remove()` → possible `ValueError` | guard with done-flag, single removal (overlaps wd-3, rob-3) |
@@ -316,7 +303,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| ds-1 | open | M | `blueman/main/SpeedCalc.py:24` `del self.log[0]` O(n) list prune | `collections.deque(maxlen=N)` (overlaps perf-8) |
 | ds-2 | open | M | `blueman/plugins/applet/NetUsage.py:261-268` linear liststore scan by address in `monitor_added` | address→iter dict |
 | ds-3 | open | M | `blueman/plugins/applet/NetUsage.py:276-283` linear liststore scan by address in `monitor_removed` | address→iter dict |
 | ds-4 | open | M | `blueman/plugins/applet/RecentConns.py:129-137` linear scan of `stored_items` by (adapter,address,uuid) | tuple-keyed dict |
@@ -439,7 +425,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| sysd-1 | open | M | `blueman/bluez/Base.py:147-149` `destroy()` only `del self.__proxy` and never removes the instance from `BaseMeta.__instances__` (no API to). With the permanent singleton cache, a later `Device(obj_path=...)` returns the destroyed instance whose `__proxy` is gone → `AttributeError` on next access; object lifecycle and the identity cache are not isolated. | Have `destroy()` pop `self` from the instance cache; key the cache per `(class, path)` and invalidate on `InterfacesRemoved`. Cross-ref conc-2, comp-1. |
 | sysd-2 | open | M | `blueman/main/PluginManager.py:92,117` plugin discovery uses `plugin_class.__subclasses__()` (import side effects) and mutates shared class attributes (`cls.__unloadable__ = False`); two PluginManager instances (applet vs mechanism) or a reload mutate shared class state, so load order/conflict resolution is global, not per-manager. | Register plugins explicitly into a per-manager registry and keep per-instance load flags off the class object. Cross-ref dec-5, ext-1. |
 
 ## CLI / option integrity
