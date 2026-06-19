@@ -68,6 +68,7 @@ class DeviceList(GenericList):
         self.__adapter_path: ObjectPath | None = None
         self.Adapter: Adapter | None = None
         self.discovering = False
+        self._discovery_timeout: int | None = None
 
         data = tabledata + [
             {"id": "device", "type": object},
@@ -206,6 +207,9 @@ class DeviceList(GenericList):
 
     def update_progress(self, time: float, totaltime: float) -> bool:
         if not self.discovering:
+            # The timer is ending itself; drop the id so stop_discovery does not
+            # try to remove an already-finished (and possibly reused) source.
+            self._discovery_timeout = None
             return False
 
         self.__discovery_time += time
@@ -214,6 +218,7 @@ class DeviceList(GenericList):
         if progress >= 1.0:
             progress = 1.0
         if self.__discovery_time >= totaltime:
+            self._discovery_timeout = None
             self.stop_discovery()
             return False
 
@@ -253,7 +258,7 @@ class DeviceList(GenericList):
                 self.Adapter.start_discovery(error_handler=error_handler)
                 self.discovering = True
                 t = 1.0 / 15 * 1000
-                GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
+                self._discovery_timeout = GLib.timeout_add(int(t), self.update_progress, t / 1000, time)
 
     def is_valid_adapter(self) -> bool:
         if self.Adapter is None:
@@ -264,8 +269,14 @@ class DeviceList(GenericList):
     def get_adapter_path(self) -> ObjectPath | None:
         return self.__adapter_path if self.is_valid_adapter() else None
 
+    def _remove_discovery_timeout(self) -> None:
+        if self._discovery_timeout is not None:
+            GLib.source_remove(self._discovery_timeout)
+            self._discovery_timeout = None
+
     def stop_discovery(self) -> None:
         self.discovering = False
+        self._remove_discovery_timeout()
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
 
