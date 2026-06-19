@@ -10,20 +10,47 @@ import logging
 DBUS_TIMEOUT = 10 * 1_000
 
 
+class InstanceRegistry:
+    """Caches one :class:`Base` instance per D-Bus object path.
+
+    Object-identity caching used to live inline in :class:`BaseMeta`. Pulling
+    it into a small, named collaborator keeps the metaclass focused on
+    construction and makes the cache independently testable and replaceable.
+    """
+
+    def __init__(self) -> None:
+        self._instances: dict[str, "Base"] = {}
+
+    def get(self, path: str) -> "Base | None":
+        return self._instances.get(path)
+
+    def add(self, path: str, instance: "Base") -> None:
+        self._instances[path] = instance
+
+    def remove(self, path: str) -> None:
+        self._instances.pop(path, None)
+
+    def clear(self) -> None:
+        self._instances.clear()
+
+
 class BaseMeta(GObjectMeta):
     def __call__(cls, *args: object, **kwargs: str) -> "Base":
-        if not hasattr(cls, "__instances__"):
-            cls.__instances__: dict[str, "Base"] = {}
+        registry: InstanceRegistry | None = cls.__dict__.get("_registry")
+        if registry is None:
+            registry = InstanceRegistry()
+            cls._registry = registry
 
         path = kwargs.get('obj_path')
         if path is None:
             path = getattr(cls, "_obj_path")
 
-        if path in cls.__instances__:
-            return cls.__instances__[path]
+        existing = registry.get(path)
+        if existing is not None:
+            return existing
 
         instance: "Base" = super().__call__(*args, **kwargs)
-        cls.__instances__[path] = instance
+        registry.add(path, instance)
 
         return instance
 
@@ -36,7 +63,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
     __gsignals__: GSignals = {
         'property-changed': (GObject.SignalFlags.NO_HOOKS, None, (str, object, str))
     }
-    __instances__: dict[str, "Base"]
+    _registry: InstanceRegistry
 
     _interface_name: str
 
@@ -145,6 +172,9 @@ class Base(GObject.Object, metaclass=BaseMeta):
         return props
 
     def destroy(self) -> None:
+        registry = type(self).__dict__.get("_registry")
+        if registry is not None:
+            registry.remove(self.get_object_path())
         if self.__proxy:
             del self.__proxy
 
