@@ -258,10 +258,16 @@ def create_logger(
     logger.name = name
 
     if syslog:
-        syslog_handler = logging.handlers.SysLogHandler(address="/dev/log")
-        syslog_formatter = logging.Formatter(syslog_logger_format)
-        syslog_handler.setFormatter(syslog_formatter)
-        logger.addHandler(syslog_handler)
+        try:
+            syslog_handler = logging.handlers.SysLogHandler(address="/dev/log")
+        except OSError:
+            # /dev/log is absent on non-Linux platforms and minimal containers;
+            # the basicConfig stderr handler still provides logging.
+            logging.warning("Syslog socket /dev/log unavailable, logging to stderr only")
+        else:
+            syslog_formatter = logging.Formatter(syslog_logger_format)
+            syslog_handler.setFormatter(syslog_formatter)
+            logger.addHandler(syslog_handler)
 
     return logger
 
