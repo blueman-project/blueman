@@ -49,6 +49,23 @@ def _read_pid_file(fname: pathlib.Path) -> int | None:
         return None
 
 
+# A spawned DHCP daemon may not have written its pid file yet when the launcher
+# returns. Poll for it a bounded number of times, returning as soon as it
+# appears, instead of blocking for a fixed delay or assuming it is present.
+_PID_POLL_ATTEMPTS = 20
+_PID_POLL_DELAY = 0.05
+
+
+def _poll_pid_file(fname: pathlib.Path) -> int | None:
+    for attempt in range(_PID_POLL_ATTEMPTS):
+        pid = _read_pid_file(fname)
+        if pid is not None:
+            return pid
+        if attempt + 1 < _PID_POLL_ATTEMPTS:
+            sleep(_PID_POLL_DELAY)
+    return None
+
+
 def _get_binary(*names: str) -> str:
     for name in names:
         path = have(name)
@@ -80,9 +97,16 @@ class DHCPHandler:
                             [ip4_address if addr.is_loopback else str(addr)
                              for addr in DNSServerProvider.get_servers()])
         if error is None:
-            logging.info(f"{self._key} started correctly")
-            self._pid = _read_pid_file(self._pid_path)
-            logging.info(f"pid {self._pid}")
+            self._pid = _poll_pid_file(self._pid_path)
+            if self._pid is None:
+                # The daemon launched but never produced a pid file, so we have
+                # no way to supervise or stop it later. Treat it as a failed
+                # start and tear down instead of locking a daemon we cannot
+                # track, which would otherwise leak a DHCP server on pan1.
+                logging.warning(f"{self._key} produced no pid file; tearing down")
+                self._clean_up_configuration()
+                raise NetworkSetupError(f"{self._key} started but wrote no pid file")
+            logging.info(f"{self._key} started correctly with pid {self._pid}")
             NetConf.lock("dhcp")
         else:
             error_msg = error.decode("UTF-8").strip()

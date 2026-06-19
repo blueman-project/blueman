@@ -12,6 +12,7 @@ from unittest.mock import patch, Mock, PropertyMock
 
 from blueman.main.NetConf import (
     DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler, _is_running,
+    _poll_pid_file,
 )
 from _blueman import BridgeException
 
@@ -77,6 +78,25 @@ class TestDnsmasqHandler(TestCase):
             DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         self.assertEqual(cm.exception.args, ("dnsmasq failed to start: errormsg",))
+
+    @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
+    @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 3)
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
+    def test_no_pid_file_tears_down(self, sleep_mock: Mock, lock_mock: Mock,
+                                    popen_mock: Mock, have_mock: Mock) -> None:
+        # Start succeeds but no pid file appears: must not lock dhcp; instead
+        # tear down and raise.
+        try:
+            os.remove("/tmp/pid")
+        except FileNotFoundError:
+            pass
+        with self.assertRaises(NetworkSetupError) as cm:
+            DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
+        self.assertIn("wrote no pid file", cm.exception.args[0])
+        lock_mock.assert_not_called()
 
     def _check_invocation(self, have_mock: Mock, popen_mock: Mock, additional_args: Optional[List[str]] = None) -> None:
         have_mock.assert_called_with("dnsmasq")
@@ -432,6 +452,38 @@ class TestIptablesRuleArgs(TestCase):
         call_mock.assert_called_once_with(
             ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
         self.assertEqual(NetConf._ipt_rules, [])
+
+
+class TestPollPidFile(TestCase):
+    def setUp(self) -> None:
+        self.path = Path("/tmp/blueman-poll.pid")
+        self.addCleanup(lambda: self.path.unlink(missing_ok=True))
+
+    @patch("blueman.main.NetConf.sleep")
+    def test_returns_pid_immediately_when_present(self, sleep_mock: Mock) -> None:
+        self.path.write_text("4321")
+        self.assertEqual(_poll_pid_file(self.path), 4321)
+        sleep_mock.assert_not_called()
+
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 4)
+    def test_returns_none_after_attempts(self, sleep_mock: Mock) -> None:
+        self.assertIsNone(_poll_pid_file(self.path))
+        # Sleeps between attempts but not after the final one.
+        self.assertEqual(sleep_mock.call_count, 3)
+
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 5)
+    def test_returns_pid_when_it_appears_late(self, sleep_mock: Mock) -> None:
+        calls = {"n": 0}
+
+        def write_on_third(_delay: float) -> None:
+            calls["n"] += 1
+            if calls["n"] == 2:
+                self.path.write_text("77")
+
+        sleep_mock.side_effect = write_on_third
+        self.assertEqual(_poll_pid_file(self.path), 77)
 
 
 class TestPidPath(TestCase):
