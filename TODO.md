@@ -132,7 +132,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | obs-4 | open | S | `blueman/bluez/obex/Manager.py:51,59,68,75` `logging.info(object_path)` lacks event/context | prefix with event name |
-| obs-1 | open | S | `blueman/Functions.py:64,87` `print()` in `check_bluetooth_status()` exception/fallback | `logging.error(..., exc_info=True)` |
 | obs-10 | open | S | `blueman/gui/GenericList.py:116` silent `ValueError` from `get_iter` | `logging.debug` invalid path |
 | obs-9 | open | S | `blueman/gui/GtkAnimation.py:79` silent `ZeroDivisionError` on duration=0 | `logging.debug("Animation duration zero")` |
 | obs-7 | open | S | `blueman/gui/Notification.py:169` silent `ValueError` on notification hints | `logging.debug` unsupported hint |

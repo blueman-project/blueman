@@ -7,12 +7,14 @@ from unittest.mock import MagicMock, patch
 
 from blueman.Functions import (
     adapter_path_to_name,
+    check_bluetooth_status,
     create_logger,
     create_parser,
     format_bytes,
     have,
     parse_os_release,
 )
+from blueman.main.DBusProxies import DBusProxyFailed
 
 
 class TestFormatBytes(TestCase):
@@ -207,3 +209,23 @@ class TestCreateParser(TestCase):
     def test_loglevel_can_be_disabled(self) -> None:
         parser = create_parser(loglevel=False)
         self.assertFalse(any(a.dest == "LEVEL" for a in parser._actions))
+
+
+class TestCheckBluetoothStatus(TestCase):
+    @patch("blueman.Functions.AppletService", side_effect=DBusProxyFailed)
+    def test_logs_and_exits_when_applet_missing(self, applet: MagicMock) -> None:
+        exitfunc = MagicMock()
+        with self.assertLogs(level=logging.ERROR) as logs:
+            check_bluetooth_status("msg", exitfunc)
+        exitfunc.assert_called_once_with()
+        self.assertTrue(any("applet needs to be running" in m for m in logs.output))
+
+    @patch("blueman.Functions.AppletPowerManagerService")
+    @patch("blueman.Functions.AppletService")
+    def test_returns_when_powermanager_plugin_absent(
+        self, applet: MagicMock, power: MagicMock
+    ) -> None:
+        applet.return_value.QueryPlugins.return_value = []
+        exitfunc = MagicMock()
+        check_bluetooth_status("msg", exitfunc)
+        exitfunc.assert_not_called()
