@@ -289,13 +289,13 @@ class DeviceList(GenericList):
         return None
 
     def clear(self) -> None:
-        # Drop every row in one pass. The previous per-row device_remove_event
-        # loop deleted rows individually (each delete() calls the O(n)
-        # iter_is_valid, making the whole clear O(n^2)) while mutating the
-        # liststore it was iterating, then called liststore.clear() anyway.
+        # Release the TreeRowReference cache *before* clearing the store. GTK
+        # keeps every live reference in sync as rows are removed, so clearing
+        # with the cache still populated makes liststore.clear() O(n^2); dropping
+        # the references first lets it run in O(n).
         if len(self.liststore):
-            self.liststore.clear()
             self.path_to_row = {}
+            self.liststore.clear()
             self.emit("device-selected", None, None)
         else:
             self.path_to_row = {}

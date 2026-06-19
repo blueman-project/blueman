@@ -10,7 +10,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk  # noqa: E402
 
-constants = types.ModuleType("blueman.Constants")
+constants: Any = types.ModuleType("blueman.Constants")
 constants.BIN_DIR = Path("/tmp")
 constants.BLUETOOTHD_PATH = Path("/tmp/bluetoothd")
 constants.ICON_PATH = Path("/tmp")
@@ -33,7 +33,7 @@ class FakeDeviceList:
     def __init__(self, liststore: Gtk.ListStore | None = None) -> None:
         self.discovering = False
         self._discovery_timeout: int | None = None
-        self.Adapter = Mock()
+        self.Adapter: Any = Mock()
         self.liststore = liststore if liststore is not None else Gtk.ListStore(str)
         self.path_to_row: dict[str, object] = {}
         self.emitted: list[tuple[Any, ...]] = []
