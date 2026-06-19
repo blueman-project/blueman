@@ -32,7 +32,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | perf-5 | open | M | `blueman/bluez/Manager.py:115-149` `get_adapter_paths`/`get_devices` iterate `_object_manager.get_objects()` per call | cache, invalidate on object-added/removed |
-| perf-3 | open | S | `blueman/gui/DeviceList.py:282-285` `clear()` iterates liststore calling `device_remove_event` per item → O(n²) | call `liststore.clear()` once, drop `path_to_row` in bulk |
 | perf-10 | open | S | `blueman/gui/manager/ManagerMenu.py:53` creates Adapter proxies for all adapters in `__init__` | lazy-instantiate on selection |
 | perf-13 | open | S | `blueman/main/Applet.py:93-118` plugin broadcast loop runs full plugin set per property change → O(plugins × props × devices) | debounce/batch property events |
 | perf-9 | open | S | `blueman/main/DhcpClient.py:48-50,68` `subprocess.poll()` blocking in 1s `GLib.timeout` | use `Gio.Subprocess` + `wait_check_async` or `GLib.child_watch_add` |
@@ -309,7 +308,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | vec-2 | open | L | `blueman/bluez/Manager.py:138-149` `get_devices()` rescans all objects per `find_device()` | cache indexed by adapter, batch GetAll (dup perf-5) |
-| vec-3 | open | L | `blueman/gui/DeviceList.py:281-289` `clear()` per-row `device_remove_event` + dict lookups | bulk clear, defer path_to_row cleanup (dup perf-3) |
 | vec-1 | open | M | `blueman/main/Sendto.py:140-143` per-property-change loop over UUIDs for OBEX_OBJPUSH | set membership / `any()` |
 
 ## robustiness
@@ -317,7 +315,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | rob-8 | open | S | `blueman/gui/Animation.py:28-35` `start()` is not idempotent: calling it twice overwrites `self.timer` and leaks the first `GLib.timeout_add` source, so `stop()` can remove only the newest timer. | Return early if already started, or stop the existing source before starting a new one; add a start/stop source-id test. Cross-ref test-4. |
-| rob-4 | open | M | `blueman/gui/DeviceList.py:256` discovery progress timeout source not stored/removed | capture id, remove in `stop_discovery()` |
 | rob-2 | open | M | `blueman/gui/manager/ManagerProgressbar.py:117` `timeout_add(timeout,finalize)` id discarded; double-finalize | capture + remove before re-call |
 | rob-1 | open | M | `blueman/gui/manager/ManagerProgressbar.py:178` `timeout_add(41,pulse)` source id not captured; pulses after `stop()` | store + remove source id (overlaps perf-14) |
 | rob-3 | open | M | `blueman/main/DhcpClient.py:49-50` two timeout sources never stored/removed (dup wd-3) | store ids, remove on exit |
