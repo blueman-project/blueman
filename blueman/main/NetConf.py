@@ -20,12 +20,26 @@ class NetworkSetupError(Exception):
     pass
 
 
-def _is_running(name: str, pid: int) -> bool:
-    path = pathlib.Path(f"/proc/{pid}")
-    if not path.exists():
-        return False
+_PROC_PATH = pathlib.Path("/proc")
 
-    return name in path.joinpath("cmdline").read_text()
+
+def _is_running(name: str, pid: int) -> bool:
+    if _PROC_PATH.is_dir():
+        path = _PROC_PATH / str(pid)
+        if not path.exists():
+            return False
+        try:
+            return name in path.joinpath("cmdline").read_text()
+        except OSError:
+            return False
+
+    # No procfs (non-Linux): we cannot match the binary name, so fall back to
+    # a plain liveness check via signal 0.
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
 
 
 def _read_pid_file(fname: pathlib.Path) -> int | None:

@@ -10,7 +10,9 @@ from typing import Optional, List
 from unittest import TestCase
 from unittest.mock import patch, Mock, PropertyMock
 
-from blueman.main.NetConf import DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler
+from blueman.main.NetConf import (
+    DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler, _is_running,
+)
 from _blueman import BridgeException
 
 
@@ -265,6 +267,41 @@ class TestNetConf(TestCase):
         self.assertTrue(any("Failed to destroy bridge pan1" in m for m in logs.output))
         # The lock must still be released despite the bridge failure.
         self.assertFalse(NetConf.locked("netconfig"))
+
+
+class TestIsRunning(TestCase):
+    def setUp(self) -> None:
+        self.proc = Path("/tmp/blueman-proc")
+        self.proc.mkdir(parents=True)
+        self.addCleanup(lambda: shutil.rmtree(self.proc))
+
+    def _write_proc(self, pid: int, cmdline: str) -> None:
+        d = self.proc / str(pid)
+        d.mkdir()
+        d.joinpath("cmdline").write_text(cmdline)
+
+    def test_procfs_match(self) -> None:
+        self._write_proc(123, "/usr/sbin/dnsmasq\0--foo")
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertTrue(_is_running("dnsmasq", 123))
+
+    def test_procfs_name_mismatch(self) -> None:
+        self._write_proc(123, "/usr/sbin/other\0")
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_procfs_pid_absent(self) -> None:
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertFalse(_is_running("dnsmasq", 999))
+
+    def test_no_procfs_falls_back_to_liveness(self) -> None:
+        missing = Path("/tmp/blueman-no-proc")
+        with patch("blueman.main.NetConf._PROC_PATH", missing):
+            with patch("blueman.main.NetConf.os.kill") as kill_mock:
+                self.assertTrue(_is_running("dnsmasq", 123))
+                kill_mock.assert_called_once_with(123, 0)
+            with patch("blueman.main.NetConf.os.kill", side_effect=OSError):
+                self.assertFalse(_is_running("dnsmasq", 123))
 
 
 class _CleanupHandler(DHCPHandler):
