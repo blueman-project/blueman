@@ -11,7 +11,7 @@ import signal
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
-from subprocess import call, Popen, PIPE
+from subprocess import call, Popen, PIPE, TimeoutExpired
 
 from blueman.main.DNSServerProvider import DNSServerProvider
 
@@ -64,6 +64,21 @@ def _poll_pid_file(fname: pathlib.Path) -> int | None:
         if attempt + 1 < _PID_POLL_ATTEMPTS:
             sleep(_PID_POLL_DELAY)
     return None
+
+
+# Upper bound for how long to wait on a spawned DHCP daemon's launcher to
+# finish writing to stderr. Well-behaved daemons fork and exit (EOF) quickly;
+# the timeout stops a misbehaving one from blocking the mechanism forever.
+_PROC_START_TIMEOUT = 10
+
+
+def _communicate_stderr(p: "Popen[bytes]") -> bytes:
+    try:
+        return p.communicate(timeout=_PROC_START_TIMEOUT)[1]
+    except TimeoutExpired:
+        logging.warning("Timed out waiting for DHCP daemon to start; killing it")
+        p.kill()
+        return p.communicate()[1] or b"timed out waiting for daemon to start"
 
 
 def _get_binary(*names: str) -> str:
@@ -170,7 +185,7 @@ class DnsMasqHandler(DHCPHandler):
         logging.info(cmd)
         p = Popen(cmd, stderr=PIPE)
 
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
         return error if error else None
 
@@ -238,7 +253,7 @@ class DhcpdHandler(DHCPHandler):
         cmd = [binary, "-pf", self._pid_path.as_posix(), "pan1"]
         p = Popen(cmd, stderr=PIPE)
 
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
         return None if p.returncode == 0 else error
 
@@ -282,7 +297,7 @@ class UdhcpdHandler(DHCPHandler):
         logging.info(f"Running udhcpd with config file {self._config_file}")
         cmd = [binary, "-S", self._config_file.as_posix()]
         p = Popen(cmd, stderr=PIPE)
-        error = p.communicate()[1]
+        error = _communicate_stderr(p)
 
         # udhcpd takes time to create its pid file; poll for it (returning as
         # soon as it appears) instead of blocking on a fixed sleep.

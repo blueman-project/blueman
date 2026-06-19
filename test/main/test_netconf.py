@@ -12,7 +12,7 @@ from unittest.mock import patch, Mock, PropertyMock
 
 from blueman.main.NetConf import (
     DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler, _is_running,
-    _poll_pid_file,
+    _poll_pid_file, _communicate_stderr,
 )
 from _blueman import BridgeException
 
@@ -497,6 +497,23 @@ class TestIptablesRuleArgs(TestCase):
         call_mock.assert_called_once_with(
             ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
         self.assertEqual(NetConf._ipt_rules, [])
+
+
+class TestCommunicateStderr(TestCase):
+    def test_returns_stderr_within_timeout(self) -> None:
+        p = Mock()
+        p.communicate.return_value = (b"", b"some error")
+        self.assertEqual(_communicate_stderr(p), b"some error")
+        p.communicate.assert_called_once_with(timeout=10)
+        p.kill.assert_not_called()
+
+    def test_kills_on_timeout(self) -> None:
+        p = Mock()
+        p.communicate.side_effect = [subprocess.TimeoutExpired(cmd="dnsmasq", timeout=10), (b"", b"")]
+        with self.assertLogs(level="WARNING"):
+            result = _communicate_stderr(p)
+        p.kill.assert_called_once_with()
+        self.assertIn(b"timed out", result)
 
 
 class TestPollPidFile(TestCase):
