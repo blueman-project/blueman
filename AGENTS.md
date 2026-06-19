@@ -24,6 +24,7 @@ This file defines the expected behavior and usage model for AI agents working in
 - Keep code complexity <= 10 for any new function, class, or method.
 - Avoid code duplication and apply SOLID principles where practical.
 - Document assumptions, constraints, and design intent in comments or commit notes when they matter.
+- Do not add comments that restate what the code plainly says. Comment only the non-obvious: why a choice was made, a constraint, or a subtle edge case. Delete redundant comments rather than write them.
 - Prefer explicit, maintainable solutions over clever shortcuts.
 - Propose business/design patterns and DDD only when they improve clarity or structure.
 - ALWAYS record review findings in `TODO.md` — never report them only in chat. Any time you
