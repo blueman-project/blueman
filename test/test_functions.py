@@ -1,10 +1,11 @@
+import logging
 import os
 import tempfile
 from pathlib import Path
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
-from blueman.Functions import adapter_path_to_name, format_bytes, have, parse_os_release
+from blueman.Functions import adapter_path_to_name, create_logger, format_bytes, have, parse_os_release
 
 
 class TestFormatBytes(TestCase):
@@ -133,3 +134,36 @@ class TestHave(TestCase):
         used_path = which.call_args.kwargs["path"]
         self.assertEqual(used_path.split(os.pathsep).count("/sbin"), 1)
         self.assertEqual(used_path.split(os.pathsep).count("/usr/sbin"), 1)
+
+
+class TestCreateLogger(TestCase):
+    def setUp(self) -> None:
+        root = logging.getLogger(None)
+        self._saved_handlers = root.handlers[:]
+        self._saved_name = root.name
+        self._saved_level = root.level
+
+    def tearDown(self) -> None:
+        root = logging.getLogger(None)
+        root.handlers[:] = self._saved_handlers
+        root.name = self._saved_name
+        root.level = self._saved_level
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler")
+    def test_syslog_handler_added_when_available(self, handler_cls: MagicMock) -> None:
+        handler_cls.return_value = logging.NullHandler()
+        create_logger(logging.INFO, "blueman-test", syslog=True)
+        handler_cls.assert_called_once_with(address="/dev/log")
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler", side_effect=OSError)
+    def test_falls_back_to_stderr_when_dev_log_missing(self, handler_cls: MagicMock) -> None:
+        # Must not raise when /dev/log is unavailable, and add no syslog handler.
+        before = len(logging.getLogger(None).handlers)
+        logger = create_logger(logging.INFO, "blueman-test", syslog=True)
+        handler_cls.assert_called_once_with(address="/dev/log")
+        self.assertLessEqual(len(logger.handlers), before + 1)  # only basicConfig's stderr handler, if any
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler")
+    def test_no_syslog_handler_when_disabled(self, handler_cls: MagicMock) -> None:
+        create_logger(logging.INFO, "blueman-test", syslog=False)
+        handler_cls.assert_not_called()

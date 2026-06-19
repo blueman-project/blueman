@@ -281,7 +281,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| plat-8 | open | S | `blueman/Functions.py:256` hardcoded `/dev/log` syslog address | platform detect / fallback to stderr |
 | plat-9 | open | M | `blueman/main/NetConf.py:24` `/proc/{pid}` cmdline check, Linux-only | abstract proc access |
 | plat-4 | open | L | `blueman/main/NetConf.py:255` hardcoded `/proc/sys/net/ipv4` IP-forward, Linux-only | abstract, no non-Linux fallback |
 | plat-3 | open | M | `blueman/main/NetConf.py:268,276` hardcoded `/sbin/iptables` | dynamic lookup |
