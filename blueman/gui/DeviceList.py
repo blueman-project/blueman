@@ -293,12 +293,10 @@ class DeviceList(GenericList):
         # keeps every live reference in sync as rows are removed, so clearing
         # with the cache still populated makes liststore.clear() O(n^2); dropping
         # the references first lets it run in O(n).
+        self.path_to_row = {}
         if len(self.liststore):
-            self.path_to_row = {}
             self.liststore.clear()
             self.emit("device-selected", None, None)
-        else:
-            self.path_to_row = {}
 
     def find_device_by_path(self, object_path: ObjectPath) -> Gtk.TreeIter | None:
         row = self.path_to_row.get(object_path, None)
