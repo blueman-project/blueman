@@ -5,6 +5,9 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
+from gi.repository import GLib
+
+from blueman.Constants import BIN_DIR
 from blueman.Functions import (
     adapter_path_to_name,
     check_bluetooth_status,
@@ -12,6 +15,7 @@ from blueman.Functions import (
     create_parser,
     format_bytes,
     have,
+    launch,
     parse_os_release,
     set_proc_title,
 )
@@ -252,3 +256,56 @@ class TestSetProcTitle(TestCase):
         cdll.LoadLibrary.side_effect = OSError
         with self.assertLogs(level=logging.ERROR):
             self.assertEqual(set_proc_title("blueman"), -1)
+
+
+@patch("blueman.Functions.Gtk.get_current_event_time", return_value=0)
+@patch("blueman.Functions.Gio.File.new_for_commandline_arg")
+@patch("blueman.Functions.Gio.AppInfo.create_from_commandline")
+class TestLaunch(TestCase):
+    @staticmethod
+    def _command_line(create: MagicMock) -> str:
+        return create.call_args.args[0]
+
+    def test_legacy_string_form_unquoted(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        self.assertTrue(launch("blueman-services"))
+        self.assertEqual(self._command_line(create), (BIN_DIR / "blueman-services").as_posix())
+
+    def test_argv_form_quotes_each_token(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        launch("blueman-sendto", args=["--delete", "--device=AA:BB:CC:DD:EE:FF"])
+        expected = " ".join(
+            GLib.shell_quote(t) for t in (
+                (BIN_DIR / "blueman-sendto").as_posix(),
+                "--delete",
+                "--device=AA:BB:CC:DD:EE:FF",
+            )
+        )
+        self.assertEqual(self._command_line(create), expected)
+
+    def test_argv_form_neutralizes_shell_metacharacters(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        hostile = "foo; rm -rf ~"
+        launch("blueman-sendto", args=[hostile])
+        command_line = self._command_line(create)
+        # The hostile argument must survive as a single shell-quoted token.
+        self.assertIn(GLib.shell_quote(hostile), command_line)
+
+    def test_returns_launch_result(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = False
+        self.assertFalse(launch("blueman-services"))
+
+    def test_paths_become_gio_files(
+        self, create: MagicMock, new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        launch("xdg-open", paths=["/tmp/a", "/tmp/b"], system=True)
+        self.assertEqual(new_file.call_count, 2)

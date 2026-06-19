@@ -16,7 +16,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| cmd-2 | open | M | `blueman/Functions.py:120-134` exposes `launch(cmd: str, ...)` as a command-line string API and sends it to `Gio.AppInfo.create_from_commandline`. Callers such as `blueman/plugins/manager/Notes.py:35` embed options in `cmd`, so argument boundaries depend on string parsing instead of an argv contract. | Replace or supplement `launch` with an argv-based helper (`program`, `args`, `files`) and migrate command-building call sites. Keep `system=True` uses explicit and reviewed. |
 | cmd-1 | open | S | `sendto/blueman_sendto.py.in:20-28` builds a shell-style command line by wrapping file paths in double quotes and passing the joined string to `Gio.AppInfo.create_from_commandline`. A filename containing quotes or command separators can break argument boundaries when launched through the desktop shell parser. | Build a `Gio.AppInfo`/`Gio.Subprocess` invocation from an argv vector, or escape with GLib shell-quoting for every path. Add a regression test with spaces, quotes, and semicolons in filenames. Cross-ref test-1. |
 
 ## data integrity
@@ -83,7 +82,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| api-2 | open | M | `blueman/Functions.py:133` uses `Gio.AppInfo.create_from_commandline` in a shared helper, but its API accepts one opaque command string plus separate `paths`. This makes it hard for callers to express portable argv semantics or safely pass non-file options without depending on GLib command-line parsing. | Define a stable internal process-launch contract around argv and file arguments; deprecate the string form after migrating users. Cross-ref cmd-2. |
 | api-1 | open | S | `blueman/main/DBusProxies.py:91` exposes the Python proxy method as `dchp_client`, while the DBus method and interface are `DhcpClient`. The typo is now part of the local Python call surface and makes future refactors/API docs error-prone. | Add correctly spelled `dhcp_client()` as the public method, keep `dchp_client()` as a deprecated alias until callers/tests migrate, then remove the alias in a later cleanup. |
 
 ## architecture/modularity/SOLID
