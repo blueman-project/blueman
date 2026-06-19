@@ -89,6 +89,10 @@ class Base(GObject.Object, metaclass=BaseMeta):
 
         self.__variant_map = {str: 's', int: 'u', bool: 'b'}
 
+        # Properties whose last forced refresh failed and are being served from
+        # cache. PropertiesChanged clears the flag once a live value arrives.
+        self.__stale: set[str] = set()
+
     def _properties_changed(self, _proxy: Gio.DBusProxy, changed_properties: GLib.Variant,
                             invalidated_properties: list[str]) -> None:
         changed = changed_properties.unpack()
@@ -96,7 +100,12 @@ class Base(GObject.Object, metaclass=BaseMeta):
         logging.debug(f"{object_path} {changed} {invalidated_properties} {self}")
 
         for key in list(changed) + invalidated_properties:
+            self.__stale.discard(key)
             self.emit("property-changed", key, changed.get(key, None), object_path)
+
+    def is_stale(self, name: str) -> bool:
+        """True if ``name`` is currently served from cache after a failed refresh."""
+        return name in self.__stale
 
     def _call(
         self,
@@ -124,14 +133,16 @@ class Base(GObject.Object, metaclass=BaseMeta):
         self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, DBUS_TIMEOUT, None,
                           callback, reply_handler, error_handler)
 
-    def get(self, name: str) -> Any:
+    def get(self, name: str, fresh: bool = False) -> Any:
         # Prefer the proxy's local property cache, which Gio keeps current from
         # PropertiesChanged signals, over a synchronous Properties.Get round-trip
         # on every read. Bluez devices expose the same properties repeatedly to
         # the UI; serving them from cache avoids a blocking D-Bus call each time.
-        cached = self.__proxy.get_cached_property(name)
-        if cached is not None:
-            return cached.unpack()
+        # Callers that need a guaranteed-live value pass fresh=True.
+        if not fresh:
+            cached = self.__proxy.get_cached_property(name)
+            if cached is not None:
+                return cached.unpack()
 
         try:
             prop = self.__proxy.call_sync(
@@ -140,8 +151,15 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 Gio.DBusCallFlags.NONE,
                 DBUS_TIMEOUT,
                 None)
+            self.__stale.discard(name)
             return prop.unpack()[0]
         except GLib.Error as e:
+            # The refresh failed: fall back to the last cached value if we have
+            # one, but record that it is stale so callers can tell.
+            cached = self.__proxy.get_cached_property(name)
+            if cached is not None:
+                self.__stale.add(name)
+                return cached.unpack()
             if name in self.__fallback:
                 return self.__fallback[name]
             raise parse_dbus_error(e)

@@ -184,3 +184,50 @@ class TestBasePropertyCache(TestCase):
         proxy = FakeProxy({"Paired": True})
         obj = make(FakeBase, proxy)
         self.assertIs(obj["Paired"], True)
+
+
+class TestBaseCacheFreshness(TestCase):
+    def setUp(self) -> None:
+        _clear_registries()
+        self.addCleanup(_clear_registries)
+
+    def _err(self) -> GLib.Error:
+        return GLib.Error.new_literal(GLib.quark_from_string("x"), "bus down", 0)
+
+    def test_fresh_forces_sync_even_when_cached(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        obj.get("Connected", fresh=True)
+        self.assertEqual(proxy.sync_get_calls, 1)
+
+    def test_not_stale_by_default(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        obj.get("Connected")
+        self.assertFalse(obj.is_stale("Connected"))
+
+    def test_failed_fresh_serves_cache_and_marks_stale(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        proxy.get_should_raise = self._err()
+        self.assertIs(obj.get("Connected", fresh=True), True)  # served from cache
+        self.assertTrue(obj.is_stale("Connected"))
+
+    def test_properties_changed_clears_stale(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        proxy.get_should_raise = self._err()
+        obj.get("Connected", fresh=True)
+        self.assertTrue(obj.is_stale("Connected"))
+        proxy.emit_properties_changed({"Connected": False})
+        self.assertFalse(obj.is_stale("Connected"))
+
+    def test_successful_sync_clears_stale(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        proxy.get_should_raise = self._err()
+        obj.get("Connected", fresh=True)
+        self.assertTrue(obj.is_stale("Connected"))
+        proxy.get_should_raise = None
+        obj.get("Connected", fresh=True)
+        self.assertFalse(obj.is_stale("Connected"))
