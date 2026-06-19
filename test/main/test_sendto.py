@@ -55,6 +55,16 @@ class TestOnTransferProgressClock(TestCase):
         self.assertAlmostEqual(s.pb.props.fraction, 0.25)  # 2500 / 10000
 
 
+class TestCreateSessionTimeout(TestCase):
+    def test_creates_session_once_and_stops(self) -> None:
+        s = Sender.__new__(Sender)
+        s.create_session = Mock()  # type: ignore[method-assign]
+        result = s._create_session_timeout()
+        s.create_session.assert_called_once_with()
+        # Must return False so the GLib timeout does not repeat.
+        self.assertFalse(result)
+
+
 class TestSetupSignalHandlers(TestCase):
     def test_connects_each_signal_with_args(self) -> None:
         source = Mock()

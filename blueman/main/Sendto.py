@@ -326,14 +326,19 @@ class Sender(Gtk.Dialog):
         logging.info(f"Sending to {device['Address']}")
         self.l_dest.props.label = device.display_name
 
-        # Stop discovery if discovering and let adapter settle for a second
+        # Stop discovery if discovering and let the adapter settle for a second
+        # before creating the session, without blocking the UI thread.
         if self.adapter["Discovering"]:
             self.adapter.stop_discovery()
-            time.sleep(1)
-
-        self.create_session()
+            GLib.timeout_add_seconds(1, self._create_session_timeout)
+        else:
+            self.create_session()
 
         self.show()
+
+    def _create_session_timeout(self) -> bool:
+        self.create_session()
+        return False  # one-shot timer
 
     def create_session(self) -> None:
         self.client.create_session(self.device['Address'], self.adapter["Address"])
