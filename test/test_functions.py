@@ -13,6 +13,7 @@ from blueman.Functions import (
     format_bytes,
     have,
     parse_os_release,
+    set_proc_title,
 )
 from blueman.main.DBusProxies import DBusProxyFailed
 
@@ -229,3 +230,25 @@ class TestCheckBluetoothStatus(TestCase):
         exitfunc = MagicMock()
         check_bluetooth_status("msg", exitfunc)
         exitfunc.assert_not_called()
+
+
+class TestSetProcTitle(TestCase):
+    @patch("blueman.Functions.sys.platform", "darwin")
+    @patch("blueman.Functions.cdll")
+    def test_noop_on_non_linux(self, cdll: MagicMock) -> None:
+        self.assertEqual(set_proc_title("blueman"), 0)
+        cdll.LoadLibrary.assert_not_called()
+
+    @patch("blueman.Functions.sys.platform", "linux")
+    @patch("blueman.Functions.cdll")
+    def test_calls_prctl_on_linux(self, cdll: MagicMock) -> None:
+        cdll.LoadLibrary.return_value.prctl.return_value = 0
+        self.assertEqual(set_proc_title("blueman"), 0)
+        cdll.LoadLibrary.return_value.prctl.assert_called_once()
+
+    @patch("blueman.Functions.sys.platform", "linux")
+    @patch("blueman.Functions.cdll")
+    def test_returns_minus_one_when_libc_unavailable(self, cdll: MagicMock) -> None:
+        cdll.LoadLibrary.side_effect = OSError
+        with self.assertLogs(level=logging.ERROR):
+            self.assertEqual(set_proc_title("blueman"), -1)

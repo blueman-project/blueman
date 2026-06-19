@@ -257,7 +257,6 @@ _(none open)_
 | leg-7 | open | S | `blueman/bluez/Device.py:22,29` `# type: ignore` on connect/disconnect masking signature mismatch | resolve override signatures |
 | leg-8 | open | S | `blueman/bluez/Network.py:17,26` `# type: ignore` on connect/disconnect | resolve signatures |
 | leg-2 | open | M | `blueman/Functions.py:189,200` deprecated `Gtk.ImageMenuItem` | migrate to `Gtk.MenuItem` + image |
-| leg-5 | open | S | `blueman/Functions.py:226` raw ctypes `libc.prctl(15,...)` for proc title | document or guard non-Linux (relates dead-1) |
 | leg-1 | open | M | `blueman/Functions.py:78` deprecated `Gtk.Dialog.run()`/`.destroy()` blocking pattern | non-blocking response-signal pattern |
 | leg-6 | open | S | `blueman/gui/GtkAnimation.py:200` FIXME `Gtk.render_background()` wrong colors | investigate + fix or document |
 | leg-4 | open | M | `blueman/gui/manager/ManagerMenu.py:45,47` `Gtk.ImageMenuItem` in manager UI | migrate to `Gtk.MenuItem` |

@@ -219,15 +219,27 @@ def have(t: str) -> pathlib.Path | None:
 
 
 def set_proc_title(name: str | None = None) -> int:
-    """Set the process title"""
+    """Set the process title via ``prctl(PR_SET_NAME)``.
+
+    Only Linux exposes ``prctl`` through glibc; on other platforms this is a
+    no-op returning 0. Returns -1 if libc/prctl cannot be reached.
+    """
 
     if not name:
         name = pathlib.Path(sys.argv[0]).name
 
-    libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name) + 1)
-    buff.value = name.encode("UTF-8")
-    ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
+    if not sys.platform.startswith("linux"):
+        logging.debug("set_proc_title is only supported on Linux")
+        return 0
+
+    try:
+        libc = cdll.LoadLibrary('libc.so.6')
+        buff = create_string_buffer(len(name) + 1)
+        buff.value = name.encode("UTF-8")
+        ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
+    except (OSError, AttributeError):
+        logging.error("Failed to set process title", exc_info=True)
+        return -1
 
     if ret != 0:
         logging.error("Failed to set process title")
