@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import atexit
 import os
+import sys
 import time
 import logging
 from argparse import Namespace
@@ -72,6 +73,10 @@ class SendTo:
             try:
                 adapter = manager.get_adapter(parsed_args.source)
             except DBusNoSuchAdapterError:
+                # Tell the CLI user their -s/--source choice was not found and
+                # is being ignored, instead of only logging to the console.
+                print(f"Unknown adapter {parsed_args.source!r}, falling back to the first available adapter",
+                      file=sys.stderr)
                 logging.error("Unknown adapter, trying first available")
 
         if adapter is None:
