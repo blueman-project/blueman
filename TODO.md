@@ -154,9 +154,8 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| dead-1 | open | S | `blueman/Functions.py:217` `set_proc_title` in `__all__`, no production callers | delete |
-| dead-2 | open | S | `blueman/Functions.py:239` `create_logger` in `__all__`, no production callers | delete |
-| dead-3 | open | S | `blueman/Functions.py:264` `create_parser` in `__all__`, no production callers | delete |
+
+_(none open)_
 
 ## STRIDE
 
@@ -463,3 +462,11 @@ _(none open)_
   `IconNameChanged`/`VisibilityChanged`/`ToolTipTitleChanged`/`ToolTipTextChanged`
   (`AppletMenuService` only delivers `MenuChanged` on the Menu interface). Deleting/inlining it
   would silence tray-icon updates. Kept; guarded by a test in `test/main/test_dbus_proxies.py`.
+- **dead-1 / dead-2 / dead-3** (`set_proc_title`/`create_logger`/`create_parser` "no production
+  callers") — false positives. The audit scanned `*.py` only and missed the entry-point
+  templates: all three are imported and called by every binary in `apps/*.in`
+  (`blueman-applet`, `blueman-manager`, `blueman-sendto`, `blueman-adapters`, `blueman-services`,
+  `blueman-tray`, `blueman-mechanism`, plus `set_proc_title` in `blueman-rfcomm-watcher`).
+  Deleting them would break startup of every executable. Kept and documented (doc-1); the
+  related real issues were fixed instead: `create_parser` loglevel validation (cli-1),
+  `create_logger` syslog fallback (plat-8), and `set_proc_title` non-Linux guard (leg-5).
