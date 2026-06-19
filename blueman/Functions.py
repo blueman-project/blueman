@@ -23,6 +23,7 @@ from collections.abc import Callable, Iterable
 import re
 import os
 import pathlib
+import shutil
 import sys
 import errno
 from gettext import gettext as _
@@ -207,11 +208,15 @@ def create_menuitem(
 
 
 def have(t: str) -> pathlib.Path | None:
-    pathstr = os.environ['PATH'] + ':/sbin:/usr/sbin'
-    for path in [pathlib.Path(p, t) for p in pathstr.split(":")]:
-        if path.exists() and os.access(path, os.EX_OK):
-            return path
-    return None
+    search_path = os.environ.get("PATH", os.defpath)
+    # System binaries such as dhcp clients commonly live in sbin dirs that are
+    # not on a desktop session's PATH; append them if missing.
+    for sbin in ("/sbin", "/usr/sbin"):
+        if sbin not in search_path.split(os.pathsep):
+            search_path += os.pathsep + sbin
+
+    found = shutil.which(t, path=search_path)
+    return pathlib.Path(found) if found else None
 
 
 def set_proc_title(name: str | None = None) -> int:

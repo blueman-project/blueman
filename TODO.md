@@ -222,7 +222,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| dep-8 | open | L | `blueman/Functions.py:210` hardcoded PATH suffix `:/sbin:/usr/sbin` | use `shutil.which()` (dup plat-001) |
 | dep-5 | open | S | `blueman/main/Applet.py:10` wildcard `from blueman.Functions import *` obscures deps | explicit imports |
 | dep-7 | open | M | `blueman/main/DNSServerProvider.py:12` hardcoded `RESOLVER_PATH="/etc/resolv.conf"` | configurable + DNSProvider abstraction (dup cfg-004) |
 | dep-2 | open | L | `blueman/main/NetworkManager.py:9-12` import-time `gi.require_version` raises if NM bindings missing | move into lazy init try-block |
@@ -282,7 +281,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| plat-1 | open | M | `blueman/Functions.py:210` hardcoded `:/sbin:/usr/sbin` fallback (dup dep-8) | `shutil.which()` |
 | plat-8 | open | S | `blueman/Functions.py:256` hardcoded `/dev/log` syslog address | platform detect / fallback to stderr |
 | plat-9 | open | M | `blueman/main/NetConf.py:24` `/proc/{pid}` cmdline check, Linux-only | abstract proc access |
 | plat-4 | open | L | `blueman/main/NetConf.py:255` hardcoded `/proc/sys/net/ipv4` IP-forward, Linux-only | abstract, no non-Linux fallback |
