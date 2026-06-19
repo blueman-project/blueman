@@ -135,8 +135,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | obs-7 | open | S | `blueman/gui/Notification.py:169` silent `ValueError` on notification hints | `logging.debug` unsupported hint |
 | obs-11 | open | S | `blueman/main/DNSServerProvider.py:48` `GLib.Error` swallowed | `logging.debug("DNS lookup failed, using fallback")` |
 | obs-3 | open | S | `blueman/main/Manager.py:62` `print()` in exception handler | `logging.error(..., exc_info=True)` |
-| obs-5 | open | S | `blueman/main/NetConf.py:340` silent `pass` on `BridgeException` | `logging.warning(...)` |
-| obs-2 | open | S | `blueman/main/NetConf.py:93` `print()` for process termination | `logging.info` with binary/pid context |
 | obs-6 | open | S | `blueman/main/PluginManager.py:64,123` `LoadException` swallowed silently | `logging.warning` with plugin name |
 | obs-8 | open | S | `blueman/main/Sendto.py:286` `logging.debug(e.message)` on `GLib.Error` | use `str(e)` |
 | obs-15 | open | S | `blueman/plugins/applet/AutoConnect.py:116-117` ignores automatic connection failures with `pass`, so failed auto-connect attempts leave no log trail and are hard to diagnose. | Log the target service/device and failure reason at debug or warning level, with rate limiting if needed. |
@@ -186,7 +184,6 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | wd-3 | open | M | `blueman/main/DhcpClient.py:49-50` two `timeout_add` sources, neither stored; `_check_client` keeps polling dead process after `_on_timeout` | store + `source_remove` both on exit (overlaps rob-3) |
 | wd-8 | open | S | `blueman/main/indicators/StatusNotifierItem.py:32-42` starts a repeating revision-advertisement timeout and discards the source id. The menu service cannot remove the source on unregister/teardown, so it can keep emitting after the tray path is gone. | Store the source id and remove it in an explicit `unregister`/delete path; add a test that teardown removes the source. |
-| wd-7 | open | M | `blueman/main/NetConf.py:122,190,235` Dhcpd/Udhcpd/DnsMasq Popen+communicate with no hang supervision | timeout-guard or async |
 | wd-2 | open | M | `blueman/main/PPPConnection.py:76` `cleanup()` only closes fd, leaves io_watch/timeout sources registered | remove all GLib sources in cleanup (overlaps rel-7) |
 | wd-1 | open | M | `blueman/main/PPPConnection.py:82-87` pppd spawned with no liveness monitoring; orphan pppd possible on error path | add `GLib.child_watch_add`, kill on cleanup |
 | wd-6 | open | S | `blueman/plugins/applet/PPPSupport.py:40` synchronous `Popen(['ps'])` blocks main loop until ps returns | use async `Gio.Subprocess` |
@@ -198,7 +195,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | sm-4 | open | M | `blueman/main/DhcpClient.py:39-51` no state flag; `_check_client` + `_on_timeout` both call `querying.remove()` → possible `ValueError` | guard with done-flag, single removal (overlaps wd-3, rob-3) |
-| sm-7 | open | M | `blueman/main/NetConf.py:84-101` `DHCPHandler.clean_up()` reads/kills `_pid` with no guard; concurrent calls race / SIGTERM wrong pid | idempotent guard on `_pid` |
 | sm-5 | open | M | `blueman/main/NetworkManager.py:38,69-70` `_statehandler` asserted not-None but state change can fire before assignment | assign handler before connect / null-guard |
 | sm-2 | open | M | `blueman/main/PPPConnection.py:181-210` `on_data_ready` can run cleanup while `on_timeout` still pending → double `error-occurred` emit | explicit connection-state guard, single emit |
 | sm-3 | open | L | `blueman/main/PPPConnection.py:213-224` `on_timeout` closure captures stale `command_id` if `send_commands` reused before fire | bind per-command state / cancel prior timeout |
@@ -267,16 +263,12 @@ _(none open)_
 | cfg-5 | open | S | `blueman/main/DhcpClient.py:17-20` DHCP client search order hardcoded (dhclient/dhcpcd/udhcpc) | configurable list |
 | cfg-4 | open | M | `blueman/main/DNSServerProvider.py:12` hardcoded `/etc/resolv.conf`, precedence undocumented | document resolved-first precedence |
 | cfg-2 | open | M | `blueman/main/MechanismApplication.py:25` idle timeout hardcoded (30s / 9999 dev) keyed on `BLUEMAN_SOURCE` | make configurable, document dev mode (overlaps arch-5) |
-| cfg-3 | open | S | `blueman/main/NetConf.py:62,256` hardcoded `/var/run` PID path | use `XDG_RUNTIME_DIR`/`/run` (overlaps dep-11) |
 | cfg-6 | open | M | `blueman/plugins/services/Network.py` DHCP handler selection (dnsmasq/dhcpd/udhcpd) no user config, undocumented fallback chain | document + expose config |
 
 ## platform
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| plat-9 | open | M | `blueman/main/NetConf.py:24` `/proc/{pid}` cmdline check, Linux-only | abstract proc access |
-| plat-4 | open | L | `blueman/main/NetConf.py:255` hardcoded `/proc/sys/net/ipv4` IP-forward, Linux-only | abstract, no non-Linux fallback |
-| plat-3 | open | M | `blueman/main/NetConf.py:268,276` hardcoded `/sbin/iptables` | dynamic lookup |
 | plat-2 | open | M | `blueman/main/PPPConnection.py:83` hardcoded `/usr/sbin/pppd` | dynamic `have()` lookup |
 | plat-5 | open | M | `blueman/plugins/applet/KillSwitch.py:59,87` hardcoded `/dev/rfkill`, silent fail without it | feature-detect + graceful degrade |
 | plat-7 | open | M | `blueman/plugins/applet/NetUsage.py:84,87` hardcoded `/sys/class/net` sysfs paths, Linux-only | abstraction + degrade |
@@ -373,16 +365,11 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | depend-3 | open | S | `blueman/main/DNSServerProvider.py:29,102` `_get_servers_from_systemd_resolved`/`_subscribe_systemd_resolved` call `Gio.bus_get_sync(SYSTEM)` and `DBusProxy.new_for_bus_sync` with no error handling around bus/proxy acquisition (only the later `Get` at :48 is guarded). A briefly-unavailable system bus makes `__init__` raise and the whole provider fail rather than falling back to resolv.conf. | Wrap bus/proxy acquisition in try/except `GLib.Error` and degrade to the resolv.conf path. Cross-ref mem-2. |
-| depend-2 | open | S | `blueman/main/NetConf.py:117-119` `DnsMasqHandler._start` appends `--dhcp-option=option:dns-server,{join(dns_servers)}` whenever `localhost:53` is reachable; if `DNSServerProvider.get_servers()` returned empty the option becomes a trailing-comma empty value, which dnsmasq rejects — the start fails entirely instead of degrading to "address but no DNS option". | Only append the `dns-server` option when `dns_servers` is non-empty. |
-| depend-1 | open | M | `blueman/main/NetConf.py:64-72` `DHCPHandler.apply` locks `dhcp` after a successful `_start` even when `_read_pid_file` returns `None` (daemon slow to write its pidfile; `DnsMasqHandler`/`UdhcpdHandler` don't reliably yield a pid in time). Later `clean_up` reads a now-absent pidfile, logs "Stale dhcp lockfile" and never kills the orphaned daemon — leaking a DHCP server bound to pan1. | Poll the pidfile with a bounded retry before locking; if no pid is obtained, treat the start as failed and tear down instead of locking. Cross-ref sm-7. |
 
 ## distributed systems
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| dist-2 | open | M | `blueman/main/NetConf.py:253,270,280` `_ipt_rules` is in-memory class state but the iptables rules it tracks live in the kernel and survive a mechanism restart (idle-exit after 30s, `MechanismApplication.py:25`). After re-activation `_ipt_rules` is empty while old MASQUERADE/FORWARD rules and the `iptables` lockfile persist; a later `clean_up`/`_del_ipt_rules` deletes nothing yet `unlock("iptables")`, and a new apply sees the stale lock and skips re-adding — leaving stale rules for the previous address. | Tag blueman rules with an iptables comment and flush-by-comment on apply; reconcile lockfile state against actual kernel rules at startup instead of trusting in-memory state. |
-| dist-4 | open | M | `blueman/main/NetConf.py:347-348` In `apply_settings` the dhcp branch runs `clean_up()` (unlocks `dhcp`) then `apply()` (re-locks). If `apply`'s `_start` raises `NetworkSetupError`, earlier locks/forwarding/iptables from the same call are already applied — leaving a partially-applied state (bridge up, forwarding on, rules present) with no DHCP and no rollback; the caller just propagates a generic error. | Wrap `apply_settings` in try/except that runs full `NetConf.clean_up()` on any failure so the system is left all-or-nothing. Cross-ref depend-1. |
-| dist-1 | open | M | `blueman/main/NetConf.py:366-374` `lock`/`unlock`/`locked` are plain `touch`/`unlink(missing_ok)`/`exists` on `/var/run/blueman-*` with no `flock` or atomic check-and-set. The mechanism is a system D-Bus service serving concurrent `EnableNetwork`/`DisableNetwork`/`DhcpClient` calls; two near-simultaneous `apply_settings` both see `locked()==False`, both enable forwarding, both append iptables MASQUERADE/FORWARD rules, and both start DHCP daemons on pan1 — duplicate rules accumulate and the shared `_dhcp_handler`/`_ipt_rules` class state corrupts. | Hold a real exclusive lock (`fcntl.flock` on the lockfile) across the whole apply/clean_up, or process mechanism requests strictly serially; make rule application idempotent (flush blueman rules before re-adding). |
 | dist-3 | open | S | `blueman/plugins/mechanism/Rfcomm.py:13-14` `_open_rfcomm` spawns a watcher per call with no dedup; two `OpenRFCOMM` calls for the same `port_id` start two `blueman-rfcomm-watcher /dev/rfcommN` processes, and `_close_rfcomm` kills only by matching the `ps` cmdline (can leave orphans or signal a recycled/foreign PID). | Before launching, scan for an existing watcher on that port and skip if present; track watcher PIDs in the mechanism rather than re-deriving from `ps`. Cross-ref wd-4, mem-1. |
 
 ## time & scheduling correctness
@@ -399,7 +386,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | mem-2 | open | S | `blueman/main/DNSServerProvider.py:29-79` `_get_servers_from_systemd_resolved` issues a chain of synchronous `call_sync` D-Bus calls (Get DNS, then per-interface GetLink + DefaultRoute Get) with `-1` (infinite) timeout on the main loop whenever DHCP servers are resolved, scaling with interface count and able to hang indefinitely. | Use finite timeouts and/or move resolution off the main loop; cache across the `changed` signal instead of re-walking all links each call. Cross-ref depend-3. |
-| mem-3 | open | S | `blueman/main/NetConf.py:239` `UdhcpdHandler._start` calls a blocking `sleep(0.1)` after spawning udhcpd to wait for the pid file, inside the mechanism process. Distinct from ux-1 (Sendto UI sleep). | Poll the pid file with a short non-blocking `GLib.timeout_add` loop instead of a fixed blocking sleep. |
 | mem-1 | open | S | `blueman/plugins/mechanism/Rfcomm.py:17` `_close_rfcomm` shells out `ps -e o pid,args` and `communicate()` synchronously inside the privileged mechanism D-Bus method, blocking the mechanism main loop while it scans every process to find one watcher PID. | Track watcher PIDs (from `Popen` in `_open_rfcomm`) keyed by port and kill by stored PID instead of scanning `ps`. Cross-ref dist-3. |
 
 ## system design
