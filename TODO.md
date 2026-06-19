@@ -253,8 +253,6 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | leg-7 | open | S | `blueman/bluez/Device.py:22,29` `# type: ignore` on connect/disconnect masking signature mismatch | resolve override signatures |
 | leg-8 | open | S | `blueman/bluez/Network.py:17,26` `# type: ignore` on connect/disconnect | resolve signatures |
-| leg-2 | open | M | `blueman/Functions.py:189,200` deprecated `Gtk.ImageMenuItem` | migrate to `Gtk.MenuItem` + image |
-| leg-1 | open | M | `blueman/Functions.py:78` deprecated `Gtk.Dialog.run()`/`.destroy()` blocking pattern | non-blocking response-signal pattern |
 | leg-6 | open | S | `blueman/gui/GtkAnimation.py:200` FIXME `Gtk.render_background()` wrong colors | investigate + fix or document |
 | leg-4 | open | M | `blueman/gui/manager/ManagerMenu.py:45,47` `Gtk.ImageMenuItem` in manager UI | migrate to `Gtk.MenuItem` |
 | leg-9 | open | S | `blueman/main/indicators/GtkStatusIcon.py:44` `# type: ignore` on submenu enumerate | proper overload/typing |
@@ -453,6 +451,20 @@ _(none open)_
 - **perf-14** (`GtkAnimation` per-animation timer) — the fix ("unify tick clock") is a
   shared-timer architecture change, not a low-risk edit, and can't reach genuine coverage
   headless. Park for a dedicated animation-scheduler change.
+- **leg-1** (`check_bluetooth_status` `Gtk.Dialog.run()`/`.destroy()`) — `run()` is deprecated
+  but still supported in GTK3. The function is a synchronous startup gate called by every entry
+  point before the GLib main loop, and its result (via `exitfunc`) decides whether the app
+  proceeds. A non-blocking response-signal rewrite must run a main loop and turn every caller
+  into a continuation — a cross-file behavioural change on the bluetooth-enable path that cannot
+  reach genuine coverage headless (needs a live dialog + main loop). Park for the GTK4 migration
+  or a dedicated async-dialog change (overlaps leg-3, ux-6).
+- **leg-2** (`create_menuitem` `Gtk.ImageMenuItem`) — deprecated but functional in GTK3.
+  `create_menuitem` is the single chokepoint returning a `Gtk.ImageMenuItem`, consumed by ~20
+  call sites (manager menu, status icon, plugins) that rely on the returned item's child being
+  an `AccelLabel` with markup. The GTK3-supported replacement (`Gtk.MenuItem` + manual
+  image/label box) changes the child structure and image handling — a visible UI change only
+  validatable by running the GUI, so it can't meet the headless coverage bar. Park for the
+  GTK4 migration alongside leg-4 (`ManagerMenu` `ImageMenuItem`).
 
 ## Audit picks deliberately rejected
 
