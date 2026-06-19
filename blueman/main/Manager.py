@@ -121,6 +121,8 @@ class Blueman(Gtk.Application):
 
             # Connect to configure event to store new window position and size
             self.window.connect("configure-event", self._on_configure)
+            # Quit application if primary window is closed
+            self.window.connect("delete-event", self._on_delete)
 
         self.window.present_with_time(Gtk.get_current_event_time())
 
@@ -205,6 +207,10 @@ class Blueman(Gtk.Application):
         width, height, x, y = self.Config["window-properties"]
         if event.x != x or event.y != y or event.width != width or event.height != height:
             self.Config["window-properties"] = [event.width, event.height, event.x, event.y]
+        return False
+
+    def _on_delete(self, _window: Gtk.ApplicationWindow, _event: Gdk.Event) -> bool:
+        self.quit()
         return False
 
     def register_settings_action(self, name: str) -> None:

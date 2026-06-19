@@ -1,5 +1,6 @@
 import builtins
 import typing
+from collections.abc import Generator
 
 from gi.repository import GLib
 from gi.repository import GObject
@@ -4199,6 +4200,8 @@ class ListStore(GObject.Object, ListModel):
     def sort(self, compare_func: GLib.CompareDataFunc, *user_data: typing.Optional[builtins.object]) -> None: ...
 
     def splice(self, position: builtins.int, n_removals: builtins.int, additions: typing.Sequence[GObject.Object]) -> None: ...
+
+    def __iter__(self) -> Generator[GObject.Object, None, None]: ...
 
 
 class BytesIcon(GObject.Object, Icon, LoadableIcon):
