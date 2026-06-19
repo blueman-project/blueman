@@ -55,6 +55,20 @@ class TestDnsmasqHandler(TestCase):
         self._check_invocation(have_mock, popen_mock, ["--port=0", "--dhcp-option=option:dns-server,203.0.113.10"])
         lock_mock.assert_called_with("dhcp")
 
+    @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
+    @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(0))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
+    def test_local_resolver_no_dns_servers(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+        # Local resolver present (port 53 reachable) but no DNS servers:
+        # disable dnsmasq DNS with --port=0 but emit no dns-server option,
+        # which with an empty list would be a dnsmasq-rejected trailing comma.
+        with open("/tmp/pid", "w") as f:
+            f.write("123")
+        DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
+        self._check_invocation(have_mock, popen_mock, ["--port=0"])
+        lock_mock.assert_called_with("dhcp")
+
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
     @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])

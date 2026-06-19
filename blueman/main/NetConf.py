@@ -130,7 +130,13 @@ class DnsMasqHandler(DHCPHandler):
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(("localhost", 53)) == 0:
-                cmd += ["--port=0", f"--dhcp-option=option:dns-server,{', '.join(dns_servers)}"]
+                # A local resolver already owns port 53, so disable dnsmasq's
+                # own DNS. Only advertise dns-server when we actually have
+                # addresses; an empty list would produce a trailing-comma value
+                # that dnsmasq rejects, failing the whole start.
+                cmd.append("--port=0")
+                if dns_servers:
+                    cmd.append(f"--dhcp-option=option:dns-server,{', '.join(dns_servers)}")
 
         logging.info(cmd)
         p = Popen(cmd, stderr=PIPE)
