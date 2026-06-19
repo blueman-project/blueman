@@ -1,6 +1,8 @@
+import tempfile
+from pathlib import Path
 from unittest import TestCase
 
-from blueman.Functions import adapter_path_to_name, format_bytes
+from blueman.Functions import adapter_path_to_name, format_bytes, parse_os_release
 
 
 class TestFormatBytes(TestCase):
@@ -66,3 +68,37 @@ class TestAdapterPathToName(TestCase):
 
     def test_embedded_in_other_text(self) -> None:
         self.assertEqual(adapter_path_to_name("prefix-hci99-suffix"), "hci99")
+
+
+class TestParseOsRelease(TestCase):
+    def _parse(self, content: str) -> dict[str, str]:
+        with tempfile.NamedTemporaryFile("w", suffix="os-release", delete=False) as f:
+            f.write(content)
+            path = Path(f.name)
+        try:
+            return parse_os_release(path)
+        finally:
+            path.unlink()
+
+    def test_basic_keys(self) -> None:
+        result = self._parse('NAME="Foo"\nVERSION="1.0"\n')
+        self.assertEqual(result, {"NAME": "Foo", "VERSION": "1.0"})
+
+    def test_value_with_equals_sign(self) -> None:
+        # Regression (data-3): a quoted value containing "=" must survive.
+        result = self._parse('PRETTY_NAME="Name=Variant"\n')
+        self.assertEqual(result["PRETTY_NAME"], "Name=Variant")
+
+    def test_unquoted_value(self) -> None:
+        self.assertEqual(self._parse("ID=arch\n"), {"ID": "arch"})
+
+    def test_comments_and_blank_lines_skipped(self) -> None:
+        result = self._parse("# comment\n\n   \nID=foo\n")
+        self.assertEqual(result, {"ID": "foo"})
+
+    def test_line_without_equals_skipped(self) -> None:
+        result = self._parse("garbage line\nID=foo\n")
+        self.assertEqual(result, {"ID": "foo"})
+
+    def test_missing_file_returns_empty(self) -> None:
+        self.assertEqual(parse_os_release(Path("/nonexistent/os-release")), {})
