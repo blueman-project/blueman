@@ -75,7 +75,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | dup-2 | open | S | `blueman/gui/manager/ManagerDeviceMenu.py:141-188` `connect_service`/`disconnect_service` duplicate nested success/error callbacks | extract async-DBus template |
 | dup-6 | open | S | `blueman/main/Applet.py:78-90` `_on_dbus_name_appeared/_vanished` repeat plugin notify loop | `_notify_manager_state_change(state)` |
 | dup-1 | open | M | `blueman/main/Applet.py:92-118` 8× identical plugin broadcast loops | `_broadcast(event, *args)` helper |
-| dup-7 | open | S | `blueman/main/Sendto.py:47-55` 6× identical `connect_signal` boilerplate | `_setup_signal_handlers(source, handlers)` |
 | dup-8 | open | S | `blueman/main/Services.py:86` bare `except:` with `# noqa: E722` | narrow to expected exceptions |
 
 ## API contract & compatibility
@@ -136,7 +135,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | obs-11 | open | S | `blueman/main/DNSServerProvider.py:48` `GLib.Error` swallowed | `logging.debug("DNS lookup failed, using fallback")` |
 | obs-3 | open | S | `blueman/main/Manager.py:62` `print()` in exception handler | `logging.error(..., exc_info=True)` |
 | obs-6 | open | S | `blueman/main/PluginManager.py:64,123` `LoadException` swallowed silently | `logging.warning` with plugin name |
-| obs-8 | open | S | `blueman/main/Sendto.py:286` `logging.debug(e.message)` on `GLib.Error` | use `str(e)` |
 | obs-15 | open | S | `blueman/plugins/applet/AutoConnect.py:116-117` ignores automatic connection failures with `pass`, so failed auto-connect attempts leave no log trail and are hard to diagnose. | Log the target service/device and failure reason at debug or warning level, with rate limiting if needed. |
 | obs-12 | open | S | `blueman/plugins/mechanism/Network.py:46` exception only routed to error callback, no local log | add `logging.error` with trace |
 | obs-14 | open | S | `sendto/blueman_sendto.py.in:14,17,29,33` `print()` for user-facing messages | replace with `logging` where plugin host allows |
@@ -252,7 +250,6 @@ _(none open)_
 | leg-6 | open | S | `blueman/gui/GtkAnimation.py:200` FIXME `Gtk.render_background()` wrong colors | investigate + fix or document |
 | leg-4 | open | M | `blueman/gui/manager/ManagerMenu.py:45,47` `Gtk.ImageMenuItem` in manager UI | migrate to `Gtk.MenuItem` |
 | leg-9 | open | S | `blueman/main/indicators/GtkStatusIcon.py:44` `# type: ignore` on submenu enumerate | proper overload/typing |
-| leg-3 | open | M | `blueman/main/Sendto.py:178,190,291,461` deprecated dialog `.run()`/`.destroy()` | async response handlers |
 
 ## configuration
 
@@ -289,7 +286,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | vec-2 | open | L | `blueman/bluez/Manager.py:138-149` `get_devices()` rescans all objects per `find_device()` | cache indexed by adapter, batch GetAll (dup perf-5) |
-| vec-1 | open | M | `blueman/main/Sendto.py:140-143` per-property-change loop over UUIDs for OBEX_OBJPUSH | set membership / `any()` |
 
 ## robustiness
 
@@ -300,7 +296,6 @@ _(none open)_
 | rob-1 | open | M | `blueman/gui/manager/ManagerProgressbar.py:178` `timeout_add(41,pulse)` source id not captured; pulses after `stop()` | store + remove source id (overlaps perf-14) |
 | rob-3 | open | M | `blueman/main/DhcpClient.py:49-50` two timeout sources never stored/removed (dup wd-3) | store ids, remove on exit |
 | rob-5 | open | S | `blueman/main/PPPConnection.py:182-197` OSError path may skip `source_remove(io_watch)` before cleanup → leaked source | remove source in except (overlaps rel-7) |
-| rob-7 | open | M | `blueman/main/Sendto.py:351-378` `on_transfer_progress` divides by `spd` without re-guard after ZeroDivisionError | `if spd>0` guard + log |
 | rob-6 | open | S | `blueman/plugins/applet/NetUsage.py:79-80` Monitor `__del__` doesn't remove timeout source | guard + `source_remove(poller)` |
 
 ## ui / ux
@@ -313,8 +308,6 @@ _(none open)_
 | ux-4 | open | M | `blueman/gui/Notification.py:168-169` bare `except ValueError: pass` on hint set (dup obs-7) | log when fallback occurs |
 | ux-2 | open | S | `blueman/gui/Notification.py:51` hardcoded notification size 350x50 | responsive sizing |
 | ux-8 | open | S | `blueman/main/Manager.py:183` FIXME BlueZ stop/start not surfaced to user | notification/infobar on daemon loss |
-| ux-6 | open | M | `blueman/main/Sendto.py:178,188,291,461` blocking `dialog.run()` freeze UI (overlaps leg-3) | non-blocking response signals |
-| ux-1 | open | M | `blueman/main/Sendto.py:310` blocking `time.sleep(1)` on UI thread during discovery stop | `GLib.timeout_add_seconds` |
 
 ## accessibility
 
@@ -377,7 +370,6 @@ _(none open)_
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
 | time-4 | open | M | `blueman/main/MechanismApplication.py:20-29` the idle-exit timer counts 1s `timeout_add` ticks (`self.time += 1` to 30) instead of comparing a monotonic deadline; GLib coalesces/delays timeouts under load or suspend, so the "30s idle" auto-exit drifts and can fire much later than intended. | Record `GLib.get_monotonic_time()` on activity and exit once `now - last >= 30s`, independent of tick count. Cross-ref cfg-2. |
-| time-2 | open | S | `blueman/main/Sendto.py:360` transfer-progress throttle `tm - self._last_update > 0.5` uses `time.time()`; a backward clock step stalls all speed/ETA UI updates until wall time catches up, a forward step fires every call. | Use `time.monotonic()` for `tm`/`self._last_update`. |
 | time-1 | open | M | `blueman/main/SpeedCalc.py:21` `calc()` keys elapsed-time/speed math on wall clock `time.time()`; an NTP step or manual clock change can skew the divisor across retained samples and produce erratic speeds (the zero-elapsed guard only catches exact ties/backsteps within the window). | Sample with `time.monotonic()` / `GLib.get_monotonic_time()`; a monotonic clock never steps. Distinct from ds-1 (log prune) and adapt-2 (clock_gettime portability). |
 | time-3 | open | S | `blueman/plugins/applet/NetUsage.py:201` session duration `datetime.now() - fromtimestamp(config["time"])` is pure wall-clock; if the clock moved backward since the stored start, the delta is negative and renders nonsense durations. | Clamp negative deltas to 0 (or store a monotonic anchor) before formatting. |
 
@@ -409,8 +401,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| prodeng-1 | open | S | `blueman/main/Sendto.py:61-63` aborts with a bare log "Error: No Adapters present" (no GUI dialog, no remedy) when no adapter is present; a user who launched sendto from a file manager's "Send To" sees nothing actionable. | Show a GTK error dialog telling the user to enable/plug in a Bluetooth adapter, mirroring `check_bluetooth_status`. |
-| prodeng-2 | open | S | `blueman/main/Sendto.py:69` `--source` with an unknown adapter logs "Unknown adapter, trying first available" only to console and silently falls back; a CLI user who mistyped `-s` never learns their choice was ignored. | Print the fallback notice to stderr (or error out) instead of silently switching adapters. |
 
 ## design thinking
 
@@ -451,6 +441,14 @@ _(none open)_
   image/label box) changes the child structure and image handling — a visible UI change only
   validatable by running the GUI, so it can't meet the headless coverage bar. Park for the
   GTK4 migration alongside leg-4 (`ManagerMenu` `ImageMenuItem`).
+- **leg-3 / ux-6** (`Sendto.py` deprecated `dialog.run()`/`.destroy()` → async response
+  handlers) — three of the four `.run()` sites (`select_files`, `select_device`, the
+  obex-start error dialog) are synchronous startup gates in `SendTo`/`Sender.__init__` whose
+  return values drive control flow before the GTK main loop runs. Converting to the async
+  response-signal pattern requires restructuring both `__init__`s into continuation-based
+  flows, which cannot reach genuine coverage headless and carries high regression risk on the
+  core send path. Park for the GTK4 migration (same rationale as leg-1). The other Sendto.py
+  findings were fixed in fix/sendto-hardening.
 
 ## Audit picks deliberately rejected
 
