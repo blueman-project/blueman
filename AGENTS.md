@@ -37,6 +37,9 @@ This file defines the expected behavior and usage model for AI agents working in
 - When making major changes, rescan the whole project and create or update `TODO.md` with one
   table per review category defined below. Each table uses the format:
   `id | status | effort | description | notes`.
+- Keep every `TODO.md` table sorted by the `description` column. Each description starts with the
+  affected `file:line`, so sorting clusters findings in the same file together — letting related
+  items be fixed in one batch. Re-sort a table whenever you add or edit its rows.
 
 ### Category definitions
 
