@@ -263,12 +263,19 @@ class NetConf:
             p.write_text("1")
 
     @classmethod
+    def _iptables(cls) -> str:
+        # Resolve iptables via PATH instead of assuming /sbin/iptables, which
+        # does not hold on all distributions (e.g. usr-merged or nftables-based
+        # layouts that ship it elsewhere).
+        return _get_binary("iptables")
+
+    @classmethod
     def _add_ipt_rule(cls, table: str, chain: str, *rule_args: str) -> None:
         # Pass the rule as already-split arguments instead of splitting a single
         # string on spaces. A value that contains a space (e.g. an address that
         # was not validated) can no longer smuggle in extra iptables arguments.
         cls._ipt_rules.append((table, chain, rule_args))
-        args = ["/sbin/iptables", "-t", table, "-A", chain, *rule_args]
+        args = [cls._iptables(), "-t", table, "-A", chain, *rule_args]
         logging.debug(" ".join(args))
         ret = call(args)
         logging.info(f"Return code {ret}")
@@ -276,7 +283,7 @@ class NetConf:
     @classmethod
     def _del_ipt_rules(cls) -> None:
         for table, chain, rule_args in cls._ipt_rules:
-            call(["/sbin/iptables", "-t", table, "-D", chain, *rule_args])
+            call([cls._iptables(), "-t", table, "-D", chain, *rule_args])
         cls._ipt_rules = []
         cls.unlock("iptables")
 

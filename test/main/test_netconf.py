@@ -152,6 +152,7 @@ class TestUdhcpdHandler(TestCase):
         self.assertEqual(args[1], {"stderr": subprocess.PIPE})
 
 
+@patch("blueman.main.NetConf.NetConf._iptables", new=classmethod(lambda cls: "/sbin/iptables"))
 @patch("blueman.main.NetConf.NetConf._IPV4_SYS_PATH", Path("/tmp/blueman-test/ipv4"))
 @patch("blueman.main.NetConf.NetConf._RUN_PATH", Path("/tmp/blueman-test/run"))
 @patch("blueman.main.NetConf.create_bridge")
@@ -343,6 +344,7 @@ class TestValidateIpv4(TestCase):
                     pass
 
 
+@patch("blueman.main.NetConf.NetConf._iptables", new=classmethod(lambda cls: "/sbin/iptables"))
 class TestIptablesRuleArgs(TestCase):
     def setUp(self) -> None:
         NetConf._ipt_rules = []
@@ -373,3 +375,23 @@ class TestIptablesRuleArgs(TestCase):
         call_mock.assert_called_once_with(
             ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
         self.assertEqual(NetConf._ipt_rules, [])
+
+
+class TestIptablesResolution(TestCase):
+    @patch("blueman.main.NetConf.have", return_value=Path("/usr/sbin/iptables"))
+    def test_resolves_via_have(self, have_mock: Mock) -> None:
+        self.assertEqual(NetConf._iptables(), "/usr/sbin/iptables")
+        have_mock.assert_called_with("iptables")
+
+    @patch("blueman.main.NetConf.have", return_value=None)
+    def test_missing_iptables_raises(self, _have_mock: Mock) -> None:
+        with self.assertRaises(FileNotFoundError):
+            NetConf._iptables()
+
+    @patch("blueman.main.NetConf.have", return_value=Path("/usr/sbin/iptables"))
+    @patch("blueman.main.NetConf.call", return_value=0)
+    def test_add_rule_uses_resolved_path(self, call_mock: Mock, _have_mock: Mock) -> None:
+        self.addCleanup(lambda: setattr(NetConf, "_ipt_rules", []))
+        NetConf._ipt_rules = []
+        NetConf._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+        self.assertEqual(call_mock.call_args.args[0][0], "/usr/sbin/iptables")
