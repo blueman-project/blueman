@@ -255,7 +255,7 @@ def set_proc_title(name: str | None = None) -> int:
         buff.value = name.encode("UTF-8")
         ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
     except (OSError, AttributeError):
-        logging.error("Failed to set process title", exc_info=True)
+        logging.exception("Failed to set process title")
         return -1
 
     if ret != 0:
@@ -349,7 +349,7 @@ def _netmask_for_ifacename(name: str, sock: socket.socket) -> str | None:
     try:
         ret = fcntl.ioctl(sock.fileno(), siocgifnetmask, bytebuf)
     except OSError:
-        logging.error('siocgifnetmask failed')
+        logging.exception('siocgifnetmask failed')
         return None
 
     return socket.inet_ntoa(ret[20:24])
@@ -367,7 +367,7 @@ def get_local_interfaces() -> dict[str, tuple[str, str | None]]:
             try:
                 mutated_byte_buffer = fcntl.ioctl(sock.fileno(), siocgifconf, mutable_byte_buffer)
             except OSError:
-                logging.error('siocgifconf failed')
+                logging.exception('siocgifconf failed')
                 return {}
 
             max_bytes_out, names_address_out = struct.unpack('iL', mutated_byte_buffer)
@@ -380,7 +380,7 @@ def get_local_interfaces() -> dict[str, tuple[str, str | None]]:
                 mask = _netmask_for_ifacename(name, sock)
                 ip_dict[name] = (ipaddr, mask)
     except OSError:
-        logging.error('Socket creation failed', exc_info=True)
+        logging.exception('Socket creation failed')
         return {}
 
     return ip_dict
@@ -404,7 +404,7 @@ def parse_os_release(path: Path) -> dict[str, str]:
                     continue
                 release_dict[key] = val.strip("\"")
     except OSError:
-        logging.error(f"Could not read {path.as_uri()}")
+        logging.exception(f"Could not read {path.as_uri()}")
     return release_dict
 
 
