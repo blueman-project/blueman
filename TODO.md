@@ -141,6 +141,7 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 | rel-10 | open | S | `blueman/plugins/applet/TransferService.py:95-100` schedules removal of an allowed device but the timeout closure reads `self._pending_transfer` later instead of capturing the accepted address. A second pending transfer or cleared state can remove the wrong address or hit the assertion. | Capture `address` in the closure and remove it idempotently (`discard`-style) from the allowed list. Cross-ref sm-8. |
 | rel-11 | open | S | `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]` when displaying a passkey. If BlueZ reports `entered == 6` after all digits are typed, or an invalid value, the notification path raises `IndexError`. | Clamp `entered` to the valid range and render the fully-entered passkey without bolding a missing digit. Cross-ref test-2. |
 | rel-12 | open | S | `blueman/plugins/BasePlugin.py:50` registers `weakref.finalize(self, self._on_plugin_delete)`. Passing a bound method keeps `self` strongly referenced by the finalizer, so plugin instances may not be collected and the delete hook is unreliable. | Register a module-level/static cleanup callback with weak state, or rely on explicit plugin unload and remove the finalizer. |
+| rel-13 | open | S | `blueman/main/NetConf.py:91` `DHCPHandler.clean_up()` uses `next(b for b in self._BINARIES if _is_running(b, pid))` with no default; if `pid` is live but its cmdline matches no known binary (recycled PID), this raises `StopIteration`, aborting cleanup so the `dhcp` lock is never released and future apply/disable wedge. | Use `next((...), None)` so the existing `running_binary is None` branch runs and `unlock("dhcp")` always executes. Cross-ref sm-7. |
 
 ## observability
 
@@ -399,6 +400,83 @@ _(none open)_
 |----|--------|--------|-------------|-------|
 | releng-1 | open | S | `make_release.sh:3-7` archives `HEAD` using the latest tag name from `git describe --tags --abbrev=0`, without verifying that `HEAD` is exactly that tag or that the working tree is clean. A release tarball can be mislabeled with the previous tag or include unintended worktree attributes. | Require `git describe --tags --exact-match`, fail on dirty status, and print the commit/tag being archived. |
 | releng-2 | open | S | `make_release.sh:9-16` produces `.tar.xz` and `.tar.gz` but no checksums or signatures. Downstream packagers/users have no release-integrity artifact from the script. | Generate SHA256 sums and optionally detached signatures as part of the release script, documenting the expected verification flow. |
+
+## dependability
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| depend-1 | open | M | `blueman/main/NetConf.py:64-72` `DHCPHandler.apply` locks `dhcp` after a successful `_start` even when `_read_pid_file` returns `None` (daemon slow to write its pidfile; `DnsMasqHandler`/`UdhcpdHandler` don't reliably yield a pid in time). Later `clean_up` reads a now-absent pidfile, logs "Stale dhcp lockfile" and never kills the orphaned daemon — leaking a DHCP server bound to pan1. | Poll the pidfile with a bounded retry before locking; if no pid is obtained, treat the start as failed and tear down instead of locking. Cross-ref sm-7. |
+| depend-2 | open | S | `blueman/main/NetConf.py:117-119` `DnsMasqHandler._start` appends `--dhcp-option=option:dns-server,{join(dns_servers)}` whenever `localhost:53` is reachable; if `DNSServerProvider.get_servers()` returned empty the option becomes a trailing-comma empty value, which dnsmasq rejects — the start fails entirely instead of degrading to "address but no DNS option". | Only append the `dns-server` option when `dns_servers` is non-empty. |
+| depend-3 | open | S | `blueman/main/DNSServerProvider.py:29,102` `_get_servers_from_systemd_resolved`/`_subscribe_systemd_resolved` call `Gio.bus_get_sync(SYSTEM)` and `DBusProxy.new_for_bus_sync` with no error handling around bus/proxy acquisition (only the later `Get` at :48 is guarded). A briefly-unavailable system bus makes `__init__` raise and the whole provider fail rather than falling back to resolv.conf. | Wrap bus/proxy acquisition in try/except `GLib.Error` and degrade to the resolv.conf path. Cross-ref mem-2. |
+
+## distributed systems
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| dist-1 | open | M | `blueman/main/NetConf.py:366-374` `lock`/`unlock`/`locked` are plain `touch`/`unlink(missing_ok)`/`exists` on `/var/run/blueman-*` with no `flock` or atomic check-and-set. The mechanism is a system D-Bus service serving concurrent `EnableNetwork`/`DisableNetwork`/`DhcpClient` calls; two near-simultaneous `apply_settings` both see `locked()==False`, both enable forwarding, both append iptables MASQUERADE/FORWARD rules, and both start DHCP daemons on pan1 — duplicate rules accumulate and the shared `_dhcp_handler`/`_ipt_rules` class state corrupts. | Hold a real exclusive lock (`fcntl.flock` on the lockfile) across the whole apply/clean_up, or process mechanism requests strictly serially; make rule application idempotent (flush blueman rules before re-adding). |
+| dist-2 | open | M | `blueman/main/NetConf.py:253,270,280` `_ipt_rules` is in-memory class state but the iptables rules it tracks live in the kernel and survive a mechanism restart (idle-exit after 30s, `MechanismApplication.py:25`). After re-activation `_ipt_rules` is empty while old MASQUERADE/FORWARD rules and the `iptables` lockfile persist; a later `clean_up`/`_del_ipt_rules` deletes nothing yet `unlock("iptables")`, and a new apply sees the stale lock and skips re-adding — leaving stale rules for the previous address. | Tag blueman rules with an iptables comment and flush-by-comment on apply; reconcile lockfile state against actual kernel rules at startup instead of trusting in-memory state. |
+| dist-3 | open | S | `blueman/plugins/mechanism/Rfcomm.py:13-14` `_open_rfcomm` spawns a watcher per call with no dedup; two `OpenRFCOMM` calls for the same `port_id` start two `blueman-rfcomm-watcher /dev/rfcommN` processes, and `_close_rfcomm` kills only by matching the `ps` cmdline (can leave orphans or signal a recycled/foreign PID). | Before launching, scan for an existing watcher on that port and skip if present; track watcher PIDs in the mechanism rather than re-deriving from `ps`. Cross-ref wd-4, mem-1. |
+| dist-4 | open | M | `blueman/main/NetConf.py:347-348` In `apply_settings` the dhcp branch runs `clean_up()` (unlocks `dhcp`) then `apply()` (re-locks). If `apply`'s `_start` raises `NetworkSetupError`, earlier locks/forwarding/iptables from the same call are already applied — leaving a partially-applied state (bridge up, forwarding on, rules present) with no DHCP and no rollback; the caller just propagates a generic error. | Wrap `apply_settings` in try/except that runs full `NetConf.clean_up()` on any failure so the system is left all-or-nothing. Cross-ref depend-1. |
+
+## time & scheduling correctness
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| time-1 | open | M | `blueman/main/SpeedCalc.py:21` `calc()` keys elapsed-time/speed math on wall clock `time.time()`; an NTP step or manual clock change can skew the divisor across retained samples and produce erratic speeds (the zero-elapsed guard only catches exact ties/backsteps within the window). | Sample with `time.monotonic()` / `GLib.get_monotonic_time()`; a monotonic clock never steps. Distinct from ds-1 (log prune) and adapt-2 (clock_gettime portability). |
+| time-2 | open | S | `blueman/main/Sendto.py:360` transfer-progress throttle `tm - self._last_update > 0.5` uses `time.time()`; a backward clock step stalls all speed/ETA UI updates until wall time catches up, a forward step fires every call. | Use `time.monotonic()` for `tm`/`self._last_update`. |
+| time-3 | open | S | `blueman/plugins/applet/NetUsage.py:201` session duration `datetime.now() - fromtimestamp(config["time"])` is pure wall-clock; if the clock moved backward since the stored start, the delta is negative and renders nonsense durations. | Clamp negative deltas to 0 (or store a monotonic anchor) before formatting. |
+| time-4 | open | M | `blueman/main/MechanismApplication.py:20-29` the idle-exit timer counts 1s `timeout_add` ticks (`self.time += 1` to 30) instead of comparing a monotonic deadline; GLib coalesces/delays timeouts under load or suspend, so the "30s idle" auto-exit drifts and can fire much later than intended. | Record `GLib.get_monotonic_time()` on activity and exit once `now - last >= 30s`, independent of tick count. Cross-ref cfg-2. |
+
+## memory and cpu management
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| mem-1 | open | S | `blueman/plugins/mechanism/Rfcomm.py:17` `_close_rfcomm` shells out `ps -e o pid,args` and `communicate()` synchronously inside the privileged mechanism D-Bus method, blocking the mechanism main loop while it scans every process to find one watcher PID. | Track watcher PIDs (from `Popen` in `_open_rfcomm`) keyed by port and kill by stored PID instead of scanning `ps`. Cross-ref dist-3. |
+| mem-2 | open | S | `blueman/main/DNSServerProvider.py:29-79` `_get_servers_from_systemd_resolved` issues a chain of synchronous `call_sync` D-Bus calls (Get DNS, then per-interface GetLink + DefaultRoute Get) with `-1` (infinite) timeout on the main loop whenever DHCP servers are resolved, scaling with interface count and able to hang indefinitely. | Use finite timeouts and/or move resolution off the main loop; cache across the `changed` signal instead of re-walking all links each call. Cross-ref depend-3. |
+| mem-3 | open | S | `blueman/main/NetConf.py:239` `UdhcpdHandler._start` calls a blocking `sleep(0.1)` after spawning udhcpd to wait for the pid file, inside the mechanism process. Distinct from ux-1 (Sendto UI sleep). | Poll the pid file with a short non-blocking `GLib.timeout_add` loop instead of a fixed blocking sleep. |
+
+## system design
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| sysd-1 | open | M | `blueman/bluez/Base.py:147-149` `destroy()` only `del self.__proxy` and never removes the instance from `BaseMeta.__instances__` (no API to). With the permanent singleton cache, a later `Device(obj_path=...)` returns the destroyed instance whose `__proxy` is gone → `AttributeError` on next access; object lifecycle and the identity cache are not isolated. | Have `destroy()` pop `self` from the instance cache; key the cache per `(class, path)` and invalidate on `InterfacesRemoved`. Cross-ref conc-2, comp-1. |
+| sysd-2 | open | M | `blueman/main/PluginManager.py:92,117` plugin discovery uses `plugin_class.__subclasses__()` (import side effects) and mutates shared class attributes (`cls.__unloadable__ = False`); two PluginManager instances (applet vs mechanism) or a reload mutate shared class state, so load order/conflict resolution is global, not per-manager. | Register plugins explicitly into a per-manager registry and keep per-instance load flags off the class object. Cross-ref dec-5, ext-1. |
+
+## CLI / option integrity
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| cli-1 | open | S | `blueman/Functions.py:273` `--loglevel` has no `help`, no `choices`; an unrecognized value (e.g. `--loglevel verbose`) silently coerces to WARNING with no error, so users get quieter logs than expected. Applies to all 7 entry points using `create_parser`. | Add `choices=[debug,info,warning,error,critical]` (case-insensitive) and `help=`; argparse then rejects bad values clearly. |
+| cli-2 | open | S | `apps/blueman-mechanism.in:38,57-58` `-d/--debug` only logs "Enabled verbose output" and does nothing else; the level is driven by `--loglevel`, so `--debug` does NOT enable debug logging — a dead/misleading flag. | Make `--debug` set `log_level = logging.DEBUG`, or remove it and document `--loglevel debug`. |
+| cli-3 | open | S | `apps/blueman-adapters.in:24` `--socket-id` (XEmbed) is undocumented — no `help=`, absent from `data/man/blueman-adapters.1` — yet plumbed into `BluemanAdapters(... socket_id)`. | Add `help=` text and document, or mark intentionally internal. |
+| cli-4 | open | S | `data/man/blueman-sendto.1` documents only `--device=ADDRESS`, but `apps/blueman-sendto.in:32-38` also ships `-d/--dest`, `-s/--source`, `-u/--delete` and a positional `FILE`. Man page is out of date vs `--help`. | Update the man page to list all options and the `FILE` positional. |
+| cli-5 | open | S | `data/man/blueman-applet.1`, `blueman-manager.1`, `blueman-services.1` state "There are no options.", but each accepts `--loglevel`/`--syslog` via `create_parser`. Docs contradict behavior. | Replace "no options" with the actual flags. |
+| cli-6 | open | S | `data/man/blueman-adapters.1:1` `.TH` header is `BLUEMAN-SENDTO` (copy-paste), so `man blueman-adapters` shows the wrong title/section. | Fix `.TH` to `BLUEMAN-ADAPTERS`. |
+| cli-7 | open | S | `data/man/blueman-adapters.1` says the `adapter` arg selects the initial tab in `hci0` form, but `blueman/main/Adapter.py:74-76` matches tab keys and derives the page via `int(name[3:])`; any non-`hciN` value is silently dropped, and the positional has no CLI `help=` (`apps/blueman-adapters.in:25`). | Add `help=` to the positional stating the `hciN` format/behavior; align the man page. |
+
+## product engineering
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| prodeng-1 | open | S | `blueman/main/Sendto.py:61-63` aborts with a bare log "Error: No Adapters present" (no GUI dialog, no remedy) when no adapter is present; a user who launched sendto from a file manager's "Send To" sees nothing actionable. | Show a GTK error dialog telling the user to enable/plug in a Bluetooth adapter, mirroring `check_bluetooth_status`. |
+| prodeng-2 | open | S | `blueman/main/Sendto.py:69` `--source` with an unknown adapter logs "Unknown adapter, trying first available" only to console and silently falls back; a CLI user who mistyped `-s` never learns their choice was ignored. | Print the fallback notice to stderr (or error out) instead of silently switching adapters. |
+
+## design thinking
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| dsgn-1 | open | S | `blueman/main/Adapter.py:73-78` when `blueman-adapters <name>` names a nonexistent adapter, it logs "the selected adapter does not exist" to console but still opens the window on the default tab — a GUI-launched user gets no on-screen feedback that their argument was ignored (silent dead-end). | Show an in-window/infobar message (or a toast) and fall through to the first tab. |
+
+## test / fuzz coverage
+
+| id | status | effort | description | notes |
+|----|--------|--------|-------------|-------|
+| fuzz-1 | open | M | `blueman/main/DhcpClient.py:25-77` has NO test file. `__init__` builds the client argv from `have()` across dhclient/dhcpcd/udhcpc; `_check_client` parses `poll()` status and reads `netifs[self._interface][0]`. Untested: client selection when several/none exist, argv assembly, poll-status branching, and the `KeyError`/`IndexError` when the bound interface is absent from `get_local_interfaces()`. | Add `test/main/test_dhcpclient.py` mocking `have`/`Popen`/`get_local_interfaces`; cover argv per client, run() raising when none found, double-run, poll 0/1/None, and hostile interface maps (missing key, empty tuple). |
+| fuzz-2 | open | S | `blueman/Sdp.py:358-385` `ServiceUUID` is untested. `UUID(uuid)` raises `ValueError` on malformed input; `name`/`short_uuid`/`reserved` decode the 128-bit int and index `uuid_names[short_uuid]`. Untested: short vs full UUIDs, the all-zero case, Proprietary (non-reserved) UUIDs, unknown reserved short ids (KeyError→"Unknown"), and malformed/empty/garbage strings from the BlueZ wire. | Add `test/test_sdp.py` covering reserved short UUIDs, `int==0`, a non-Bluetooth-base UUID, an unknown reserved id, and a fuzz set of malformed strings asserting only `ValueError` escapes construction. |
+| fuzz-3 | open | S | `blueman/DeviceClass.py:473-555` `get_major_class`/`get_minor_class`/`gatt_appearance_to_name` decode raw class-of-device and GATT appearance bitfields, untested. Hostile/boundary inputs: negative ints, values exceeding 16 bits, out-of-range minor indices, and appearance category boundaries around the reserved/invalid guards (:541-547). | Add `test/test_deviceclass.py` parametrized over major indices + overflow, each minor family in/out of range, and `gatt_appearance_to_name` at category edges plus a sweep asserting no `KeyError`/`IndexError` escapes. |
+| fuzz-4 | open | S | `blueman/Functions.py:166-181` `format_bytes` has a confirmed boundary bug and no test: strict `<` on both band edges means exact powers of 1024 fall through to GB — `format_bytes(1024)` returns `(9.5e-07, "GB")` instead of `(1.0, "KB")`; 1048576/1073741824 likewise mislabel. | Fix comparisons to `<=`/`>=` and add tests asserting exact boundaries 1024→KB, 1048576→MB, 1073741824→GB plus 0, sub-1024, and a huge value. |
+| fuzz-5 | open | S | `blueman/Functions.py:340-356` `parse_os_release` (nested in `log_system_info`) splits with `line.split("=")` and is untested: a valid `PRETTY_NAME="Name=Variant"` raises `ValueError` and is dropped; comment/blank/`=`-less lines also untested. | Extract `parse_os_release` to module scope, use `split("=", 1)`, and test `KEY="a=b"`, comment/blank, and missing-`=` lines asserting graceful skip. Cross-ref data-3. |
+| fuzz-6 | open | S | `blueman/Functions.py:147-154` `adapter_path_to_name` parses a D-Bus object path with greedy `re.search(r".*(hci[0-9]*)", path)` (zero digits allowed) and is untested; hostile/edge inputs (`/org/bluez/hci`, trailing `dev_..` segments, `prefix-hci99-suffix`, empty/None, no-`hci`) can yield surprising captures or `None`. | Add tests for normal `/org/bluez/hci0`, None/empty→None, no-`hci`→None, trailing segments, and multiple `hci` occurrences to pin the greedy behavior. |
 
 ---
 
