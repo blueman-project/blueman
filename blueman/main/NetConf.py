@@ -271,6 +271,13 @@ class NetConf:
 
     @classmethod
     def _enable_ip4_forwarding(cls) -> None:
+        # IPv4 forwarding is controlled through the procfs sysctl tree, which
+        # only exists on Linux. Fail with a clear error rather than an opaque
+        # FileNotFoundError on platforms that lack it.
+        if not cls._IPV4_SYS_PATH.is_dir():
+            raise NetworkSetupError(
+                f"IPv4 forwarding control not available at {cls._IPV4_SYS_PATH}; NAT requires Linux")
+
         cls._IPV4_SYS_PATH.joinpath("ip_forward").write_text("1")
 
         for p in cls._IPV4_SYS_PATH.joinpath("conf").glob("**/forwarding"):

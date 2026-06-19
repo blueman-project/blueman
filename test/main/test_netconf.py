@@ -258,6 +258,12 @@ class TestNetConf(TestCase):
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
 
+    def test_missing_sysctl_path_raises(self, call_mock: Mock, _bridge_mock: Mock) -> None:
+        with patch.object(NetConf, "_IPV4_SYS_PATH", Path("/tmp/blueman-test/does-not-exist")):
+            with self.assertRaises(NetworkSetupError) as cm:
+                NetConf.apply_settings("203.0.113.1", "255.255.255.0", self.TestDHCPHandler, False)
+        self.assertIn("IPv4 forwarding control not available", cm.exception.args[0])
+
     @patch("blueman.main.NetConf.destroy_bridge", side_effect=BridgeException(errno.ENODEV))
     def test_cleanup_logs_bridge_failure(self, destroy_bridge_mock: Mock, call_mock: Mock,
                                          _create_bridge_mock: Mock) -> None:
