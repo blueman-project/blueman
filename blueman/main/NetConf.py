@@ -414,7 +414,17 @@ class NetConf:
     def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
                        address_changed: bool) -> None:
         with cls._exclusive_lock():
-            cls._apply_settings(ip4_address, ip4_mask, handler, address_changed)
+            try:
+                cls._apply_settings(ip4_address, ip4_mask, handler, address_changed)
+            except Exception:
+                # apply_settings touches several subsystems (bridge, forwarding,
+                # iptables, DHCP) in sequence; a failure partway leaves the
+                # system half-configured with no DHCP. Tear everything down so
+                # the operation is all-or-nothing, then re-raise. _clean_up is
+                # the unlocked variant because we already hold the lock.
+                logging.exception("apply_settings failed; rolling back")
+                cls._clean_up()
+                raise
 
     @classmethod
     def _apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],

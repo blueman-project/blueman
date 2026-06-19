@@ -312,6 +312,20 @@ class TestNetConf(TestCase):
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
 
+    @patch("blueman.main.NetConf.destroy_bridge")
+    def test_apply_failure_rolls_back(self, destroy_bridge_mock: Mock, call_mock: Mock,
+                                      _create_bridge_mock: Mock) -> None:
+        class FailingHandler(self.TestDHCPHandler):
+            apply = Mock(side_effect=NetworkSetupError("dhcp boom"))
+
+        with self.assertRaises(NetworkSetupError):
+            NetConf.apply_settings("203.0.113.1", "255.255.255.0", FailingHandler, False)
+
+        # Rollback must undo the partially-applied state.
+        destroy_bridge_mock.assert_called_once_with("pan1")
+        self.assertFalse(NetConf.locked("netconfig"))
+        self.assertFalse(NetConf.locked("iptables"))
+
     def test_missing_sysctl_path_raises(self, call_mock: Mock, _bridge_mock: Mock) -> None:
         with patch.object(NetConf, "_IPV4_SYS_PATH", Path("/tmp/blueman-test/does-not-exist")):
             with self.assertRaises(NetworkSetupError) as cm:
