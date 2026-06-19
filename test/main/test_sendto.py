@@ -55,6 +55,127 @@ class TestOnTransferProgressClock(TestCase):
         self.assertAlmostEqual(s.pb.props.fraction, 0.25)  # 2500 / 10000
 
 
+def make_sendto() -> SendTo:
+    s = SendTo.__new__(SendTo)
+    s._device_selector = Mock()
+    s._manager = Mock()
+    return s
+
+
+class TestManagerSignalDispatch(TestCase):
+    @patch("blueman.main.Sendto.GLib.timeout_add_seconds")
+    def test_adapter_added(self, timeout: Mock) -> None:
+        s = make_sendto()
+        s._SendTo__on_manager_signal(None, "/org/bluez/hci0", "adapter-added")
+        s._device_selector.add_adapter.assert_called_once_with("/org/bluez/hci0")
+        timeout.assert_called_once()
+
+    def test_adapter_removed(self) -> None:
+        s = make_sendto()
+        s._SendTo__on_manager_signal(None, "/org/bluez/hci0", "adapter-removed")
+        s._device_selector.remove_adapter.assert_called_once_with("/org/bluez/hci0")
+
+    def test_device_added_sets_warning(self) -> None:
+        s = make_sendto()
+        s._has_objpush = Mock(return_value=False)  # type: ignore[method-assign]
+        s._SendTo__on_manager_signal(None, "/dev/x", "device-added")
+        s._device_selector.add_device.assert_called_once_with("/dev/x", True)
+
+    def test_device_removed(self) -> None:
+        s = make_sendto()
+        s._SendTo__on_manager_signal(None, "/dev/x", "device-removed")
+        s._device_selector.remove_device.assert_called_once_with("/dev/x")
+
+    def test_unknown_signal_raises(self) -> None:
+        s = make_sendto()
+        with self.assertRaises(ValueError):
+            s._SendTo__on_manager_signal(None, "/dev/x", "bogus")
+
+
+class TestPropertyChangedDispatch(TestCase):
+    def test_adapter_discovering(self) -> None:
+        s = make_sendto()
+        s._SendTo__on_adapter_property_changed(None, "Discovering", True, "/org/bluez/hci0")
+        s._device_selector.set_discovering.assert_called_once_with(True)
+
+    def test_adapter_other_key_ignored(self) -> None:
+        s = make_sendto()
+        s._SendTo__on_adapter_property_changed(None, "Powered", True, "/org/bluez/hci0")
+        s._device_selector.set_discovering.assert_not_called()
+
+    def test_device_alias(self) -> None:
+        s = make_sendto()
+        s._SendTo__on_device_property_changed(None, "Alias", "Phone", "/dev/x")
+        s._device_selector.update_row.assert_called_once_with("/dev/x", "description", "Phone")
+
+    def test_device_uuids_updates_warning(self) -> None:
+        s = make_sendto()
+        s._has_objpush = Mock(return_value=True)  # type: ignore[method-assign]
+        s._SendTo__on_device_property_changed(None, "UUIDs", ["x"], "/dev/x")
+        s._device_selector.update_row.assert_called_once_with("/dev/x", "warning", False)
+
+
+class TestStartDiscovery(TestCase):
+    def test_starts_only_idle_adapters_and_return_value(self) -> None:
+        s = make_sendto()
+        a_idle = Mock()
+        a_idle.__getitem__ = Mock(return_value=False)
+        a_busy = Mock()
+        a_busy.__getitem__ = Mock(return_value=True)
+        s._manager.get_adapters.return_value = [a_idle, a_busy]
+
+        self.assertTrue(s._start_discovery())          # not from timer -> repeat
+        a_idle.start_discovery.assert_called_once_with()
+        a_busy.start_discovery.assert_not_called()
+
+        self.assertFalse(s._start_discovery(from_timer=True))  # one-shot
+
+
+class TestSenderQueueAndText(TestCase):
+    def test_update_pb_text_format(self) -> None:
+        s = make_sender()
+        s.num_files = 3
+        s.files = [Mock(), Mock()]  # one already sent -> num = 3-2+1 = 2
+        s._update_pb_text(1.5, "KB", "5 Seconds")
+        text = s.pb.set_text.call_args.args[0]
+        self.assertIn("2/3", text)
+        self.assertIn("1.50", text)
+        self.assertIn("KB", text)
+        self.assertIn("5 Seconds", text)
+
+    def test_update_pb_text_infinite_eta(self) -> None:
+        s = make_sender()
+        s.num_files = 1
+        s.files = [Mock()]
+        s._update_pb_text(0.0, "B")
+        self.assertIn("∞", s.pb.set_text.call_args.args[0])
+
+    def test_process_queue_sends_next(self) -> None:
+        s = Sender.__new__(Sender)
+        f = Mock()
+        f.get_path.return_value = "/tmp/file"
+        s.files = [f]
+        s.send_file = Mock()  # type: ignore[method-assign]
+        s.process_queue()
+        s.send_file.assert_called_once_with("/tmp/file")
+
+    def test_process_queue_emits_result_when_done(self) -> None:
+        s = Sender.__new__(Sender)
+        s.files = []
+        s.emit = Mock()  # type: ignore[method-assign]
+        s.process_queue()
+        s.emit.assert_called_once_with("result", True)
+
+    def test_on_transfer_completed_pops_and_continues(self) -> None:
+        s = Sender.__new__(Sender)
+        s.files = [Mock(), Mock()]
+        s.process_queue = Mock()  # type: ignore[method-assign]
+        s.on_transfer_completed(None)
+        self.assertEqual(len(s.files), 1)
+        self.assertIsNone(s.transfer)
+        s.process_queue.assert_called_once_with()
+
+
 class TestCreateSessionTimeout(TestCase):
     def test_creates_session_once_and_stops(self) -> None:
         s = Sender.__new__(Sender)
