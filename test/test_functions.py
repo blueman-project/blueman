@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from blueman.Functions import format_bytes
+from blueman.Functions import adapter_path_to_name, format_bytes
 
 
 class TestFormatBytes(TestCase):
@@ -33,3 +33,36 @@ class TestFormatBytes(TestCase):
     def test_accepts_float_and_int(self) -> None:
         self.assertEqual(format_bytes(2048.0), (2.0, "KB"))
         self.assertEqual(format_bytes(2048), (2.0, "KB"))
+
+
+class TestAdapterPathToName(TestCase):
+    def test_normal_path(self) -> None:
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0"), "hci0")
+
+    def test_none_and_empty(self) -> None:
+        self.assertIsNone(adapter_path_to_name(None))
+        self.assertIsNone(adapter_path_to_name(""))
+
+    def test_no_hci(self) -> None:
+        self.assertIsNone(adapter_path_to_name("/org/bluez"))
+        self.assertIsNone(adapter_path_to_name("no-match"))
+
+    def test_case_sensitive(self) -> None:
+        # The pattern matches lowercase "hci" only.
+        self.assertIsNone(adapter_path_to_name("HCI0"))
+
+    def test_trailing_segments(self) -> None:
+        # Device sub-paths still resolve to the adapter name.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF"), "hci0")
+
+    def test_zero_digits_allowed(self) -> None:
+        # The `[0-9]*` quantifier permits an "hci" with no index.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci"), "hci")
+        self.assertEqual(adapter_path_to_name("hci"), "hci")
+
+    def test_greedy_picks_last_occurrence(self) -> None:
+        # Greedy `.*` consumes up to the final "hci" match.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0hci1"), "hci1")
+
+    def test_embedded_in_other_text(self) -> None:
+        self.assertEqual(adapter_path_to_name("prefix-hci99-suffix"), "hci99")
