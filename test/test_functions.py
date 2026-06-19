@@ -5,7 +5,14 @@ from pathlib import Path
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
-from blueman.Functions import adapter_path_to_name, create_logger, format_bytes, have, parse_os_release
+from blueman.Functions import (
+    adapter_path_to_name,
+    create_logger,
+    create_parser,
+    format_bytes,
+    have,
+    parse_os_release,
+)
 
 
 class TestFormatBytes(TestCase):
@@ -167,3 +174,36 @@ class TestCreateLogger(TestCase):
     def test_no_syslog_handler_when_disabled(self, handler_cls: MagicMock) -> None:
         create_logger(logging.INFO, "blueman-test", syslog=False)
         handler_cls.assert_not_called()
+
+
+class TestCreateParser(TestCase):
+    def test_default_loglevel(self) -> None:
+        args = create_parser().parse_args([])
+        self.assertEqual(args.LEVEL, "warning")
+
+    def test_valid_loglevel_lowercased(self) -> None:
+        args = create_parser().parse_args(["--loglevel", "DEBUG"])
+        self.assertEqual(args.LEVEL, "debug")
+
+    def test_invalid_loglevel_rejected(self) -> None:
+        # argparse exits with status 2 on an out-of-choices value.
+        with self.assertRaises(SystemExit):
+            create_parser().parse_args(["--loglevel", "verbose"])
+
+    def test_loglevel_has_help(self) -> None:
+        for action in create_parser()._actions:
+            if action.dest == "LEVEL":
+                self.assertTrue(action.help)
+                self.assertEqual(
+                    set(action.choices), {"debug", "info", "warning", "error", "critical"})
+                break
+        else:
+            self.fail("--loglevel argument not registered")
+
+    def test_syslog_flag(self) -> None:
+        self.assertTrue(create_parser().parse_args(["--syslog"]).syslog)
+        self.assertFalse(create_parser().parse_args([]).syslog)
+
+    def test_loglevel_can_be_disabled(self) -> None:
+        parser = create_parser(loglevel=False)
+        self.assertFalse(any(a.dest == "LEVEL" for a in parser._actions))

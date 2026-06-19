@@ -281,7 +281,10 @@ def create_parser(
         parser = argparse.ArgumentParser()
 
     if loglevel:
-        parser.add_argument("--loglevel", dest="LEVEL", default="warning")
+        parser.add_argument(
+            "--loglevel", dest="LEVEL", default="warning", type=str.lower,
+            choices=["debug", "info", "warning", "error", "critical"],
+            help="Logging verbosity (case-insensitive); defaults to warning.")
 
     if syslog:
         parser.add_argument("--syslog", dest="syslog", action="store_true")
