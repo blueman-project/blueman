@@ -60,9 +60,8 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     try:
         applet = AppletService()
         powermanager = AppletPowerManagerService()
-    except DBusProxyFailed as e:
-        logging.exception(e)
-        print("Blueman applet needs to be running")
+    except DBusProxyFailed:
+        logging.exception("Blueman applet needs to be running")
         exitfunc()
         return
 
@@ -85,7 +84,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
     powermanager.set_bluetooth_status(True)
     if not powermanager.get_bluetooth_status():
-        print('Failed to enable bluetooth')
+        logging.error("Failed to enable bluetooth")
         exitfunc()
 
 
