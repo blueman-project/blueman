@@ -162,13 +162,16 @@ class TestUdhcpdHandler(TestCase):
 
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo warning >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.sleep")
     @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
-    def test_success(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+    def test_success(self, sleep_mock: Mock, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
         with open("/tmp/pid", "w") as f:
             f.write("123")
         UdhcpdHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         lock_mock.assert_called_with("dhcp")
+        # pid file already present: poll returns at once with no blocking sleep.
+        sleep_mock.assert_not_called()
 
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf._is_running", lambda _name, _pid: False)

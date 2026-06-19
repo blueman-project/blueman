@@ -279,10 +279,9 @@ class UdhcpdHandler(DHCPHandler):
         p = Popen(cmd, stderr=PIPE)
         error = p.communicate()[1]
 
-        # udhcpd takes time to create pid file
-        sleep(0.1)
-
-        pid = _read_pid_file(self._pid_path)
+        # udhcpd takes time to create its pid file; poll for it (returning as
+        # soon as it appears) instead of blocking on a fixed sleep.
+        pid = _poll_pid_file(self._pid_path)
 
         return None if p.pid and pid is not None and _is_running("udhcpd", pid) else error
 
