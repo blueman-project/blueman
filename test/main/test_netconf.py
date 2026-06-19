@@ -1,5 +1,6 @@
 import os.path
 import shutil
+import signal
 import subprocess
 from ipaddress import IPv4Address
 from pathlib import Path
@@ -251,6 +252,31 @@ class TestNetConf(TestCase):
 
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
+
+
+class _CleanupHandler(DHCPHandler):
+    _BINARIES = ["dnsmasq"]
+
+
+@patch("blueman.main.NetConf.NetConf._RUN_PATH", Path("/tmp/blueman-cleanup"))
+class TestDHCPHandlerCleanup(TestCase):
+    def setUp(self) -> None:
+        Path("/tmp/blueman-cleanup").mkdir(parents=True)
+
+    def tearDown(self) -> None:
+        shutil.rmtree("/tmp/blueman-cleanup")
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_terminate_logs_binary_and_pid(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        with self.assertLogs(level="INFO") as logs:
+            handler.clean_up()
+        kill_mock.assert_called_once_with(4321, signal.SIGTERM)
+        self.assertTrue(any("Terminating dnsmasq (pid 4321)" in m for m in logs.output))
+        self.assertFalse(NetConf.locked("dhcp"))
 
 
 class TestValidateIpv4(TestCase):

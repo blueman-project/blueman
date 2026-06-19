@@ -90,7 +90,7 @@ class DHCPHandler:
             if pid is not None:
                 running_binary: str | None = next(binary for binary in self._BINARIES if _is_running(binary, pid))
                 if running_binary is not None:
-                    print('Terminating ' + running_binary)
+                    logging.info(f"Terminating {running_binary} (pid {pid})")
                     os.kill(pid, signal.SIGTERM)
             else:
                 running_binary = None
