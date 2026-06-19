@@ -119,24 +119,29 @@ class DHCPHandler:
     def clean_up(self) -> None:
         self._clean_up_configuration()
 
-        if NetConf.locked("dhcp"):
-            if not self._pid:
-                pid = _read_pid_file(self._pid_path)
-            else:
-                pid = self._pid
+        if not NetConf.locked("dhcp"):
+            return
 
-            if pid is not None:
-                running_binary: str | None = next(binary for binary in self._BINARIES if _is_running(binary, pid))
-                if running_binary is not None:
-                    logging.info(f"Terminating {running_binary} (pid {pid})")
+        pid = self._pid if self._pid else _read_pid_file(self._pid_path)
+        # Clear the cached pid up front so a concurrent or repeated clean_up
+        # cannot read it again and signal a now-unrelated (possibly recycled)
+        # pid a second time.
+        self._pid = None
+
+        running_binary: str | None = None
+        if pid is not None:
+            running_binary = next((binary for binary in self._BINARIES if _is_running(binary, pid)), None)
+            if running_binary is not None:
+                logging.info(f"Terminating {running_binary} (pid {pid})")
+                try:
                     os.kill(pid, signal.SIGTERM)
-            else:
-                running_binary = None
+                except ProcessLookupError:
+                    logging.info(f"DHCP daemon pid {pid} already gone")
 
-            if pid is None or running_binary is None:
-                logging.info("Stale dhcp lockfile found")
+        if pid is None or running_binary is None:
+            logging.info("Stale dhcp lockfile found")
 
-            NetConf.unlock("dhcp")
+        NetConf.unlock("dhcp")
 
     def _clean_up_configuration(self) -> None:
         ...

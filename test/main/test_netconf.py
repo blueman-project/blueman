@@ -371,6 +371,48 @@ class TestDHCPHandlerCleanup(TestCase):
         self.assertTrue(any("Terminating dnsmasq (pid 4321)" in m for m in logs.output))
         self.assertFalse(NetConf.locked("dhcp"))
 
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_clean_up_clears_pid_and_is_idempotent(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        handler.clean_up()
+        self.assertIsNone(handler._pid)
+        # Second call: lock already gone, must not signal anything again.
+        handler.clean_up()
+        kill_mock.assert_called_once_with(4321, signal.SIGTERM)
+
+    @patch("blueman.main.NetConf.os.kill", side_effect=ProcessLookupError)
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_clean_up_survives_already_dead_pid(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        # Must not propagate ProcessLookupError, and must still unlock.
+        handler.clean_up()
+        self.assertFalse(NetConf.locked("dhcp"))
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: False)
+    def test_clean_up_stale_lock_no_kill(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        with self.assertLogs(level="INFO") as logs:
+            handler.clean_up()
+        kill_mock.assert_not_called()
+        self.assertTrue(any("Stale dhcp lockfile" in m for m in logs.output))
+        self.assertFalse(NetConf.locked("dhcp"))
+
+    @patch("blueman.main.NetConf.os.kill")
+    def test_clean_up_not_locked_is_noop(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        # dhcp not locked -> nothing happens.
+        handler.clean_up()
+        kill_mock.assert_not_called()
+
 
 class TestValidateIpv4(TestCase):
     def test_valid_addresses_pass(self) -> None:
