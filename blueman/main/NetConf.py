@@ -11,7 +11,7 @@ import signal
 from blueman.Constants import DHCP_CONFIG_FILE
 from blueman.Functions import have
 from _blueman import create_bridge, destroy_bridge, BridgeException
-from subprocess import call, Popen, PIPE, TimeoutExpired
+from subprocess import call, run, Popen, PIPE, TimeoutExpired
 
 from blueman.main.DNSServerProvider import DNSServerProvider
 
@@ -315,6 +315,13 @@ class NetConf:
     _dhcp_handler: DHCPHandler | None = None
     _ipt_rules: list[tuple[str, str, tuple[str, ...]]] = []
 
+    # Every rule blueman installs is tagged with this iptables comment so it can
+    # be reconciled against the live kernel ruleset, even after a mechanism
+    # restart that lost the in-memory _ipt_rules list.
+    _IPT_COMMENT = "blueman-pan1"
+    # (table, chain) pairs blueman writes rules into; scanned when flushing.
+    _IPT_TARGETS: tuple[tuple[str, str], ...] = (("nat", "POSTROUTING"), ("filter", "FORWARD"))
+
     _IPV4_SYS_PATH = pathlib.Path("/proc/sys/net/ipv4")
     # Prefer the canonical /run; fall back to the legacy /var/run only where
     # /run is unavailable. Both hold the mechanism's pid and lock files.
@@ -346,16 +353,27 @@ class NetConf:
         # Pass the rule as already-split arguments instead of splitting a single
         # string on spaces. A value that contains a space (e.g. an address that
         # was not validated) can no longer smuggle in extra iptables arguments.
-        cls._ipt_rules.append((table, chain, rule_args))
-        args = [cls._iptables(), "-t", table, "-A", chain, *rule_args]
+        # Tag the rule with a comment so it can later be matched in the kernel.
+        tagged = (*rule_args, "-m", "comment", "--comment", cls._IPT_COMMENT)
+        cls._ipt_rules.append((table, chain, tagged))
+        args = [cls._iptables(), "-t", table, "-A", chain, *tagged]
         logging.debug(" ".join(args))
         ret = call(args)
         logging.info(f"Return code {ret}")
 
     @classmethod
     def _del_ipt_rules(cls) -> None:
-        for table, chain, rule_args in cls._ipt_rules:
-            call([cls._iptables(), "-t", table, "-D", chain, *rule_args])
+        # Reconcile against the live kernel ruleset rather than trusting the
+        # in-memory list, which is empty after a mechanism restart while stale
+        # MASQUERADE/FORWARD rules from a previous run may still be installed.
+        iptables = cls._iptables()
+        for table, chain in cls._IPT_TARGETS:
+            result = run([iptables, "-t", table, "-S", chain], stdout=PIPE, text=True, check=False)
+            for line in result.stdout.splitlines():
+                if cls._IPT_COMMENT not in line or not line.startswith(f"-A {chain} "):
+                    continue
+                spec = line.split()[2:]  # drop the leading "-A <chain>"
+                call([iptables, "-t", table, "-D", chain, *spec])
         cls._ipt_rules = []
         cls.unlock("iptables")
 

@@ -210,6 +210,19 @@ class TestNetConf(TestCase):
         i1fw.parent.mkdir(parents=True)
         i1fw.write_text("0")
 
+        # Fake `iptables -S <chain>` by reflecting the rules blueman has
+        # installed (tracked in _ipt_rules) as the live kernel ruleset, so the
+        # flush-by-comment path can find and delete them.
+        def fake_run(args: list, **_kwargs: object) -> Mock:
+            table, chain = args[2], args[4]
+            lines = [f"-A {chain} " + " ".join(spec)
+                     for t, c, spec in NetConf._ipt_rules if t == table and c == chain]
+            return Mock(stdout="\n".join(lines) + ("\n" if lines else ""))
+
+        self.run_patch = patch("blueman.main.NetConf.run", side_effect=fake_run)
+        self.run_patch.start()
+        self.addCleanup(self.run_patch.stop)
+
     def tearDown(self) -> None:
         shutil.rmtree("/tmp/blueman-test")
 
@@ -268,10 +281,13 @@ class TestNetConf(TestCase):
 
     def _check_iptables(self, call_mock: Mock, remove: bool = False) -> None:
         command = "-D" if remove else "-A"
+        cmt = ["-m", "comment", "--comment", "blueman-pan1"]
         call_mock.assert_any_call(["/sbin/iptables", "-t", "nat", command, "POSTROUTING",
-                                   "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE"])
-        call_mock.assert_any_call(["/sbin/iptables", "-t", "filter", command, "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
-        call_mock.assert_any_call(["/sbin/iptables", "-t", "filter", command, "FORWARD", "-o", "pan1", "-j", "ACCEPT"])
+                                   "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE", *cmt])
+        call_mock.assert_any_call(
+            ["/sbin/iptables", "-t", "filter", command, "FORWARD", "-i", "pan1", "-j", "ACCEPT", *cmt])
+        call_mock.assert_any_call(
+            ["/sbin/iptables", "-t", "filter", command, "FORWARD", "-o", "pan1", "-j", "ACCEPT", *cmt])
         self.assertEqual(NetConf.locked("iptables"), not remove)
 
     def test_dhcp_handler_replacement(self, _call_mock: Mock, _bridge_mock: Mock) -> None:
@@ -477,7 +493,8 @@ class TestIptablesRuleArgs(TestCase):
         NetConf._add_ipt_rule("nat", "POSTROUTING", "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE")
         call_mock.assert_called_once_with(
             ["/sbin/iptables", "-t", "nat", "-A", "POSTROUTING",
-             "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE"])
+             "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE",
+             "-m", "comment", "--comment", "blueman-pan1"])
 
     @patch("blueman.main.NetConf.call", return_value=0)
     def test_value_with_space_stays_single_arg(self, call_mock: Mock) -> None:
@@ -488,14 +505,26 @@ class TestIptablesRuleArgs(TestCase):
         self.assertIn("1.2.3.4 -j ACCEPT", args)
         self.assertEqual(args.count("-j"), 0)
 
+    @patch("blueman.main.NetConf.run")
     @patch("blueman.main.NetConf.call", return_value=0)
-    def test_delete_uses_same_args(self, call_mock: Mock) -> None:
-        NetConf._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
-        call_mock.reset_mock()
+    def test_flush_deletes_kernel_rules_by_comment(self, call_mock: Mock, run_mock: Mock) -> None:
+        # The kernel reports a blueman-tagged rule plus an unrelated one; only
+        # the tagged rule must be deleted, regardless of in-memory state.
+        def fake_run(args: list, **_kwargs: object) -> Mock:
+            if args[2] == "filter" and args[4] == "FORWARD":
+                return Mock(stdout=(
+                    "-A FORWARD -i pan1 -j ACCEPT -m comment --comment blueman-pan1\n"
+                    "-A FORWARD -i eth0 -j ACCEPT\n"))
+            return Mock(stdout="")
+
+        run_mock.side_effect = fake_run
+        NetConf._ipt_rules = []  # simulate a restarted mechanism with no memory
         NetConf.unlock("iptables")
         NetConf._del_ipt_rules()
+
         call_mock.assert_called_once_with(
-            ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
+            ["/sbin/iptables", "-t", "filter", "-D", "FORWARD",
+             "-i", "pan1", "-j", "ACCEPT", "-m", "comment", "--comment", "blueman-pan1"])
         self.assertEqual(NetConf._ipt_rules, [])
 
 
