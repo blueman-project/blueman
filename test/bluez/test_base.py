@@ -9,6 +9,7 @@ from gi.repository import GLib  # noqa: E402
 
 from blueman.bluemantyping import ObjectPath  # noqa: E402
 from blueman.bluez.Base import Base, InstanceRegistry  # noqa: E402
+from blueman.bluez.errors import BluezDBusException  # noqa: E402
 
 
 class FakeVariant:
@@ -19,6 +20,12 @@ class FakeVariant:
 
     def unpack(self) -> Any:
         return self._value
+
+
+class FakeAsyncResult:
+    def __init__(self, value: tuple, error: "Optional[GLib.Error]") -> None:
+        self.value = value
+        self.error = error
 
 
 class FakeProxy:
@@ -34,6 +41,7 @@ class FakeProxy:
         self.async_calls: list[tuple[str, Any]] = []
         self.get_should_raise: Optional[GLib.Error] = None
         self._pchanged_cb: Any = None
+        self._last_async: tuple[Any, Any, Any] = (None, None, None)
 
     def connect(self, signal: str, cb: Any) -> int:
         if signal == "g-properties-changed":
@@ -57,14 +65,33 @@ class FakeProxy:
             self.sync_get_calls += 1
             if self.get_should_raise is not None:
                 raise self.get_should_raise
+            if rest[0] not in self.props:
+                raise GLib.Error.new_literal(
+                    GLib.quark_from_string("g-dbus-error-quark"),
+                    "GDBus.Error:org.bluez.Error.DoesNotExist:No such property", 0)
             return FakeVariant((self.props[rest[0]],))
         if method == "org.freedesktop.DBus.Properties.GetAll":
             self.sync_getall_calls += 1
             return FakeVariant((dict(self.props),))
         raise AssertionError(f"unexpected call_sync {method}")
 
-    def call(self, method: str, params: Any, *_args: Any) -> None:
+    def call(self, method: str, params: Any, _flags: Any = None, _timeout: Any = None,
+             _cancellable: Any = None, callback: Any = None, reply: Any = None,
+             error: Any = None) -> None:
         self.async_calls.append((method, params))
+        self._last_async = (callback, reply, error)
+
+    def call_finish(self, result: "FakeAsyncResult") -> FakeVariant:
+        if result.error is not None:
+            raise result.error
+        return FakeVariant(result.value)
+
+    # Test helper: fire the most recent async .call() callback.
+    def fire_last(self, value: tuple = (), raise_error: Optional[GLib.Error] = None) -> None:
+        callback, reply, error = self._last_async
+        if callback is None:
+            return
+        callback(self, FakeAsyncResult(value, raise_error), reply, error)
 
     # Test helper: simulate a D-Bus PropertiesChanged signal.
     def emit_properties_changed(self, changed: dict[str, Any],
@@ -174,6 +201,17 @@ class TestBasePropertyCache(TestCase):
         self.assertIs(obj.get("Connected"), True)
         self.assertEqual(proxy.sync_get_calls, 0)
 
+    def test_disconnect_signal_reflected_without_sync(self) -> None:
+        # A device disconnect (manual or link loss) arrives as a
+        # PropertiesChanged(Connected=false); the cached read must observe it
+        # immediately and without a synchronous round-trip.
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        self.assertIs(obj.get("Connected"), True)
+        proxy.emit_properties_changed({"Connected": False})
+        self.assertIs(obj.get("Connected"), False)
+        self.assertEqual(proxy.sync_get_calls, 0)
+
     def test_fallback_used_when_missing_and_sync_fails(self) -> None:
         proxy = FakeProxy()
         proxy.get_should_raise = GLib.Error.new_literal(GLib.quark_from_string("x"), "boom", 0)
@@ -231,3 +269,129 @@ class TestBaseCacheFreshness(TestCase):
         proxy.get_should_raise = None
         obj.get("Connected", fresh=True)
         self.assertFalse(obj.is_stale("Connected"))
+
+    def test_logs_debug_when_serving_cache_after_error(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        proxy.get_should_raise = self._err()
+        with self.assertLogs(level="DEBUG") as cm:
+            obj.get("Connected", fresh=True)
+        self.assertTrue(any("serving cached value after" in m for m in cm.output))
+
+
+class TestBaseMisc(TestCase):
+    def setUp(self) -> None:
+        _clear_registries()
+        self.addCleanup(_clear_registries)
+
+    def test_set_issues_async_call(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        obj.set("Trusted", True)
+        self.assertEqual(proxy.async_calls[-1][0], "org.freedesktop.DBus.Properties.Set")
+
+    def test_setitem_delegates_to_set(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        obj["Alias"] = "phone"
+        self.assertEqual(proxy.async_calls[-1][0], "org.freedesktop.DBus.Properties.Set")
+
+    def test_get_properties_includes_fallback(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        props = obj.get_properties()
+        self.assertIs(props["Connected"], True)
+        self.assertEqual(props["Icon"], "blueman")  # fallback filled in
+
+    def test_contains_uses_get_properties(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        obj = make(FakeBase, proxy)
+        self.assertIn("Connected", obj)
+        self.assertNotIn("Nonexistent", obj)
+
+    def test_get_object_path(self) -> None:
+        proxy = FakeProxy(object_path="/org/test/dev0")
+        obj = make(FakeBase, proxy)
+        self.assertEqual(obj.get_object_path(), "/org/test/dev0")
+
+    def test_call_dispatches_async(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        obj._call("Connect")
+        self.assertEqual(proxy.async_calls[-1][0], "Connect")
+
+    def test_call_reply_handler_receives_value(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        got: list[Any] = []
+        obj._call("Connect", reply_handler=lambda *a: got.append(a))
+        proxy.fire_last(value=(1, 2))
+        self.assertEqual(got, [(1, 2)])
+
+    def test_call_error_handler_receives_bluez_error(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        errs: list[Any] = []
+        obj._call("Connect", error_handler=errs.append)
+        proxy.fire_last(raise_error=GLib.Error.new_literal(
+            GLib.quark_from_string("x"), "GDBus.Error:org.bluez.Error.Failed:nope", 0))
+        self.assertEqual(len(errs), 1)
+        self.assertIsInstance(errs[0], BluezDBusException)
+
+    def test_call_unhandled_error_is_logged(self) -> None:
+        proxy = FakeProxy()
+        obj = make(FakeBase, proxy)
+        obj._call("Connect")
+        with self.assertLogs(level="ERROR") as cm:
+            proxy.fire_last(raise_error=GLib.Error.new_literal(
+                GLib.quark_from_string("x"), "GDBus.Error:org.bluez.Error.Failed:nope", 0))
+        self.assertTrue(any("Unhandled error" in m for m in cm.output))
+
+    def test_get_properties_keeps_present_fallback_key(self) -> None:
+        proxy = FakeProxy({"Icon": "phone", "Connected": True})
+        obj = make(FakeBase, proxy)
+        props = obj.get_properties()
+        self.assertEqual(props["Icon"], "phone")  # not overwritten by fallback
+
+    def test_properties_changed_emits_signal(self) -> None:
+        proxy = FakeProxy({"Connected": False})
+        obj = make(FakeBase, proxy)
+        seen: list[tuple[str, Any]] = []
+        obj.connect_signal("property-changed", lambda _o, k, v, _p: seen.append((k, v)))
+        proxy.emit_properties_changed({"Connected": True})
+        self.assertIn(("Connected", True), seen)
+
+
+class TestBaseFuzz(TestCase):
+    """Adversarial inputs to the read/refresh paths must never raise unexpectedly."""
+
+    def setUp(self) -> None:
+        _clear_registries()
+        self.addCleanup(_clear_registries)
+
+    def test_get_arbitrary_names_only_raises_bluez_error(self) -> None:
+        known = {"Connected": True, "Class": 0, "Icon": "blueman"}
+        proxy = FakeProxy(dict(known))
+        obj = make(FakeBase, proxy)
+        names = [
+            "", " ", "\t", "\n", "Connected", "UUIDs", "x" * 4096, "na/me",
+            "Conn:ected", "0", "../etc", "Ünïcode", "drop;table", "%s%n",
+        ]
+        for i, name in enumerate(names):
+            with self.subTest(name=name):
+                try:
+                    obj.get(name, fresh=bool(i % 2))
+                except BluezDBusException:
+                    pass  # acceptable: unknown property over the bus
+
+    def test_properties_changed_arbitrary_payloads_never_raise(self) -> None:
+        proxy = FakeProxy({"Connected": True})
+        make(FakeBase, proxy)  # connects proxy to the handler under test
+        payloads = [
+            {}, {"A": 1}, {"": None}, {"x" * 1000: "y" * 1000},
+            {"Ünïcode": "✓", "n\x00ul": 1},
+        ]
+        invalidateds = [[], ["A"], ["", "B"], ["x" * 1000]]
+        for i, changed in enumerate(payloads):
+            with self.subTest(i=i):
+                proxy.emit_properties_changed(changed, invalidateds[i % len(invalidateds)])

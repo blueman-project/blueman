@@ -158,6 +158,8 @@ class Base(GObject.Object, metaclass=BaseMeta):
             # one, but record that it is stale so callers can tell.
             cached = self.__proxy.get_cached_property(name)
             if cached is not None:
+                logging.debug(f"{self._interface_name}.{name}: serving cached value after "
+                              f"refresh error: {e.message}")
                 self.__stale.add(name)
                 return cached.unpack()
             if name in self.__fallback:
