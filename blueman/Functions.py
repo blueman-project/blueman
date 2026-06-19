@@ -337,24 +337,25 @@ def bmexit(msg: str | int | None = None) -> None:
     raise SystemExit(msg)
 
 
-def log_system_info() -> None:
-    def parse_os_release(path: Path) -> dict[str, str]:
-        release_dict = {}
-        try:
-            with path.open() as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("#"):
-                        continue
-                    try:
-                        key, val = line.split("=")
-                        release_dict[key] = val.strip("\"")
-                    except ValueError:
-                        logging.error(f"Unable to parse line: {line}")
-        except OSError:
-            logging.error(f"Could not read {path.as_uri()}")
-        return release_dict
+def parse_os_release(path: Path) -> dict[str, str]:
+    release_dict = {}
+    try:
+        with path.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                key, sep, val = line.partition("=")
+                if not sep:
+                    logging.error(f"Unable to parse line: {line}")
+                    continue
+                release_dict[key] = val.strip("\"")
+    except OSError:
+        logging.error(f"Could not read {path.as_uri()}")
+    return release_dict
 
+
+def log_system_info() -> None:
     try:
         complete = subprocess.run(
             [BLUETOOTHD_PATH, "-v"],
