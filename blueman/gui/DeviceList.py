@@ -289,15 +289,16 @@ class DeviceList(GenericList):
         return None
 
     def clear(self) -> None:
+        # Drop every row in one pass. The previous per-row device_remove_event
+        # loop deleted rows individually (each delete() calls the O(n)
+        # iter_is_valid, making the whole clear O(n^2)) while mutating the
+        # liststore it was iterating, then called liststore.clear() anyway.
         if len(self.liststore):
-            for i in self.liststore:
-                tree_iter = i.iter
-                dbus_path = self.get(tree_iter, "dbus_path")["dbus_path"]
-                self.device_remove_event(dbus_path)
             self.liststore.clear()
+            self.path_to_row = {}
             self.emit("device-selected", None, None)
-
-        self.path_to_row = {}
+        else:
+            self.path_to_row = {}
 
     def find_device_by_path(self, object_path: ObjectPath) -> Gtk.TreeIter | None:
         row = self.path_to_row.get(object_path, None)

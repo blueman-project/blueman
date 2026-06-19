@@ -112,3 +112,50 @@ class TestDiscoveryTimeout(TestCase):
         self.assertTrue(fake.update_progress(1.0, 60.0))
         self.assertEqual(fake._discovery_timeout, 77)
         self.assertTrue(any(e[0] == "discovery-progress" for e in fake.emitted))
+
+
+def _fill(fake: FakeDeviceList, n: int) -> None:
+    for i in range(n):
+        path = f"/org/bluez/hci0/dev_{i}"
+        tree_iter = fake.liststore.append([path])
+        fake.path_to_row[path] = Gtk.TreeRowReference.new(
+            fake.liststore, fake.liststore.get_path(tree_iter))
+
+
+class TestClear(TestCase):
+    def test_clear_empties_store_and_cache(self) -> None:
+        fake = FakeDeviceList()
+        _fill(fake, 5)
+        fake.clear()
+        self.assertEqual(len(fake.liststore), 0)
+        self.assertEqual(fake.path_to_row, {})
+
+    def test_clear_emits_device_deselected_when_nonempty(self) -> None:
+        fake = FakeDeviceList()
+        _fill(fake, 3)
+        fake.clear()
+        self.assertIn(("device-selected", None, None), fake.emitted)
+
+    def test_clear_empty_store_no_emit(self) -> None:
+        fake = FakeDeviceList()
+        fake.path_to_row = {"stale": object()}  # type: ignore[dict-item]
+        fake.clear()
+        self.assertEqual(fake.path_to_row, {})
+        self.assertEqual(fake.emitted, [])
+
+    def test_clear_releases_all_references(self) -> None:
+        fake = FakeDeviceList()
+        _fill(fake, 10)
+        refs = list(fake.path_to_row.values())
+        fake.clear()
+        # After clear the references are dropped from the cache and invalid.
+        self.assertFalse(any(r.valid() for r in refs))  # type: ignore[attr-defined]
+
+    def test_clear_fuzz_sizes(self) -> None:
+        for n in (0, 1, 2, 17, 200, 1000):
+            with self.subTest(n=n):
+                fake = FakeDeviceList()
+                _fill(fake, n)
+                fake.clear()
+                self.assertEqual(len(fake.liststore), 0)
+                self.assertEqual(fake.path_to_row, {})
