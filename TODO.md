@@ -31,7 +31,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| perf-4 | open | M | `blueman/bluez/Base.py:100` `device["Prop"]` issues sync `Properties.Get` DBus on UI thread | local prop cache + signal-driven invalidation |
 | perf-5 | open | M | `blueman/bluez/Manager.py:115-149` `get_adapter_paths`/`get_devices` iterate `_object_manager.get_objects()` per call | cache, invalidate on object-added/removed |
 | perf-3 | open | S | `blueman/gui/DeviceList.py:282-285` `clear()` iterates liststore calling `device_remove_event` per item → O(n²) | call `liststore.clear()` once, drop `path_to_row` in bulk |
 | perf-10 | open | S | `blueman/gui/manager/ManagerMenu.py:53` creates Adapter proxies for all adapters in `__init__` | lazy-instantiate on selection |
@@ -52,7 +51,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| cache-1 | open | M | `blueman/bluez/Base.py:100-107` caches DBus properties only after a synchronous `Get`, and falls back to the cached value on later `GLib.Error` without freshness metadata. Callers cannot tell whether they received live state or stale state, and no cache invalidation policy is documented per property. | Make cache state explicit: update from `PropertiesChanged`, mark stale on bus errors, and expose/handle stale reads at call sites that need fresh state. Cross-ref perf-4, obs-13. |
 
 ## concurrency
 
@@ -135,7 +133,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| obs-13 | open | S | `blueman/bluez/Base.py:107` `GLib.Error` falls back to cached property silently | `logging.debug` cache fallback |
 | obs-4 | open | S | `blueman/bluez/obex/Manager.py:51,59,68,75` `logging.info(object_path)` lacks event/context | prefix with event name |
 | obs-1 | open | S | `blueman/Functions.py:64,87` `print()` in `check_bluetooth_status()` exception/fallback | `logging.error(..., exc_info=True)` |
 | obs-10 | open | S | `blueman/gui/GenericList.py:116` silent `ValueError` from `get_iter` | `logging.debug` invalid path |
@@ -219,7 +216,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| comp-1 | open | M | `blueman/bluez/Base.py:11-26` `BaseMeta` metaclass couples object identity to DBus path via permanent instance cache | extract caching to registry/factory (overlaps conc-2) |
 | comp-2 | open | M | `blueman/bluez/obex/Base.py:5` obex Base subclasses bluez Base, both override metaclass attrs; class-attr duplication | pass bus config to `__init__` instead of subclassing |
 | comp-3 | open | S | `blueman/gui/manager/ManagerDeviceList.py:45` 4-level inheritance (Gtk.TreeView→GenericList→DeviceList→ManagerDeviceList) + parent-chain coupling | inject deps via constructor, prefer composition |
 | comp-4 | open | M | `blueman/plugins/MechanismPlugin.py:8-12` copies parent methods (timer, confirm_authorization) into `__init__`; tight bind to concrete app | abstract plugin interface + DI |
