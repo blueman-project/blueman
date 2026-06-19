@@ -345,7 +345,6 @@ _(none open)_
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| doc-1 | open | S | `blueman/Functions.py:217,239,264` dead `set_proc_title`/`create_logger`/`create_parser` in `__all__` (see dead-1..3) | document or remove |
 | doc-7 | open | M | `blueman/gui/CommonUi.py` `ErrorDialog` lacks docstring; `excp` param undocumented | document exception UI |
 | doc-3 | open | M | `blueman/gui/DeviceList.py` class docstring missing; signals only in `__gsignals__` | document model + key signals |
 | doc-6 | open | M | `blueman/gui/DeviceSelectorDialog.py` `DeviceRow`/`DeviceSelector` lack docstrings | document selector pattern |
