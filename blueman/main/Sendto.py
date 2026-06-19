@@ -137,10 +137,7 @@ class SendTo:
 
     def _has_objpush(self, object_path: ObjectPath) -> bool:
         device = Device(obj_path=object_path)
-        for uuid in device["UUIDs"]:
-            if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
-                return True
-        return False
+        return any(ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID for uuid in device["UUIDs"])
 
     def _start_discovery(self, from_timer: bool = False) -> bool:
         for adapter in self._manager.get_adapters():

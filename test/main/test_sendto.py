@@ -55,6 +55,30 @@ class TestOnTransferProgressClock(TestCase):
         self.assertAlmostEqual(s.pb.props.fraction, 0.25)  # 2500 / 10000
 
 
+OBJPUSH_UUID = "00001105-0000-1000-8000-00805f9b34fb"
+GATT_UUID = "00001801-0000-1000-8000-00805f9b34fb"
+
+
+class TestHasObjpush(TestCase):
+    @patch("blueman.main.Sendto.Device")
+    def test_true_when_objpush_present(self, device_cls: Mock) -> None:
+        device_cls.return_value = {"UUIDs": [GATT_UUID, OBJPUSH_UUID]}
+        s = SendTo.__new__(SendTo)
+        self.assertTrue(s._has_objpush("/org/bluez/hci0/dev_AA"))
+
+    @patch("blueman.main.Sendto.Device")
+    def test_false_when_absent(self, device_cls: Mock) -> None:
+        device_cls.return_value = {"UUIDs": [GATT_UUID]}
+        s = SendTo.__new__(SendTo)
+        self.assertFalse(s._has_objpush("/org/bluez/hci0/dev_AA"))
+
+    @patch("blueman.main.Sendto.Device")
+    def test_false_when_empty(self, device_cls: Mock) -> None:
+        device_cls.return_value = {"UUIDs": []}
+        s = SendTo.__new__(SendTo)
+        self.assertFalse(s._has_objpush("/org/bluez/hci0/dev_AA"))
+
+
 class TestOnTransferProgressGuards(TestCase):
     @patch("blueman.main.Sendto.time.monotonic", return_value=1.0)
     def test_zero_speed_no_zero_division(self, _monotonic: Mock) -> None:
