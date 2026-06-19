@@ -427,57 +427,62 @@ class NetConf:
                 raise
 
     @classmethod
-    def _apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
-                        address_changed: bool) -> None:
-        cls._validate_ipv4(ip4_address, ip4_mask)
-
+    def _ensure_handler(cls, handler: type["DHCPHandler"]) -> "DHCPHandler":
         if not isinstance(cls._dhcp_handler, handler):
             if cls._dhcp_handler is not None:
                 cls._dhcp_handler.clean_up()
-
             cls._dhcp_handler = handler()
+        return cls._dhcp_handler
 
+    @staticmethod
+    def _ensure_bridge() -> None:
         try:
             create_bridge("pan1")
         except BridgeException as e:
             if e.errno != errno.EEXIST:
                 raise
 
+    @staticmethod
+    def _configure_interface(ip4_address: str, ip4_mask: str) -> None:
+        if have("ip"):
+            if call(["ip", "link", "set", "dev", "pan1", "up"]) != 0:
+                raise NetworkSetupError("Failed to bring up interface pan1")
+            if call(["ip", "address", "add", "/".join((ip4_address, ip4_mask)), "dev", "pan1"]) != 0:
+                raise NetworkSetupError(f"Failed to add ip address {ip4_address}with netmask {ip4_mask}")
+        elif have('ifconfig'):
+            if call(["ifconfig", "pan1", ip4_address, "netmask", ip4_mask, "up"]) != 0:
+                raise NetworkSetupError(f"Failed to add ip address {ip4_address}with netmask {ip4_mask}")
+        else:
+            raise NetworkSetupError(
+                "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
+
+    @classmethod
+    def _apply_iptables(cls, ip4_address: str, ip4_mask: str) -> None:
+        cls._del_ipt_rules()
+        cls._add_ipt_rule("nat", "POSTROUTING", "-s", f"{ip4_address}/{ip4_mask}", "-j", "MASQUERADE")
+        cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+        cls._add_ipt_rule("filter", "FORWARD", "-o", "pan1", "-j", "ACCEPT")
+        cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+
+    @classmethod
+    def _apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
+                        address_changed: bool) -> None:
+        cls._validate_ipv4(ip4_address, ip4_mask)
+        dhcp_handler = cls._ensure_handler(handler)
+        cls._ensure_bridge()
+
         if address_changed or not cls.locked("netconfig"):
             cls._enable_ip4_forwarding()
-
-            if have("ip"):
-                ret = call(["ip", "link", "set", "dev", "pan1", "up"])
-                if ret != 0:
-                    raise NetworkSetupError("Failed to bring up interface pan1")
-
-                ret = call(["ip", "address", "add", "/".join((ip4_address, ip4_mask)), "dev", "pan1"])
-                if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
-            elif have('ifconfig'):
-                ret = call(["ifconfig", "pan1", ip4_address, "netmask", ip4_mask, "up"])
-                if ret != 0:
-                    raise NetworkSetupError(f"Failed to add ip address {ip4_address}"
-                                            f"with netmask {ip4_mask}")
-            else:
-                raise NetworkSetupError(
-                    "Neither ifconfig or ip commands are found. Please install net-tools or iproute2")
-
+            cls._configure_interface(ip4_address, ip4_mask)
             cls.lock("netconfig")
 
         if address_changed or not cls.locked("iptables"):
-            cls._del_ipt_rules()
-
-            cls._add_ipt_rule("nat", "POSTROUTING", "-s", f"{ip4_address}/{ip4_mask}", "-j", "MASQUERADE")
-            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-o", "pan1", "-j", "ACCEPT")
-            cls._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+            cls._apply_iptables(ip4_address, ip4_mask)
             cls.lock("iptables")
 
-        if address_changed or not NetConf.locked("dhcp"):
-            cls._dhcp_handler.clean_up()
-            cls._dhcp_handler.apply(ip4_address, ip4_mask)
+        if address_changed or not cls.locked("dhcp"):
+            dhcp_handler.clean_up()
+            dhcp_handler.apply(ip4_address, ip4_mask)
 
     @classmethod
     def clean_up(cls) -> None:
