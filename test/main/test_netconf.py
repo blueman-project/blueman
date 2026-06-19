@@ -1,4 +1,5 @@
 import errno
+import fcntl
 import os.path
 import shutil
 import signal
@@ -526,6 +527,32 @@ class TestIptablesRuleArgs(TestCase):
             ["/sbin/iptables", "-t", "filter", "-D", "FORWARD",
              "-i", "pan1", "-j", "ACCEPT", "-m", "comment", "--comment", "blueman-pan1"])
         self.assertEqual(NetConf._ipt_rules, [])
+
+
+class TestExclusiveLock(TestCase):
+    def setUp(self) -> None:
+        self.run_dir = Path("/tmp/blueman-lock")
+        self.run_dir.mkdir(parents=True)
+        self.addCleanup(lambda: shutil.rmtree(self.run_dir))
+        self.patch = patch.object(NetConf, "_RUN_PATH", self.run_dir)
+        self.patch.start()
+        self.addCleanup(self.patch.stop)
+
+    @patch("blueman.main.NetConf.fcntl.flock")
+    def test_acquires_and_releases_exclusively(self, flock_mock: Mock) -> None:
+        with NetConf._exclusive_lock():
+            pass
+        modes = [c.args[1] for c in flock_mock.call_args_list]
+        self.assertEqual(modes, [fcntl.LOCK_EX, fcntl.LOCK_UN])
+        self.assertTrue((self.run_dir / "blueman-mechanism.lock").exists())
+
+    @patch("blueman.main.NetConf.fcntl.flock")
+    def test_releases_on_exception(self, flock_mock: Mock) -> None:
+        with self.assertRaises(ValueError):
+            with NetConf._exclusive_lock():
+                raise ValueError("boom")
+        modes = [c.args[1] for c in flock_mock.call_args_list]
+        self.assertIn(fcntl.LOCK_UN, modes)
 
 
 class TestCommunicateStderr(TestCase):

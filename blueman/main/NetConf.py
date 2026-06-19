@@ -3,6 +3,9 @@ import os
 import pathlib
 import ipaddress
 import socket
+import fcntl
+import contextlib
+from collections.abc import Iterator
 from tempfile import mkstemp
 from time import sleep
 import logging
@@ -392,8 +395,30 @@ class NetConf:
             raise NetworkSetupError(f"Invalid IPv4 netmask: {ip4_mask!r}")
 
     @classmethod
+    @contextlib.contextmanager
+    def _exclusive_lock(cls) -> Iterator[None]:
+        # The mechanism is a system D-Bus service handling concurrent
+        # Enable/Disable/DhcpClient calls. The touch/exists lock markers are not
+        # atomic, so two near-simultaneous applies could both proceed and double
+        # up forwarding, iptables rules and DHCP daemons. Hold a real exclusive
+        # advisory lock across the whole operation to serialize them.
+        fd = os.open(cls._RUN_PATH / "blueman-mechanism.lock", os.O_CREAT | os.O_RDWR, 0o600)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            yield
+        finally:
+            fcntl.flock(fd, fcntl.LOCK_UN)
+            os.close(fd)
+
+    @classmethod
     def apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
                        address_changed: bool) -> None:
+        with cls._exclusive_lock():
+            cls._apply_settings(ip4_address, ip4_mask, handler, address_changed)
+
+    @classmethod
+    def _apply_settings(cls, ip4_address: str, ip4_mask: str, handler: type["DHCPHandler"],
+                        address_changed: bool) -> None:
         cls._validate_ipv4(ip4_address, ip4_mask)
 
         if not isinstance(cls._dhcp_handler, handler):
@@ -446,6 +471,11 @@ class NetConf:
 
     @classmethod
     def clean_up(cls) -> None:
+        with cls._exclusive_lock():
+            cls._clean_up()
+
+    @classmethod
+    def _clean_up(cls) -> None:
         logging.info(cls)
 
         if cls._dhcp_handler:
