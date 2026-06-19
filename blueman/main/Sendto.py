@@ -44,15 +44,21 @@ class SendTo:
 
         self.device: Device | None = None
         self._manager = manager = Manager()
-        self._manager.connect_signal("adapter-added", self.__on_manager_signal, "adapter-added")
-        self._manager.connect_signal("adapter-removed", self.__on_manager_signal, "adapter-removed")
-        self._manager.connect_signal("device-created", self.__on_manager_signal, "device-added")
-        self._manager.connect_signal("device-removed", self.__on_manager_signal, "device-removed")
+        self._setup_signal_handlers(self._manager, {
+            "adapter-added": (self.__on_manager_signal, "adapter-added"),
+            "adapter-removed": (self.__on_manager_signal, "adapter-removed"),
+            "device-created": (self.__on_manager_signal, "device-added"),
+            "device-removed": (self.__on_manager_signal, "device-removed"),
+        })
 
         self.__any_adapter = AnyAdapter()
-        self.__any_adapter.connect_signal("property-changed", self.__on_adapter_property_changed)
+        self._setup_signal_handlers(self.__any_adapter, {
+            "property-changed": (self.__on_adapter_property_changed,),
+        })
         self.__any_device = AnyDevice()
-        self.__any_device.connect_signal("property-changed", self.__on_device_property_changed)
+        self._setup_signal_handlers(self.__any_device, {
+            "property-changed": (self.__on_device_property_changed,),
+        })
 
         adapter: Adapter | None = None
         adapters = manager.get_adapters()
@@ -105,6 +111,14 @@ class SendTo:
             self.device = d
             self.do_send()
             self.__cleanup()
+
+    @staticmethod
+    def _setup_signal_handlers(source: GObject.Object, handlers: dict[str, tuple[Any, ...]]) -> None:
+        """Connect each signal to its (callback, *args), replacing repeated
+        connect_signal boilerplate. connect_signal is an alias of
+        GObject.connect, so the connection semantics are unchanged."""
+        for signal_name, (callback, *args) in handlers.items():
+            source.connect(signal_name, callback, *args)
 
     def __on_manager_signal(self, _manager: Manager, object_path: ObjectPath, signal_name: str) -> None:
         logging.debug(f"{object_path} {signal_name}")

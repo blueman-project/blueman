@@ -55,6 +55,24 @@ class TestOnTransferProgressClock(TestCase):
         self.assertAlmostEqual(s.pb.props.fraction, 0.25)  # 2500 / 10000
 
 
+class TestSetupSignalHandlers(TestCase):
+    def test_connects_each_signal_with_args(self) -> None:
+        source = Mock()
+        cb1, cb2 = Mock(), Mock()
+        SendTo._setup_signal_handlers(source, {
+            "adapter-added": (cb1, "adapter-added"),
+            "property-changed": (cb2,),
+        })
+        source.connect.assert_any_call("adapter-added", cb1, "adapter-added")
+        source.connect.assert_any_call("property-changed", cb2)
+        self.assertEqual(source.connect.call_count, 2)
+
+    def test_empty_handlers_no_calls(self) -> None:
+        source = Mock()
+        SendTo._setup_signal_handlers(source, {})
+        source.connect.assert_not_called()
+
+
 OBJPUSH_UUID = "00001105-0000-1000-8000-00805f9b34fb"
 GATT_UUID = "00001801-0000-1000-8000-00805f9b34fb"
 
