@@ -363,20 +363,22 @@ class Sender(Gtk.Dialog):
         if tm - self._last_update > 0.5:
             spd = self.speed.calc(self.total_transferred)
             (size, units) = format_bytes(spd)
-            try:
+            if spd > 0:
                 x = ((self.total_bytes - self.total_transferred) / spd) + 1
                 if x > 60:
                     x /= 60
                     eta = ngettext("%(minutes)d Minute", "%(minutes)d Minutes", round(x)) % {"minutes": round(x)}
                 else:
                     eta = ngettext("%(seconds)d Second", "%(seconds)d Seconds", round(x)) % {"seconds": round(x)}
-            except ZeroDivisionError:
+            else:
+                logging.debug("Speed is zero, cannot estimate ETA")
                 eta = None
 
             self._update_pb_text(size, units, eta)
             self._last_update = tm
 
-        self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
+        if self.total_bytes > 0:
+            self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
 
     def on_transfer_completed(self, _transfer: Transfer) -> None:
         del self.files[-1]

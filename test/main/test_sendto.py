@@ -53,3 +53,32 @@ class TestOnTransferProgressClock(TestCase):
         self.assertEqual(s.total_transferred, 2500)
         self.assertEqual(s._last_bytes, 2500)
         self.assertAlmostEqual(s.pb.props.fraction, 0.25)  # 2500 / 10000
+
+
+class TestOnTransferProgressGuards(TestCase):
+    @patch("blueman.main.Sendto.time.monotonic", return_value=1.0)
+    def test_zero_speed_no_zero_division(self, _monotonic: Mock) -> None:
+        s = make_sender()
+        s.speed.calc.return_value = 0.0
+        # ETA cannot be computed; must not raise, must log, must still render.
+        with self.assertLogs(level="DEBUG"):
+            s.on_transfer_progress(None, 100)
+        self.assertTrue(s.pb.set_text.called)
+
+    @patch("blueman.main.Sendto.time.monotonic", return_value=1.0)
+    def test_zero_total_bytes_no_zero_division(self, _monotonic: Mock) -> None:
+        s = make_sender()
+        s.total_bytes = 0
+        s.speed.calc.return_value = 0.0
+        # Must not raise ZeroDivisionError on the fraction update.
+        s.on_transfer_progress(None, 0)
+        # fraction left untouched (never divided by zero).
+
+    @patch("blueman.main.Sendto.time.monotonic", return_value=1.0)
+    def test_positive_speed_computes_eta(self, _monotonic: Mock) -> None:
+        s = make_sender()
+        s.total_bytes = 100000
+        s.speed.calc.return_value = 1000.0
+        s.on_transfer_progress(None, 1000)
+        # ETA computed, progress bar text updated.
+        self.assertTrue(s.pb.set_text.called)
