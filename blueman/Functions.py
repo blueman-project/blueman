@@ -50,6 +50,7 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
+from gi.repository import GLib
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
@@ -95,8 +96,17 @@ def launch(
     icon_name: str | None = None,
     name: str = "blueman",
     sn: bool = True,
+    args: Iterable[str] | None = None,
 ) -> bool:
-    """Launch a gui app with startup notification"""
+    """Launch a gui app with startup notification.
+
+    ``cmd`` is the program to run. Pass options as an ``args`` iterable rather
+    than embedding them in ``cmd``: each program token and argument is then
+    shell-quoted individually so argument boundaries follow an argv contract
+    instead of GLib command-line parsing. The legacy form, where ``cmd`` itself
+    is a full command line, is still accepted when ``args`` is omitted but is
+    deprecated.
+    """
     context = None
     gtktimestamp = Gtk.get_current_event_time()
     if gtktimestamp == 0:
@@ -122,6 +132,13 @@ def launch(
     else:
         command = pathlib.Path(cmd).expanduser()
 
+    if args is not None:
+        # argv contract: quote each token so spaces/quotes/separators in
+        # arguments cannot cross argument boundaries.
+        command_line = " ".join(GLib.shell_quote(arg) for arg in (command.as_posix(), *args))
+    else:
+        command_line = command.as_posix()
+
     if paths:
         files: list[Gio.File] | None = [Gio.File.new_for_commandline_arg(p) for p in paths]
     else:
@@ -130,7 +147,7 @@ def launch(
     if icon_name and context is not None:
         context.set_icon_name(icon_name)
 
-    appinfo = Gio.AppInfo.create_from_commandline(command.as_posix(), name, flags)
+    appinfo = Gio.AppInfo.create_from_commandline(command_line, name, flags)
     launched: bool = appinfo.launch(files, context)
 
     if not launched:
