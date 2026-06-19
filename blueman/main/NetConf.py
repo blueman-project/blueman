@@ -27,6 +27,13 @@ _PROC_PATH = pathlib.Path("/proc")
 
 
 def _is_running(name: str, pid: int) -> bool:
+    # A non-positive pid is never a single live process: /proc/0 does not exist
+    # and os.kill(0/-N, ...) targets a whole process group, so a 0 or negative
+    # value parsed from a corrupt pid file must not be treated as running (and
+    # must never reach the SIGTERM in clean_up).
+    if pid <= 0:
+        return False
+
     if _PROC_PATH.is_dir():
         path = _PROC_PATH / str(pid)
         if not path.exists():
@@ -36,10 +43,15 @@ def _is_running(name: str, pid: int) -> bool:
         except OSError:
             return False
 
-    # No procfs (non-Linux): we cannot match the binary name, so fall back to
-    # a plain liveness check via signal 0.
+    # No procfs (non-Linux): we cannot match the binary name, so fall back to a
+    # liveness check via signal 0. EPERM means the process exists but we may not
+    # signal it, which still counts as running; ESRCH means it is gone.
     try:
         os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
     except OSError:
         return False
     return True

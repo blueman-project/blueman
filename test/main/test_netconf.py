@@ -374,8 +374,56 @@ class TestIsRunning(TestCase):
             with patch("blueman.main.NetConf.os.kill") as kill_mock:
                 self.assertTrue(_is_running("dnsmasq", 123))
                 kill_mock.assert_called_once_with(123, 0)
+            with patch("blueman.main.NetConf.os.kill", side_effect=ProcessLookupError):
+                self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_no_procfs_eperm_counts_as_running(self) -> None:
+        # EPERM means the process exists but we may not signal it -> running.
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            with patch("blueman.main.NetConf.os.kill", side_effect=PermissionError):
+                self.assertTrue(_is_running("dnsmasq", 123))
+
+    def test_no_procfs_other_oserror_is_not_running(self) -> None:
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
             with patch("blueman.main.NetConf.os.kill", side_effect=OSError):
                 self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_non_positive_pid_rejected_with_procfs(self) -> None:
+        # Guard runs before any /proc lookup.
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            for pid in (0, -1, -1000):
+                with self.subTest(pid=pid):
+                    self.assertFalse(_is_running("dnsmasq", pid))
+
+    def test_non_positive_pid_never_calls_kill(self) -> None:
+        # os.kill(0/-N, ...) would target a whole process group; the guard must
+        # short-circuit before os.kill is ever reached on the no-procfs path.
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            with patch("blueman.main.NetConf.os.kill") as kill_mock:
+                for pid in (0, -1, -42):
+                    with self.subTest(pid=pid):
+                        self.assertFalse(_is_running("dnsmasq", pid))
+                kill_mock.assert_not_called()
+
+    def test_fuzz_returns_bool_never_raises(self) -> None:
+        # Whatever the pid and however os.kill behaves, _is_running returns a
+        # bool and never propagates an exception or signals a process group.
+        oserrors = [
+            ProcessLookupError(), PermissionError(), OSError(),
+            OSError(errno.ESRCH, "no such process"), OSError(errno.EPERM, "denied"),
+            OSError(errno.EINVAL, "invalid"),
+        ]
+        pids = [-(1 << 31), -1000, -1, 0, 1, 2, 123, 999999, 1 << 31]
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            for pid in pids:
+                for err in [None, *oserrors]:
+                    with self.subTest(pid=pid, err=type(err).__name__):
+                        side = None if err is None else err
+                        with patch("blueman.main.NetConf.os.kill", side_effect=side) as kill_mock:
+                            result = _is_running("dnsmasq", pid)
+                            self.assertIsInstance(result, bool)
+                            if pid <= 0:
+                                kill_mock.assert_not_called()
 
 
 class _CleanupHandler(DHCPHandler):
