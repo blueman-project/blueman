@@ -1,8 +1,10 @@
+import os
 import tempfile
 from pathlib import Path
 from unittest import TestCase
+from unittest.mock import patch
 
-from blueman.Functions import adapter_path_to_name, format_bytes, parse_os_release
+from blueman.Functions import adapter_path_to_name, format_bytes, have, parse_os_release
 
 
 class TestFormatBytes(TestCase):
@@ -102,3 +104,32 @@ class TestParseOsRelease(TestCase):
 
     def test_missing_file_returns_empty(self) -> None:
         self.assertEqual(parse_os_release(Path("/nonexistent/os-release")), {})
+
+
+class TestHave(TestCase):
+    @patch("blueman.Functions.shutil.which", return_value="/usr/bin/dhclient")
+    def test_found_returns_path(self, which: object) -> None:
+        result = have("dhclient")
+        self.assertEqual(result, Path("/usr/bin/dhclient"))
+
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_not_found_returns_none(self, which: object) -> None:
+        self.assertIsNone(have("nonexistent-binary"))
+
+    @patch.dict(os.environ, {"PATH": "/usr/bin"}, clear=True)
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_appends_sbin_dirs(self, which: object) -> None:
+        have("dhcpcd")
+        used_path = which.call_args.kwargs["path"]
+        parts = used_path.split(os.pathsep)
+        self.assertIn("/usr/bin", parts)
+        self.assertIn("/sbin", parts)
+        self.assertIn("/usr/sbin", parts)
+
+    @patch.dict(os.environ, {"PATH": "/sbin:/usr/sbin:/usr/bin"}, clear=True)
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_does_not_duplicate_existing_sbin(self, which: object) -> None:
+        have("udhcpc")
+        used_path = which.call_args.kwargs["path"]
+        self.assertEqual(used_path.split(os.pathsep).count("/sbin"), 1)
+        self.assertEqual(used_path.split(os.pathsep).count("/usr/sbin"), 1)
