@@ -293,8 +293,8 @@ class Sender(Gtk.Dialog):
             self.obex_manager.connect_signal('session-added', self.on_session_added)
             self.obex_manager.connect_signal('session-removed', self.on_session_removed)
         except GLib.Error as e:
-            if 'StartServiceByName' in e.message:
-                logging.debug(e.message)
+            if 'StartServiceByName' in str(e):
+                logging.debug(str(e))
                 parent = self.get_toplevel()
                 assert isinstance(parent, Gtk.Container)
                 d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
