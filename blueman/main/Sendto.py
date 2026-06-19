@@ -357,7 +357,9 @@ class Sender(Gtk.Dialog):
 
         self._last_bytes = progress
 
-        tm = time.time()
+        # Monotonic clock: a wall-clock step (NTP/manual) must not stall or spam
+        # the speed/ETA throttle.
+        tm = time.monotonic()
         if tm - self._last_update > 0.5:
             spd = self.speed.calc(self.total_transferred)
             (size, units) = format_bytes(spd)
