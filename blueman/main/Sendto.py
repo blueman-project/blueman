@@ -67,6 +67,12 @@ class SendTo:
 
         if len(adapters) == 0:
             logging.error("Error: No Adapters present")
+            dialog = ErrorDialog(
+                _("No Bluetooth adapters found"),
+                _("Connect or enable a Bluetooth adapter and try sending the file(s) again."),
+                icon_name="blueman")
+            dialog.run()
+            dialog.destroy()
             bmexit()
 
         if parsed_args.source is not None:
