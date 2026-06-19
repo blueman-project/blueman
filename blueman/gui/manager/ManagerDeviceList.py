@@ -391,7 +391,7 @@ class ManagerDeviceList(DeviceList):
         surface = self._make_device_icon(properties["Icon"], properties["Paired"], properties["Connected"],
                                          properties["Trusted"], properties["Blocked"])
         surface_object = SurfaceObject(surface)
-        address = cast(BtAddress, properties["Address"])
+        address = BtAddress(properties["Address"])
         display_name = self.make_display_name(device.display_name, klass_id, address)
         caption = self.make_caption(display_name, description, address)
 
@@ -406,7 +406,7 @@ class ManagerDeviceList(DeviceList):
     def _monitor_power_levels(
         self, tree_iter: Gtk.TreeIter, device: Device, properties: Mapping[str, Any] | None = None
     ) -> None:
-        address = cast(BtAddress, device["Address"] if properties is None else properties["Address"])
+        address = BtAddress(device["Address"] if properties is None else properties["Address"])
         if address in self._monitored_devices:
             return
 
@@ -479,7 +479,7 @@ class ManagerDeviceList(DeviceList):
         elif key == "Alias":
             properties = device.get_properties()
             properties[key] = value
-            address = cast(BtAddress, properties["Address"])
+            address = BtAddress(properties["Address"])
             c = self.make_caption(value, self.get_device_class(device, properties), address)
             name = self.make_display_name(device.display_name, properties["Class"], address)
             self.set(tree_iter, caption=c, alias=name)
@@ -498,7 +498,7 @@ class ManagerDeviceList(DeviceList):
             else:
                 self._disable_power_levels(tree_iter)
                 assert properties is not None
-                address = cast(BtAddress, properties["Address"])
+                address = BtAddress(properties["Address"])
                 monitored = self._monitored_devices.pop(address, None)
                 if monitored is not None:
                     monitored[1].deinit()
