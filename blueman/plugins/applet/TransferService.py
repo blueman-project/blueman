@@ -181,7 +181,8 @@ class TransferService(AppletPlugin):
             text = _('Configured directory for incoming files does not exist')
             secondary_text = _('Please make sure that directory "<b>%s</b>" exists or '
                                'configure it with blueman-services. Until then the default "%s" will be used')
-            self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
+            self._notification = Notification(text, secondary_text % (escape(self._config["shared-path"]),
+                                                                      escape(share_path.as_posix())),
                                               icon_name='blueman', timeout=30000,
                                               actions=[('reset', 'Reset to default')], actions_cb=on_reset)
             self._notification.show()

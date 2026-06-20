@@ -10,7 +10,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| sec-1 | open | S | `blueman/plugins/applet/TransferService.py:181-186` interpolates the user-configured shared path into notification markup without escaping it. A path containing Pango markup can alter the fallback notification body and may be interpreted by notification daemons that support body markup. | Escape `shared-path` and the fallback path before formatting, or use a plain-text notification path. Add a regression test with `<b>`, `&`, and quote characters. |
 
 ## input validation / command safety
 
