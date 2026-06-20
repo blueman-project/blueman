@@ -15,7 +15,6 @@ from blueman.bluez.obex.Transfer import Transfer
 from blueman.bluez.obex.Session import Session
 from blueman.Functions import launch
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
-from blueman.main.Applet import BluemanApplet
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -38,6 +37,9 @@ class PendingTransferDict(TypedDict):
 
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
+
+# Resolve (display name, trusted) for a device given its adapter source path and address.
+DeviceResolver = Callable[[str, BtAddress], tuple[str, bool]]
 
 _MAX_DESTINATION_ATTEMPTS = 10000
 
@@ -78,7 +80,7 @@ class ObexErrorCanceled(DbusError):
 class Agent(DbusService):
     __agent_path = ObjectPath('/org/bluez/obex/agent/blueman')
 
-    def __init__(self, applet: BluemanApplet):
+    def __init__(self, resolve_device: "DeviceResolver"):
         super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
 
         self.add_method("Release", (), "", self._release)
@@ -86,7 +88,7 @@ class Agent(DbusService):
         self.add_method("AuthorizePush", ("o",), "s", self._authorize_push, is_async=True)
         self.register()
 
-        self._applet = applet
+        self._resolve_device = resolve_device
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
         self._allowed_devices: set[BtAddress] = set()
@@ -113,11 +115,7 @@ class Agent(DbusService):
         size = transfer.size
 
         try:
-            adapter = self._applet.Manager.get_adapter(session.source)
-            device = self._applet.Manager.find_device(address, adapter.get_object_path())
-            assert device is not None
-            name = device.display_name
-            trusted = device["Trusted"]
+            name, trusted = self._resolve_device(session.source, address)
         except Exception as e:
             logging.exception(e)
             name = address
@@ -250,9 +248,15 @@ class TransferService(AppletPlugin):
 
         return path, error
 
+    def _resolve_device(self, source: str, address: BtAddress) -> tuple[str, bool]:
+        adapter = self.parent.Manager.get_adapter(source)
+        device = self.parent.Manager.find_device(address, adapter.get_object_path())
+        assert device is not None
+        return device.display_name, device["Trusted"]
+
     def _register_agent(self) -> None:
         if not self._agent:
-            self._agent = Agent(self.parent)
+            self._agent = Agent(self._resolve_device)
         self._agent.register_at_manager()
 
     def _unregister_agent(self) -> None:

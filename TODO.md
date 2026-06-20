@@ -100,7 +100,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 |----|--------|--------|-------------|-------|
 | dec-3 | open | S | `blueman/plugins/applet/AutoConnect.py:62` `self.parent.Manager.find_device()` reach-through | `parent.find_device_by_address(addr)` API |
 | dec-4 | open | S | `blueman/plugins/applet/KillSwitch.py:147-149` direct `self.parent.Plugins.StatusIcon/PowerManager` access | optional plugin query w/ fallback |
-| dec-1 | open | M | `blueman/plugins/applet/TransferService.py:17` reaches into `parent.Plugins`/`parent.Manager` | DI via plugin interface or signal |
 | dec-6 | open | S | `blueman/plugins/AppletPlugin.py:32` hardcoded fallback icon name | constant + GSettings override |
 | dec-5 | open | S | `blueman/plugins/manager/Services.py:82` plugin discovery via `ServicePlugin.__subclasses__()` | registry or `importlib.metadata.entry_points` |
 | dec-2 | open | M | `blueman/plugins/manager/Services.py:8` `ManagerPlugin` imports `ManagerDeviceMenu`, `MenuItemsProvider` (GUI layer) | event-based provider interface |

@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, patch
 from blueman.plugins.applet.TransferService import Agent, TransferService, reserve_destination
 
 
-def _make_agent() -> Agent:
+def _make_agent(resolve_device: object = None) -> Agent:
     agent = Agent.__new__(Agent)
     agent._allowed_devices = set()
     agent._notification = None
@@ -16,10 +16,7 @@ def _make_agent() -> Agent:
     config = MagicMock()
     config.__getitem__.side_effect = lambda key: True if key == "opp-accept" else ""
     agent._config = config
-    agent._applet = MagicMock()
-    device = agent._applet.Manager.find_device.return_value
-    device.display_name = "Phone"
-    device.__getitem__.side_effect = lambda key: True if key == "Trusted" else None
+    agent._resolve_device = resolve_device or (lambda source, address: ("Phone", True))
     return agent
 
 
@@ -129,8 +126,7 @@ class TestAllowedDeviceRemoval(TestCase):
 @patch("blueman.plugins.applet.TransferService.Transfer")
 class TestOverlappingPending(TestCase):
     def _setup_two_untrusted(self, agent: Agent, transfer_mock: MagicMock, session_mock: MagicMock) -> None:
-        device = agent._applet.Manager.find_device.return_value
-        device.__getitem__.side_effect = lambda key: False if key == "Trusted" else None
+        agent._resolve_device = lambda source, address: ("Phone", False)
 
         def make_transfer(obj_path: str) -> MagicMock:
             transfer = MagicMock()
@@ -225,3 +221,49 @@ class TestReserveDestination(TestCase):
                 # Reserved name must stay within the destination directory.
                 self.assertEqual(first.parent, self.dir)
                 self.assertEqual(second.parent, self.dir)
+
+
+class TestDeviceResolverInjection(TestCase):
+    def test_plugin_resolver_delegates_to_manager(self) -> None:
+        plugin = TransferService.__new__(TransferService)
+        plugin.parent = MagicMock()
+        device = plugin.parent.Manager.find_device.return_value
+        device.display_name = "Watch"
+        device.__getitem__.side_effect = lambda key: True if key == "Trusted" else None
+
+        name, trusted = plugin._resolve_device("/org/bluez/hci0", "AA:BB:CC:DD:EE:FF")
+
+        self.assertEqual((name, trusted), ("Watch", True))
+        plugin.parent.Manager.get_adapter.assert_called_once_with("/org/bluez/hci0")
+        plugin.parent.Manager.find_device.assert_called_once()
+
+    @patch("blueman.plugins.applet.TransferService.GLib")
+    @patch("blueman.plugins.applet.TransferService.Notification")
+    @patch("blueman.plugins.applet.TransferService.Session")
+    @patch("blueman.plugins.applet.TransferService.Transfer")
+    def test_agent_uses_injected_resolver(self, transfer_mock: MagicMock, session_mock: MagicMock,
+                                          _notification_mock: MagicMock, _glib_mock: MagicMock) -> None:
+        resolver = MagicMock(return_value=("Laptop", True))
+        agent = _make_agent(resolver)
+        _configure_transfer(transfer_mock, session_mock, address="AA:BB:CC:DD:EE:FF")
+
+        agent._authorize_push("/transfer", MagicMock(), MagicMock())
+
+        resolver.assert_called_once_with("/org/bluez/hci0", "AA:BB:CC:DD:EE:FF")
+        self.assertFalse(hasattr(agent, "_applet"))
+
+    @patch("blueman.plugins.applet.TransferService.GLib")
+    @patch("blueman.plugins.applet.TransferService.Notification")
+    @patch("blueman.plugins.applet.TransferService.Session")
+    @patch("blueman.plugins.applet.TransferService.Transfer")
+    def test_resolver_failure_falls_back_to_address(self, transfer_mock: MagicMock, session_mock: MagicMock,
+                                                    notification_mock: MagicMock, _glib_mock: MagicMock) -> None:
+        resolver = MagicMock(side_effect=RuntimeError("no device"))
+        agent = _make_agent(resolver)
+        agent._config.__getitem__.side_effect = lambda key: False  # force the confirmation path
+        _configure_transfer(transfer_mock, session_mock, address="AA:BB:CC:DD:EE:FF", size=10)
+
+        agent._authorize_push("/transfer", MagicMock(), MagicMock())
+
+        body = notification_mock.call_args.args[1]
+        self.assertIn("AA:BB:CC:DD:EE:FF", body)  # falls back to the raw address as the display name
