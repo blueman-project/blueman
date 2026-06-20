@@ -62,7 +62,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
         applet = AppletService()
         powermanager = AppletPowerManagerService()
     except DBusProxyFailed:
-        logging.error("Blueman applet needs to be running", exc_info=True)
+        logging.exception("Blueman applet needs to be running")
         exitfunc()
         return
 
@@ -255,7 +255,7 @@ def set_proc_title(name: str | None = None) -> int:
         buff.value = name.encode("UTF-8")
         ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
     except (OSError, AttributeError):
-        logging.error("Failed to set process title", exc_info=True)
+        logging.exception("Failed to set process title")
         return -1
 
     if ret != 0:
@@ -380,7 +380,7 @@ def get_local_interfaces() -> dict[str, tuple[str, str | None]]:
                 mask = _netmask_for_ifacename(name, sock)
                 ip_dict[name] = (ipaddr, mask)
     except OSError:
-        logging.error('Socket creation failed', exc_info=True)
+        logging.exception('Socket creation failed')
         return {}
 
     return ip_dict
