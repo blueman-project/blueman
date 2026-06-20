@@ -36,6 +36,8 @@ class PluginManager(GObject.GObject, Generic[_T]):
         self._plugins: dict[str, _T] = {}
         self.__classes: dict[str, type[_T]] = {}
         self.__loaded: list[str] = []
+        # Per-manager unloadable flags; never mutate the shared class attribute.
+        self.__unloadable: dict[str, bool] = {}
         self.parent = parent
 
         self.module_path = module_path
@@ -91,6 +93,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
 
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
+            self.__unloadable.setdefault(cls.__name__, cls.__unloadable__)
             if cls.__name__ not in self.__deps:
                 self.__deps[cls.__name__] = []
 
@@ -113,11 +116,11 @@ class PluginManager(GObject.GObject, Generic[_T]):
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
                 # plugins that are required by not unloadable plugins are not unloadable too
-                if not self.__classes[dep].__unloadable__:
-                    cls.__unloadable__ = False
+                if not self.is_unloadable(dep):
+                    self.__unloadable[name] = False
 
             if (cls.__autoload__ or (cl and cls.__name__ in cl)) and \
-                    not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
+                    not (self.is_unloadable(cls.__name__) and cl and "!" + cls.__name__ in cl):
                 try:
                     self.__load_plugin(cls)
                 except LoadException as e:
@@ -162,7 +165,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
             inst._load()
         except Exception:
             logging.error(f"Failed to load {cls.__name__}", exc_info=True)
-            if not cls.__unloadable__:
+            if not self.is_unloadable(cls.__name__):
                 bmexit()
 
             raise  # NOTE TO SELF: might cause bugs
@@ -179,8 +182,13 @@ class PluginManager(GObject.GObject, Generic[_T]):
         except KeyError:
             return self.__dict__[key]
 
+    def is_unloadable(self, name: str) -> bool:
+        if name in self.__unloadable:
+            return self.__unloadable[name]
+        return self.__classes[name].__unloadable__
+
     def unload_plugin(self, name: str) -> None:
-        if self.__classes[name].__unloadable__:
+        if self.is_unloadable(name):
             for d in self.__deps[name]:
                 self.unload_plugin(d)
 
@@ -258,8 +266,9 @@ class PersistentPluginManager(PluginManager[_T]):
                 item = item.lstrip("!")
 
             try:
-                cls: type[BasePlugin] = self.get_classes()[item]
-                if not cls.__unloadable__ and disable:
+                if item not in self.get_classes():
+                    raise KeyError(item)
+                if not self.is_unloadable(item) and disable:
                     logging.warning(f"warning: {item} is not unloadable")
                 elif item in self.get_loaded() and disable:
                     self.unload_plugin(item)

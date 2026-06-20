@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from blueman.main.PluginManager import PluginManager, LoadException
 from blueman.plugins.errors import PluginError, PluginDependencyError
@@ -92,3 +92,41 @@ class TestGetPlugin(TestCase):
         manager = _manager()
         with self.assertRaises(KeyError):
             manager.get_plugin("Nope")
+
+
+class TestPerInstanceUnloadable(TestCase):
+    def test_is_unloadable_defaults_to_class_attribute(self) -> None:
+        manager = _manager()
+        fixed = _plugin_class("Fixed", __unloadable__=False)
+        flex = _plugin_class("Flex", __unloadable__=True)
+        _register(manager, fixed)
+        _register(manager, flex)
+        self.assertFalse(manager.is_unloadable("Fixed"))
+        self.assertTrue(manager.is_unloadable("Flex"))
+
+    def test_per_instance_flag_does_not_mutate_class(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Flex", __unloadable__=True)
+        _register(manager, cls)
+        manager._PluginManager__unloadable["Flex"] = False
+        self.assertFalse(manager.is_unloadable("Flex"))
+        self.assertTrue(cls.__unloadable__)  # the shared class attribute is untouched
+
+    def test_dependency_rule_is_per_manager_not_global(self) -> None:
+        # A (non-unloadable) depends on B -> B becomes non-unloadable, but only
+        # in this manager's flags; the B class attribute must stay True so a
+        # second manager (or the class itself) is unaffected.
+        base = type("UniqueBase", (_Plugin,), {})
+        b = type("B", (base,), {"__autoload__": False})
+        a = type("A", (base,), {"__unloadable__": False, "__depends__": ["B"], "__autoload__": False})
+        self.assertIsNotNone(a)  # keep A alive so __subclasses__() sees the dependent
+
+        module_path = MagicMock()
+        module_path.__file__ = "/x"
+        module_path.__name__ = "m"
+        manager: PluginManager = PluginManager(base, module_path, MagicMock())
+        with patch("blueman.main.PluginManager.plugin_names", return_value=[]):
+            manager.load_plugin()
+
+        self.assertFalse(manager.is_unloadable("B"))  # demoted by non-unloadable dependent A
+        self.assertTrue(b.__unloadable__)             # class attribute never mutated
