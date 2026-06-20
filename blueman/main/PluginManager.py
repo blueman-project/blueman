@@ -335,23 +335,25 @@ class PersistentPluginManager(PluginManager[_T]):
     def on_property_changed(self, config: Gio.Settings, key: str) -> None:
         for item in config[key]:
             disable = item.startswith("!")
-            if disable:
-                item = item.lstrip("!")
-
+            name = item.lstrip("!") if disable else item
             try:
-                if item not in self.get_classes():
-                    raise KeyError(item)
-                if not self.is_unloadable(item) and disable:
-                    logging.warning(f"warning: {item} is not unloadable")
-                elif item in self.get_loaded() and disable:
-                    self.unload_plugin(item)
-                elif item not in self.get_loaded() and not disable:
-                    try:
-                        self.load_plugin(item, user_action=True)
-                    except Exception as e:
-                        logging.exception(e)
-                        self.set_config(item, False)
-
+                self.__apply_config_state(name, disable)
             except KeyError:
-                logging.warning(f"warning: Plugin {item} not found")
-                continue
+                logging.warning(f"warning: Plugin {name} not found")
+
+    def __apply_config_state(self, item: str, disable: bool) -> None:
+        if item not in self.get_classes():
+            raise KeyError(item)
+        if not self.is_unloadable(item) and disable:
+            logging.warning(f"warning: {item} is not unloadable")
+        elif item in self.get_loaded() and disable:
+            self.unload_plugin(item)
+        elif item not in self.get_loaded() and not disable:
+            self.__enable_from_config(item)
+
+    def __enable_from_config(self, item: str) -> None:
+        try:
+            self.load_plugin(item, user_action=True)
+        except Exception as e:
+            logging.exception(e)
+            self.set_config(item, False)
