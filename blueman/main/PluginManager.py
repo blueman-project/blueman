@@ -23,6 +23,34 @@ class LoadException(Exception):
 _T = TypeVar("_T", bound=BasePlugin)
 
 
+class PluginDependencyResolver(Generic[_T]):
+    """Owns the dependency/conflict graph and answers load-ordering queries.
+
+    Pure graph queries only; performing side effects (loading, unloading,
+    enabling) stays with the manager that owns the live plugin state.
+    """
+
+    def __init__(self, classes: dict[str, type[_T]], conflicts: dict[str, list[str]]) -> None:
+        self.__classes = classes
+        self.__conflicts = conflicts
+
+    def required(self, cls: type[_T]) -> list[type[_T]]:
+        """Dependency classes that must load before cls, in declaration order.
+
+        Raises PluginDependencyError if a declared dependency is unregistered.
+        """
+        result = []
+        for dep in cls.__depends__:
+            if dep not in self.__classes:
+                raise PluginDependencyError(f"Could not satisfy dependency {cls.__name__} -> {dep}")
+            result.append(self.__classes[dep])
+        return result
+
+    def conflicts(self, cls: type[_T]) -> list[tuple[str, type[_T] | None]]:
+        """Conflicting (name, registered class or None) pairs declared against cls."""
+        return [(cfl, self.__classes.get(cfl)) for cfl in self.__conflicts[cls.__name__]]
+
+
 class PluginManager(GObject.GObject, Generic[_T]):
     __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
@@ -38,6 +66,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
         self.__loaded: list[str] = []
         # Per-manager unloadable flags; never mutate the shared class attribute.
         self.__unloadable: dict[str, bool] = {}
+        self.__resolver: PluginDependencyResolver[_T] = PluginDependencyResolver(self.__classes, self.__cfls)
         self.parent = parent
 
         self.module_path = module_path
@@ -136,29 +165,38 @@ class PluginManager(GObject.GObject, Generic[_T]):
         if cls.__name__ in self.__loaded:
             return
 
-        for dep in cls.__depends__:
-            if dep not in self.__loaded:
-                if dep not in self.__classes:
-                    raise PluginDependencyError(f"Could not satisfy dependency {cls.__name__} -> {dep}")
+        self.__load_dependencies(cls)
+        if not self.__resolve_conflicts(cls):
+            return
+        self.__activate(cls)
+
+    def __load_dependencies(self, cls: type[_T]) -> None:
+        for dep_cls in self.__resolver.required(cls):
+            if dep_cls.__name__ not in self.__loaded:
                 try:
-                    self.__load_plugin(self.__classes[dep])
+                    self.__load_plugin(dep_cls)
                 except Exception as e:
                     logging.exception(e)
                     raise
 
-        for cfl in self.__cfls[cls.__name__]:
-            if cfl in self.__classes:
-                if self.__classes[cfl].__priority__ > cls.__priority__ and not self.disable_plugin(cfl) \
+    def __resolve_conflicts(self, cls: type[_T]) -> bool:
+        """Return True if cls may load. Unloads a lower-priority conflict when it
+        should yield; raises LoadException when cls itself must yield."""
+        for cfl, cfl_cls in self.__resolver.conflicts(cls):
+            if cfl_cls is not None:
+                if cfl_cls.__priority__ > cls.__priority__ and not self.disable_plugin(cfl) \
                         and not self.enable_plugin(cls.__name__):
                     logging.warning(f"Not loading {cls.__name__} because its conflict has higher priority")
-                    return
+                    return False
 
             if cfl in self.__loaded:
                 if cls.__priority__ > self.__classes[cfl].__priority__ and not self.enable_plugin(cfl):
                     self.unload_plugin(cfl)
                 else:
                     raise LoadException(f"Not loading conflicting plugin {cls.__name__} due to lower priority")
+        return True
 
+    def __activate(self, cls: type[_T]) -> None:
         logging.info(f"loading {cls}")
         inst = cls(self.parent)
         try:

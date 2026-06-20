@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
-from blueman.main.PluginManager import PluginManager, LoadException
+from blueman.main.PluginManager import PluginManager, LoadException, PluginDependencyResolver
 from blueman.plugins.errors import PluginError, PluginDependencyError
 
 
@@ -130,3 +130,76 @@ class TestPerInstanceUnloadable(TestCase):
 
         self.assertFalse(manager.is_unloadable("B"))  # demoted by non-unloadable dependent A
         self.assertTrue(b.__unloadable__)             # class attribute never mutated
+
+
+class TestDependencyResolver(TestCase):
+    def test_required_returns_dependency_classes_in_order(self) -> None:
+        a = _plugin_class("A")
+        b = _plugin_class("B")
+        dependent = _plugin_class("Dependent", __depends__=["A", "B"])
+        resolver: PluginDependencyResolver = PluginDependencyResolver({"A": a, "B": b, "Dependent": dependent}, {})
+        self.assertEqual(resolver.required(dependent), [a, b])
+
+    def test_required_raises_on_unregistered_dependency(self) -> None:
+        dependent = _plugin_class("Dependent", __depends__=["Gone"])
+        resolver: PluginDependencyResolver = PluginDependencyResolver({"Dependent": dependent}, {})
+        with self.assertRaises(PluginDependencyError):
+            resolver.required(dependent)
+
+    def test_conflicts_returns_registered_and_unregistered_pairs(self) -> None:
+        a = _plugin_class("A")
+        resolver: PluginDependencyResolver = PluginDependencyResolver({"A": a}, {"A": ["A", "Ghost"]})
+        self.assertEqual(resolver.conflicts(a), [("A", a), ("Ghost", None)])
+
+
+class TestLoadOrderingAndConflicts(TestCase):
+    def test_dependency_is_loaded_before_dependent(self) -> None:
+        manager = _manager()
+        dep = _plugin_class("Dep")
+        main_cls = _plugin_class("Main", __depends__=["Dep"])
+        _register(manager, dep)
+        _register(manager, main_cls)
+        manager.load_plugin("Main")
+        self.assertEqual(manager.get_loaded(), ["Dep", "Main"])
+
+    def test_higher_priority_plugin_unloads_lower_priority_conflict(self) -> None:
+        manager = _manager()
+        manager.enable_plugin = lambda plugin: False  # type: ignore[method-assign]
+        low = _plugin_class("Low", __priority__=0)
+        high = _plugin_class("High", __priority__=10)
+        _register(manager, low)
+        _register(manager, high, cfls=["Low"])
+        manager.load_plugin("Low")
+        manager.load_plugin("High")
+        self.assertIn("High", manager.get_loaded())
+        self.assertNotIn("Low", manager.get_loaded())
+
+    def test_already_loaded_plugin_is_not_reloaded(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Once")
+        _register(manager, cls)
+        manager.load_plugin("Once")
+        first = manager.get_plugin("Once")
+        manager.load_plugin("Once")
+        self.assertIs(manager.get_plugin("Once"), first)
+
+
+class TestActivateFailure(TestCase):
+    def test_unloadable_plugin_load_failure_reraises(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Boom", __unloadable__=True)
+        cls._load = lambda self: (_ for _ in ()).throw(RuntimeError("nope"))  # type: ignore[assignment]
+        _register(manager, cls)
+        with self.assertRaises(RuntimeError):
+            manager._PluginManager__load_plugin(cls)
+        self.assertNotIn("Boom", manager.get_loaded())
+
+    @patch("blueman.main.PluginManager.bmexit")
+    def test_non_unloadable_plugin_load_failure_calls_bmexit(self, bmexit_mock: MagicMock) -> None:
+        manager = _manager()
+        cls = _plugin_class("Critical", __unloadable__=False)
+        cls._load = lambda self: (_ for _ in ()).throw(RuntimeError("nope"))  # type: ignore[assignment]
+        _register(manager, cls)
+        with self.assertRaises(RuntimeError):
+            manager._PluginManager__load_plugin(cls)
+        bmexit_mock.assert_called_once()
