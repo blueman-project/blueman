@@ -267,3 +267,214 @@ class TestDeviceResolverInjection(TestCase):
 
         body = notification_mock.call_args.args[1]
         self.assertIn("AA:BB:CC:DD:EE:FF", body)  # falls back to the raw address as the display name
+
+
+@patch("blueman.plugins.applet.TransferService.Notification")
+class TestTransferCompleted(TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        root = Path(self._tmp.name)
+        self.dest_dir = root / "Downloads"
+        self.dest_dir.mkdir()
+        self.src = root / "incoming.bin"
+        self.src.write_text("payload")
+
+    def _plugin(self, size: int = 10) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        plugin._agent = MagicMock()
+        plugin._agent.transfers = {"/t": {"path": self.src, "size": size, "name": "Phone"}}
+        plugin._normal_transfers = 0
+        plugin._silent_transfers = 1
+        plugin._notification = None
+        return plugin
+
+    def test_unauthorized_transfer_ignored(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin()
+        plugin._agent.transfers = {}
+        plugin._on_transfer_completed(MagicMock(), "/t", True)
+        notification_mock.assert_not_called()
+
+    def test_success_moves_file_and_notifies(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin()
+        with patch.object(TransferService, "_make_share_path", return_value=(self.dest_dir, False)):
+            plugin._on_transfer_completed(MagicMock(), "/t", True)
+        self.assertTrue((self.dest_dir / "incoming.bin").exists())
+        self.assertFalse(self.src.exists())
+        notification_mock.assert_called_once()
+        self.assertNotIn("/t", plugin._agent.transfers)
+
+    def test_failed_move_cleans_placeholder_and_decrements(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin(size=10)
+        with patch.object(TransferService, "_make_share_path", return_value=(self.dest_dir, False)), \
+                patch("blueman.plugins.applet.TransferService.shutil.move", side_effect=OSError("boom")):
+            plugin._on_transfer_completed(MagicMock(), "/t", True)
+        self.assertEqual(list(self.dest_dir.iterdir()), [])  # reserved placeholder cleaned up
+        self.assertEqual(plugin._silent_transfers, 0)
+        self.assertNotIn("/t", plugin._agent.transfers)
+
+    def test_failed_move_decrements_normal_for_large_file(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin(size=400000)
+        plugin._normal_transfers = 1
+        plugin._silent_transfers = 0
+        with patch.object(TransferService, "_make_share_path", return_value=(self.dest_dir, False)), \
+                patch("blueman.plugins.applet.TransferService.shutil.move", side_effect=PermissionError):
+            plugin._on_transfer_completed(MagicMock(), "/t", False)
+        self.assertEqual(plugin._normal_transfers, 0)
+
+
+class TestTransferStarted(TestCase):
+    def _plugin(self, size: int) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        plugin._agent = MagicMock()
+        plugin._agent.transfers = {"/t": {"path": Path("/x"), "size": size, "name": "Phone"}}
+        plugin._normal_transfers = 0
+        plugin._silent_transfers = 0
+        return plugin
+
+    def test_large_file_counts_as_normal(self) -> None:
+        plugin = self._plugin(400000)
+        plugin._on_transfer_started(MagicMock(), "/t")
+        self.assertEqual((plugin._normal_transfers, plugin._silent_transfers), (1, 0))
+
+    def test_small_file_counts_as_silent(self) -> None:
+        plugin = self._plugin(10)
+        plugin._on_transfer_started(MagicMock(), "/t")
+        self.assertEqual((plugin._normal_transfers, plugin._silent_transfers), (0, 1))
+
+    def test_unauthorized_transfer_ignored(self) -> None:
+        plugin = self._plugin(10)
+        plugin._agent = None
+        plugin._on_transfer_started(MagicMock(), "/t")  # must not raise
+
+
+@patch("blueman.plugins.applet.TransferService.Notification")
+class TestSessionRemoved(TestCase):
+    def _plugin(self, silent: int, normal: int) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        plugin._silent_transfers = silent
+        plugin._normal_transfers = normal
+        plugin._notification = None
+        return plugin
+
+    def test_no_silent_transfers_does_nothing(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin(silent=0, normal=0)
+        plugin._on_session_removed(MagicMock(), "/sess")
+        notification_mock.assert_not_called()
+
+    def test_only_silent_transfers_notifies(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin(silent=2, normal=0)
+        with patch.object(TransferService, "_make_share_path", return_value=(Path("/dl"), False)):
+            plugin._on_session_removed(MagicMock(), "/sess")
+        notification_mock.assert_called_once()
+
+    def test_mixed_transfers_notifies_more_variant(self, notification_mock: MagicMock) -> None:
+        plugin = self._plugin(silent=1, normal=1)
+        with patch.object(TransferService, "_make_share_path", return_value=(Path("/dl"), False)):
+            plugin._on_session_removed(MagicMock(), "/sess")
+        notification_mock.assert_called_once()
+
+
+class TestAgentControl(TestCase):
+    def test_cancel_closes_notification_and_raises(self) -> None:
+        from blueman.plugins.applet.TransferService import ObexErrorCanceled
+        agent = _make_agent()
+        agent._notification = MagicMock()
+        with self.assertRaises(ObexErrorCanceled):
+            agent._cancel()
+        agent._notification.close.assert_called_once()
+
+    def test_release_raises(self) -> None:
+        agent = _make_agent()
+        with self.assertRaises(Exception):
+            agent._release()
+
+
+@patch("blueman.plugins.applet.TransferService.GLib")
+class TestMakeSharePath(TestCase):
+    def _plugin(self, configured: str) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        config = MagicMock()
+        config.__getitem__.side_effect = lambda key: configured
+        config.__setitem__ = MagicMock()
+        plugin._config = config
+        return plugin
+
+    def test_empty_config_uses_download_dir(self, glib_mock: MagicMock) -> None:
+        glib_mock.get_user_special_dir.return_value = "/dl"
+        plugin = self._plugin("")
+        path, error = plugin._make_share_path()
+        self.assertEqual(path, Path("/dl"))
+        self.assertFalse(error)
+
+    def test_invalid_dir_flags_error(self, glib_mock: MagicMock) -> None:
+        glib_mock.get_user_special_dir.return_value = "/dl"
+        plugin = self._plugin("/does/not/exist/here")
+        path, error = plugin._make_share_path()
+        self.assertEqual(path, Path("/dl"))
+        self.assertTrue(error)
+
+    def test_valid_dir_used(self, glib_mock: MagicMock) -> None:
+        glib_mock.get_user_special_dir.return_value = "/dl"
+        with tempfile.TemporaryDirectory() as tmp:
+            plugin = self._plugin(tmp)
+            path, error = plugin._make_share_path()
+            self.assertEqual(path, Path(tmp))
+            self.assertFalse(error)
+
+
+@patch("blueman.plugins.applet.TransferService.GLib")
+@patch("blueman.plugins.applet.TransferService.Notification")
+@patch("blueman.plugins.applet.TransferService.Session")
+@patch("blueman.plugins.applet.TransferService.Transfer")
+class TestAutoAccept(TestCase):
+    def test_trusted_large_file_auto_accepts_with_notification(self, transfer_mock: MagicMock, session_mock: MagicMock,
+                                                               notification_mock: MagicMock,
+                                                               _glib_mock: MagicMock) -> None:
+        agent = _make_agent()  # default resolver -> trusted
+        _configure_transfer(transfer_mock, session_mock, address="AA:BB:CC:DD:EE:FF", size=400001)
+        ok = MagicMock()
+        agent._authorize_push("/t", ok, MagicMock())
+        ok.assert_called_once()
+        self.assertIn("/t", agent.transfers)
+        self.assertIn("AA:BB:CC:DD:EE:FF", agent._allowed_devices)
+        notification_mock.assert_called_once()
+
+
+class TestRegisterAgent(TestCase):
+    @patch("blueman.plugins.applet.TransferService.Agent")
+    def test_register_then_unregister(self, agent_cls: MagicMock) -> None:
+        plugin = TransferService.__new__(TransferService)
+        plugin._agent = None
+        plugin._register_agent()
+        agent_cls.assert_called_once_with(plugin._resolve_device)
+        agent_cls.return_value.register_at_manager.assert_called_once()
+        agent = plugin._agent
+        plugin._unregister_agent()
+        agent.unregister_from_manager.assert_called_once()
+        agent.unregister.assert_called_once()
+        self.assertIsNone(plugin._agent)
+
+
+@patch("blueman.plugins.applet.TransferService.launch")
+@patch("blueman.plugins.applet.TransferService.Notification")
+class TestOpenAction(TestCase):
+    def test_open_action_launches_xdg_open(self, notification_mock: MagicMock, launch_mock: MagicMock) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            dest_dir = Path(tmp)
+            src = dest_dir / "incoming.bin"
+            src.write_text("x")
+            plugin = TransferService.__new__(TransferService)
+            plugin._agent = MagicMock()
+            plugin._agent.transfers = {"/t": {"path": src, "size": 10, "name": "Phone"}}
+            plugin._normal_transfers = 0
+            plugin._silent_transfers = 1
+            plugin._notification = None
+            notification_mock.return_value.actions_supported = True
+            dst = dest_dir / "out"
+            dst.mkdir()
+            with patch.object(TransferService, "_make_share_path", return_value=(dst, False)):
+                plugin._on_transfer_completed(MagicMock(), "/t", True)
+            on_open = notification_mock.return_value.add_action.call_args.args[2]
+            on_open("open")
+            launch_mock.assert_called_once()
