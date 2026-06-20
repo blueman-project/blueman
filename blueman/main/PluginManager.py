@@ -61,8 +61,8 @@ class PluginManager(GObject.GObject, Generic[_T]):
         if name:
             try:
                 self.__load_plugin(self.__classes[name])
-            except LoadException:
-                pass
+            except LoadException as e:
+                logging.warning(f"Not loading plugin {name}: {e}")
             except Exception:
                 if user_action:
                     d = ErrorDialog(_("<b>An error has occurred while loading "
@@ -120,8 +120,8 @@ class PluginManager(GObject.GObject, Generic[_T]):
                     not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
                 try:
                     self.__load_plugin(cls)
-                except LoadException:
-                    pass
+                except LoadException as e:
+                    logging.warning(f"Not loading plugin {cls.__name__}: {e}")
 
     def disable_plugin(self, plugin: str) -> bool:
         return False
