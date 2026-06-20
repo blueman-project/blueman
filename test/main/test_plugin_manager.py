@@ -2,6 +2,7 @@ from unittest import TestCase
 from unittest.mock import MagicMock
 
 from blueman.main.PluginManager import PluginManager, LoadException
+from blueman.plugins.errors import PluginError, PluginDependencyError
 
 
 class _Plugin:
@@ -51,3 +52,22 @@ class TestLoadExceptionLogged(TestCase):
 
         self.assertTrue(any("Low" in line for line in cm.output))
         self.assertNotIn("Low", manager.get_loaded())
+
+
+class TestErrorTypes(TestCase):
+    def test_missing_dependency_raises_dependency_error(self) -> None:
+        manager = _manager()
+        dependent = _plugin_class("Dependent", __depends__=["Absent"])
+        _register(manager, dependent)
+        with self.assertRaises(PluginDependencyError):
+            manager._PluginManager__load_plugin(dependent)
+
+    def test_unload_non_unloadable_raises_plugin_error(self) -> None:
+        manager = _manager()
+        fixed = _plugin_class("Fixed", __unloadable__=False)
+        _register(manager, fixed)
+        with self.assertRaises(PluginError):
+            manager.unload_plugin("Fixed")
+
+    def test_dependency_error_is_a_plugin_error(self) -> None:
+        self.assertTrue(issubclass(PluginDependencyError, PluginError))

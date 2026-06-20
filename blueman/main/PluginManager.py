@@ -13,7 +13,7 @@ from blueman.Functions import bmexit, plugin_names
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.plugins.BasePlugin import BasePlugin
 from blueman.bluemantyping import GSignals
-from blueman.plugins.errors import PluginException
+from blueman.plugins.errors import PluginException, PluginError, PluginDependencyError
 
 
 class LoadException(Exception):
@@ -136,7 +136,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
         for dep in cls.__depends__:
             if dep not in self.__loaded:
                 if dep not in self.__classes:
-                    raise Exception(f"Could not satisfy dependency {cls.__name__} -> {dep}")
+                    raise PluginDependencyError(f"Could not satisfy dependency {cls.__name__} -> {dep}")
                 try:
                     self.__load_plugin(self.__classes[dep])
                 except Exception as e:
@@ -197,7 +197,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
                     self.emit("plugin-unloaded", name)
 
         else:
-            raise Exception(f"Plugin {name} is not unloadable")
+            raise PluginError(f"Plugin {name} is not unloadable")
 
     def get_plugins(self) -> dict[str, _T]:
         return self._plugins
