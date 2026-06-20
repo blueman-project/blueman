@@ -1,0 +1,311 @@
+import logging
+import os
+import tempfile
+from pathlib import Path
+from unittest import TestCase
+from unittest.mock import MagicMock, patch
+
+from gi.repository import GLib
+
+from blueman.Constants import BIN_DIR
+from blueman.Functions import (
+    adapter_path_to_name,
+    check_bluetooth_status,
+    create_logger,
+    create_parser,
+    format_bytes,
+    have,
+    launch,
+    parse_os_release,
+    set_proc_title,
+)
+from blueman.main.DBusProxies import DBusProxyFailed
+
+
+class TestFormatBytes(TestCase):
+    def test_zero(self) -> None:
+        self.assertEqual(format_bytes(0), (0.0, "B"))
+
+    def test_sub_kilobyte(self) -> None:
+        self.assertEqual(format_bytes(512), (512.0, "B"))
+        self.assertEqual(format_bytes(1023), (1023.0, "B"))
+
+    def test_kilobyte_boundary(self) -> None:
+        # Regression: exact 1024 must be 1.0 KB, not a fraction of a GB.
+        self.assertEqual(format_bytes(1024), (1.0, "KB"))
+
+    def test_megabyte_boundary(self) -> None:
+        self.assertEqual(format_bytes(1024 * 1024), (1.0, "MB"))
+
+    def test_gigabyte_boundary(self) -> None:
+        self.assertEqual(format_bytes(1024 * 1024 * 1024), (1.0, "GB"))
+
+    def test_mid_band_values(self) -> None:
+        self.assertEqual(format_bytes(1536), (1.5, "KB"))
+        self.assertEqual(format_bytes(1024 * 1024 * 3), (3.0, "MB"))
+
+    def test_huge_value(self) -> None:
+        ret, suffix = format_bytes(5 * 1024 ** 4)
+        self.assertEqual(suffix, "GB")
+        self.assertEqual(ret, 5 * 1024)
+
+    def test_accepts_float_and_int(self) -> None:
+        self.assertEqual(format_bytes(2048.0), (2.0, "KB"))
+        self.assertEqual(format_bytes(2048), (2.0, "KB"))
+
+
+class TestAdapterPathToName(TestCase):
+    def test_normal_path(self) -> None:
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0"), "hci0")
+
+    def test_none_and_empty(self) -> None:
+        self.assertIsNone(adapter_path_to_name(None))
+        self.assertIsNone(adapter_path_to_name(""))
+
+    def test_no_hci(self) -> None:
+        self.assertIsNone(adapter_path_to_name("/org/bluez"))
+        self.assertIsNone(adapter_path_to_name("no-match"))
+
+    def test_case_sensitive(self) -> None:
+        # The pattern matches lowercase "hci" only.
+        self.assertIsNone(adapter_path_to_name("HCI0"))
+
+    def test_trailing_segments(self) -> None:
+        # Device sub-paths still resolve to the adapter name.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0/dev_AA_BB_CC_DD_EE_FF"), "hci0")
+
+    def test_zero_digits_allowed(self) -> None:
+        # The `[0-9]*` quantifier permits an "hci" with no index.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci"), "hci")
+        self.assertEqual(adapter_path_to_name("hci"), "hci")
+
+    def test_greedy_picks_last_occurrence(self) -> None:
+        # Greedy `.*` consumes up to the final "hci" match.
+        self.assertEqual(adapter_path_to_name("/org/bluez/hci0hci1"), "hci1")
+
+    def test_embedded_in_other_text(self) -> None:
+        self.assertEqual(adapter_path_to_name("prefix-hci99-suffix"), "hci99")
+
+
+class TestParseOsRelease(TestCase):
+    def _parse(self, content: str) -> dict[str, str]:
+        with tempfile.NamedTemporaryFile("w", suffix="os-release", delete=False) as f:
+            f.write(content)
+            path = Path(f.name)
+        try:
+            return parse_os_release(path)
+        finally:
+            path.unlink()
+
+    def test_basic_keys(self) -> None:
+        result = self._parse('NAME="Foo"\nVERSION="1.0"\n')
+        self.assertEqual(result, {"NAME": "Foo", "VERSION": "1.0"})
+
+    def test_value_with_equals_sign(self) -> None:
+        # Regression (data-3): a quoted value containing "=" must survive.
+        result = self._parse('PRETTY_NAME="Name=Variant"\n')
+        self.assertEqual(result["PRETTY_NAME"], "Name=Variant")
+
+    def test_unquoted_value(self) -> None:
+        self.assertEqual(self._parse("ID=arch\n"), {"ID": "arch"})
+
+    def test_comments_and_blank_lines_skipped(self) -> None:
+        result = self._parse("# comment\n\n   \nID=foo\n")
+        self.assertEqual(result, {"ID": "foo"})
+
+    def test_line_without_equals_skipped(self) -> None:
+        result = self._parse("garbage line\nID=foo\n")
+        self.assertEqual(result, {"ID": "foo"})
+
+    def test_missing_file_returns_empty(self) -> None:
+        self.assertEqual(parse_os_release(Path("/nonexistent/os-release")), {})
+
+
+class TestHave(TestCase):
+    @patch("blueman.Functions.shutil.which", return_value="/usr/bin/dhclient")
+    def test_found_returns_path(self, which: object) -> None:
+        result = have("dhclient")
+        self.assertEqual(result, Path("/usr/bin/dhclient"))
+
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_not_found_returns_none(self, which: object) -> None:
+        self.assertIsNone(have("nonexistent-binary"))
+
+    @patch.dict(os.environ, {"PATH": "/usr/bin"}, clear=True)
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_appends_sbin_dirs(self, which: object) -> None:
+        have("dhcpcd")
+        used_path = which.call_args.kwargs["path"]
+        parts = used_path.split(os.pathsep)
+        self.assertIn("/usr/bin", parts)
+        self.assertIn("/sbin", parts)
+        self.assertIn("/usr/sbin", parts)
+
+    @patch.dict(os.environ, {"PATH": "/sbin:/usr/sbin:/usr/bin"}, clear=True)
+    @patch("blueman.Functions.shutil.which", return_value=None)
+    def test_does_not_duplicate_existing_sbin(self, which: object) -> None:
+        have("udhcpc")
+        used_path = which.call_args.kwargs["path"]
+        self.assertEqual(used_path.split(os.pathsep).count("/sbin"), 1)
+        self.assertEqual(used_path.split(os.pathsep).count("/usr/sbin"), 1)
+
+
+class TestCreateLogger(TestCase):
+    def setUp(self) -> None:
+        root = logging.getLogger(None)
+        self._saved_handlers = root.handlers[:]
+        self._saved_name = root.name
+        self._saved_level = root.level
+
+    def tearDown(self) -> None:
+        root = logging.getLogger(None)
+        root.handlers[:] = self._saved_handlers
+        root.name = self._saved_name
+        root.level = self._saved_level
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler")
+    def test_syslog_handler_added_when_available(self, handler_cls: MagicMock) -> None:
+        handler_cls.return_value = logging.NullHandler()
+        create_logger(logging.INFO, "blueman-test", syslog=True)
+        handler_cls.assert_called_once_with(address="/dev/log")
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler", side_effect=OSError)
+    def test_falls_back_to_stderr_when_dev_log_missing(self, handler_cls: MagicMock) -> None:
+        # Must not raise when /dev/log is unavailable, and add no syslog handler.
+        before = len(logging.getLogger(None).handlers)
+        logger = create_logger(logging.INFO, "blueman-test", syslog=True)
+        handler_cls.assert_called_once_with(address="/dev/log")
+        self.assertLessEqual(len(logger.handlers), before + 1)  # only basicConfig's stderr handler, if any
+
+    @patch("blueman.Functions.logging.handlers.SysLogHandler")
+    def test_no_syslog_handler_when_disabled(self, handler_cls: MagicMock) -> None:
+        create_logger(logging.INFO, "blueman-test", syslog=False)
+        handler_cls.assert_not_called()
+
+
+class TestCreateParser(TestCase):
+    def test_default_loglevel(self) -> None:
+        args = create_parser().parse_args([])
+        self.assertEqual(args.LEVEL, "warning")
+
+    def test_valid_loglevel_lowercased(self) -> None:
+        args = create_parser().parse_args(["--loglevel", "DEBUG"])
+        self.assertEqual(args.LEVEL, "debug")
+
+    def test_invalid_loglevel_rejected(self) -> None:
+        # argparse exits with status 2 on an out-of-choices value.
+        with self.assertRaises(SystemExit):
+            create_parser().parse_args(["--loglevel", "verbose"])
+
+    def test_loglevel_has_help(self) -> None:
+        for action in create_parser()._actions:
+            if action.dest == "LEVEL":
+                self.assertTrue(action.help)
+                self.assertEqual(
+                    set(action.choices), {"debug", "info", "warning", "error", "critical"})
+                break
+        else:
+            self.fail("--loglevel argument not registered")
+
+    def test_syslog_flag(self) -> None:
+        self.assertTrue(create_parser().parse_args(["--syslog"]).syslog)
+        self.assertFalse(create_parser().parse_args([]).syslog)
+
+    def test_loglevel_can_be_disabled(self) -> None:
+        parser = create_parser(loglevel=False)
+        self.assertFalse(any(a.dest == "LEVEL" for a in parser._actions))
+
+
+class TestCheckBluetoothStatus(TestCase):
+    @patch("blueman.Functions.AppletService", side_effect=DBusProxyFailed)
+    def test_logs_and_exits_when_applet_missing(self, applet: MagicMock) -> None:
+        exitfunc = MagicMock()
+        with self.assertLogs(level=logging.ERROR) as logs:
+            check_bluetooth_status("msg", exitfunc)
+        exitfunc.assert_called_once_with()
+        self.assertTrue(any("applet needs to be running" in m for m in logs.output))
+
+    @patch("blueman.Functions.AppletPowerManagerService")
+    @patch("blueman.Functions.AppletService")
+    def test_returns_when_powermanager_plugin_absent(
+        self, applet: MagicMock, power: MagicMock
+    ) -> None:
+        applet.return_value.QueryPlugins.return_value = []
+        exitfunc = MagicMock()
+        check_bluetooth_status("msg", exitfunc)
+        exitfunc.assert_not_called()
+
+
+class TestSetProcTitle(TestCase):
+    @patch("blueman.Functions.sys.platform", "darwin")
+    @patch("blueman.Functions.cdll")
+    def test_noop_on_non_linux(self, cdll: MagicMock) -> None:
+        self.assertEqual(set_proc_title("blueman"), 0)
+        cdll.LoadLibrary.assert_not_called()
+
+    @patch("blueman.Functions.sys.platform", "linux")
+    @patch("blueman.Functions.cdll")
+    def test_calls_prctl_on_linux(self, cdll: MagicMock) -> None:
+        cdll.LoadLibrary.return_value.prctl.return_value = 0
+        self.assertEqual(set_proc_title("blueman"), 0)
+        cdll.LoadLibrary.return_value.prctl.assert_called_once()
+
+    @patch("blueman.Functions.sys.platform", "linux")
+    @patch("blueman.Functions.cdll")
+    def test_returns_minus_one_when_libc_unavailable(self, cdll: MagicMock) -> None:
+        cdll.LoadLibrary.side_effect = OSError
+        with self.assertLogs(level=logging.ERROR):
+            self.assertEqual(set_proc_title("blueman"), -1)
+
+
+@patch("blueman.Functions.Gtk.get_current_event_time", return_value=0)
+@patch("blueman.Functions.Gio.File.new_for_commandline_arg")
+@patch("blueman.Functions.Gio.AppInfo.create_from_commandline")
+class TestLaunch(TestCase):
+    @staticmethod
+    def _command_line(create: MagicMock) -> str:
+        return create.call_args.args[0]
+
+    def test_legacy_string_form_unquoted(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        self.assertTrue(launch("blueman-services"))
+        self.assertEqual(self._command_line(create), (BIN_DIR / "blueman-services").as_posix())
+
+    def test_argv_form_quotes_each_token(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        launch("blueman-sendto", args=["--delete", "--device=AA:BB:CC:DD:EE:FF"])
+        expected = " ".join(
+            GLib.shell_quote(t) for t in (
+                (BIN_DIR / "blueman-sendto").as_posix(),
+                "--delete",
+                "--device=AA:BB:CC:DD:EE:FF",
+            )
+        )
+        self.assertEqual(self._command_line(create), expected)
+
+    def test_argv_form_neutralizes_shell_metacharacters(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        hostile = "foo; rm -rf ~"
+        launch("blueman-sendto", args=[hostile])
+        command_line = self._command_line(create)
+        # The hostile argument must survive as a single shell-quoted token.
+        self.assertIn(GLib.shell_quote(hostile), command_line)
+
+    def test_returns_launch_result(
+        self, create: MagicMock, _new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = False
+        self.assertFalse(launch("blueman-services"))
+
+    def test_paths_become_gio_files(
+        self, create: MagicMock, new_file: MagicMock, _evt: MagicMock
+    ) -> None:
+        create.return_value.launch.return_value = True
+        launch("xdg-open", paths=["/tmp/a", "/tmp/b"], system=True)
+        self.assertEqual(new_file.call_count, 2)

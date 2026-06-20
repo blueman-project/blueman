@@ -1,11 +1,12 @@
 from datetime import datetime
 from gettext import gettext as _, ngettext
 from pathlib import Path
+import os
 import shutil
 import logging
 from html import escape
-from typing import Optional, TypedDict, Union
-from collections.abc import Callable
+from typing import TypedDict, Union
+from collections.abc import Callable, Iterator
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.obex.AgentManager import AgentManager
@@ -14,7 +15,6 @@ from blueman.bluez.obex.Transfer import Transfer
 from blueman.bluez.obex.Session import Session
 from blueman.Functions import launch
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
-from blueman.main.Applet import BluemanApplet
 from blueman.main.DbusService import DbusService, DbusError
 from blueman.plugins.AppletPlugin import AppletPlugin
 
@@ -38,6 +38,37 @@ class PendingTransferDict(TypedDict):
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
 
+# Resolve (display name, trusted) for a device by adapter source path + address.
+# May raise; callers treat a raised resolver as an untrusted/unknown device.
+DeviceResolver = Callable[[str, BtAddress], tuple[str, bool]]
+
+_MAX_DESTINATION_ATTEMPTS = 10000
+
+
+def _destination_candidates(filename: str, stamp: str) -> "Iterator[str]":
+    yield filename
+    yield f"{stamp}_{filename}"
+    for index in range(1, _MAX_DESTINATION_ATTEMPTS):
+        yield f"{stamp}_{index}_{filename}"
+
+
+def reserve_destination(dest_dir: Path, filename: str, now: datetime) -> Path:
+    """Atomically reserve a unique destination, returning the reserved (empty) path.
+
+    Uses O_EXCL so two transfers completing in the same second cannot pick the
+    same name and overwrite each other; the caller moves the source onto it.
+    """
+    stamp = now.strftime('%Y%m%d%H%M%S')
+    for candidate in _destination_candidates(filename, stamp):
+        dest = dest_dir / candidate
+        try:
+            fd = os.open(dest, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        except FileExistsError:
+            continue
+        os.close(fd)
+        return dest
+    raise FileExistsError(f"No free destination for {filename} in {dest_dir}")
+
 
 class ObexErrorRejected(DbusError):
     _name = "org.bluez.obex.Error.Rejected"
@@ -50,7 +81,7 @@ class ObexErrorCanceled(DbusError):
 class Agent(DbusService):
     __agent_path = ObjectPath('/org/bluez/obex/agent/blueman')
 
-    def __init__(self, applet: BluemanApplet):
+    def __init__(self, resolve_device: "DeviceResolver"):
         super().__init__(None, "org.bluez.obex.Agent1", self.__agent_path, Gio.BusType.SESSION)
 
         self.add_method("Release", (), "", self._release)
@@ -58,12 +89,12 @@ class Agent(DbusService):
         self.add_method("AuthorizePush", ("o",), "s", self._authorize_push, is_async=True)
         self.register()
 
-        self._applet = applet
+        self._resolve_device = resolve_device
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
-        self._allowed_devices: list[str] = []
+        self._allowed_devices: set[BtAddress] = set()
         self._notification: NotificationType | None = None
-        self._pending_transfer: Optional[PendingTransferDict] = None
+        self._pending_transfers: dict[ObjectPath, PendingTransferDict] = {}
         self.transfers: dict[ObjectPath, TransferDict] = {}
 
     def register_at_manager(self) -> None:
@@ -77,30 +108,6 @@ class Agent(DbusService):
 
     def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[str], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
-        def on_action(action: str) -> None:
-            logging.info(f"Action {action}")
-
-            if action == "accept":
-                assert self._pending_transfer
-                self.transfers[self._pending_transfer['transfer_path']] = {
-                    'path': self._pending_transfer['root'] / self._pending_transfer['filename'],
-                    'size': self._pending_transfer['size'],
-                    'name': self._pending_transfer['name']
-                }
-
-                ok(self.transfers[self._pending_transfer['transfer_path']]['path'].as_posix())
-
-                self._allowed_devices.append(self._pending_transfer['address'])
-
-                def _remove() -> bool:
-                    assert self._pending_transfer is not None  # https://github.com/python/mypy/issues/2608
-                    self._allowed_devices.remove(self._pending_transfer['address'])
-                    return False
-
-                GLib.timeout_add(60000, _remove)
-            else:
-                err(ObexErrorRejected("Rejected"))
-
         transfer = Transfer(obj_path=transfer_path)
         session = Session(obj_path=transfer.session)
         root = Path(session.root)
@@ -109,18 +116,39 @@ class Agent(DbusService):
         size = transfer.size
 
         try:
-            adapter = self._applet.Manager.get_adapter(session.source)
-            device = self._applet.Manager.find_device(address, adapter.get_object_path())
-            assert device is not None
-            name = device.display_name
-            trusted = device["Trusted"]
+            name, trusted = self._resolve_device(session.source, address)
         except Exception as e:
             logging.exception(e)
             name = address
             trusted = False
 
-        self._pending_transfer = {'transfer_path': transfer_path, 'address': address, 'root': root,
-                                  'filename': filename, 'size': size, 'name': name}
+        pending: PendingTransferDict = {'transfer_path': transfer_path, 'address': address, 'root': root,
+                                        'filename': filename, 'size': size, 'name': name}
+        self._pending_transfers[transfer_path] = pending
+
+        def on_action(action: str, pending: PendingTransferDict = pending) -> None:
+            logging.info(f"Action {action}")
+            self._pending_transfers.pop(pending['transfer_path'], None)
+
+            if action == "accept":
+                self.transfers[pending['transfer_path']] = {
+                    'path': pending['root'] / pending['filename'],
+                    'size': pending['size'],
+                    'name': pending['name']
+                }
+
+                ok(self.transfers[pending['transfer_path']]['path'].as_posix())
+
+                allowed_address = pending['address']
+                self._allowed_devices.add(allowed_address)
+
+                def _remove(address: BtAddress = allowed_address) -> bool:
+                    self._allowed_devices.discard(address)
+                    return False
+
+                GLib.timeout_add(60000, _remove)
+            else:
+                err(ObexErrorRejected("Rejected"))
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
@@ -174,6 +202,7 @@ class TransferService(AppletPlugin):
             logging.info('Reset share path')
 
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
+        self._handlerids = []  # per-instance; avoid sharing the class-level list across instances
 
         share_path, invalid_share_path = self._make_share_path()
 
@@ -181,9 +210,10 @@ class TransferService(AppletPlugin):
             text = _('Configured directory for incoming files does not exist')
             secondary_text = _('Please make sure that directory "<b>%s</b>" exists or '
                                'configure it with blueman-services. Until then the default "%s" will be used')
-            self._notification = Notification(text, secondary_text % (self._config["shared-path"], share_path),
+            self._notification = Notification(text, secondary_text % (escape(self._config["shared-path"]),
+                                                                      escape(share_path.as_posix())),
                                               icon_name='blueman', timeout=30000,
-                                              actions=[('reset', 'Reset to default')], actions_cb=on_reset)
+                                              actions=[('reset', _('Reset to default'))], actions_cb=on_reset)
             self._notification.show()
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)
@@ -196,7 +226,8 @@ class TransferService(AppletPlugin):
 
     def _make_share_path(self) -> tuple[Path, bool]:
         config_path = Path(self._config["shared-path"])
-        default_path = Path(GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD))
+        download_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
+        default_path = Path(download_dir) if download_dir else None
         path = None
         error = False
 
@@ -220,9 +251,15 @@ class TransferService(AppletPlugin):
 
         return path, error
 
+    def _resolve_device(self, source: str, address: BtAddress) -> tuple[str, bool]:
+        adapter = self.parent.Manager.get_adapter(source)
+        device = self.parent.Manager.find_device(address, adapter.get_object_path())
+        assert device is not None
+        return device.display_name, device["Trusted"]
+
     def _register_agent(self) -> None:
         if not self._agent:
-            self._agent = Agent(self.parent)
+            self._agent = Agent(self._resolve_device)
         self._agent.register_at_manager()
 
     def _unregister_agent(self) -> None:
@@ -291,18 +328,17 @@ class TransferService(AppletPlugin):
 
         src = attributes['path']
         dest_dir, ignored = self._make_share_path()
-        filename = src.name
 
-        if dest_dir.joinpath(filename).exists():
-            now = datetime.now()
-            filename = f"{now.strftime('%Y%m%d%H%M%S')}_{filename}"
+        dest = reserve_destination(dest_dir, src.name, datetime.now())
+        filename = dest.name
+        if filename != src.name:
             logging.info(f"Destination file exists, renaming to: {filename}")
 
-        dest = dest_dir.joinpath(filename)
         try:
             shutil.move(src, dest)
         except (OSError, PermissionError):
             logging.error("Failed to move files", exc_info=True)
+            dest.unlink(missing_ok=True)
             success = False
 
         if success:
@@ -313,7 +349,7 @@ class TransferService(AppletPlugin):
                                               icon_name="blueman")
             self._add_open(self._notification, _("Open"), dest)
             self._notification.show()
-        elif not success:
+        else:
             n = Notification(
                 _("Transfer failed"),
                 _("Transfer of file %(0)s failed") % {
@@ -352,3 +388,7 @@ class TransferService(AppletPlugin):
                                               icon_name="blueman")
             self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()
+
+        # The summary consumes the counts; reset so the next session starts fresh.
+        self._silent_transfers = 0
+        self._normal_transfers = 0
