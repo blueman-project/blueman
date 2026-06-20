@@ -196,7 +196,6 @@ _(none open)_
 | sm-3 | open | L | `blueman/main/PPPConnection.py:213-224` `on_timeout` closure captures stale `command_id` if `send_commands` reused before fire | bind per-command state / cancel prior timeout |
 | sm-6 | open | L | `blueman/plugins/applet/PowerManager.py:97,109` Callback timer source id not tracked; orphan timeout fires on GC'd object | store source id, remove in destructor |
 | sm-9 | open | S | `blueman/plugins/applet/ShowConnected.py:86-92` schedules delayed `enumerate_connections()` calls on every manager-state-enabled event without storing/canceling the source. A fast state flap can let a stale enumeration update the icon after the manager is disabled. | Store the pending source id, cancel it on manager disable/unload, and ignore callbacks if manager state changed. |
-| sm-8 | open | M | `blueman/plugins/applet/TransferService.py:78-123` tracks only one `_pending_transfer` for authorization, but multiple incoming pushes can overlap before the user answers. A later request overwrites the pending state used by the first notification action. | Track pending transfers by `transfer_path`; bind notification callbacks to an immutable pending-transfer record. Cross-ref rel-10. |
 
 ## composition
 

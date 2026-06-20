@@ -9,7 +9,7 @@ def _make_agent() -> Agent:
     agent = Agent.__new__(Agent)
     agent._allowed_devices = set()
     agent._notification = None
-    agent._pending_transfer = None
+    agent._pending_transfers = {}
     agent.transfers = {}
     config = MagicMock()
     config.__getitem__.side_effect = lambda key: True if key == "opp-accept" else ""
@@ -115,8 +115,58 @@ class TestAllowedDeviceRemoval(TestCase):
     def test_removes_captured_address_not_current_pending(self, transfer_mock: MagicMock, session_mock: MagicMock,
                                                           _notification_mock: MagicMock, glib_mock: MagicMock) -> None:
         agent, remove_cb = self._authorize(transfer_mock, session_mock, glib_mock, "AA:BB:CC:DD:EE:FF")
-        agent._allowed_devices.add("11:22:33:44:55:66")
-        agent._pending_transfer = {"address": "11:22:33:44:55:66"}  # a later, overlapping request
+        agent._allowed_devices.add("11:22:33:44:55:66")  # a later, overlapping request's address
         remove_cb()
         self.assertNotIn("AA:BB:CC:DD:EE:FF", agent._allowed_devices)
         self.assertIn("11:22:33:44:55:66", agent._allowed_devices)
+
+
+@patch("blueman.plugins.applet.TransferService.GLib")
+@patch("blueman.plugins.applet.TransferService.Notification")
+@patch("blueman.plugins.applet.TransferService.Session")
+@patch("blueman.plugins.applet.TransferService.Transfer")
+class TestOverlappingPending(TestCase):
+    def _setup_two_untrusted(self, agent: Agent, transfer_mock: MagicMock, session_mock: MagicMock) -> None:
+        device = agent._applet.Manager.find_device.return_value
+        device.__getitem__.side_effect = lambda key: False if key == "Trusted" else None
+
+        def make_transfer(obj_path: str) -> MagicMock:
+            transfer = MagicMock()
+            transfer.session = "/s" + obj_path
+            transfer.name = "first.bin" if obj_path == "/t1" else "second.bin"
+            transfer.size = 10
+            return transfer
+
+        def make_session(obj_path: str) -> MagicMock:
+            session = MagicMock()
+            session.root = "/root"
+            session.address = "AA:AA" if obj_path == "/s/t1" else "BB:BB"
+            session.source = "/org/bluez/hci0"
+            return session
+
+        transfer_mock.side_effect = make_transfer
+        session_mock.side_effect = make_session
+
+    def test_overlapping_requests_keep_independent_records(self, transfer_mock: MagicMock, session_mock: MagicMock,
+                                                           notification_mock: MagicMock, _glib_mock: MagicMock) -> None:
+        agent = _make_agent()
+        self._setup_two_untrusted(agent, transfer_mock, session_mock)
+        ok_a, err_a, ok_b, err_b = MagicMock(), MagicMock(), MagicMock(), MagicMock()
+
+        agent._authorize_push("/t1", ok_a, err_a)
+        agent._authorize_push("/t2", ok_b, err_b)
+        self.assertEqual(set(agent._pending_transfers), {"/t1", "/t2"})
+
+        on_action_a = notification_mock.call_args_list[0].kwargs["actions_cb"]
+        on_action_b = notification_mock.call_args_list[1].kwargs["actions_cb"]
+
+        on_action_a("accept")
+        self.assertEqual(agent.transfers["/t1"]["path"].name, "first.bin")
+        ok_a.assert_called_once()
+        self.assertNotIn("/t1", agent._pending_transfers)
+        self.assertIn("/t2", agent._pending_transfers)  # the second request is untouched by the first's action
+
+        on_action_b("reject")
+        err_b.assert_called_once()
+        self.assertNotIn("/t2", agent._pending_transfers)
+        self.assertNotIn("/t2", agent.transfers)

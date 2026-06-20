@@ -4,7 +4,7 @@ from pathlib import Path
 import shutil
 import logging
 from html import escape
-from typing import Optional, TypedDict, Union
+from typing import TypedDict, Union
 from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath, BtAddress
 
@@ -63,7 +63,7 @@ class Agent(DbusService):
 
         self._allowed_devices: set[BtAddress] = set()
         self._notification: NotificationType | None = None
-        self._pending_transfer: Optional[PendingTransferDict] = None
+        self._pending_transfers: dict[ObjectPath, PendingTransferDict] = {}
         self.transfers: dict[ObjectPath, TransferDict] = {}
 
     def register_at_manager(self) -> None:
@@ -77,30 +77,6 @@ class Agent(DbusService):
 
     def _authorize_push(self, transfer_path: ObjectPath, ok: Callable[[str], None],
                         err: Callable[[ObexErrorRejected], None]) -> None:
-        def on_action(action: str) -> None:
-            logging.info(f"Action {action}")
-
-            if action == "accept":
-                assert self._pending_transfer
-                self.transfers[self._pending_transfer['transfer_path']] = {
-                    'path': self._pending_transfer['root'] / self._pending_transfer['filename'],
-                    'size': self._pending_transfer['size'],
-                    'name': self._pending_transfer['name']
-                }
-
-                ok(self.transfers[self._pending_transfer['transfer_path']]['path'].as_posix())
-
-                allowed_address = self._pending_transfer['address']
-                self._allowed_devices.add(allowed_address)
-
-                def _remove(address: BtAddress = allowed_address) -> bool:
-                    self._allowed_devices.discard(address)
-                    return False
-
-                GLib.timeout_add(60000, _remove)
-            else:
-                err(ObexErrorRejected("Rejected"))
-
         transfer = Transfer(obj_path=transfer_path)
         session = Session(obj_path=transfer.session)
         root = Path(session.root)
@@ -119,8 +95,33 @@ class Agent(DbusService):
             name = address
             trusted = False
 
-        self._pending_transfer = {'transfer_path': transfer_path, 'address': address, 'root': root,
-                                  'filename': filename, 'size': size, 'name': name}
+        pending: PendingTransferDict = {'transfer_path': transfer_path, 'address': address, 'root': root,
+                                        'filename': filename, 'size': size, 'name': name}
+        self._pending_transfers[transfer_path] = pending
+
+        def on_action(action: str, pending: PendingTransferDict = pending) -> None:
+            logging.info(f"Action {action}")
+            self._pending_transfers.pop(pending['transfer_path'], None)
+
+            if action == "accept":
+                self.transfers[pending['transfer_path']] = {
+                    'path': pending['root'] / pending['filename'],
+                    'size': pending['size'],
+                    'name': pending['name']
+                }
+
+                ok(self.transfers[pending['transfer_path']]['path'].as_posix())
+
+                allowed_address = pending['address']
+                self._allowed_devices.add(allowed_address)
+
+                def _remove(address: BtAddress = allowed_address) -> bool:
+                    self._allowed_devices.discard(address)
+                    return False
+
+                GLib.timeout_add(60000, _remove)
+            else:
+                err(ObexErrorRejected("Rejected"))
 
         # This device was neither allowed nor is it trusted -> ask for confirmation
         if address not in self._allowed_devices and not (self._config['opp-accept'] and trusted):
