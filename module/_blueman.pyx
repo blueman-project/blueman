@@ -104,7 +104,8 @@ ERR = {
     -12: "Can't bind RFCOMM socket",
     -13: "Can't connect RFCOMM socket",
     -14: "Can't create RFCOMM TTY",
-    -15: "Can't release RFCOMM TTY"
+    -15: "Can't release RFCOMM TTY",
+    -16: "Invalid Bluetooth address"
     }
 
 RFCOMM_STATES = [

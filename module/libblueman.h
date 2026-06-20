@@ -1,4 +1,6 @@
 #pragma once
+#include <stdint.h>
+
 #define ERR_CANNOT_ALLOCATE -1
 #define ERR_HCI_DEV_OPEN_FAILED -2
 #define ERR_NOT_CONNECTED -3
@@ -11,19 +13,20 @@
 #define ERR_CONNECT_FAILED -13
 #define ERR_CREATE_DEV_FAILED -14
 #define ERR_RELEASE_DEV_FAILED -15
+#define ERR_INVALID_ADDRESS -16
 
 struct conn_info_handles {
 	unsigned int handle;
 	int dd;
 };
 
-int connection_init(int dev_id, char *addr, struct conn_info_handles *ci);
-int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi);
-int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
-int connection_close(struct conn_info_handles *ci);
-int get_rfcomm_channel(uint16_t uuid, char* btd_addr);
+int connection_init(int dev_id, const char *addr, struct conn_info_handles *ci);
+int connection_get_rssi(const struct conn_info_handles *ci, int8_t *ret_rssi);
+int connection_get_tpl(const struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type);
+int connection_close(const struct conn_info_handles *ci);
+int get_rfcomm_channel(uint16_t service_class, const char *btd_addr);
 int get_rfcomm_list(struct rfcomm_dev_list_req **result);
-int create_rfcomm_device(char *local_address, char *remote_address, int channel);
+int create_rfcomm_device(const char *local_address, const char *remote_address, int channel);
 int release_rfcomm_device(int id);
 
 int _create_bridge(const char* name);
