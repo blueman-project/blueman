@@ -90,6 +90,8 @@ class PluginManager(GObject.GObject, Generic[_T]):
         self.__loaded: list[str] = []
         # Per-manager unloadable flags; never mutate the shared class attribute.
         self.__unloadable: dict[str, bool] = {}
+        # Names whose dependency resolution is in progress, to detect cycles.
+        self.__loading: set[str] = set()
         self.__resolver: PluginDependencyResolver[_T] = PluginDependencyResolver(self.__classes, self.__cfls)
         self.__strategy: LoadStrategy[_T] = load_strategy or DefaultLoadStrategy()
         self.parent = parent
@@ -115,23 +117,30 @@ class PluginManager(GObject.GObject, Generic[_T]):
 
     def load_plugin(self, name: str | None = None, user_action: bool = False) -> None:
         if name:
-            try:
-                self.__load_plugin(self.__classes[name])
-            except LoadException as e:
-                logging.warning(f"Not loading plugin {name}: {e}")
-            except Exception:
-                if user_action:
-                    d = ErrorDialog(_("<b>An error has occurred while loading "
-                                      "a plugin. Please notify the developers "
-                                      "with the content of this message to our </b>\n"
-                                      "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
-                                    excp=traceback.format_exc())
-                    d.run()
-                    d.destroy()
-                    raise
-
+            self.__load_named_plugin(name, user_action)
             return
 
+        self.__import_plugin_modules()
+        self.__register_classes()
+        self.__autoload_classes()
+
+    def __load_named_plugin(self, name: str, user_action: bool) -> None:
+        try:
+            self.__load_plugin(self.__classes[name])
+        except LoadException as e:
+            logging.warning(f"Not loading plugin {name}: {e}")
+        except Exception:
+            if user_action:
+                d = ErrorDialog(_("<b>An error has occurred while loading "
+                                  "a plugin. Please notify the developers "
+                                  "with the content of this message to our </b>\n"
+                                  "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
+                                excp=traceback.format_exc())
+                d.run()
+                d.destroy()
+                raise
+
+    def __import_plugin_modules(self) -> None:
         assert self.module_path.__file__ is not None
         path = pathlib.Path(self.module_path.__file__)
         plugins = plugin_names(path)
@@ -145,27 +154,22 @@ class PluginManager(GObject.GObject, Generic[_T]):
             except PluginException as err:
                 logging.warning(f"Failed to start plugin {plugin}: {err}")
 
+    def __register_classes(self) -> None:
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
             self.__unloadable.setdefault(cls.__name__, cls.__unloadable__)
-            if cls.__name__ not in self.__deps:
-                self.__deps[cls.__name__] = []
-
-            if cls.__name__ not in self.__cfls:
-                self.__cfls[cls.__name__] = []
+            self.__deps.setdefault(cls.__name__, [])
+            self.__cfls.setdefault(cls.__name__, [])
 
             for c in cls.__depends__:
-                if c not in self.__deps:
-                    self.__deps[c] = []
-                self.__deps[c].append(cls.__name__)
+                self.__deps.setdefault(c, []).append(cls.__name__)
 
             for c in cls.__conflicts__:
-                if c not in self.__cfls:
-                    self.__cfls[c] = []
-                self.__cfls[c].append(cls.__name__)
+                self.__cfls.setdefault(c, []).append(cls.__name__)
                 if c not in self.__cfls[cls.__name__]:
                     self.__cfls[cls.__name__].append(c)
 
+    def __autoload_classes(self) -> None:
         cl = self.config_list
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
@@ -195,13 +199,20 @@ class PluginManager(GObject.GObject, Generic[_T]):
         return name in self.__loaded
 
     def load_dependencies(self, cls: type[_T]) -> None:
-        for dep_cls in self.__resolver.required(cls):
-            if not self.is_loaded(dep_cls.__name__):
-                try:
-                    self.__load_plugin(dep_cls)
-                except Exception as e:
-                    logging.exception(e)
-                    raise
+        self.__loading.add(cls.__name__)
+        try:
+            for dep_cls in self.__resolver.required(cls):
+                if dep_cls.__name__ in self.__loading:
+                    raise PluginDependencyError(
+                        f"Dependency cycle detected: {cls.__name__} -> {dep_cls.__name__}")
+                if not self.is_loaded(dep_cls.__name__):
+                    try:
+                        self.__load_plugin(dep_cls)
+                    except Exception as e:
+                        logging.exception(e)
+                        raise
+        finally:
+            self.__loading.discard(cls.__name__)
 
     def resolve_conflicts(self, cls: type[_T]) -> bool:
         """Return True if cls may load. Unloads a lower-priority conflict when it

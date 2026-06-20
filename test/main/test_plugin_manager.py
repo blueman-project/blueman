@@ -383,3 +383,209 @@ class TestDependencyChainFuzz(TestCase):
             manager.load_plugin("Winner")
             self.assertIn("Winner", manager.get_loaded())
             self.assertNotIn("Loser", manager.get_loaded())
+
+
+class TestDependencyCycles(TestCase):
+    def test_direct_cycle_raises_dependency_error(self) -> None:
+        manager = _manager()
+        a = _plugin_class("A", __depends__=["B"])
+        b = _plugin_class("B", __depends__=["A"])
+        _register(manager, a)
+        _register(manager, b)
+        with self.assertRaises(PluginDependencyError):
+            manager._PluginManager__load_plugin(a)
+        self.assertEqual(manager.get_loaded(), [])
+
+    def test_self_cycle_raises_dependency_error(self) -> None:
+        manager = _manager()
+        a = _plugin_class("A", __depends__=["A"])
+        _register(manager, a)
+        with self.assertRaises(PluginDependencyError):
+            manager._PluginManager__load_plugin(a)
+
+    def test_loading_set_is_cleared_after_cycle(self) -> None:
+        manager = _manager()
+        a = _plugin_class("A", __depends__=["B"])
+        b = _plugin_class("B", __depends__=["A"])
+        _register(manager, a)
+        _register(manager, b)
+        with self.assertRaises(PluginDependencyError):
+            manager._PluginManager__load_plugin(a)
+        self.assertEqual(manager._PluginManager__loading, set())
+
+
+class TestDiamondDependencies(TestCase):
+    def test_shared_dependency_loaded_once_in_order(self) -> None:
+        manager = _manager()
+        for cls in (
+            _plugin_class("A"),
+            _plugin_class("B", __depends__=["A"]),
+            _plugin_class("C", __depends__=["A"]),
+            _plugin_class("D", __depends__=["B", "C"]),
+        ):
+            _register(manager, cls)
+        manager.load_plugin("D")
+        order = manager.get_loaded()
+        self.assertEqual(order.count("A"), 1)
+        self.assertEqual(set(order), {"A", "B", "C", "D"})
+        self.assertLess(order.index("A"), order.index("B"))
+        self.assertLess(order.index("C"), order.index("D"))
+
+
+class TestLifecycleSignals(TestCase):
+    def test_plugin_loaded_signal_is_emitted(self) -> None:
+        manager = _manager()
+        _register(manager, _plugin_class("P"))
+        seen: list = []
+        manager.connect("plugin-loaded", lambda mgr, name: seen.append(name))
+        manager.load_plugin("P")
+        self.assertEqual(seen, ["P"])
+
+    def test_plugin_unloaded_signal_is_emitted(self) -> None:
+        manager = _manager()
+        _register(manager, _plugin_class("P"))
+        manager.load_plugin("P")
+        seen: list = []
+        manager.connect("plugin-unloaded", lambda mgr, name: seen.append(name))
+        manager.unload_plugin("P")
+        self.assertEqual(seen, ["P"])
+
+    def test_load_unload_reload_yields_fresh_instance(self) -> None:
+        manager = _manager()
+        _register(manager, _plugin_class("P"))
+        manager.load_plugin("P")
+        first = manager.get_plugin("P")
+        manager.unload_plugin("P")
+        self.assertNotIn("P", manager.get_loaded())
+        manager.load_plugin("P")
+        self.assertIn("P", manager.get_loaded())
+        self.assertIsNot(manager.get_plugin("P"), first)
+
+
+class _Marker:
+    pass
+
+
+class TestGetLoadedPluginsAndGetattr(TestCase):
+    def test_get_loaded_plugins_filters_by_protocol(self) -> None:
+        manager = _manager()
+        plain = _plugin_class("Plain")
+        marked = type("Marked", (_Plugin, _Marker), {})
+        _register(manager, plain)
+        _register(manager, marked)
+        manager.load_plugin("Plain")
+        manager.load_plugin("Marked")
+        result = list(manager.get_loaded_plugins(_Marker))
+        self.assertEqual(len(result), 1)
+        self.assertIsInstance(result[0], _Marker)
+
+    def test_getattr_missing_attribute_raises_key_error(self) -> None:
+        manager = _manager()
+        with self.assertRaises(KeyError):
+            manager.totally_missing_attribute
+
+
+class TestConflictHigherPrioritySkip(TestCase):
+    def test_existing_higher_priority_conflict_blocks_load(self) -> None:
+        manager = _manager()
+        manager.disable_plugin = lambda plugin: False  # type: ignore[method-assign]
+        manager.enable_plugin = lambda plugin: False  # type: ignore[method-assign]
+        high = _plugin_class("High", __priority__=10)
+        low = _plugin_class("Low", __priority__=0)
+        _register(manager, high)
+        _register(manager, low, cfls=["High"])
+        with self.assertLogs(level="WARNING") as cm:
+            manager.load_plugin("Low")
+        self.assertTrue(any("higher priority" in line for line in cm.output))
+        self.assertNotIn("Low", manager.get_loaded())
+
+
+class TestUserActionErrorDialog(TestCase):
+    @patch("blueman.main.PluginManager.ErrorDialog")
+    def test_user_action_failure_shows_dialog_and_reraises(self, dialog_mock: MagicMock) -> None:
+        manager = _manager()
+        cls = _plugin_class("Boom")
+        cls._load = lambda self: (_ for _ in ()).throw(RuntimeError("x"))  # type: ignore[assignment]
+        _register(manager, cls)
+        with self.assertRaises(RuntimeError):
+            manager.load_plugin("Boom", user_action=True)
+        dialog_mock.assert_called_once()
+        dialog_mock.return_value.run.assert_called_once()
+        dialog_mock.return_value.destroy.assert_called_once()
+
+
+class TestFullDiscovery(TestCase):
+    def test_discovery_builds_graph_and_autoloads(self) -> None:
+        base = type("DiscBase", (_Plugin,), {})
+        dep = type("DepP", (base,), {"__autoload__": False})
+        main = type("MainP", (base,), {"__depends__": ["DepP"], "__conflicts__": ["Ghost"]})
+        self.assertIsNotNone(dep)
+        self.assertIsNotNone(main)
+        module_path = MagicMock()
+        module_path.__file__ = "/x"
+        module_path.__name__ = "m"
+        manager: PluginManager = PluginManager(base, module_path, MagicMock())
+        with patch("blueman.main.PluginManager.plugin_names", return_value=[]):
+            manager.load_plugin()
+        self.assertIn("DepP", manager.get_dependencies())
+        self.assertIn("Ghost", manager.get_conflicts())
+        self.assertIn("MainP", manager.get_loaded())
+        self.assertIn("DepP", manager.get_loaded())
+
+
+@patch("blueman.main.PluginManager.Gio")
+class TestPersistentConfigPaths(TestCase):
+    def _ppm(self, gio_mock: MagicMock, plugin_list: list) -> tuple:
+        from blueman.main.PluginManager import PersistentPluginManager
+        store = {"plugin-list": list(plugin_list)}
+        config = MagicMock()
+        config.__getitem__.side_effect = lambda key: store[key]
+        config.__setitem__.side_effect = lambda key, value: store.__setitem__(key, value)
+        gio_mock.Settings.return_value = config
+        ppm = PersistentPluginManager(_Plugin, MagicMock(), MagicMock())
+        return ppm, store
+
+    def test_set_config_reenable_removes_disabled_marker(self, gio_mock: MagicMock) -> None:
+        ppm, store = self._ppm(gio_mock, ["!Foo"])
+        ppm.set_config("Foo", True)
+        self.assertIn("Foo", store["plugin-list"])
+        self.assertNotIn("!Foo", store["plugin-list"])
+
+    def test_on_property_changed_loads_enabled_plugin(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["Widget"])
+        _register(ppm, _plugin_class("Widget"))
+        ppm.on_property_changed(ppm._PersistentPluginManager__config, "plugin-list")
+        self.assertIn("Widget", ppm.get_loaded())
+
+    @patch("blueman.main.PluginManager.ErrorDialog")
+    def test_on_property_changed_load_failure_resets_config(self, _dialog: MagicMock, gio_mock: MagicMock) -> None:
+        ppm, store = self._ppm(gio_mock, ["Bad"])
+        cls = _plugin_class("Bad")
+        cls._load = lambda self: (_ for _ in ()).throw(RuntimeError("x"))  # type: ignore[assignment]
+        _register(ppm, cls)
+        ppm.on_property_changed(ppm._PersistentPluginManager__config, "plugin-list")
+        self.assertIn("!Bad", store["plugin-list"])
+        self.assertNotIn("Bad", ppm.get_loaded())
+
+
+class TestFullDiscoveryEdgeCases(TestCase):
+    def test_dangling_dependency_and_autoload_conflict(self) -> None:
+        base = type("EdgeBase", (_Plugin,), {})
+        alpha = type("Alpha", (base,), {"__conflicts__": ["Beta"], "__priority__": 0})
+        beta = type("Beta", (base,), {"__priority__": 0})
+        gamma = type("Gamma", (base,), {"__depends__": ["Phantom"], "__autoload__": False})
+        for cls in (alpha, beta, gamma):
+            self.assertIsNotNone(cls)
+        module_path = MagicMock()
+        module_path.__file__ = "/x"
+        module_path.__name__ = "m"
+        manager: PluginManager = PluginManager(base, module_path, MagicMock())
+        with patch("blueman.main.PluginManager.plugin_names", return_value=[]), \
+                self.assertLogs(level="WARNING"):
+            manager.load_plugin()
+        # Dangling dependency name is registered in the graph but never loaded.
+        self.assertIn("Phantom", manager.get_dependencies())
+        self.assertNotIn("Phantom", manager.get_loaded())
+        # Equal-priority conflict: the first autoloads, the second is skipped.
+        loaded_conflicts = [n for n in manager.get_loaded() if n in ("Alpha", "Beta")]
+        self.assertEqual(len(loaded_conflicts), 1)
