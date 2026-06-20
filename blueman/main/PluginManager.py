@@ -13,7 +13,7 @@ from blueman.Functions import bmexit, plugin_names
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.plugins.BasePlugin import BasePlugin
 from blueman.bluemantyping import GSignals
-from blueman.plugins.errors import PluginException
+from blueman.plugins.errors import PluginException, PluginError, PluginDependencyError
 
 
 class LoadException(Exception):
@@ -23,19 +23,77 @@ class LoadException(Exception):
 _T = TypeVar("_T", bound=BasePlugin)
 
 
+class PluginDependencyResolver(Generic[_T]):
+    """Owns the dependency/conflict graph and answers load-ordering queries.
+
+    Pure graph queries only; performing side effects (loading, unloading,
+    enabling) stays with the manager that owns the live plugin state.
+    """
+
+    def __init__(self, classes: dict[str, type[_T]], conflicts: dict[str, list[str]]) -> None:
+        self.__classes = classes
+        self.__conflicts = conflicts
+
+    def required(self, cls: type[_T]) -> list[type[_T]]:
+        """Dependency classes that must load before cls, in declaration order.
+
+        Raises PluginDependencyError if a declared dependency is unregistered.
+        """
+        result = []
+        for dep in cls.__depends__:
+            if dep not in self.__classes:
+                raise PluginDependencyError(f"Could not satisfy dependency {cls.__name__} -> {dep}")
+            result.append(self.__classes[dep])
+        return result
+
+    def conflicts(self, cls: type[_T]) -> list[tuple[str, type[_T] | None]]:
+        """Conflicting (name, registered class or None) pairs declared against cls."""
+        return [(cfl, self.__classes.get(cfl)) for cfl in self.__conflicts[cls.__name__]]
+
+
+class LoadStrategy(Generic[_T]):
+    """Pluggable plugin-load pipeline.
+
+    Subclass and pass to PluginManager to support alternative loaders (e.g. a
+    different plugin type or an asynchronous loader) without changing the
+    manager. The default is synchronous: resolve dependencies, resolve
+    conflicts, then activate.
+    """
+
+    def load(self, manager: "PluginManager[_T]", cls: type[_T]) -> None:
+        raise NotImplementedError
+
+
+class DefaultLoadStrategy(LoadStrategy[_T]):
+    def load(self, manager: "PluginManager[_T]", cls: type[_T]) -> None:
+        if manager.is_loaded(cls.__name__):
+            return
+        manager.load_dependencies(cls)
+        if not manager.resolve_conflicts(cls):
+            return
+        manager.activate(cls)
+
+
 class PluginManager(GObject.GObject, Generic[_T]):
     __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
-    def __init__(self, plugin_class: type[_T], module_path: ModuleType, parent: object) -> None:
+    def __init__(self, plugin_class: type[_T], module_path: ModuleType, parent: object,
+                 load_strategy: "LoadStrategy[_T] | None" = None) -> None:
         super().__init__()
         self.__deps: dict[str, list[str]] = {}
         self.__cfls: dict[str, list[str]] = {}
         self._plugins: dict[str, _T] = {}
         self.__classes: dict[str, type[_T]] = {}
         self.__loaded: list[str] = []
+        # Per-manager unloadable flags; never mutate the shared class attribute.
+        self.__unloadable: dict[str, bool] = {}
+        # Names whose dependency resolution is in progress, to detect cycles.
+        self.__loading: set[str] = set()
+        self.__resolver: PluginDependencyResolver[_T] = PluginDependencyResolver(self.__classes, self.__cfls)
+        self.__strategy: LoadStrategy[_T] = load_strategy or DefaultLoadStrategy()
         self.parent = parent
 
         self.module_path = module_path
@@ -59,23 +117,30 @@ class PluginManager(GObject.GObject, Generic[_T]):
 
     def load_plugin(self, name: str | None = None, user_action: bool = False) -> None:
         if name:
-            try:
-                self.__load_plugin(self.__classes[name])
-            except LoadException:
-                pass
-            except Exception:
-                if user_action:
-                    d = ErrorDialog(_("<b>An error has occurred while loading "
-                                      "a plugin. Please notify the developers "
-                                      "with the content of this message to our </b>\n"
-                                      "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
-                                    excp=traceback.format_exc())
-                    d.run()
-                    d.destroy()
-                    raise
-
+            self.__load_named_plugin(name, user_action)
             return
 
+        self.__import_plugin_modules()
+        self.__register_classes()
+        self.__autoload_classes()
+
+    def __load_named_plugin(self, name: str, user_action: bool) -> None:
+        try:
+            self.__load_plugin(self.__classes[name])
+        except LoadException as e:
+            logging.warning(f"Not loading plugin {name}: {e}")
+        except Exception:
+            if user_action:
+                d = ErrorDialog(_("<b>An error has occurred while loading "
+                                  "a plugin. Please notify the developers "
+                                  "with the content of this message to our </b>\n"
+                                  "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"),
+                                excp=traceback.format_exc())
+                d.run()
+                d.destroy()
+                raise
+
+    def __import_plugin_modules(self) -> None:
         assert self.module_path.__file__ is not None
         path = pathlib.Path(self.module_path.__file__)
         plugins = plugin_names(path)
@@ -89,39 +154,35 @@ class PluginManager(GObject.GObject, Generic[_T]):
             except PluginException as err:
                 logging.warning(f"Failed to start plugin {plugin}: {err}")
 
+    def __register_classes(self) -> None:
         for cls in self.plugin_class.__subclasses__():
             self.__classes[cls.__name__] = cls
-            if cls.__name__ not in self.__deps:
-                self.__deps[cls.__name__] = []
-
-            if cls.__name__ not in self.__cfls:
-                self.__cfls[cls.__name__] = []
+            self.__unloadable.setdefault(cls.__name__, cls.__unloadable__)
+            self.__deps.setdefault(cls.__name__, [])
+            self.__cfls.setdefault(cls.__name__, [])
 
             for c in cls.__depends__:
-                if c not in self.__deps:
-                    self.__deps[c] = []
-                self.__deps[c].append(cls.__name__)
+                self.__deps.setdefault(c, []).append(cls.__name__)
 
             for c in cls.__conflicts__:
-                if c not in self.__cfls:
-                    self.__cfls[c] = []
-                self.__cfls[c].append(cls.__name__)
+                self.__cfls.setdefault(c, []).append(cls.__name__)
                 if c not in self.__cfls[cls.__name__]:
                     self.__cfls[cls.__name__].append(c)
 
+    def __autoload_classes(self) -> None:
         cl = self.config_list
         for name, cls in self.__classes.items():
             for dep in self.__deps[name]:
                 # plugins that are required by not unloadable plugins are not unloadable too
-                if not self.__classes[dep].__unloadable__:
-                    cls.__unloadable__ = False
+                if not self.is_unloadable(dep):
+                    self.__unloadable[name] = False
 
             if (cls.__autoload__ or (cl and cls.__name__ in cl)) and \
-                    not (cls.__unloadable__ and cl and "!" + cls.__name__ in cl):
+                    not (self.is_unloadable(cls.__name__) and cl and "!" + cls.__name__ in cl):
                 try:
                     self.__load_plugin(cls)
-                except LoadException:
-                    pass
+                except LoadException as e:
+                    logging.warning(f"Not loading plugin {cls.__name__}: {e}")
 
     def disable_plugin(self, plugin: str) -> bool:
         return False
@@ -130,39 +191,54 @@ class PluginManager(GObject.GObject, Generic[_T]):
         return True
 
     def __load_plugin(self, cls: type[_T]) -> None:
-        if cls.__name__ in self.__loaded:
-            return
+        self.__strategy.load(self, cls)
 
-        for dep in cls.__depends__:
-            if dep not in self.__loaded:
-                if dep not in self.__classes:
-                    raise Exception(f"Could not satisfy dependency {cls.__name__} -> {dep}")
-                try:
-                    self.__load_plugin(self.__classes[dep])
-                except Exception as e:
-                    logging.exception(e)
-                    raise
+    # Pipeline hooks invoked by LoadStrategy implementations.
 
-        for cfl in self.__cfls[cls.__name__]:
-            if cfl in self.__classes:
-                if self.__classes[cfl].__priority__ > cls.__priority__ and not self.disable_plugin(cfl) \
+    def is_loaded(self, name: str) -> bool:
+        return name in self.__loaded
+
+    def load_dependencies(self, cls: type[_T]) -> None:
+        self.__loading.add(cls.__name__)
+        try:
+            for dep_cls in self.__resolver.required(cls):
+                if dep_cls.__name__ in self.__loading:
+                    raise PluginDependencyError(
+                        f"Dependency cycle detected: {cls.__name__} -> {dep_cls.__name__}")
+                if not self.is_loaded(dep_cls.__name__):
+                    try:
+                        self.__load_plugin(dep_cls)
+                    except Exception as e:
+                        logging.exception(e)
+                        raise
+        finally:
+            self.__loading.discard(cls.__name__)
+
+    def resolve_conflicts(self, cls: type[_T]) -> bool:
+        """Return True if cls may load. Unloads a lower-priority conflict when it
+        should yield; raises LoadException when cls itself must yield."""
+        for cfl, cfl_cls in self.__resolver.conflicts(cls):
+            if cfl_cls is not None:
+                if cfl_cls.__priority__ > cls.__priority__ and not self.disable_plugin(cfl) \
                         and not self.enable_plugin(cls.__name__):
                     logging.warning(f"Not loading {cls.__name__} because its conflict has higher priority")
-                    return
+                    return False
 
             if cfl in self.__loaded:
                 if cls.__priority__ > self.__classes[cfl].__priority__ and not self.enable_plugin(cfl):
                     self.unload_plugin(cfl)
                 else:
                     raise LoadException(f"Not loading conflicting plugin {cls.__name__} due to lower priority")
+        return True
 
+    def activate(self, cls: type[_T]) -> None:
         logging.info(f"loading {cls}")
         inst = cls(self.parent)
         try:
             inst._load()
         except Exception:
             logging.error(f"Failed to load {cls.__name__}", exc_info=True)
-            if not cls.__unloadable__:
+            if not self.is_unloadable(cls.__name__):
                 bmexit()
 
             raise  # NOTE TO SELF: might cause bugs
@@ -179,8 +255,13 @@ class PluginManager(GObject.GObject, Generic[_T]):
         except KeyError:
             return self.__dict__[key]
 
+    def is_unloadable(self, name: str) -> bool:
+        if name in self.__unloadable:
+            return self.__unloadable[name]
+        return self.__classes[name].__unloadable__
+
     def unload_plugin(self, name: str) -> None:
-        if self.__classes[name].__unloadable__:
+        if self.is_unloadable(name):
             for d in self.__deps[name]:
                 self.unload_plugin(d)
 
@@ -197,10 +278,19 @@ class PluginManager(GObject.GObject, Generic[_T]):
                     self.emit("plugin-unloaded", name)
 
         else:
-            raise Exception(f"Plugin {name} is not unloadable")
+            raise PluginError(f"Plugin {name} is not unloadable")
 
     def get_plugins(self) -> dict[str, _T]:
         return self._plugins
+
+    def get_plugin(self, name: str) -> _T:
+        """Return the loaded plugin instance by name.
+
+        Explicit, type-checkable alternative to attribute access via __getattr__,
+        which is opaque to IDEs and refactoring tools. Raises KeyError if the
+        plugin is not loaded.
+        """
+        return self._plugins[name]
 
     _U = TypeVar("_U")
 
@@ -245,22 +335,25 @@ class PersistentPluginManager(PluginManager[_T]):
     def on_property_changed(self, config: Gio.Settings, key: str) -> None:
         for item in config[key]:
             disable = item.startswith("!")
-            if disable:
-                item = item.lstrip("!")
-
+            name = item.lstrip("!") if disable else item
             try:
-                cls: type[BasePlugin] = self.get_classes()[item]
-                if not cls.__unloadable__ and disable:
-                    logging.warning(f"warning: {item} is not unloadable")
-                elif item in self.get_loaded() and disable:
-                    self.unload_plugin(item)
-                elif item not in self.get_loaded() and not disable:
-                    try:
-                        self.load_plugin(item, user_action=True)
-                    except Exception as e:
-                        logging.exception(e)
-                        self.set_config(item, False)
-
+                self.__apply_config_state(name, disable)
             except KeyError:
-                logging.warning(f"warning: Plugin {item} not found")
-                continue
+                logging.warning(f"warning: Plugin {name} not found")
+
+    def __apply_config_state(self, item: str, disable: bool) -> None:
+        if item not in self.get_classes():
+            raise KeyError(item)
+        if not self.is_unloadable(item) and disable:
+            logging.warning(f"warning: {item} is not unloadable")
+        elif item in self.get_loaded() and disable:
+            self.unload_plugin(item)
+        elif item not in self.get_loaded() and not disable:
+            self.__enable_from_config(item)
+
+    def __enable_from_config(self, item: str) -> None:
+        try:
+            self.load_plugin(item, user_action=True)
+        except Exception as e:
+            logging.exception(e)
+            self.set_config(item, False)

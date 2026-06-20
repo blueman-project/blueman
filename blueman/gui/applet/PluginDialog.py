@@ -326,7 +326,8 @@ class PluginDialog(Gtk.ApplicationWindow):
                 desc = f"<span weight=\"bold\">{name}</span>"
             else:
                 desc = name
-            plugin_item = PluginItem(cls.__icon__, name, desc, name in loaded, activatable=cls.__unloadable__)
+            plugin_item = PluginItem(cls.__icon__, name, desc, name in loaded,
+                                     activatable=self.applet.Plugins.is_unloadable(name))
             self.model.insert_sorted(plugin_item, self._model_sort_func)
         self.listbox.select_row(self.listbox.get_row_at_index(0))
 
