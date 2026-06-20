@@ -38,7 +38,8 @@ class PendingTransferDict(TypedDict):
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
 
-# Resolve (display name, trusted) for a device given its adapter source path and address.
+# Resolve (display name, trusted) for a device by adapter source path + address.
+# May raise; callers treat a raised resolver as an untrusted/unknown device.
 DeviceResolver = Callable[[str, BtAddress], tuple[str, bool]]
 
 _MAX_DESTINATION_ATTEMPTS = 10000
