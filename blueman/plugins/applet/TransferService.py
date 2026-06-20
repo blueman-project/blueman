@@ -184,7 +184,7 @@ class TransferService(AppletPlugin):
             self._notification = Notification(text, secondary_text % (escape(self._config["shared-path"]),
                                                                       escape(share_path.as_posix())),
                                               icon_name='blueman', timeout=30000,
-                                              actions=[('reset', 'Reset to default')], actions_cb=on_reset)
+                                              actions=[('reset', _('Reset to default'))], actions_cb=on_reset)
             self._notification.show()
 
         self._watch = Manager.watch_name_owner(self._on_dbus_name_appeared, self._on_dbus_name_vanished)

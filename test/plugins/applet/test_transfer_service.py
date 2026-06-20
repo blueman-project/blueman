@@ -41,3 +41,18 @@ class TestSharePathEscaping(TestCase):
         body = self._body(settings_mock, notification_mock, '/home/"quoted"')
         self.assertNotIn('"quoted"', body)
         self.assertIn("&quot;quoted&quot;", body)
+
+
+@patch("blueman.plugins.applet.TransferService.Manager")
+@patch("blueman.plugins.applet.TransferService.Notification")
+@patch("blueman.plugins.applet.TransferService.Gio.Settings")
+class TestResetActionTranslated(TestCase):
+    def test_reset_label_routed_through_gettext(self, settings_mock: MagicMock, notification_mock: MagicMock,
+                                                _manager_mock: MagicMock) -> None:
+        plugin = _make_plugin("/does/not/matter")
+        settings_mock.return_value = plugin._config
+        with patch.object(TransferService, "_make_share_path", return_value=(Path("/srv/Downloads"), True)), \
+                patch("blueman.plugins.applet.TransferService._", lambda s: f"<tr>{s}"):
+            plugin.on_load()
+        actions = notification_mock.call_args.kwargs["actions"]
+        self.assertEqual(actions, [("reset", "<tr>Reset to default")])
