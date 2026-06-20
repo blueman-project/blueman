@@ -71,3 +71,24 @@ class TestErrorTypes(TestCase):
 
     def test_dependency_error_is_a_plugin_error(self) -> None:
         self.assertTrue(issubclass(PluginDependencyError, PluginError))
+
+
+class TestGetPlugin(TestCase):
+    def test_returns_loaded_instance(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Widget")
+        instance = cls(manager.parent)
+        manager.get_plugins()["Widget"] = instance
+        self.assertIs(manager.get_plugin("Widget"), instance)
+
+    def test_matches_getattr_access(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Widget")
+        instance = cls(manager.parent)
+        manager.get_plugins()["Widget"] = instance
+        self.assertIs(manager.get_plugin("Widget"), manager.Widget)
+
+    def test_unknown_plugin_raises_key_error(self) -> None:
+        manager = _manager()
+        with self.assertRaises(KeyError):
+            manager.get_plugin("Nope")

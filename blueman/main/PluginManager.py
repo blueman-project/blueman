@@ -202,6 +202,15 @@ class PluginManager(GObject.GObject, Generic[_T]):
     def get_plugins(self) -> dict[str, _T]:
         return self._plugins
 
+    def get_plugin(self, name: str) -> _T:
+        """Return the loaded plugin instance by name.
+
+        Explicit, type-checkable alternative to attribute access via __getattr__,
+        which is opaque to IDEs and refactoring tools. Raises KeyError if the
+        plugin is not loaded.
+        """
+        return self._plugins[name]
+
     _U = TypeVar("_U")
 
     def get_loaded_plugins(self, protocol: type[_U]) -> Iterable[_U]:
