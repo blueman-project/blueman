@@ -21,7 +21,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 
 | id | status | effort | description | notes |
 |----|--------|--------|-------------|-------|
-| data-1 | open | S | `blueman/plugins/applet/TransferService.py:296-303` resolves incoming-file name collisions by prefixing only second-resolution time, then moves without rechecking the timestamped destination. Two same-named transfers completing in the same second can collide and overwrite/fail depending on platform semantics. | Generate a unique destination with an exclusive create/rename loop (`name`, `timestamp_name`, `timestamp_1_name`, ...), and test repeated same-second completions. |
 | data-2 | open | S | `blueman/plugins/manager/Notes.py:32-35` creates a `.vnt` temporary file with `delete=False` and relies on the launched sendto process to delete it. If launch fails or the process never starts, the note body remains in `/tmp` indefinitely. | Delete the temp file when `launch()` returns false or raises; consider creating it in an app-owned temp directory with cleanup on startup. Cross-ref gov-5. |
 
 ## performance

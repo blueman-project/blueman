@@ -1,8 +1,10 @@
+import tempfile
+from datetime import datetime
 from pathlib import Path
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
-from blueman.plugins.applet.TransferService import Agent, TransferService
+from blueman.plugins.applet.TransferService import Agent, TransferService, reserve_destination
 
 
 def _make_agent() -> Agent:
@@ -170,3 +172,56 @@ class TestOverlappingPending(TestCase):
         err_b.assert_called_once()
         self.assertNotIn("/t2", agent._pending_transfers)
         self.assertNotIn("/t2", agent.transfers)
+
+
+class TestReserveDestination(TestCase):
+    _NOW = datetime(2020, 1, 2, 3, 4, 5)
+    _STAMP = "20200102030405"
+
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+
+    def test_no_collision_uses_plain_name(self) -> None:
+        dest = reserve_destination(self.dir, "file.bin", self._NOW)
+        self.assertEqual(dest, self.dir / "file.bin")
+        self.assertTrue(dest.exists())
+
+    def test_first_collision_uses_timestamp(self) -> None:
+        (self.dir / "file.bin").write_text("existing")
+        dest = reserve_destination(self.dir, "file.bin", self._NOW)
+        self.assertEqual(dest, self.dir / f"{self._STAMP}_file.bin")
+
+    def test_second_collision_uses_indexed_timestamp(self) -> None:
+        (self.dir / "file.bin").write_text("existing")
+        (self.dir / f"{self._STAMP}_file.bin").write_text("existing")
+        dest = reserve_destination(self.dir, "file.bin", self._NOW)
+        self.assertEqual(dest, self.dir / f"{self._STAMP}_1_file.bin")
+
+    def test_same_second_calls_never_collide(self) -> None:
+        # Two transfers of the same name completing in the same second must each
+        # reserve a distinct, freshly-created destination — no overwrite.
+        reserved = [reserve_destination(self.dir, "photo.jpg", self._NOW) for _ in range(5)]
+        self.assertEqual(len(set(reserved)), 5)
+        for dest in reserved:
+            self.assertTrue(dest.exists())
+
+    def test_reserved_file_is_exclusive(self) -> None:
+        dest = reserve_destination(self.dir, "x", self._NOW)
+        # A second reservation must not hand back the same path it just created.
+        other = reserve_destination(self.dir, "x", self._NOW)
+        self.assertNotEqual(dest, other)
+
+    def test_fuzz_weird_names_stay_unique_and_safe(self) -> None:
+        names = ["a b.bin", "résumé.pdf", ".hidden", "name.with.dots.tar.gz",
+                 "UPPER.TXT", "  spaces  ", "emoji-😀.png", "a" * 200 + ".bin"]
+        for raw in names:
+            with self.subTest(name=raw):
+                first = reserve_destination(self.dir, raw, self._NOW)
+                second = reserve_destination(self.dir, raw, self._NOW)
+                self.assertNotEqual(first, second)
+                self.assertTrue(first.exists() and second.exists())
+                # Reserved name must stay within the destination directory.
+                self.assertEqual(first.parent, self.dir)
+                self.assertEqual(second.parent, self.dir)

@@ -1,11 +1,12 @@
 from datetime import datetime
 from gettext import gettext as _, ngettext
 from pathlib import Path
+import os
 import shutil
 import logging
 from html import escape
 from typing import TypedDict, Union
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from blueman.bluemantyping import ObjectPath, BtAddress
 
 from blueman.bluez.obex.AgentManager import AgentManager
@@ -37,6 +38,33 @@ class PendingTransferDict(TypedDict):
 
 
 NotificationType = Union[_NotificationBubble, _NotificationDialog]
+
+_MAX_DESTINATION_ATTEMPTS = 10000
+
+
+def _destination_candidates(filename: str, stamp: str) -> "Iterator[str]":
+    yield filename
+    yield f"{stamp}_{filename}"
+    for index in range(1, _MAX_DESTINATION_ATTEMPTS):
+        yield f"{stamp}_{index}_{filename}"
+
+
+def reserve_destination(dest_dir: Path, filename: str, now: datetime) -> Path:
+    """Atomically reserve a unique destination, returning the reserved (empty) path.
+
+    Uses O_EXCL so two transfers completing in the same second cannot pick the
+    same name and overwrite each other; the caller moves the source onto it.
+    """
+    stamp = now.strftime('%Y%m%d%H%M%S')
+    for candidate in _destination_candidates(filename, stamp):
+        dest = dest_dir / candidate
+        try:
+            fd = os.open(dest, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+        except FileExistsError:
+            continue
+        os.close(fd)
+        return dest
+    raise FileExistsError(f"No free destination for {filename} in {dest_dir}")
 
 
 class ObexErrorRejected(DbusError):
@@ -293,18 +321,17 @@ class TransferService(AppletPlugin):
 
         src = attributes['path']
         dest_dir, ignored = self._make_share_path()
-        filename = src.name
 
-        if dest_dir.joinpath(filename).exists():
-            now = datetime.now()
-            filename = f"{now.strftime('%Y%m%d%H%M%S')}_{filename}"
+        dest = reserve_destination(dest_dir, src.name, datetime.now())
+        filename = dest.name
+        if filename != src.name:
             logging.info(f"Destination file exists, renaming to: {filename}")
 
-        dest = dest_dir.joinpath(filename)
         try:
             shutil.move(src, dest)
         except (OSError, PermissionError):
             logging.error("Failed to move files", exc_info=True)
+            dest.unlink(missing_ok=True)
             success = False
 
         if success:
