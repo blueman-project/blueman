@@ -61,7 +61,7 @@ class Agent(DbusService):
         self._applet = applet
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
 
-        self._allowed_devices: list[str] = []
+        self._allowed_devices: set[BtAddress] = set()
         self._notification: NotificationType | None = None
         self._pending_transfer: Optional[PendingTransferDict] = None
         self.transfers: dict[ObjectPath, TransferDict] = {}
@@ -90,11 +90,11 @@ class Agent(DbusService):
 
                 ok(self.transfers[self._pending_transfer['transfer_path']]['path'].as_posix())
 
-                self._allowed_devices.append(self._pending_transfer['address'])
+                allowed_address = self._pending_transfer['address']
+                self._allowed_devices.add(allowed_address)
 
-                def _remove() -> bool:
-                    assert self._pending_transfer is not None  # https://github.com/python/mypy/issues/2608
-                    self._allowed_devices.remove(self._pending_transfer['address'])
+                def _remove(address: BtAddress = allowed_address) -> bool:
+                    self._allowed_devices.discard(address)
                     return False
 
                 GLib.timeout_add(60000, _remove)

@@ -120,7 +120,6 @@ Status: `open`, `in-progress`, `blocked`. Effort: `S` (≤1h), `M` (half-day), `
 |----|--------|--------|-------------|-------|
 | rel-11 | open | S | `blueman/main/applet/BluezAgent.py:201-203` indexes `key[entered]` when displaying a passkey. If BlueZ reports `entered == 6` after all digits are typed, or an invalid value, the notification path raises `IndexError`. | Clamp `entered` to the valid range and render the fully-entered passkey without bolding a missing digit. Cross-ref test-2. |
 | rel-9 | open | S | `blueman/main/Services.py:86` bare `except: pass` hides errors | narrow exception types |
-| rel-10 | open | S | `blueman/plugins/applet/TransferService.py:95-100` schedules removal of an allowed device but the timeout closure reads `self._pending_transfer` later instead of capturing the accepted address. A second pending transfer or cleared state can remove the wrong address or hit the assertion. | Capture `address` in the closure and remove it idempotently (`discard`-style) from the allowed list. Cross-ref sm-8. |
 | rel-12 | open | S | `blueman/plugins/BasePlugin.py:50` registers `weakref.finalize(self, self._on_plugin_delete)`. Passing a bound method keeps `self` strongly referenced by the finalizer, so plugin instances may not be collected and the delete hook is unreliable. | Register a module-level/static cleanup callback with weak state, or rely on explicit plugin unload and remove the finalizer. |
 
 ## observability
