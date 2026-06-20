@@ -1,7 +1,12 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 
-from blueman.main.PluginManager import PluginManager, LoadException, PluginDependencyResolver
+from blueman.main.PluginManager import (
+    PluginManager,
+    PluginDependencyResolver,
+    LoadStrategy,
+    DefaultLoadStrategy,
+)
 from blueman.plugins.errors import PluginError, PluginDependencyError
 
 
@@ -203,3 +208,178 @@ class TestActivateFailure(TestCase):
         with self.assertRaises(RuntimeError):
             manager._PluginManager__load_plugin(cls)
         bmexit_mock.assert_called_once()
+
+
+class TestLoadStrategySeam(TestCase):
+    def test_custom_strategy_overrides_loading(self) -> None:
+        calls = []
+
+        class RecordingStrategy(LoadStrategy):
+            def load(self, manager: PluginManager, cls: type) -> None:
+                calls.append(cls.__name__)
+
+        manager: PluginManager = PluginManager(_Plugin, MagicMock(), MagicMock(),
+                                               load_strategy=RecordingStrategy())
+        cls = _plugin_class("P")
+        _register(manager, cls)
+        manager.load_plugin("P")
+        self.assertEqual(calls, ["P"])
+        self.assertNotIn("P", manager.get_loaded())  # custom strategy chose not to activate
+
+    def test_default_strategy_activates_plugin(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("P")
+        _register(manager, cls)
+        manager.load_plugin("P")
+        self.assertIn("P", manager.get_loaded())
+
+    def test_default_load_strategy_is_used_by_default(self) -> None:
+        manager = _manager()
+        self.assertIsInstance(manager._PluginManager__strategy, DefaultLoadStrategy)
+
+    def test_base_strategy_load_is_abstract(self) -> None:
+        with self.assertRaises(NotImplementedError):
+            LoadStrategy().load(_manager(), _plugin_class("P"))
+
+    def test_is_loaded_hook_reflects_state(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("P")
+        _register(manager, cls)
+        self.assertFalse(manager.is_loaded("P"))
+        manager.load_plugin("P")
+        self.assertTrue(manager.is_loaded("P"))
+
+
+class TestUnloadPlugin(TestCase):
+    def test_unload_removes_loaded_plugin(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("P")
+        _register(manager, cls)
+        manager.load_plugin("P")
+        manager.unload_plugin("P")
+        self.assertNotIn("P", manager.get_loaded())
+        self.assertNotIn("P", manager.get_plugins())
+
+    def test_unload_recurses_into_dependents(self) -> None:
+        manager = _manager()
+        dep = _plugin_class("Dep")
+        main_cls = _plugin_class("Main", __depends__=["Dep"])
+        _register(manager, dep, deps=["Main"])  # __deps[Dep] holds Dep's dependents
+        _register(manager, main_cls)
+        manager.load_plugin("Main")
+        manager.unload_plugin("Dep")  # Dep's dependent Main is unloaded first
+        self.assertNotIn("Main", manager.get_loaded())
+        self.assertNotIn("Dep", manager.get_loaded())
+
+    def test_unload_warns_when_plugin_refuses(self) -> None:
+        manager = _manager()
+        cls = _plugin_class("Stubborn")
+        cls._unload = lambda self: (_ for _ in ()).throw(NotImplementedError())  # type: ignore[assignment]
+        _register(manager, cls)
+        manager.load_plugin("Stubborn")
+        with self.assertLogs(level="WARNING"):
+            manager.unload_plugin("Stubborn")
+        self.assertIn("Stubborn", manager.get_loaded())  # still loaded
+
+
+@patch("blueman.main.PluginManager.importlib")
+@patch("blueman.main.PluginManager.plugin_names", return_value=["modx"])
+class TestDiscoveryImportFailures(TestCase):
+    def _manager_over_empty_base(self) -> PluginManager:
+        base = type("EmptyBase", (_Plugin,), {})
+        module_path = MagicMock()
+        module_path.__file__ = "/x"
+        module_path.__name__ = "m"
+        return PluginManager(base, module_path, MagicMock())
+
+    def test_import_error_is_logged(self, _names: MagicMock, importlib_mock: MagicMock) -> None:
+        importlib_mock.import_module.side_effect = ImportError("boom")
+        manager = self._manager_over_empty_base()
+        with self.assertLogs(level="ERROR"):
+            manager.load_plugin()
+
+    def test_plugin_exception_is_logged(self, _names: MagicMock, importlib_mock: MagicMock) -> None:
+        importlib_mock.import_module.side_effect = PluginError("nope")
+        manager = self._manager_over_empty_base()
+        with self.assertLogs(level="WARNING"):
+            manager.load_plugin()
+
+
+@patch("blueman.main.PluginManager.Gio")
+class TestPersistentPluginManager(TestCase):
+    def _ppm(self, gio_mock: MagicMock, plugin_list: list) -> tuple:
+        from blueman.main.PluginManager import PersistentPluginManager
+        store = {"plugin-list": list(plugin_list)}
+        config = MagicMock()
+        config.__getitem__.side_effect = lambda key: store[key]
+        config.__setitem__.side_effect = lambda key, value: store.__setitem__(key, value)
+        gio_mock.Settings.return_value = config
+        ppm = PersistentPluginManager(_Plugin, MagicMock(), MagicMock())
+        return ppm, store
+
+    def test_disable_and_enable_queries(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["Enabled", "!Disabled"])
+        self.assertTrue(ppm.enable_plugin("Enabled"))
+        self.assertFalse(ppm.enable_plugin("Disabled"))
+        self.assertTrue(ppm.disable_plugin("Disabled"))
+        self.assertFalse(ppm.disable_plugin("Enabled"))
+
+    def test_config_list_returns_setting(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["A", "!B"])
+        self.assertEqual(ppm.config_list, ["A", "!B"])
+
+    def test_set_config_enable_and_disable(self, gio_mock: MagicMock) -> None:
+        ppm, store = self._ppm(gio_mock, [])
+        ppm.set_config("Foo", True)
+        self.assertIn("Foo", store["plugin-list"])
+        ppm.set_config("Foo", False)
+        self.assertIn("!Foo", store["plugin-list"])
+        self.assertNotIn("Foo", store["plugin-list"])
+
+    def test_on_property_changed_unknown_plugin_logs(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["Ghost"])
+        with self.assertLogs(level="WARNING") as cm:
+            ppm.on_property_changed(ppm._PersistentPluginManager__config, "plugin-list")
+        self.assertTrue(any("not found" in line for line in cm.output))
+
+    def test_on_property_changed_disables_loaded_plugin(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["!Widget"])
+        cls = _plugin_class("Widget")
+        _register(ppm, cls)
+        ppm.load_plugin("Widget")
+        ppm.on_property_changed(ppm._PersistentPluginManager__config, "plugin-list")
+        self.assertNotIn("Widget", ppm.get_loaded())
+
+    def test_on_property_changed_warns_for_non_unloadable(self, gio_mock: MagicMock) -> None:
+        ppm, _store = self._ppm(gio_mock, ["!Fixed"])
+        cls = _plugin_class("Fixed", __unloadable__=False)
+        _register(ppm, cls)
+        with self.assertLogs(level="WARNING") as cm:
+            ppm.on_property_changed(ppm._PersistentPluginManager__config, "plugin-list")
+        self.assertTrue(any("not unloadable" in line for line in cm.output))
+
+
+class TestDependencyChainFuzz(TestCase):
+    def test_deep_chains_load_in_dependency_order(self) -> None:
+        for depth in range(1, 12):
+            manager = _manager()
+            names = [f"P{i}" for i in range(depth)]
+            for index, name in enumerate(names):
+                deps = [names[index + 1]] if index + 1 < depth else []
+                _register(manager, _plugin_class(name, __depends__=deps))
+            manager.load_plugin(names[0])
+            self.assertEqual(manager.get_loaded(), list(reversed(names)),
+                             f"depth={depth} loaded out of order")
+
+    def test_conflict_priority_matrix_is_deterministic(self) -> None:
+        for winner_priority, loser_priority in [(1, 0), (10, 2), (5, 4), (100, 99)]:
+            manager = _manager()
+            manager.enable_plugin = lambda plugin: False  # type: ignore[method-assign]
+            loser = _plugin_class("Loser", __priority__=loser_priority)
+            winner = _plugin_class("Winner", __priority__=winner_priority)
+            _register(manager, loser)
+            _register(manager, winner, cfls=["Loser"])
+            manager.load_plugin("Loser")
+            manager.load_plugin("Winner")
+            self.assertIn("Winner", manager.get_loaded())
+            self.assertNotIn("Loser", manager.get_loaded())

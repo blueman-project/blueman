@@ -51,13 +51,37 @@ class PluginDependencyResolver(Generic[_T]):
         return [(cfl, self.__classes.get(cfl)) for cfl in self.__conflicts[cls.__name__]]
 
 
+class LoadStrategy(Generic[_T]):
+    """Pluggable plugin-load pipeline.
+
+    Subclass and pass to PluginManager to support alternative loaders (e.g. a
+    different plugin type or an asynchronous loader) without changing the
+    manager. The default is synchronous: resolve dependencies, resolve
+    conflicts, then activate.
+    """
+
+    def load(self, manager: "PluginManager[_T]", cls: type[_T]) -> None:
+        raise NotImplementedError
+
+
+class DefaultLoadStrategy(LoadStrategy[_T]):
+    def load(self, manager: "PluginManager[_T]", cls: type[_T]) -> None:
+        if manager.is_loaded(cls.__name__):
+            return
+        manager.load_dependencies(cls)
+        if not manager.resolve_conflicts(cls):
+            return
+        manager.activate(cls)
+
+
 class PluginManager(GObject.GObject, Generic[_T]):
     __gsignals__: GSignals = {
         'plugin-loaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
         'plugin-unloaded': (GObject.SignalFlags.NO_HOOKS, None, (GObject.TYPE_STRING,)),
     }
 
-    def __init__(self, plugin_class: type[_T], module_path: ModuleType, parent: object) -> None:
+    def __init__(self, plugin_class: type[_T], module_path: ModuleType, parent: object,
+                 load_strategy: "LoadStrategy[_T] | None" = None) -> None:
         super().__init__()
         self.__deps: dict[str, list[str]] = {}
         self.__cfls: dict[str, list[str]] = {}
@@ -67,6 +91,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
         # Per-manager unloadable flags; never mutate the shared class attribute.
         self.__unloadable: dict[str, bool] = {}
         self.__resolver: PluginDependencyResolver[_T] = PluginDependencyResolver(self.__classes, self.__cfls)
+        self.__strategy: LoadStrategy[_T] = load_strategy or DefaultLoadStrategy()
         self.parent = parent
 
         self.module_path = module_path
@@ -162,24 +187,23 @@ class PluginManager(GObject.GObject, Generic[_T]):
         return True
 
     def __load_plugin(self, cls: type[_T]) -> None:
-        if cls.__name__ in self.__loaded:
-            return
+        self.__strategy.load(self, cls)
 
-        self.__load_dependencies(cls)
-        if not self.__resolve_conflicts(cls):
-            return
-        self.__activate(cls)
+    # Pipeline hooks invoked by LoadStrategy implementations.
 
-    def __load_dependencies(self, cls: type[_T]) -> None:
+    def is_loaded(self, name: str) -> bool:
+        return name in self.__loaded
+
+    def load_dependencies(self, cls: type[_T]) -> None:
         for dep_cls in self.__resolver.required(cls):
-            if dep_cls.__name__ not in self.__loaded:
+            if not self.is_loaded(dep_cls.__name__):
                 try:
                     self.__load_plugin(dep_cls)
                 except Exception as e:
                     logging.exception(e)
                     raise
 
-    def __resolve_conflicts(self, cls: type[_T]) -> bool:
+    def resolve_conflicts(self, cls: type[_T]) -> bool:
         """Return True if cls may load. Unloads a lower-priority conflict when it
         should yield; raises LoadException when cls itself must yield."""
         for cfl, cfl_cls in self.__resolver.conflicts(cls):
@@ -196,7 +220,7 @@ class PluginManager(GObject.GObject, Generic[_T]):
                     raise LoadException(f"Not loading conflicting plugin {cls.__name__} due to lower priority")
         return True
 
-    def __activate(self, cls: type[_T]) -> None:
+    def activate(self, cls: type[_T]) -> None:
         logging.info(f"loading {cls}")
         inst = cls(self.parent)
         try:
