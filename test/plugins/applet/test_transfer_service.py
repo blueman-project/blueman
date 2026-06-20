@@ -478,3 +478,206 @@ class TestOpenAction(TestCase):
             on_open = notification_mock.return_value.add_action.call_args.args[2]
             on_open("open")
             launch_mock.assert_called_once()
+
+
+@patch("blueman.plugins.applet.TransferService.AgentManager")
+@patch("blueman.plugins.applet.TransferService.Gio")
+@patch("blueman.plugins.applet.TransferService.DbusService.__init__", return_value=None)
+class TestAgentLifecycle(TestCase):
+    def _make(self) -> tuple:
+        with patch.object(Agent, "add_method") as add, patch.object(Agent, "register") as reg:
+            agent = Agent(lambda source, address: ("X", True))
+        return agent, add, reg
+
+    def test_init_registers_three_methods_and_state(self, _dbus: MagicMock, _gio: MagicMock,
+                                                    _am: MagicMock) -> None:
+        agent, add, reg = self._make()
+        self.assertEqual(add.call_count, 3)
+        reg.assert_called_once()
+        self.assertEqual(agent._allowed_devices, set())
+        self.assertEqual(agent._pending_transfers, {})
+        self.assertEqual(agent.transfers, {})
+
+    def test_register_and_unregister_at_manager(self, _dbus: MagicMock, _gio: MagicMock,
+                                                am_mock: MagicMock) -> None:
+        agent, _add, _reg = self._make()
+        agent.register_at_manager()
+        am_mock.return_value.register_agent.assert_called_once()
+        agent.unregister_from_manager()
+        am_mock.return_value.unregister_agent.assert_called_once()
+
+
+@patch("blueman.plugins.applet.TransferService.Manager")
+@patch("blueman.plugins.applet.TransferService.Notification")
+@patch("blueman.plugins.applet.TransferService.Gio.Settings")
+class TestOnLoadClosures(TestCase):
+    def _load(self, settings_mock: MagicMock, notification_mock: MagicMock, invalid: bool) -> TransferService:
+        plugin = _make_plugin("/configured")
+        settings_mock.return_value = plugin._config
+        with patch.object(TransferService, "_make_share_path", return_value=(Path("/srv/Downloads"), invalid)):
+            plugin.on_load()
+        return plugin
+
+    def test_handlerids_are_per_instance(self, settings_mock: MagicMock, notification_mock: MagicMock,
+                                         _manager_mock: MagicMock) -> None:
+        plugin = self._load(settings_mock, notification_mock, invalid=False)
+        self.assertEqual(plugin._handlerids, [])
+        self.assertIsNot(plugin._handlerids, TransferService._handlerids)
+
+    def test_on_reset_clears_config_and_notification(self, settings_mock: MagicMock, notification_mock: MagicMock,
+                                                     _manager_mock: MagicMock) -> None:
+        plugin = self._load(settings_mock, notification_mock, invalid=True)
+        on_reset = notification_mock.call_args.kwargs["actions_cb"]
+        on_reset("reset")
+        plugin._config.reset.assert_called_once_with("shared-path")
+        self.assertIsNone(plugin._notification)
+
+
+@patch("blueman.plugins.applet.TransferService.Gio")
+class TestOnUnload(TestCase):
+    def test_unwatch_and_unregister(self, gio_mock: MagicMock) -> None:
+        plugin = TransferService.__new__(TransferService)
+        plugin._watch = 42
+        agent = MagicMock()
+        plugin._agent = agent
+        plugin.on_unload()
+        gio_mock.bus_unwatch_name.assert_called_once_with(42)
+        agent.unregister_from_manager.assert_called_once()
+        self.assertIsNone(plugin._agent)
+
+    def test_noop_without_watch_or_agent(self, gio_mock: MagicMock) -> None:
+        plugin = TransferService.__new__(TransferService)
+        plugin._watch = None
+        plugin._agent = None
+        plugin.on_unload()
+        gio_mock.bus_unwatch_name.assert_not_called()
+
+
+@patch("blueman.plugins.applet.TransferService.Agent")
+@patch("blueman.plugins.applet.TransferService.Manager")
+class TestDbusNameLifecycle(TestCase):
+    def _plugin(self) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        plugin._agent = None
+        plugin._manager = None
+        plugin._handlerids = []
+        return plugin
+
+    def test_appeared_connects_signals_and_registers(self, manager_mock: MagicMock, agent_mock: MagicMock) -> None:
+        plugin = self._plugin()
+        plugin._on_dbus_name_appeared(MagicMock(), "name", "owner")
+        self.assertEqual(len(plugin._handlerids), 3)
+        agent_mock.assert_called_once_with(plugin._resolve_device)
+
+    def test_appeared_handles_manager_failure(self, manager_mock: MagicMock, agent_mock: MagicMock) -> None:
+        from gi.repository import GLib
+        manager_mock.side_effect = GLib.Error("obex down")
+        plugin = self._plugin()
+        plugin._on_dbus_name_appeared(MagicMock(), "name", "owner")
+        self.assertEqual(plugin._handlerids, [])
+        agent_mock.assert_not_called()
+
+    def test_vanished_disconnects_and_clears(self, manager_mock: MagicMock, _agent_mock: MagicMock) -> None:
+        plugin = self._plugin()
+        manager = MagicMock()
+        plugin._manager = manager
+        plugin._handlerids = [1, 2, 3]
+        agent = MagicMock()
+        plugin._agent = agent
+        plugin._on_dbus_name_vanished(MagicMock(), "name")
+        self.assertEqual(manager.disconnect.call_count, 3)
+        self.assertIsNone(plugin._manager)
+        self.assertEqual(plugin._handlerids, [])
+        agent.unregister.assert_called_once()
+        self.assertIsNone(plugin._agent)
+
+    def test_vanished_noop_when_idle(self, manager_mock: MagicMock, _agent_mock: MagicMock) -> None:
+        plugin = self._plugin()
+        plugin._on_dbus_name_vanished(MagicMock(), "name")  # must not raise
+
+
+class TestReserveDestinationExhaustion(TestCase):
+    def test_raises_when_no_free_candidate(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp)
+            now = datetime(2020, 1, 2, 3, 4, 5)
+            stamp = "20200102030405"
+            with patch("blueman.plugins.applet.TransferService._MAX_DESTINATION_ATTEMPTS", 2):
+                (d / "f").write_text("")
+                (d / f"{stamp}_f").write_text("")
+                (d / f"{stamp}_1_f").write_text("")
+                with self.assertRaises(FileExistsError):
+                    reserve_destination(d, "f", now)
+
+
+@patch("blueman.plugins.applet.TransferService.GLib")
+class TestMakeSharePathReset(TestCase):
+    def test_config_equal_to_default_is_reset(self, glib_mock: MagicMock) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            glib_mock.get_user_special_dir.return_value = tmp
+            plugin = TransferService.__new__(TransferService)
+            config = MagicMock()
+            config.__getitem__.side_effect = lambda key: tmp
+            config.__setitem__ = MagicMock()
+            plugin._config = config
+            path, error = plugin._make_share_path()
+            self.assertEqual(path, Path(tmp))
+            self.assertFalse(error)
+            config.__setitem__.assert_called_with("shared-path", "")
+
+
+@patch("blueman.plugins.applet.TransferService.Notification")
+class TestCompletionRenameAndReset(TestCase):
+    def setUp(self) -> None:
+        self._tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self._tmp.cleanup)
+        root = Path(self._tmp.name)
+        self.dest_dir = root / "Downloads"
+        self.dest_dir.mkdir()
+        self.src = root / "incoming.bin"
+        self.src.write_text("payload")
+
+    def test_collision_renames_with_timestamp(self, _notification_mock: MagicMock) -> None:
+        (self.dest_dir / "incoming.bin").write_text("pre-existing")
+        plugin = TransferService.__new__(TransferService)
+        plugin._agent = MagicMock()
+        plugin._agent.transfers = {"/t": {"path": self.src, "size": 10, "name": "Phone"}}
+        plugin._normal_transfers = 0
+        plugin._silent_transfers = 1
+        plugin._notification = None
+        with patch.object(TransferService, "_make_share_path", return_value=(self.dest_dir, False)):
+            plugin._on_transfer_completed(MagicMock(), "/t", True)
+        moved = [p.name for p in self.dest_dir.iterdir()]
+        self.assertIn("incoming.bin", moved)  # the pre-existing file
+        self.assertTrue(any(n.endswith("_incoming.bin") for n in moved))  # the renamed arrival
+
+
+@patch("blueman.plugins.applet.TransferService.Notification")
+class TestSessionCounterReset(TestCase):
+    def _plugin(self, silent: int, normal: int) -> TransferService:
+        plugin = TransferService.__new__(TransferService)
+        plugin._silent_transfers = silent
+        plugin._normal_transfers = normal
+        plugin._notification = None
+        return plugin
+
+    def test_counters_reset_after_summary(self, _notification_mock: MagicMock) -> None:
+        plugin = self._plugin(silent=2, normal=1)
+        with patch.object(TransferService, "_make_share_path", return_value=(Path("/dl"), False)):
+            plugin._on_session_removed(MagicMock(), "/sess")
+        self.assertEqual(plugin._silent_transfers, 0)
+        self.assertEqual(plugin._normal_transfers, 0)
+
+
+@patch("blueman.plugins.applet.TransferService.GLib")
+class TestMakeSharePathXdgMissing(TestCase):
+    def test_falls_back_to_home_when_xdg_unavailable(self, glib_mock: MagicMock) -> None:
+        glib_mock.get_user_special_dir.return_value = None
+        plugin = TransferService.__new__(TransferService)
+        config = MagicMock()
+        config.__getitem__.side_effect = lambda key: ""  # no configured path
+        config.__setitem__ = MagicMock()
+        plugin._config = config
+        path, error = plugin._make_share_path()
+        self.assertEqual(path, Path("~").expanduser())
+        self.assertFalse(error)

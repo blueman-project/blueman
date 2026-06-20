@@ -202,6 +202,7 @@ class TransferService(AppletPlugin):
             logging.info('Reset share path')
 
         self._config = Gio.Settings(schema_id="org.blueman.transfer")
+        self._handlerids = []  # per-instance; avoid sharing the class-level list across instances
 
         share_path, invalid_share_path = self._make_share_path()
 
@@ -225,7 +226,8 @@ class TransferService(AppletPlugin):
 
     def _make_share_path(self) -> tuple[Path, bool]:
         config_path = Path(self._config["shared-path"])
-        default_path = Path(GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD))
+        download_dir = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_DOWNLOAD)
+        default_path = Path(download_dir) if download_dir else None
         path = None
         error = False
 
@@ -347,7 +349,7 @@ class TransferService(AppletPlugin):
                                               icon_name="blueman")
             self._add_open(self._notification, _("Open"), dest)
             self._notification.show()
-        elif not success:
+        else:
             n = Notification(
                 _("Transfer failed"),
                 _("Transfer of file %(0)s failed") % {
@@ -386,3 +388,7 @@ class TransferService(AppletPlugin):
                                               icon_name="blueman")
             self._add_open(self._notification, _("Open Location"), share_path)
             self._notification.show()
+
+        # The summary consumes the counts; reset so the next session starts fresh.
+        self._silent_transfers = 0
+        self._normal_transfers = 0
