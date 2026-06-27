@@ -4,20 +4,23 @@
 # Translators:
 # Cadan ap Tomos https://launchpad.net/~cadz123
 # ciaran, 2014-2015
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2020-04-14 10:14+0000\n"
-"Last-Translator: Christopher Schramm <transifex@cschramm.eu>\n"
-"Language-Team: Welsh (http://www.transifex.com/mate/MATE/language/cy/)\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
+"Language-Team: Welsh <https://hosted.weblate.org/projects/blueman/blueman/cy/"
+">\n"
 "Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != "
 "11) ? 2 : 3;\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -387,13 +390,13 @@ msgid "Always"
 msgstr "Bob amser"
 
 #: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d munud"
-msgstr[1] "%d funud"
-msgstr[2] "%d o funudau"
-msgstr[3] "%d o funudau"
+msgstr[0] "%(minutes)d munud"
+msgstr[1] "%(minutes)d funud"
+msgstr[2] "%(minutes)d o funudau"
+msgstr[3] "%(minutes)d o funudau"
 
 #: blueman/main/Adapter.py:233
 msgid "Adapter"
@@ -3339,13 +3342,13 @@ msgid "Files received"
 msgstr "Ffeiliau a dderbyniwyd"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Derbyniwyd %d ffeil yn y cefndir"
-msgstr[1] "Derbyniwyd %d ffeil yn y cefndir"
-msgstr[2] "Derbyniwyd %d o ffeiliau yn y cefndir"
-msgstr[3] "Derbyniwyd %d o ffeiliau yn y cefndir"
+msgstr[0] "Derbyniwyd %(files)d ffeil yn y cefndir"
+msgstr[1] "Derbyniwyd %(files)d ffeil yn y cefndir"
+msgstr[2] "Derbyniwyd %(files)d o ffeiliau yn y cefndir"
+msgstr[3] "Derbyniwyd %(files)d o ffeiliau yn y cefndir"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3353,13 +3356,13 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Derbyniwyd %d ffeil arall yn y cefndir"
-msgstr[1] "Derbyniwyd %d ffeil arall yn y cefndir"
-msgstr[2] "Derbyniwyd %d o ffeiliau eraill yn y cefndir"
-msgstr[3] "Derbyniwyd %d o ffeiliau eraill yn y cefndir"
+msgstr[0] "Derbyniwyd %(files)d ffeil arall yn y cefndir"
+msgstr[1] "Derbyniwyd %(files)d ffeil arall yn y cefndir"
+msgstr[2] "Derbyniwyd %(files)d o ffeiliau eraill yn y cefndir"
+msgstr[3] "Derbyniwyd %(files)d o ffeiliau eraill yn y cefndir"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3453,9 +3456,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Wrthi'n datgysylltu..."
+msgstr ""
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3584,10 +3587,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr ""
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Proffil Sain"
+msgstr "Proffil Sain %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"

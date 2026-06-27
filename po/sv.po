@@ -25,13 +25,14 @@
 # John M Smith <translatetose@mail.com>, 2023.
 # DANNYboii343 <maktabidanny1@gmail.com>, 2025.
 # Fredrik Wastring <fredrik@wastring.com>, 2025.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-05-07 03:46+0000\n"
-"Last-Translator: Fredrik Wastring <fredrik@wastring.com>\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/blueman/blueman/"
 "sv/>\n"
 "Language: sv\n"
@@ -39,7 +40,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3444,11 +3445,11 @@ msgid "Files received"
 msgstr "Filer har tagits emot"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Tog emot %d fil i bakgrunden"
-msgstr[1] "Tog emot %d filer i bakgrunden"
+msgstr[0] "Tog emot %(files)d fil i bakgrunden"
+msgstr[1] "Tog emot %(files)d filer i bakgrunden"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3457,11 +3458,11 @@ msgid "Open Location"
 msgstr "Plats Pod"
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Tog emot %d ytterligare fil i bakgrunden"
-msgstr[1] "Tog emot %d ytterligare filer i bakgrunden"
+msgstr[0] "Tog emot %(files)d ytterligare fil i bakgrunden"
+msgstr[1] "Tog emot %(files)d ytterligare filer i bakgrunden"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3566,9 +3567,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Kopplar från…"
+msgstr "Kopplar från %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3732,10 +3733,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "Lägger till ett standardmenyobjekt till statusikonens meny"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Ljudprofil"
+msgstr "Ljudprofil %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
