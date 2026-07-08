@@ -213,20 +213,18 @@ class ConnInfoReadError(Exception):
 cdef class conn_info:
     cdef conn_info_handles ci
     cdef int hci
-    cdef char* addr
+    # keep the encoded address alive on the instance: a raw char* taken from
+    # a temporary bytes object would dangle once __init__ returns
+    cdef bytes addr
     cdef public bint failed
 
     def __init__(self, py_addr, py_hci_name="hci0"):
         self.failed = False
-        py_bytes_addr = py_addr.encode("UTF-8")
-        cdef char* addr = py_bytes_addr
-
-        py_bytes_hci_name = py_hci_name.encode("UTF-8")
-        cdef char* hci_name = py_bytes_hci_name
-
-
-        self.hci = int(hci_name[3:])
-        self.addr = addr
+        self.addr = py_addr.encode("UTF-8")
+        self.hci = int(py_hci_name[3:])
+        # not yet initialized; connection_close treats a negative dd as a
+        # no-op, so deinit() before a successful init() is safe
+        self.ci.dd = -1
 
     def init(self):
         res = connection_init(self.hci, self.addr, & self.ci)
