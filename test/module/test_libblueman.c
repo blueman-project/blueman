@@ -329,7 +329,9 @@ static void test_create_bridge_setdelay_fail(void)
 {
 	g_fail_req = SIOCDEVPRIVATE;
 	M.ioctl_hook = ioctl_fail_one;
-	CHECK(_create_bridge("pan1") < 0);   /* forward-delay failure now surfaced */
+	/* forward-delay failure is non-fatal (legacy SIOCDEVPRIVATE interface);
+	 * the bridge was already created, so the call still succeeds */
+	CHECK(_create_bridge("pan1") == 0);
 	CHECK(M.socket_opens == 1 && M.socket_closes == 1);
 }
 
@@ -425,6 +427,32 @@ static void test_find_conn_ioctl_fail(void)
 	memset(&want, 0, sizeof(want));
 	g_fail_req = HCIGETCONNLIST;
 	M.ioctl_hook = ioctl_fail_one;
+	CHECK(find_conn(5, 0, (long)(intptr_t) &want) == 0);
+}
+
+static int ioctl_connlist_hostile(int fd, unsigned long req, void *arg)
+{
+	(void) fd;
+	if (req == HCIGETCONNLIST) {
+		struct hci_conn_list_req *cl = arg;
+		int i;
+		/* claim more connections than the 10 entries find_conn allocated;
+		 * without the clamp the scan loop would read out of bounds (ASan) */
+		cl->conn_num = 12;
+		for (i = 0; i < 10; i++) {
+			memset(&cl->conn_info[i], 0, sizeof(struct hci_conn_info));
+			cl->conn_info[i].bdaddr.b[0] = 0xAA;  /* no match */
+		}
+		return 0;
+	}
+	return 0;
+}
+
+static void test_find_conn_hostile_conn_num(void)
+{
+	bdaddr_t want;
+	memset(&want, 0, sizeof(want));
+	M.ioctl_hook = ioctl_connlist_hostile;
 	CHECK(find_conn(5, 0, (long)(intptr_t) &want) == 0);
 }
 
@@ -524,6 +552,16 @@ static void test_connection_get_tpl(void)
 static void test_connection_close(void)
 {
 	struct conn_info_handles ci = { .handle = 1, .dd = 2 };
+	CHECK(connection_close(&ci) == 1);
+	CHECK(M.hci_closes == 1);
+	CHECK(ci.dd == -1);  /* descriptor invalidated */
+}
+
+static void test_connection_close_idempotent(void)
+{
+	/* a second close (or a close before init, dd == -1) must be a no-op */
+	struct conn_info_handles ci = { .handle = 1, .dd = 2 };
+	CHECK(connection_close(&ci) == 1);
 	CHECK(connection_close(&ci) == 1);
 	CHECK(M.hci_closes == 1);
 }
@@ -797,6 +835,7 @@ int main(void)
 	RUN(test_find_conn_match);
 	RUN(test_find_conn_no_match);
 	RUN(test_find_conn_ioctl_fail);
+	RUN(test_find_conn_hostile_conn_num);
 	RUN(test_find_conn_malloc_fail);
 
 	RUN(test_connection_init_success);
@@ -808,6 +847,7 @@ int main(void)
 	RUN(test_connection_get_rssi);
 	RUN(test_connection_get_tpl);
 	RUN(test_connection_close);
+	RUN(test_connection_close_idempotent);
 
 	RUN(test_get_rfcomm_list_success);
 	RUN(test_get_rfcomm_list_socket_fail);

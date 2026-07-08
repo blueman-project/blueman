@@ -55,11 +55,17 @@ static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
 }
 
 int _create_bridge(const char* name) {
+	/* the kernel always copies IFNAMSIZ bytes for SIOCBRADDBR/SIOCBRDELBR,
+	 * so hand it a fixed-size zero-padded buffer instead of the raw string
+	 * to keep the read within bounds */
+	char ifname[IFNAMSIZ] = { 0 };
+	strncpy(ifname, name, IFNAMSIZ - 1);
+
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock < 0)
 		return -errno;
 
-	if (ioctl(sock, SIOCBRADDBR, name) < 0) {
+	if (ioctl(sock, SIOCBRADDBR, ifname) < 0) {
 		int err = errno;
 		close(sock);
 		return -err;
@@ -70,14 +76,15 @@ int _create_bridge(const char* name) {
 	struct ifreq ifr;
 
 	memset(&ifr, 0, sizeof(ifr));
-	strncpy(ifr.ifr_name, name, IFNAMSIZ - 1);
+	memcpy(ifr.ifr_name, ifname, IFNAMSIZ);
 	ifr.ifr_data = (char *) args;
 
-	if (ioctl(sock, SIOCDEVPRIVATE, &ifr) < 0) {
-		int err = errno;
-		close(sock);
-		return -err;
-	}
+	/* setting the forward delay uses BRCTL_SET_BRIDGE_FORWARD_DELAY via
+	 * SIOCDEVPRIVATE, a legacy ioctl interface. Treat failure as non-fatal:
+	 * the bridge itself was already created above, so failing here would
+	 * leave a half-created bridge behind and turn a working NAP setup into
+	 * a hard failure on kernels that reject the legacy interface. */
+	(void) ioctl(sock, SIOCDEVPRIVATE, &ifr);
 
 	close(sock);
 	return 0;
@@ -85,13 +92,17 @@ int _create_bridge(const char* name) {
 
 
 int _destroy_bridge(const char* name) {
+	/* zero-padded IFNAMSIZ buffer; see _create_bridge */
+	char ifname[IFNAMSIZ] = { 0 };
+	strncpy(ifname, name, IFNAMSIZ - 1);
+
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock < 0)
 		return -errno;
 
 	struct ifreq req;
 	memset(&req, 0, sizeof(req));
-	strncpy(req.ifr_name, name, IFNAMSIZ - 1);
+	memcpy(req.ifr_name, ifname, IFNAMSIZ);
 
 	if (ioctl(sock, SIOCGIFFLAGS, &req) < 0) {
 		int err = errno;
@@ -107,7 +118,7 @@ int _destroy_bridge(const char* name) {
 		return -err;
 	}
 
-	if (ioctl(sock, SIOCBRDELBR, name) < 0) {
+	if (ioctl(sock, SIOCBRDELBR, ifname) < 0) {
 		int err = errno;
 		close(sock);
 		return -err;
@@ -134,6 +145,11 @@ static int find_conn(int s, int dev_id, long arg)
 		free(cl);
 		return 0;
 	}
+
+	/* the kernel caps conn_num at the requested count; clamp anyway so a
+	 * broken contract can never walk past the 10 entries allocated above */
+	if (cl->conn_num > 10)
+		cl->conn_num = 10;
 
 	for (i = 0; i < cl->conn_num; i++, ci++) {
 		if (!bacmp((bdaddr_t *)(intptr_t) arg, &ci->bdaddr)) {
@@ -217,9 +233,14 @@ int connection_get_tpl(const struct conn_info_handles *ci, int8_t *ret_tpl, uint
 	return 1;
 }
 
-int connection_close(const struct conn_info_handles *ci)
+int connection_close(struct conn_info_handles *ci)
 {
+	/* idempotent: invalidate dd so a second close (or a close before a
+	 * successful connection_init) never touches a recycled descriptor */
+	if (ci->dd < 0)
+		return 1;
 	hci_close_dev(ci->dd);
+	ci->dd = -1;
 	return 1;
 }
 
