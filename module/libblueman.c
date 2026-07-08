@@ -54,12 +54,36 @@ static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
         return jif/10000;
 }
 
+/* Bounded, NUL-terminated, zero-padded copy of an interface name.
+ *
+ * This deliberately avoids strncpy(). The Linux kernel deprecated it
+ * (Documentation/process/deprecated.rst) because it does not guarantee
+ * NUL-termination when the source fills the buffer and its zero-padding
+ * obscures intent, and after a six-year, 362-commit conversion effort the
+ * API was removed from the kernel entirely for v7.2:
+ * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3746ccbb0a97bed3c06ccde6b880013b1dddc1
+ * The kernel's replacement is strscpy()/strscpy_pad(), which has no portable
+ * userspace equivalent, so this helper implements the strscpy_pad()
+ * semantics we need explicitly: the copy is bounded to IFNAMSIZ - 1 so the
+ * result is always terminated, and the whole buffer is zeroed first because
+ * the bridge ioctls always read a full IFNAMSIZ bytes — the padding is
+ * required, not cosmetic. */
+static void copy_ifname(char dst[IFNAMSIZ], const char *name)
+{
+	/* memchr instead of strnlen: same bounded scan, but ISO C */
+	const char *end = memchr(name, '\0', IFNAMSIZ - 1);
+	size_t len = end != NULL ? (size_t) (end - name) : IFNAMSIZ - 1;
+
+	memset(dst, 0, IFNAMSIZ);
+	memcpy(dst, name, len);
+}
+
 int _create_bridge(const char* name) {
 	/* the kernel always copies IFNAMSIZ bytes for SIOCBRADDBR/SIOCBRDELBR,
 	 * so hand it a fixed-size zero-padded buffer instead of the raw string
 	 * to keep the read within bounds */
-	char ifname[IFNAMSIZ] = { 0 };
-	strncpy(ifname, name, IFNAMSIZ - 1);
+	char ifname[IFNAMSIZ];
+	copy_ifname(ifname, name);
 
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock < 0)
@@ -92,9 +116,9 @@ int _create_bridge(const char* name) {
 
 
 int _destroy_bridge(const char* name) {
-	/* zero-padded IFNAMSIZ buffer; see _create_bridge */
-	char ifname[IFNAMSIZ] = { 0 };
-	strncpy(ifname, name, IFNAMSIZ - 1);
+	/* zero-padded IFNAMSIZ buffer; see copy_ifname */
+	char ifname[IFNAMSIZ];
+	copy_ifname(ifname, name);
 
 	int sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock < 0)

@@ -779,7 +779,8 @@ static void fuzz_bridge_names(void)
 {
 	/* Names shorter than IFNAMSIZ allocated to their exact length so any
 	 * read past the terminator lands in an ASan redzone. Validates the
-	 * strncpy fix (the old memcpy(.., IFNAMSIZ) would over-read here). */
+	 * bounded copy_ifname (the old memcpy(.., IFNAMSIZ) would over-read
+	 * here). */
 	const char *samples[] = { "", "a", "br0", "pan1", "verylonginterfacename1234567890" };
 	M.ioctl_hook = ioctl_ok;
 	for (unsigned i = 0; i < sizeof(samples) / sizeof(samples[0]); i++) {
