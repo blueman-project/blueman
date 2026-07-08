@@ -225,7 +225,7 @@ class DeviceList(GenericList):
         device = Device(obj_path=object_path)
         properties = device.get_properties()
         # device belongs to another adapter
-        if not self.Adapter or not properties["Adapter"] == self.Adapter.get_object_path():
+        if not self.Adapter or properties["Adapter"] != self.Adapter.get_object_path():
             return
 
         logging.info("adding new device")
