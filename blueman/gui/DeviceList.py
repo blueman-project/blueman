@@ -1,7 +1,7 @@
 from datetime import datetime
 import logging
 from typing import Any
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 
 from blueman.Functions import adapter_path_to_name
 from blueman.gui.GenericList import GenericList, ListDataDict
@@ -151,7 +151,8 @@ class DeviceList(GenericList):
     # ##### virtual funcs #####
 
     # called when row needs to be initialized
-    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device,
+                        properties: Mapping[str, Any] | None = None) -> None:
         pass
 
     # called when a property for a device changes
@@ -222,8 +223,9 @@ class DeviceList(GenericList):
 
     def add_device(self, object_path: ObjectPath) -> None:
         device = Device(obj_path=object_path)
+        properties = device.get_properties()
         # device belongs to another adapter
-        if not self.Adapter or not device['Adapter'] == self.Adapter.get_object_path():
+        if not self.Adapter or not properties["Adapter"] == self.Adapter.get_object_path():
             return
 
         logging.info("adding new device")
@@ -232,11 +234,11 @@ class DeviceList(GenericList):
             "device": device,
             "dbus_path": object_path,
             "timestamp": float(datetime.strftime(datetime.now(), '%Y%m%d%H%M%S%f')),
-            "no_name": "Name" not in device
+            "no_name": "Name" not in properties
         }
 
         tree_iter = self.append(**colls)
-        self.row_setup_event(tree_iter, device)
+        self.row_setup_event(tree_iter, device, properties)
 
         if self.get_selected_device() is None:
             self.selection.select_path(Gtk.TreePath.new_first())

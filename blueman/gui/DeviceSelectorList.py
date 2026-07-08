@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from html import escape
 from typing import Any
 
@@ -36,11 +37,14 @@ class DeviceSelectorList(DeviceList):
             device = self.get(row.iter, "device")["device"]
             self.row_setup_event(row.iter, device)
 
-    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
-        self.row_update_event(tree_iter, "Trusted", device['Trusted'])
-        self.row_update_event(tree_iter, "Paired", device['Paired'])
-        self.row_update_event(tree_iter, "Alias", device.display_name)
-        self.row_update_event(tree_iter, "Icon", device['Icon'])
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device,
+                        properties: Mapping[str, Any] | None = None) -> None:
+        if properties is None:
+            properties = device.get_properties()
+        self.row_update_event(tree_iter, "Trusted", properties["Trusted"])
+        self.row_update_event(tree_iter, "Paired", properties["Paired"])
+        self.row_update_event(tree_iter, "Alias", properties["Alias"].strip())
+        self.row_update_event(tree_iter, "Icon", properties["Icon"])
 
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
         if key == "Trusted":

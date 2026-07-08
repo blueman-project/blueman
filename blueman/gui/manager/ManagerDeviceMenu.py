@@ -8,7 +8,6 @@ from blueman.bluemantyping import BtAddress
 
 from blueman.bluemantyping import ObjectPath
 from blueman.Functions import create_menuitem, e_
-from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Network import AnyNetwork
 from blueman.bluez.Device import AnyDevice, Device
 from blueman.config.AutoConnectConfig import AutoConnectConfig
@@ -266,7 +265,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             if not selected:
                 return
             row = self.Blueman.List.get(selected, "alias", "paired", "connected", "trusted", "objpush", "uuids",
-                                        "device", "blocked")
+                                        "address", "device", "blocked")
         else:
             (x, y) = self.Blueman.List.get_pointer()
             posdata = self.Blueman.List.get_path_at_pos(x, y)
@@ -283,7 +282,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             assert child_iter is not None
 
             row = self.Blueman.List.get(child_iter, "alias", "paired", "connected", "trusted", "objpush", "uuids",
-                                        "device", "blocked")
+                                        "address", "device", "blocked")
 
         self.SelectedDevice = row["device"]
 
@@ -298,7 +297,10 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         show_generic_connect = self.show_generic_connect_calc(row["uuids"])
 
-        powered = Adapter(obj_path=self.SelectedDevice["Adapter"])["Powered"]
+        # list rows only exist for devices that belong to the list's adapter
+        adapter = self.Blueman.List.Adapter
+        assert adapter is not None
+        powered = adapter["Powered"]
 
         if not row["connected"] and show_generic_connect and powered:
             connect_item = create_menuitem(_("<b>_Connect</b>"), "bluetooth-symbolic")
@@ -336,7 +338,7 @@ class ManagerDeviceMenu(Gtk.Menu):
         config = AutoConnectConfig()
         generic_service = ServiceUUID("00000000-0000-0000-0000-000000000000")
         object_path = self.SelectedDevice.get_object_path()
-        btaddress: BtAddress = self.SelectedDevice["Address"]
+        btaddress = BtAddress(row["address"])
         generic_autoconnect = (object_path, str(generic_service)) in set(config["services"])
 
         if row["connected"] or generic_autoconnect or autoconnect_items:
