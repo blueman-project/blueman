@@ -10,6 +10,9 @@ import blueman.services
 
 def get_service(device: Device, uuid: str) -> Service | None:
     for name, cls in inspect.getmembers(blueman.services, inspect.isclass):
+        if not issubclass(cls, Service):
+            continue
+
         if ServiceUUID(uuid).short_uuid == cls.__svclass_id__:
             svc: Service = cls(device, uuid)
             return svc
