@@ -4,13 +4,13 @@
 # Translators:
 # abuyop <abuyop@gmail.com>, 2014-2015,2017,2019
 # Jacque Fresco <aidter@use.startmail.com>, 2020.
-# Sander Sweers <infirit@gmail.com>, 2024.
+# Sander Sweers <infirit@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2024-09-30 04:51+0000\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
 "Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Malay <https://hosted.weblate.org/projects/blueman/blueman/ms/"
 ">\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -393,10 +393,10 @@ msgid "Always"
 msgstr "Sentiasa"
 
 #: blueman/main/Adapter.py:167 blueman/main/Sendto.py:192
-#, fuzzy, python-format
+#, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%d Minit"
+msgstr[0] "%(minutes)d Minit"
 
 #: blueman/main/Adapter.py:233
 msgid "Adapter"
@@ -3396,10 +3396,10 @@ msgid "Files received"
 msgstr "Fail diterima"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Terima %d fail di belakang"
+msgstr[0] "Terima %(files)d fail di belakang"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3407,10 +3407,10 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Terima %d lagi fail dibelakang"
+msgstr[0] "Terima %(files)d lagi fail dibelakang"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3512,9 +3512,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "Memutuskan..."
+msgstr "Memutuskan %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3565,7 +3565,7 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
-"Berjaya sambung ke perkhidmatan <b>DUN</b> pada  <b>%(0)s.</b>\n"
+"Berjaya sambung ke perkhidmatan <b>DUN</b> pada <b>%(0)s.</b>\n"
 "Rangkaian kini tersedia melalui <b>%(1)s</b>"
 
 #: blueman/plugins/applet/PPPSupport.py:82
@@ -3677,10 +3677,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr "Tambah item menu piawai ke menu ikon status"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "Profil Audio"
+msgstr "Profil Audio %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
