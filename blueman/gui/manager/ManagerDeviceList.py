@@ -502,7 +502,7 @@ class ManagerDeviceList(DeviceList):
 
         obj_path = device.get_object_path()
         if obj_path in self._batteries:
-            bars["battery"] = self._batteries[obj_path]["Percentage"]
+            bars["battery"] = max(10, self._batteries[obj_path]["Percentage"])
 
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
