@@ -11,6 +11,31 @@ def _make_rfcomm():
     return Rfcomm(Mock())
 
 
+class TestOpenRfcomm(TestCase):
+    def test_open_spawns_watcher(self):
+        rfcomm = _make_rfcomm()
+        with patch("blueman.plugins.mechanism.Rfcomm.subprocess.Popen") as popen_mock:
+            rfcomm._open_rfcomm(3)
+        args = popen_mock.call_args.args[0]
+        self.assertEqual(args[-1], "/dev/rfcomm3")
+
+    def test_open_failure_logs_and_propagates(self):
+        rfcomm = _make_rfcomm()
+        with patch("blueman.plugins.mechanism.Rfcomm.subprocess.Popen",
+                   side_effect=OSError("no such file")):
+            with self.assertLogs(level="ERROR"):
+                with self.assertRaises(OSError):
+                    rfcomm._open_rfcomm(0)
+
+    def test_open_fuzz_port_ids(self):
+        for port_id in [0, 1, 7, 15, 99, 12345]:
+            with self.subTest(port_id=port_id):
+                rfcomm = _make_rfcomm()
+                with patch("blueman.plugins.mechanism.Rfcomm.subprocess.Popen") as popen_mock:
+                    rfcomm._open_rfcomm(port_id)
+                self.assertEqual(popen_mock.call_args.args[0][-1], f"/dev/rfcomm{port_id}")
+
+
 def _popen_returning(ps_output: str):
     proc = Mock()
     proc.communicate.return_value = (ps_output.encode("UTF-8"), None)
