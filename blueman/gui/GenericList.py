@@ -93,8 +93,10 @@ class GenericList(Gtk.TreeView):
         return self.liststore.prepend(vals)
 
     def set(self, tree_iter: Gtk.TreeIter, **list_columns: object) -> None:
-        for col_id, col_value in list_columns.items():
-            self.liststore.set(tree_iter, self.list_col_order[col_id], col_value)
+        # a single set call emits one row-changed instead of one per column,
+        # so the filter and sort machinery only run once per update
+        self.liststore.set(tree_iter, {self.list_col_order[col_id]: col_value
+                                       for col_id, col_value in list_columns.items()})
 
     def get(self, tree_iter: Gtk.TreeIter, *items: str) -> dict[str, Any]:
         data = {}

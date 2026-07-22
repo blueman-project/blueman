@@ -1,12 +1,11 @@
 from gettext import gettext as _
 from typing import TYPE_CHECKING, Any, cast
-from collections.abc import Callable
+from collections.abc import Callable, Iterable, Mapping
 import html
 import logging
 import cairo
 
 from blueman.bluemantyping import ObjectPath, BtAddress
-from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Battery import Battery
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
@@ -67,6 +66,10 @@ class ManagerDeviceList(DeviceList):
             {"id": "paired", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "trusted", "type": bool},  # used for quick access instead of device.GetProperties
             {"id": "objpush", "type": bool},  # used to set Send File button
+            {"id": "uuids", "type": object},
+            {"id": "klass", "type": int},  # used for quick access instead of device.GetProperties
+            {"id": "address", "type": str},  # used for quick access instead of device.GetProperties
+            {"id": "icon_name", "type": str},  # used for quick access instead of device.GetProperties
             {"id": "battery", "type": float},
             {"id": "rssi", "type": float},
             {"id": "tpl", "type": float},
@@ -81,7 +84,9 @@ class ManagerDeviceList(DeviceList):
         self.props.has_tooltip = True
         self.Blueman = inst
 
-        self._monitored_devices: set[BtAddress] = set()
+        self._monitored_devices: dict[BtAddress, tuple[Gtk.TreeRowReference, conn_info]] = {}
+        self._power_levels_timer: int | None = None
+        self._bar_pixbuf_cache: dict[tuple[str, int, int], GdkPixbuf.Pixbuf] = {}
 
         self.manager.connect_signal("battery-created", self.on_battery_created)
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
@@ -136,7 +141,8 @@ class ManagerDeviceList(DeviceList):
         if obj_path not in self._batteries:
             battery_proxy = Battery(obj_path=obj_path)
             self._batteries[obj_path] = battery_proxy
-            logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
+            if logging.getLogger().isEnabledFor(logging.DEBUG):
+                logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
 
     def on_battery_removed(self, _manager: Manager, obj_path: str) -> None:
         if obj_path in self._batteries:
@@ -147,15 +153,14 @@ class ManagerDeviceList(DeviceList):
         row = self.get(tree_iter, "caption")
         if key.lower() in row["caption"].lower():
             return False
-        logging.info(f"{model} {column} {key} {tree_iter}")
+        logging.info("%s %s %s %s", model, column, key, tree_iter)
         return True
 
     def filter_func(self, _model: Gtk.TreeModel, tree_iter: Gtk.TreeIter, _data: Any) -> bool:
-        row = self.get(tree_iter, "no_name", "device")
-        device = row["device"]
-        klass = get_minor_class(device["Class"]) if device is not None else None
+        row = self.get(tree_iter, "no_name", "klass")
 
-        if row["no_name"] and self.Config["hide-unnamed"] and klass not in (_("Keyboard"), _("Combo")):
+        if row["no_name"] and self.Config["hide-unnamed"] \
+                and get_minor_class(row["klass"]) not in (_("Keyboard"), _("Combo")):
             logging.info("Hiding unnamed device")
             return False
         else:
@@ -172,8 +177,8 @@ class ManagerDeviceList(DeviceList):
         if path:
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
-            device = self.get(tree_iter, "device")["device"]
-            command = f"blueman-sendto --device={device['Address']}"
+            address = self.get(tree_iter, "address")["address"]
+            command = f"blueman-sendto --device={address}"
 
             launch(command, paths=uris, name=_("File Sender"))
             context.finish(True, False, time)
@@ -192,7 +197,7 @@ class ManagerDeviceList(DeviceList):
             if not self.selection.path_is_selected(path):
                 tree_iter = self.get_iter(path)
                 assert tree_iter is not None
-                has_obj_push = self._has_objpush(self.get(tree_iter, "device")["device"])
+                has_obj_push = self.get(tree_iter, "objpush")["objpush"]
                 if has_obj_push:
                     Gdk.drag_status(drag_context, Gdk.DragAction.COPY, timestamp)
                     self.set_cursor(path)
@@ -233,7 +238,7 @@ class ManagerDeviceList(DeviceList):
         assert tree_iter is not None
         child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
         assert child_iter is not None
-        row = self.get(child_iter, "device", "connected")
+        row = self.get(child_iter, "device", "connected", "uuids")
         if not row:
             return False
 
@@ -241,10 +246,12 @@ class ManagerDeviceList(DeviceList):
             self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
-            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
+            if self.menu.show_generic_connect_calc(row["uuids"]):
+                # rows only exist for devices that belong to self.Adapter
+                assert self.Adapter is not None
                 if row["connected"]:
                     self.menu.disconnect_service(row["device"])
-                elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
+                elif self.Adapter["Powered"]:
                     self.menu.connect_service(row["device"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
@@ -260,11 +267,11 @@ class ManagerDeviceList(DeviceList):
         if not selected:
             return False
 
-        row = self.get(selected, "device")
+        row = self.get(selected, "address")
         if not row:
             return False
 
-        Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(row["device"]["Address"], -1)
+        Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD).set_text(row["address"], -1)
         return True
 
     def _load_surface(self, icon_name: str, size: int) -> cairo.ImageSurface:
@@ -343,14 +350,23 @@ class ManagerDeviceList(DeviceList):
             return alias
 
     @staticmethod
-    def get_device_class(device: Device) -> str:
-        klass = get_minor_class(device['Class'])
+    def get_device_class(klass_id: int) -> str:
+        klass = get_minor_class(klass_id)
         if klass != _("Uncategorized"):
             return klass
         else:
-            return get_major_class(device['Class'])
+            return get_major_class(klass_id)
 
-    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
+    def row_setup_event(self, tree_iter: Gtk.TreeIter, device: Device,
+                        properties: Mapping[str, Any] | None = None) -> None:
+        if properties is None:
+            properties = device.get_properties()
+
+        klass_id = cast(int, properties["Class"])
+        address = BtAddress(properties["Address"])
+        # cache the filter/sort inputs before the animation setup below queries the filtered model
+        self.set(tree_iter, klass=klass_id, address=address, icon_name=properties["Icon"])
+
         if not self.get(tree_iter, "initial_anim")["initial_anim"]:
             assert self.liststore is not None
             child_path = self.liststore.get_path(tree_iter)
@@ -370,53 +386,39 @@ class ManagerDeviceList(DeviceList):
                 else:
                     self.set(tree_iter, initial_anim=False)
 
-        has_objpush = self._has_objpush(device)
-        klass = get_minor_class(device['Class'])
+        uuids = tuple(cast(Iterable[str], properties["UUIDs"]))
+        has_objpush = self._has_objpush(uuids)
+        klass = get_minor_class(klass_id)
         # Bluetooth >= 4 devices use Appearance property
-        appearance = device["Appearance"]
+        appearance = properties["Appearance"]
         if klass != _("Uncategorized") and klass != _("Unknown"):
             description = klass
         elif klass == _("Unknown") and appearance:
             description = gatt_appearance_to_name(appearance)
         else:
-            description = get_major_class(device['Class'])
+            description = get_major_class(klass_id)
 
-        surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
-                                         device["Blocked"])
+        surface = self._make_device_icon(properties["Icon"], properties["Paired"], properties["Connected"],
+                                         properties["Trusted"], properties["Blocked"])
         surface_object = SurfaceObject(surface)
-        display_name = self.make_display_name(device.display_name, device["Class"], device['Address'])
-        caption = self.make_caption(display_name, description, device['Address'])
+        display_name = self.make_display_name(cast(str, properties["Alias"]).strip(), klass_id, address)
+        caption = self.make_caption(display_name, description, address)
 
-        self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, device_surface=surface_object)
+        self.set(tree_iter, caption=caption, alias=display_name, objpush=has_objpush, uuids=uuids,
+                 device_surface=surface_object, trusted=properties["Trusted"], paired=properties["Paired"],
+                 connected=properties["Connected"], blocked=properties["Blocked"])
 
-        try:
-            self.row_update_event(tree_iter, "Trusted", device['Trusted'])
-        except Exception as e:
-            logging.exception(e)
-        try:
-            self.row_update_event(tree_iter, "Paired", device['Paired'])
-        except Exception as e:
-            logging.exception(e)
-        try:
-            self.row_update_event(tree_iter, "Connected", device["Connected"])
-        except Exception as e:
-            logging.exception(e)
-        try:
-            self.row_update_event(tree_iter, "Blocked", device["Blocked"])
-        except Exception as e:
-            logging.exception(e)
+        if properties["Connected"]:
+            self._monitor_power_levels(tree_iter, device, address)
 
-        if device["Connected"]:
-            self._monitor_power_levels(tree_iter, device)
-
-    def _monitor_power_levels(self, tree_iter: Gtk.TreeIter, device: Device) -> None:
-        if device["Address"] in self._monitored_devices:
+    def _monitor_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, address: BtAddress) -> None:
+        if address in self._monitored_devices:
             return
 
         assert self.Adapter is not None
         hci_dev = adapter_path_to_name(self.Adapter.get_object_path())
         assert hci_dev is not None
-        cinfo = conn_info(device["Address"], hci_dev)
+        cinfo = conn_info(address, hci_dev)
         try:
             cinfo.init()
         except ConnInfoReadError:
@@ -426,68 +428,87 @@ class ManagerDeviceList(DeviceList):
         assert isinstance(model, Gtk.TreeModel)
         r = Gtk.TreeRowReference.new(model, model.get_path(tree_iter))
         self._update_power_levels(tree_iter, device, cinfo)
-        GLib.timeout_add(1000, self._check_power_levels, r, cinfo, device["Address"])
-        self._monitored_devices.add(device["Address"])
+        self._monitored_devices[address] = (r, cinfo)
+        if self._power_levels_timer is None:
+            self._power_levels_timer = GLib.timeout_add(1000, self._check_power_levels)
 
-    def _check_power_levels(self, row_ref: Gtk.TreeRowReference, cinfo: conn_info, address: BtAddress) -> bool:
-        if not row_ref.valid():
-            logging.warning("stopping monitor (row does not exist)")
-            cinfo.deinit()
-            self._monitored_devices.remove(address)
-            return False
+    def _check_power_levels(self) -> bool:
+        remove_addresses = []
+        for address, (row_ref, cinfo) in self._monitored_devices.items():
+            if not row_ref.valid():
+                logging.warning("stopping monitor (row does not exist)")
+                cinfo.deinit()
+                remove_addresses.append(address)
+                continue
 
-        tree_iter = self.get_iter(row_ref.get_path())
-        assert tree_iter is not None
+            tree_iter = self.get_iter(row_ref.get_path())
+            assert tree_iter is not None
 
-        device = self.get(tree_iter, "device")["device"]
+            row = self.get(tree_iter, "device", "connected")
 
-        if device["Connected"]:
-            self._update_power_levels(tree_iter, device, cinfo)
+            if row["connected"]:
+                self._update_power_levels(tree_iter, row["device"], cinfo)
+            else:
+                cinfo.deinit()
+                self._disable_power_levels(tree_iter)
+                remove_addresses.append(address)
+
+        for address in remove_addresses:
+            del self._monitored_devices[address]
+
+        if self._monitored_devices:
             return True
-        else:
-            cinfo.deinit()
-            self._disable_power_levels(tree_iter)
-            self._monitored_devices.remove(address)
-            return False
+
+        self._power_levels_timer = None
+        return False
 
     def row_update_event(self, tree_iter: Gtk.TreeIter, key: str, value: Any) -> None:
-        logging.info(f"{key} {value}")
-
-        device = self.get(tree_iter, "device")["device"]
+        logging.info("%s %s", key, value)
 
         if key in ("Blocked", "Connected", "Paired", "Trusted"):
-            surface = self._make_device_icon(device["Icon"], device["Paired"], device["Connected"], device["Trusted"],
-                                             device["Blocked"])
+            row = self.get(tree_iter, "icon_name", "paired", "connected", "trusted", "blocked")
+            row[key.lower()] = value
+            surface = self._make_device_icon(row["icon_name"], row["paired"], row["connected"],
+                                             row["trusted"], row["blocked"])
             self.set(tree_iter, device_surface=SurfaceObject(surface))
 
         if key == "Trusted":
-            if value:
-                self.set(tree_iter, trusted=True)
-            else:
-                self.set(tree_iter, trusted=False)
+            self.set(tree_iter, trusted=value)
 
         elif key == "Paired":
-            if value:
-                self.set(tree_iter, paired=True)
-            else:
-                self.set(tree_iter, paired=False)
+            self.set(tree_iter, paired=value)
 
         elif key == "Alias":
-            c = self.make_caption(value, self.get_device_class(device), device['Address'])
-            name = self.make_display_name(device.display_name, device["Class"], device["Address"])
+            row = self.get(tree_iter, "klass", "address")
+            address = BtAddress(row["address"])
+            c = self.make_caption(value, self.get_device_class(row["klass"]), address)
+            name = self.make_display_name(value.strip(), row["klass"], address)
             self.set(tree_iter, caption=c, alias=name)
 
+        elif key == "Icon":
+            # an invalidated property (value None) falls back the same way Base.get_properties does
+            self.set(tree_iter, icon_name=value if value is not None else "blueman")
+
+        elif key == "Class":
+            self.set(tree_iter, klass=value if value is not None else 0)
+
         elif key == "UUIDs":
-            has_objpush = self._has_objpush(device)
-            self.set(tree_iter, objpush=has_objpush)
+            uuids = tuple(cast(Iterable[str], value))
+            has_objpush = self._has_objpush(uuids)
+            self.set(tree_iter, objpush=has_objpush, uuids=uuids)
 
         elif key == "Connected":
             self.set(tree_iter, connected=value)
 
+            address = BtAddress(self.get(tree_iter, "address")["address"])
             if value:
-                self._monitor_power_levels(tree_iter, device)
+                device = self.get(tree_iter, "device")["device"]
+                self._monitor_power_levels(tree_iter, device, address)
             else:
                 self._disable_power_levels(tree_iter)
+                monitored = self._monitored_devices.pop(address, None)
+                if monitored is not None:
+                    monitored[1].deinit()
         elif key == "Name":
             self.set(tree_iter, no_name=False)
             self.filter.refilter()
@@ -496,7 +517,7 @@ class ManagerDeviceList(DeviceList):
             self.set(tree_iter, blocked=value)
 
     def _update_power_levels(self, tree_iter: Gtk.TreeIter, device: Device, cinfo: conn_info) -> None:
-        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "lq", "tpl")
+        row = self.get(tree_iter, "cell_fader", "battery", "rssi", "tpl")
 
         bars = {}
 
@@ -526,8 +547,13 @@ class ManagerDeviceList(DeviceList):
 
         for (name, perc) in bars.items():
             if round(row[name], -1) != round(perc, -1):
-                path = PIXMAP_PATH / f"blueman-{name}-{int(round(perc, -1))}.png"
-                icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(path.as_posix(), w, h, True)
+                level = int(round(perc, -1))
+                cache_key = (name, level, w)
+                icon = self._bar_pixbuf_cache.get(cache_key)
+                if icon is None:
+                    path = PIXMAP_PATH / f"blueman-{name}-{level}.png"
+                    icon = GdkPixbuf.Pixbuf.new_from_file_at_scale(path.as_posix(), w, h, True)
+                    self._bar_pixbuf_cache[cache_key] = icon
                 self.set(tree_iter, **{name: perc, f"{name}_pb": icon})
 
     def _disable_power_levels(self, tree_iter: Gtk.TreeIter) -> None:
@@ -591,15 +617,15 @@ class ManagerDeviceList(DeviceList):
             tree_iter = self.get_iter(path[0])
             assert tree_iter is not None
 
-            dt = self.get(tree_iter, "connected")["connected"]
-            if not dt:
+            row = self.get(tree_iter, "connected", "battery", "rssi", "tpl")
+            if not row["connected"]:
                 return False
 
             lines = [_("<b>Connected</b>")]
 
-            battery = self.get(tree_iter, "battery")["battery"]
-            rssi = self.get(tree_iter, "rssi")["rssi"]
-            tpl = self.get(tree_iter, "tpl")["tpl"]
+            battery = row["battery"]
+            rssi = row["rssi"]
+            tpl = row["tpl"]
 
             if battery != 0:
                 if path[1] == self.view_columns["battery_pb"]:
@@ -651,11 +677,9 @@ class ManagerDeviceList(DeviceList):
             return True
         return False
 
-    def _has_objpush(self, device: Device) -> bool:
-        if device is None:
-            return False
-
-        for uuid in device["UUIDs"]:
+    @staticmethod
+    def _has_objpush(uuids: Iterable[str]) -> bool:
+        for uuid in uuids:
             if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
                 return True
         return False
