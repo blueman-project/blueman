@@ -7045,6 +7045,9 @@ class Image(Misc):
 
     class _Props(Misc._Props):
         icon_name: typing.Optional[str]
+        pixbuf: GdkPixbuf.Pixbuf
+        surface: cairo.Surface
+        icon_size: int
         pixel_size: int
 
     props: _Props
@@ -7052,6 +7055,9 @@ class Image(Misc):
     def __init__(self,
         *,
         icon_name: typing.Optional[str] = None,
+        pixbuf: GdkPixbuf.Pixbuf | None = None,
+        surface: cairo.Surface | None = None,
+        icon_size: int = 4,
         pixel_size: int = -1,
         # Widget
         halign: Align = Align.FILL,
