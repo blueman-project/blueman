@@ -209,7 +209,7 @@ def create_menuitem(
 def have(t: str) -> pathlib.Path | None:
     pathstr = os.environ['PATH'] + ':/sbin:/usr/sbin'
     for path in [pathlib.Path(p, t) for p in pathstr.split(":")]:
-        if path.exists() and os.access(path, os.EX_OK):
+        if path.exists() and os.access(path, os.X_OK):
             return path
     return None
 
