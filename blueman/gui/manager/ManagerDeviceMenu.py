@@ -273,11 +273,11 @@ class ManagerDeviceMenu(Gtk.Menu):
             if posdata is None:
                 return
 
-            path = posdata[0]
-            if path is None:
+            tree_path: Gtk.TreePath | None = posdata[0]
+            if tree_path is None:
                 raise TypeError("Path should never be None")
 
-            tree_iter = self.Blueman.List.filter.get_iter(path)
+            tree_iter = self.Blueman.List.filter.get_iter(tree_path)
             assert tree_iter is not None
             child_iter = self.Blueman.List.filter.convert_iter_to_child_iter(tree_iter)
             assert child_iter is not None

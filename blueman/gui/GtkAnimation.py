@@ -103,7 +103,7 @@ class AnimBase(GObject.GObject):
 
 class TreeRowFade(AnimBase):
     def __init__(self, tw: "ManagerDeviceList",
-                 path: Gtk.TreePath,
+                 tree_path: Gtk.TreePath,
                  columns: Collection[Gtk.TreeViewColumn] | None = None) -> None:
         super().__init__(1.0)
         self.tw = tw
@@ -111,7 +111,7 @@ class TreeRowFade(AnimBase):
 
         self.sig: int | None = self.tw.connect_after("draw", self.on_draw)
 
-        self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
+        self.row = Gtk.TreeRowReference.new(self.tw.liststore, tree_path)
         self.stylecontext = tw.get_style_context()
         self.columns = columns
 
@@ -130,12 +130,12 @@ class TreeRowFade(AnimBase):
                 self.sig = None
             return False
 
-        path = self.row.get_path()
-        if path is None:
+        tree_path = self.row.get_path()
+        if tree_path is None:
             return False
 
-        path = self.tw.filter.convert_child_path_to_path(path)
-        if path is None:
+        tree_path = self.tw.filter.convert_child_path_to_path(tree_path)
+        if tree_path is None:
             return False
 
         color = self.stylecontext.get_background_color(Gtk.StateFlags.NORMAL)
@@ -145,7 +145,7 @@ class TreeRowFade(AnimBase):
         assert self.columns is not None
 
         for col in self.columns:
-            rect = self.tw.get_background_area(path, col)
+            rect = self.tw.get_background_area(tree_path, col)
             cr.rectangle(rect.x, rect.y, rect.width, rect.height)
 
         cr.clip()
@@ -161,14 +161,14 @@ class TreeRowFade(AnimBase):
 
 
 class CellFade(AnimBase):
-    def __init__(self, tw: "ManagerDeviceList", path: Gtk.TreePath, columns: Iterable[int]) -> None:
+    def __init__(self, tw: "ManagerDeviceList", tree_path: Gtk.TreePath, columns: Iterable[int]) -> None:
         super().__init__(1.0)
         self.tw = tw
         assert self.tw.liststore is not None
 
         self.frozen = False
         self.sig: int | None = tw.connect_after("draw", self.on_draw)
-        self.row = Gtk.TreeRowReference.new(self.tw.liststore, path)
+        self.row = Gtk.TreeRowReference.new(self.tw.liststore, tree_path)
         self.selection = tw.get_selection()
         self.columns: list[Gtk.TreeViewColumn | None] = []
         for i in columns:
@@ -189,19 +189,19 @@ class CellFade(AnimBase):
                 self.sig = None
 
         assert self.tw.liststore is not None
-        path = self.row.get_path()
-        if path is None:
+        tree_path = self.row.get_path()
+        if tree_path is None:
             return False
 
-        path = self.tw.filter.convert_child_path_to_path(path)
-        if path is None:
+        tree_path = self.tw.filter.convert_child_path_to_path(tree_path)
+        if tree_path is None:
             return False
 
         # FIXME Use Gtk.render_background to render background.
         # However it does not use the correct colors/gradient.
         for col in self.columns:
-            bg_rect = self.tw.get_background_area(path, col)
-            rect = self.tw.get_cell_area(path, col)
+            bg_rect = self.tw.get_background_area(tree_path, col)
+            rect = self.tw.get_cell_area(tree_path, col)
             rect.y = bg_rect.y
             rect.height = bg_rect.height
 
@@ -211,7 +211,7 @@ class CellFade(AnimBase):
 
         maybe_selected = self.tw.selected()
         if maybe_selected is not None:
-            selected = self.tw.liststore.get_path(maybe_selected) == path
+            selected = self.tw.liststore.get_path(maybe_selected) == tree_path
         else:
             selected = False
 
