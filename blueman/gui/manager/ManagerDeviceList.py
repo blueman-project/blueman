@@ -219,16 +219,16 @@ class ManagerDeviceList(DeviceList):
 
         return True
 
-    def _row_at_path(self, path: Gtk.TreePath) -> dict[str, Any] | None:
-        tree_iter = self.filter.get_iter(path)
+    def _row_at_tree_path(self, tree_path: Gtk.TreePath) -> dict[str, Any] | None:
+        tree_iter = self.filter.get_iter(tree_path)
         assert tree_iter is not None
         child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
         assert child_iter is not None
         row = self.get(child_iter, "device", "connected")
         return row if row else None
 
-    def _on_row_activated(self, _widget: Gtk.Widget, path: Gtk.TreePath, _column: Gtk.TreeViewColumn) -> None:
-        row = self._row_at_path(path)
+    def _on_row_activated(self, _widget: Gtk.Widget, tree_path: Gtk.TreePath, _column: Gtk.TreeViewColumn) -> None:
+        row = self._row_at_tree_path(tree_path)
         if row is None:
             return
 
@@ -249,10 +249,10 @@ class ManagerDeviceList(DeviceList):
         if posdata is None:
             return False
         else:
-            path = posdata[0]
-            assert path is not None
+            tree_path = posdata[0]
+            assert tree_path is not None
 
-        if not self._row_at_path(path):
+        if not self._row_at_tree_path(tree_path):
             return False
 
         if self.menu is None:
