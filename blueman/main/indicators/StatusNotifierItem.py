@@ -13,7 +13,12 @@ from blueman.plugins.applet.Menu import MenuItemDict, SubmenuItemDict
 
 class MenuService(DbusService):
     def __init__(self, on_activate_menu_item: MenuItemActivator) -> None:
-        super().__init__(None, "com.canonical.dbusmenu", "/org/blueman/sni/menu", Gio.BusType.SESSION)
+        super().__init__(None, "com.canonical.dbusmenu", "/org/blueman/sni/menu", Gio.BusType.SESSION,
+                         properties={"Version": "u", "TextDirection": "s", "Status": "s"})
+
+        self.Version = 3
+        self.TextDirection = ""
+        self.Status = "normal"
         self._items: OrderedDict[int, MenuItemDict] = OrderedDict()
         self._revision = 0
         self._revision_advertised = -1
