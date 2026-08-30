@@ -229,8 +229,10 @@ class BluezAgent(DbusService):
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey:06}</b>"
         actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
 
+        # BlueZ blocks on this response, so it must remain actionable until the user responds.
         self._notification = Notification("Bluetooth", notify_message, 0,
-                                          actions=actions, actions_cb=on_confirm_action, icon_name="blueman")
+                                          actions=actions, actions_cb=on_confirm_action, icon_name="blueman",
+                                          force_dialog=True)
         self._notification.show()
 
     def _on_request_authorization(self, object_path: ObjectPath, ok: Callable[[], None],
