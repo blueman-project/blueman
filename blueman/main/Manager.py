@@ -162,6 +162,9 @@ class Blueman(Gtk.Application):
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
 
+        # Focus the device list so Up/Down and Enter work without a prior click.
+        self.List.grab_focus()
+
         pm_available = "PowerManager" in self.Applet.QueryPlugins()
         action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
         bt_status_action = self.lookup_action("bluetooth_status")
