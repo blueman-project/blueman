@@ -155,7 +155,7 @@ class BluezAgent(DbusService):
 
     # Workaround BlueZ not calling the Cancel method, see #164
     def _on_device_property_changed(self, device: Device, key: str, value: Any, path: str) -> None:
-        if (key == "Paired" and value) or (key == "Connected" and not value):
+        if (key in ("Paired", "Bonded") and value) or (key == "Connected" and not value):
             handlerid = self._devhandlerids.pop(path)
             device.disconnect_signal(handlerid)
             self._on_cancel()
@@ -195,15 +195,18 @@ class BluezAgent(DbusService):
 
     def _on_display_passkey(self, object_path: ObjectPath, passkey: int, entered: int) -> None:
         logging.info(f"DisplayPasskey ({object_path}, {passkey:d} {entered:d})")
-        dev = Device(obj_path=object_path)
-        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
+        if object_path not in self._devhandlerids:
+            dev = Device(obj_path=object_path)
+            self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
 
         key = f"{passkey:06}"
         notify_message = _("Pairing passkey for") + f" {self.get_device_string(object_path)}: " \
                                                     f"{key[:entered]}<b>{key[entered]}</b>{key[entered + 1:]}"
-        self._close()
-        self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
-        self._notification.show()
+        if self._notification is None:
+            self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
+            self._notification.show()
+        else:
+            self._notification.set_message(notify_message)
 
     def _on_display_pin_code(self, object_path: ObjectPath, pin_code: str) -> None:
         logging.info(f'DisplayPinCode ({object_path}, {pin_code})')
