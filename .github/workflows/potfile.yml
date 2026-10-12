@@ -7,11 +7,11 @@ on:
 
 jobs:
   update-pot:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v7
       - run: sudo apt-get update
-      - run: sudo apt-get install -y -qq --no-install-recommends autopoint gettext cython3 libglib2.0-dev python-gi-dev libbluetooth-dev
+      - run: sudo apt-get install -y -qq --no-install-recommends automake autoconf libtool autopoint gettext cython3 libglib2.0-dev python3-dev python-gi-dev libbluetooth-dev
       - run: CYTHONEXEC=cython3 ./autogen.sh
       - run: make -C po blueman.pot-update
       - uses: peter-evans/create-pull-request@v8
