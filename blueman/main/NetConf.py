@@ -88,7 +88,8 @@ class DHCPHandler:
                 pid = self._pid
 
             if pid is not None:
-                running_binary: str | None = next(binary for binary in self._BINARIES if _is_running(binary, pid))
+                running_binary: str | None = next(
+                    (binary for binary in self._BINARIES if _is_running(binary, pid)), None)
                 if running_binary is not None:
                     print('Terminating ' + running_binary)
                     os.kill(pid, signal.SIGTERM)
