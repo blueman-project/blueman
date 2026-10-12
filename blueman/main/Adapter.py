@@ -32,7 +32,7 @@ class BluemanAdapters(Gtk.Application):
     def __init__(self, selected_hci_dev: str | None, socket_id: int | None) -> None:
         super().__init__(application_id="org.blueman.Adapters")
 
-        def do_quit(_: object) -> bool:
+        def do_quit(_: object | None = None) -> bool:
             self.quit()
             return False
 

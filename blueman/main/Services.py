@@ -23,7 +23,7 @@ class BluemanServices(Gtk.Application):
         self.builder = Builder("services-window.ui")
         self.Config = Gio.Settings(schema_id="org.blueman.general")
 
-        def do_quit(_: object) -> bool:
+        def do_quit(_: object | None = None) -> bool:
             self.quit()
             return False
 

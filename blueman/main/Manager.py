@@ -41,7 +41,7 @@ class Blueman(Gtk.Application):
         super().__init__(application_id="org.blueman.Manager")
         self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
 
-        def do_quit(_: object) -> bool:
+        def do_quit(_: object | None = None) -> bool:
             self.quit()
             return False
 
