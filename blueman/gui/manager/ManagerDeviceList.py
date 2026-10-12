@@ -241,18 +241,33 @@ class ManagerDeviceList(DeviceList):
             self.menu = ManagerDeviceMenu(self.Blueman)
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
-            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
-                if row["connected"]:
-                    self.menu.disconnect_service(row["device"])
-                elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
-                    self.menu.connect_service(row["device"])
+            self._toggle_connection(row["device"], row["connected"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
             self.menu.popup_at_pointer(event)
 
         return False
 
+    def _toggle_connection(self, device: Device, connected: bool) -> None:
+        if self.menu is None:
+            self.menu = ManagerDeviceMenu(self.Blueman)
+
+        if self.menu.show_generic_connect_calc(device['UUIDs']):
+            if connected:
+                self.menu.disconnect_service(device)
+            elif Adapter(obj_path=device["Adapter"])["Powered"]:
+                self.menu.connect_service(device)
+
     def _on_key_pressed(self, _widget: Gtk.Widget, event: Gdk.EventKey) -> bool:
+        if event.keyval in (Gdk.KEY_Return, Gdk.KEY_KP_Enter):
+            selected = self.selected()
+            if not selected:
+                return False
+
+            row = self.get(selected, "device", "connected")
+            self._toggle_connection(row["device"], row["connected"])
+            return True
+
         if not (event.state & Gdk.ModifierType.CONTROL_MASK and event.keyval == Gdk.KEY_c):
             return False
 
