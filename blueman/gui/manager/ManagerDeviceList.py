@@ -100,6 +100,7 @@ class ManagerDeviceList(DeviceList):
         self.connect("popup-menu", self._on_popup_menu)
         self.connect("button-press-event", self._on_event_clicked)
         self.connect("button-release-event", self._on_event_clicked)
+        self.connect("row-activated", self._on_row_activated)
         self.connect("key-press-event", self._on_key_pressed)
 
         self.menu: ManagerDeviceMenu | None = None
@@ -218,34 +219,44 @@ class ManagerDeviceList(DeviceList):
 
         return True
 
+    def _row_at_tree_path(self, tree_path: Gtk.TreePath) -> dict[str, Any] | None:
+        tree_iter = self.filter.get_iter(tree_path)
+        assert tree_iter is not None
+        child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
+        assert child_iter is not None
+        row = self.get(child_iter, "device", "connected")
+        return row if row else None
+
+    def _on_row_activated(self, _widget: Gtk.Widget, tree_path: Gtk.TreePath, _column: Gtk.TreeViewColumn) -> None:
+        row = self._row_at_tree_path(tree_path)
+        if row is None:
+            return
+
+        if self.menu is None:
+            self.menu = ManagerDeviceMenu(self.Blueman)
+
+        if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
+            if row["connected"]:
+                self.menu.disconnect_service(row["device"])
+            elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
+                self.menu.connect_service(row["device"])
+
     def _on_event_clicked(self, _widget: Gtk.Widget, event: Gdk.Event) -> bool:
-        if event.type not in (Gdk.EventType._2BUTTON_PRESS, Gdk.EventType.BUTTON_PRESS):
+        if event.type != Gdk.EventType.BUTTON_PRESS:
             return False
 
         posdata = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
         if posdata is None:
             return False
         else:
-            path = posdata[0]
-            assert path is not None
+            tree_path = posdata[0]
+            assert tree_path is not None
 
-        tree_iter = self.filter.get_iter(path)
-        assert tree_iter is not None
-        child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
-        assert child_iter is not None
-        row = self.get(child_iter, "device", "connected")
-        if not row:
+        if not self._row_at_tree_path(tree_path):
             return False
 
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
-
-        if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
-            if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
-                if row["connected"]:
-                    self.menu.disconnect_service(row["device"])
-                elif Adapter(obj_path=row["device"]["Adapter"])["Powered"]:
-                    self.menu.connect_service(row["device"])
 
         if event.type == Gdk.EventType.BUTTON_PRESS and cast(Gdk.EventButton, event).button == 3:
             self.menu.popup_at_pointer(event)
