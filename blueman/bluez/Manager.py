@@ -153,7 +153,7 @@ class Manager(GObject.GObject, metaclass=SingletonGObjectMeta):
 
     def find_device(self, address: BtAddress, adapter_path: ObjectPath = ObjectPath("/")) -> Device | None:
         for device in self.get_devices(adapter_path):
-            if device['Address'] == address:
+            if device.get_cached_property('Address') == address:
                 return device
         return None
 
