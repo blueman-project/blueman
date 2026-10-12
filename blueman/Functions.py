@@ -209,7 +209,7 @@ def create_menuitem(
 def have(t: str) -> pathlib.Path | None:
     pathstr = os.environ['PATH'] + ':/sbin:/usr/sbin'
     for path in [pathlib.Path(p, t) for p in pathstr.split(":")]:
-        if path.exists() and os.access(path, os.EX_OK):
+        if path.exists() and os.access(path, os.X_OK):
             return path
     return None
 
@@ -278,14 +278,15 @@ def create_parser(
     return parser
 
 
-def open_rfcomm(file: str, mode: int) -> int:
+def open_rfcomm(file: str, rw: bool = False) -> int:
+    mode = os.O_RDWR if rw else os.O_RDONLY
     try:
         return os.open(file, mode | os.O_EXCL | os.O_NONBLOCK | os.O_NOCTTY)
     except OSError as err:
         if err.errno == errno.EBUSY:
             logging.warning(f"{file} is busy, delaying 2 seconds")
             sleep(2)
-            return open_rfcomm(file, mode)
+            return open_rfcomm(file, rw)
         else:
             raise
 
