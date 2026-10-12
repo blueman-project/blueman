@@ -11,16 +11,17 @@
 # Walter Cheuk <wwycheuk@gmail.com>, 2016-2017
 # marklin0913da248e4cdada422a <marklin0913@protonmail.com>
 # zica <9918800@gmail.com>, 2023.
-# Brian Hsu <brianhsu.hsu@gmail.com>, 2023.
+# Brian Hsu <brianhsu.hsu@gmail.com>, 2023, 2025.
 # Kisaragi Hiu <mail@kisaragi-hiu.com>, 2024.
 # Peter Dave Hello <hsu@peterdavehello.org>, 2024.
-# hugoalh <hugoalh@users.noreply.hosted.weblate.org>, 2025.
+# hugoalh <hugoalh@users.noreply.hosted.weblate.org>, 2025, 2026.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-02-14 12:24+0000\n"
+"PO-Revision-Date: 2026-05-31 18:22+0000\n"
 "Last-Translator: hugoalh <hugoalh@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/blueman/blueman/zh_Hant/>\n"
@@ -29,7 +30,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.10\n"
+"X-Generator: Weblate 2026.6.dev0\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3102,13 +3103,13 @@ msgstr "顯示網路流量使用狀況"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 msgid "Force symbolic status icons"
-msgstr ""
+msgstr "強制符號狀態圖示"
 
 #: blueman/plugins/applet/StatusIcon.py:39
 msgid ""
 "When enabled this will force the use of a symbolic version of the blueman "
 "statusicon"
-msgstr ""
+msgstr "啟用後將強制使用 blueman 狀態圖示的符號版本"
 
 #: blueman/plugins/applet/StatusIcon.py:51
 #: blueman/plugins/applet/ShowConnected.py:80
@@ -3270,13 +3271,13 @@ msgstr "在狀態圖示選單中加入標準的選單選項"
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
-msgstr ""
+msgstr "點擊系統列的圖示以切換是否顯示管理器"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
-msgstr ""
+msgstr "點擊系統列上的圖示，將會顯示 / 隱藏管理器，而非將焦點移至管理器上。"
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
@@ -3488,16 +3489,13 @@ msgid "Provides a StatusNotifierItem to show a statusicon"
 msgstr "提供 StatusNotifierItem 以顯示狀態列圖示"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:19
-#, fuzzy
-#| msgid "Adds standard menu items to the status icon menu"
 msgid "Adds audio profile selector to the status icon menu"
-msgstr "在狀態圖示選單中加入標準的選單選項"
+msgstr "在狀態圖示選單中新增音訊設定檔選擇器"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "音訊設定"
+msgstr "音訊設定 %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"
