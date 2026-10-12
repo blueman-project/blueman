@@ -15,7 +15,7 @@ class BluemanTray(Gio.Application):
         super().__init__(application_id="org.blueman.Tray", flags=Gio.ApplicationFlags.FLAGS_NONE)
         self._active = False
 
-        def do_quit(_: object) -> bool:
+        def do_quit(_: object | None = None) -> bool:
             self.quit()
             return False
 
