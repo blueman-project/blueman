@@ -4,13 +4,14 @@
 # Translators:
 # Vaibhav S Dalvi <vaibhav.dlv@gmail.com>, 2014
 # ABHISHEK FADAKE <fadkeabhi@gmail.com>, 2022.
+# Sander Sweers <infirit@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2022-10-31 21:04+0000\n"
-"Last-Translator: ABHISHEK FADAKE <fadkeabhi@gmail.com>\n"
+"PO-Revision-Date: 2025-11-01 10:52+0000\n"
+"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
 "Language-Team: Marathi <https://hosted.weblate.org/projects/blueman/blueman/"
 "mr/>\n"
 "Language: mr\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.2-dev\n"
+"X-Generator: Weblate 5.14.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -3362,11 +3363,11 @@ msgid "Files received"
 msgstr "फाईल्स प्राप्त झाल्या"
 
 #: blueman/plugins/applet/TransferService.py:334
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "%d फाईल पार्श्वभूमीमध्ये प्राप्त झाली"
-msgstr[1] "%d फाईल्स पार्श्वभूमीमध्ये प्राप्त झाल्या"
+msgstr[0] "%(files)d फाईल पार्श्वभूमीमध्ये प्राप्त झाली"
+msgstr[1] "%(files)d फाईल्स पार्श्वभूमीमध्ये प्राप्त झाल्या"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
@@ -3374,11 +3375,11 @@ msgid "Open Location"
 msgstr ""
 
 #: blueman/plugins/applet/TransferService.py:343
-#, fuzzy, python-format
+#, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "अजून %d फाईल पार्श्वभूमीमध्ये प्राप्त झाली"
-msgstr[1] "अजून %d फाईल्स पार्श्वभूमीमध्ये प्राप्त झाल्या"
+msgstr[0] "अजून %(files)d फाईल पार्श्वभूमीमध्ये प्राप्त झाली"
+msgstr[1] "अजून %(files)d फाईल्स पार्श्वभूमीमध्ये प्राप्त झाल्या"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3472,9 +3473,9 @@ msgid "Adds disconnect menu items"
 msgstr ""
 
 #: blueman/plugins/applet/DisconnectItems.py:40
-#, fuzzy, python-format
+#, python-format
 msgid "Disconnect %s"
-msgstr "जुळवणी मोडत आहे..."
+msgstr "जुळवणी मोडत आहे %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3603,10 +3604,9 @@ msgid "Adds audio profile selector to the status icon menu"
 msgstr ""
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
-#, fuzzy, python-format
-#| msgid "Audio Profile"
+#, python-format
 msgid "Audio Profiles for %s"
-msgstr "ऑडियो प्रोफाइल"
+msgstr "ऑडियो प्रोफाइल %s"
 
 #: blueman/plugins/services/Network.py:23
 msgid "Network"

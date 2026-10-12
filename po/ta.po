@@ -7,13 +7,14 @@
 # Kamala Kannan, 2016
 # Mooglie <mooglietech@gmail.com>, 2017
 # தமிழ்நேரம் <anishprabu.t@gmail.com>, 2024, 2025.
+# தமிழ்நேரம் <tamilneram247@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-05-31 05:52+0000\n"
-"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"PO-Revision-Date: 2026-06-27 12:01+0000\n"
+"Last-Translator: தமிழ்நேரம் <tamilneram247@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/blueman/blueman/ta/"
 ">\n"
 "Language: ta\n"
@@ -21,11 +22,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr "<b> தெரிவுநிலை அமைப்பு </b>"
+msgstr "<b>தெரிவுநிலை அமைப்பு</b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
@@ -65,7 +66,7 @@ msgstr "ஊடலை சாதனங்கள்"
 
 #: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr "_ADAPTER"
+msgstr "அடாப்டர்"
 
 #: data/ui/manager-main.ui:71
 msgid "_Search"
@@ -109,7 +110,7 @@ msgstr "_ பெயர்"
 
 #: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr "_ADDED"
+msgstr "சேர்க்கப்பட்டது"
 
 #: data/ui/manager-main.ui:207
 msgid "_Descending"
@@ -205,7 +206,7 @@ msgstr "மீட்டமை"
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
 #: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_Cancel"
-msgstr "_CANCEL"
+msgstr "கைவிடு"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:19
@@ -407,10 +408,10 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
-"டி-பியூச் வழியாக புளூமேன்-மேலாளர் செயல்படுத்த முடியாது என்று தெரிகிறது. இதற்கு ஒரு "
-"பொதுவான காரணம் டி-பச் செயல்படுத்தும் சூழலில் உடைந்த வரைகலை அமைப்பாகும், இது DBUS-"
-"புதுப்பிப்பு-செயல்படுத்தல்-சூழலுக்கான அழைப்புடன் தீர்க்கப்படலாம், இது பொதுவாக Xinitrc "
-"இலிருந்து வழங்கப்படுகிறது (முறையே SWAY கட்டமைப்பு அல்லது ஒத்த)."
+"டி-பேருந்து வழியாக புளூமேன்-மேலாளர் செயல்படுத்த முடியாது என்று தெரிகிறது. இதற்கு "
+"ஒரு பொதுவான காரணம் டி-பச் செயல்படுத்தும் சூழலில் உடைந்த வரைகலை அமைப்பாகும், இது D-"
+"பேருந்து-புதுப்பிப்பு-செயல்படுத்தல்-சூழலுக்கான அழைப்புடன் தீர்க்கப்படலாம், இது பொதுவாக "
+"Xinitrc இலிருந்து வழங்கப்படுகிறது (முறையே Sway கட்டமைப்பு அல்லது ஒத்த)."
 
 #: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
@@ -460,7 +461,7 @@ msgstr "இணைக்கப்படுகிறது"
 
 #: blueman/main/Sendto.py:113
 msgid "obexd not available"
-msgstr "OBEXD கிடைக்கவில்லை"
+msgstr "obexd கிடைக்கவில்லை"
 
 #: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
@@ -807,7 +808,7 @@ msgstr "மறுபெயரிடு (_e) சாதனம்…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:429
 msgid "_Remove…"
-msgstr "_ REMOVE…"
+msgstr "நீக்கு…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -3301,7 +3302,7 @@ msgstr "சாதனத்திற்கு _ கோப்புகளை அ�
 
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
-msgstr "_DEVICES"
+msgstr "கருவிகள்"
 
 #: blueman/plugins/applet/StandardItems.py:55
 msgid "Adap_ters"
@@ -3621,7 +3622,7 @@ msgstr "Rfkill மாநிலத்தை அமைக்கவும்"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr "RFKILL நிலையை அமைப்பதற்கு சலுகைகள் தேவை"
+msgstr "rfகொல் நிலையை அமைப்பதற்கு சலுகைகள் தேவை"
 
 #, fuzzy
 #~ msgid "Turn Bluetooth _On"
