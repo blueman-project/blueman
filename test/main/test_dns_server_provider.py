@@ -78,6 +78,14 @@ nameserver 198.51.100.1""")
         action()
 
         context = GLib.MainContext.default()
-        while context.pending():
-            context.iteration()
+        timed_out = False
+
+        def on_timeout() -> bool:
+            nonlocal timed_out
+            timed_out = True
+            return GLib.SOURCE_REMOVE
+
+        GLib.timeout_add_seconds(5, on_timeout)
+        while not mock.called and not timed_out:
+            context.iteration(may_block=True)
         mock.assert_called_with(provider)
