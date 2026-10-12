@@ -107,12 +107,12 @@ class GenericList(Gtk.TreeView):
             data[col_id] = self.liststore.get_value(tree_iter, list_col_num)
         return data
 
-    def get_iter(self, path: Gtk.TreePath | None) -> Gtk.TreeIter | None:
-        if path is None:
+    def get_iter(self, tree_path: Gtk.TreePath | None) -> Gtk.TreeIter | None:
+        if tree_path is None:
             return None
 
         try:
-            return self.liststore.get_iter(path)
+            return self.liststore.get_iter(tree_path)
         except ValueError:
             return None
 
