@@ -1,5 +1,8 @@
+import errno
+import fcntl
 import os.path
 import shutil
+import signal
 import subprocess
 from ipaddress import IPv4Address
 from pathlib import Path
@@ -8,7 +11,11 @@ from typing import Optional, List
 from unittest import TestCase
 from unittest.mock import patch, Mock, PropertyMock
 
-from blueman.main.NetConf import DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler
+from blueman.main.NetConf import (
+    DnsMasqHandler, NetworkSetupError, DhcpdHandler, UdhcpdHandler, NetConf, DHCPHandler, _is_running,
+    _poll_pid_file, _communicate_stderr,
+)
+from _blueman import BridgeException
 
 
 class FakeSocket:
@@ -50,6 +57,20 @@ class TestDnsmasqHandler(TestCase):
         self._check_invocation(have_mock, popen_mock, ["--port=0", "--dhcp-option=option:dns-server,203.0.113.10"])
         lock_mock.assert_called_with("dhcp")
 
+    @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
+    @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(0))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
+    def test_local_resolver_no_dns_servers(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+        # Local resolver present (port 53 reachable) but no DNS servers:
+        # disable dnsmasq DNS with --port=0 but emit no dns-server option,
+        # which with an empty list would be a dnsmasq-rejected trailing comma.
+        with open("/tmp/pid", "w") as f:
+            f.write("123")
+        DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
+        self._check_invocation(have_mock, popen_mock, ["--port=0"])
+        lock_mock.assert_called_with("dhcp")
+
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
     @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
@@ -58,6 +79,25 @@ class TestDnsmasqHandler(TestCase):
             DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         self.assertEqual(cm.exception.args, ("dnsmasq failed to start: errormsg",))
+
+    @patch("blueman.main.NetConf.Popen", return_value=Popen("true"))
+    @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 3)
+    @patch("blueman.main.NetConf.socket.socket", lambda *args: FakeSocket(1))
+    @patch("blueman.main.NetConf.DNSServerProvider.get_servers", lambda: [])
+    def test_no_pid_file_tears_down(self, sleep_mock: Mock, lock_mock: Mock,
+                                    popen_mock: Mock, have_mock: Mock) -> None:
+        # Start succeeds but no pid file appears: must not lock dhcp; instead
+        # tear down and raise.
+        try:
+            os.remove("/tmp/pid")
+        except FileNotFoundError:
+            pass
+        with self.assertRaises(NetworkSetupError) as cm:
+            DnsMasqHandler().apply("203.0.113.1", "255.255.255.0")
+        self.assertIn("wrote no pid file", cm.exception.args[0])
+        lock_mock.assert_not_called()
 
     def _check_invocation(self, have_mock: Mock, popen_mock: Mock, additional_args: Optional[List[str]] = None) -> None:
         have_mock.assert_called_with("dnsmasq")
@@ -123,13 +163,16 @@ class TestUdhcpdHandler(TestCase):
 
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo warning >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf.NetConf.lock")
+    @patch("blueman.main.NetConf.sleep")
     @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
-    def test_success(self, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
+    def test_success(self, sleep_mock: Mock, lock_mock: Mock, popen_mock: Mock, have_mock: Mock) -> None:
         with open("/tmp/pid", "w") as f:
             f.write("123")
         UdhcpdHandler().apply("203.0.113.1", "255.255.255.0")
         self._check_invocation(have_mock, popen_mock)
         lock_mock.assert_called_with("dhcp")
+        # pid file already present: poll returns at once with no blocking sleep.
+        sleep_mock.assert_not_called()
 
     @patch("blueman.main.NetConf.Popen", return_value=Popen(["sh", "-c", "echo errormsg >&2"], stderr=subprocess.PIPE))
     @patch("blueman.main.NetConf._is_running", lambda _name, _pid: False)
@@ -149,6 +192,7 @@ class TestUdhcpdHandler(TestCase):
         self.assertEqual(args[1], {"stderr": subprocess.PIPE})
 
 
+@patch("blueman.main.NetConf.NetConf._iptables", new=classmethod(lambda cls: "/sbin/iptables"))
 @patch("blueman.main.NetConf.NetConf._IPV4_SYS_PATH", Path("/tmp/blueman-test/ipv4"))
 @patch("blueman.main.NetConf.NetConf._RUN_PATH", Path("/tmp/blueman-test/run"))
 @patch("blueman.main.NetConf.create_bridge")
@@ -166,6 +210,19 @@ class TestNetConf(TestCase):
         i1fw = tmpdir.joinpath("ipv4", "conf", "i1", "forwarding")
         i1fw.parent.mkdir(parents=True)
         i1fw.write_text("0")
+
+        # Fake `iptables -S <chain>` by reflecting the rules blueman has
+        # installed (tracked in _ipt_rules) as the live kernel ruleset, so the
+        # flush-by-comment path can find and delete them.
+        def fake_run(args: list, **_kwargs: object) -> Mock:
+            table, chain = args[2], args[4]
+            lines = [f"-A {chain} " + " ".join(spec)
+                     for t, c, spec in NetConf._ipt_rules if t == table and c == chain]
+            return Mock(stdout="\n".join(lines) + ("\n" if lines else ""))
+
+        self.run_patch = patch("blueman.main.NetConf.run", side_effect=fake_run)
+        self.run_patch.start()
+        self.addCleanup(self.run_patch.stop)
 
     def tearDown(self) -> None:
         shutil.rmtree("/tmp/blueman-test")
@@ -225,10 +282,13 @@ class TestNetConf(TestCase):
 
     def _check_iptables(self, call_mock: Mock, remove: bool = False) -> None:
         command = "-D" if remove else "-A"
+        cmt = ["-m", "comment", "--comment", "blueman-pan1"]
         call_mock.assert_any_call(["/sbin/iptables", "-t", "nat", command, "POSTROUTING",
-                                   "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE"])
-        call_mock.assert_any_call(["/sbin/iptables", "-t", "filter", command, "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
-        call_mock.assert_any_call(["/sbin/iptables", "-t", "filter", command, "FORWARD", "-o", "pan1", "-j", "ACCEPT"])
+                                   "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE", *cmt])
+        call_mock.assert_any_call(
+            ["/sbin/iptables", "-t", "filter", command, "FORWARD", "-i", "pan1", "-j", "ACCEPT", *cmt])
+        call_mock.assert_any_call(
+            ["/sbin/iptables", "-t", "filter", command, "FORWARD", "-o", "pan1", "-j", "ACCEPT", *cmt])
         self.assertEqual(NetConf.locked("iptables"), not remove)
 
     def test_dhcp_handler_replacement(self, _call_mock: Mock, _bridge_mock: Mock) -> None:
@@ -251,6 +311,186 @@ class TestNetConf(TestCase):
 
         self.assertFalse(NetConf.locked("netconfig"))
         self.assertFalse(NetConf.locked("iptables"))
+
+    @patch("blueman.main.NetConf.destroy_bridge")
+    def test_apply_failure_rolls_back(self, destroy_bridge_mock: Mock, call_mock: Mock,
+                                      _create_bridge_mock: Mock) -> None:
+        class FailingHandler(self.TestDHCPHandler):
+            apply = Mock(side_effect=NetworkSetupError("dhcp boom"))
+
+        with self.assertRaises(NetworkSetupError):
+            NetConf.apply_settings("203.0.113.1", "255.255.255.0", FailingHandler, False)
+
+        # Rollback must undo the partially-applied state.
+        destroy_bridge_mock.assert_called_once_with("pan1")
+        self.assertFalse(NetConf.locked("netconfig"))
+        self.assertFalse(NetConf.locked("iptables"))
+
+    def test_missing_sysctl_path_raises(self, call_mock: Mock, _bridge_mock: Mock) -> None:
+        with patch.object(NetConf, "_IPV4_SYS_PATH", Path("/tmp/blueman-test/does-not-exist")):
+            with self.assertRaises(NetworkSetupError) as cm:
+                NetConf.apply_settings("203.0.113.1", "255.255.255.0", self.TestDHCPHandler, False)
+        self.assertIn("IPv4 forwarding control not available", cm.exception.args[0])
+
+    @patch("blueman.main.NetConf.destroy_bridge", side_effect=BridgeException(errno.ENODEV))
+    def test_cleanup_logs_bridge_failure(self, destroy_bridge_mock: Mock, call_mock: Mock,
+                                         _create_bridge_mock: Mock) -> None:
+        NetConf.apply_settings("203.0.113.1", "255.255.255.0", self.TestDHCPHandler2, False)
+        with self.assertLogs(level="WARNING") as logs:
+            NetConf.clean_up()
+        self.assertTrue(any("Failed to destroy bridge pan1" in m for m in logs.output))
+        # The lock must still be released despite the bridge failure.
+        self.assertFalse(NetConf.locked("netconfig"))
+
+
+class TestIsRunning(TestCase):
+    def setUp(self) -> None:
+        self.proc = Path("/tmp/blueman-proc")
+        self.proc.mkdir(parents=True)
+        self.addCleanup(lambda: shutil.rmtree(self.proc))
+
+    def _write_proc(self, pid: int, cmdline: str) -> None:
+        d = self.proc / str(pid)
+        d.mkdir()
+        d.joinpath("cmdline").write_text(cmdline)
+
+    def test_procfs_match(self) -> None:
+        self._write_proc(123, "/usr/sbin/dnsmasq\0--foo")
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertTrue(_is_running("dnsmasq", 123))
+
+    def test_procfs_name_mismatch(self) -> None:
+        self._write_proc(123, "/usr/sbin/other\0")
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_procfs_pid_absent(self) -> None:
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            self.assertFalse(_is_running("dnsmasq", 999))
+
+    def test_no_procfs_falls_back_to_liveness(self) -> None:
+        missing = Path("/tmp/blueman-no-proc")
+        with patch("blueman.main.NetConf._PROC_PATH", missing):
+            with patch("blueman.main.NetConf.os.kill") as kill_mock:
+                self.assertTrue(_is_running("dnsmasq", 123))
+                kill_mock.assert_called_once_with(123, 0)
+            with patch("blueman.main.NetConf.os.kill", side_effect=ProcessLookupError):
+                self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_no_procfs_eperm_counts_as_running(self) -> None:
+        # EPERM means the process exists but we may not signal it -> running.
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            with patch("blueman.main.NetConf.os.kill", side_effect=PermissionError):
+                self.assertTrue(_is_running("dnsmasq", 123))
+
+    def test_no_procfs_other_oserror_is_not_running(self) -> None:
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            with patch("blueman.main.NetConf.os.kill", side_effect=OSError):
+                self.assertFalse(_is_running("dnsmasq", 123))
+
+    def test_non_positive_pid_rejected_with_procfs(self) -> None:
+        # Guard runs before any /proc lookup.
+        with patch("blueman.main.NetConf._PROC_PATH", self.proc):
+            for pid in (0, -1, -1000):
+                with self.subTest(pid=pid):
+                    self.assertFalse(_is_running("dnsmasq", pid))
+
+    def test_non_positive_pid_never_calls_kill(self) -> None:
+        # os.kill(0/-N, ...) would target a whole process group; the guard must
+        # short-circuit before os.kill is ever reached on the no-procfs path.
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            with patch("blueman.main.NetConf.os.kill") as kill_mock:
+                for pid in (0, -1, -42):
+                    with self.subTest(pid=pid):
+                        self.assertFalse(_is_running("dnsmasq", pid))
+                kill_mock.assert_not_called()
+
+    def test_fuzz_returns_bool_never_raises(self) -> None:
+        # Whatever the pid and however os.kill behaves, _is_running returns a
+        # bool and never propagates an exception or signals a process group.
+        oserrors = [
+            ProcessLookupError(), PermissionError(), OSError(),
+            OSError(errno.ESRCH, "no such process"), OSError(errno.EPERM, "denied"),
+            OSError(errno.EINVAL, "invalid"),
+        ]
+        pids = [-(1 << 31), -1000, -1, 0, 1, 2, 123, 999999, 1 << 31]
+        with patch("blueman.main.NetConf._PROC_PATH", Path("/tmp/blueman-no-proc")):
+            for pid in pids:
+                for err in [None, *oserrors]:
+                    with self.subTest(pid=pid, err=type(err).__name__):
+                        side = None if err is None else err
+                        with patch("blueman.main.NetConf.os.kill", side_effect=side) as kill_mock:
+                            result = _is_running("dnsmasq", pid)
+                            self.assertIsInstance(result, bool)
+                            if pid <= 0:
+                                kill_mock.assert_not_called()
+
+
+class _CleanupHandler(DHCPHandler):
+    _BINARIES = ["dnsmasq"]
+
+
+@patch("blueman.main.NetConf.NetConf._RUN_PATH", Path("/tmp/blueman-cleanup"))
+class TestDHCPHandlerCleanup(TestCase):
+    def setUp(self) -> None:
+        Path("/tmp/blueman-cleanup").mkdir(parents=True)
+
+    def tearDown(self) -> None:
+        shutil.rmtree("/tmp/blueman-cleanup")
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_terminate_logs_binary_and_pid(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        with self.assertLogs(level="INFO") as logs:
+            handler.clean_up()
+        kill_mock.assert_called_once_with(4321, signal.SIGTERM)
+        self.assertTrue(any("Terminating dnsmasq (pid 4321)" in m for m in logs.output))
+        self.assertFalse(NetConf.locked("dhcp"))
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_clean_up_clears_pid_and_is_idempotent(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        handler.clean_up()
+        self.assertIsNone(handler._pid)
+        # Second call: lock already gone, must not signal anything again.
+        handler.clean_up()
+        kill_mock.assert_called_once_with(4321, signal.SIGTERM)
+
+    @patch("blueman.main.NetConf.os.kill", side_effect=ProcessLookupError)
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: True)
+    def test_clean_up_survives_already_dead_pid(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        # Must not propagate ProcessLookupError, and must still unlock.
+        handler.clean_up()
+        self.assertFalse(NetConf.locked("dhcp"))
+
+    @patch("blueman.main.NetConf.os.kill")
+    @patch("blueman.main.NetConf._is_running", lambda _name, _pid: False)
+    def test_clean_up_stale_lock_no_kill(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        NetConf.lock("dhcp")
+        with self.assertLogs(level="INFO") as logs:
+            handler.clean_up()
+        kill_mock.assert_not_called()
+        self.assertTrue(any("Stale dhcp lockfile" in m for m in logs.output))
+        self.assertFalse(NetConf.locked("dhcp"))
+
+    @patch("blueman.main.NetConf.os.kill")
+    def test_clean_up_not_locked_is_noop(self, kill_mock: Mock) -> None:
+        handler = _CleanupHandler()
+        handler._pid = 4321
+        # dhcp not locked -> nothing happens.
+        handler.clean_up()
+        kill_mock.assert_not_called()
 
 
 class TestValidateIpv4(TestCase):
@@ -305,6 +545,7 @@ class TestValidateIpv4(TestCase):
                     pass
 
 
+@patch("blueman.main.NetConf.NetConf._iptables", new=classmethod(lambda cls: "/sbin/iptables"))
 class TestIptablesRuleArgs(TestCase):
     def setUp(self) -> None:
         NetConf._ipt_rules = []
@@ -315,7 +556,8 @@ class TestIptablesRuleArgs(TestCase):
         NetConf._add_ipt_rule("nat", "POSTROUTING", "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE")
         call_mock.assert_called_once_with(
             ["/sbin/iptables", "-t", "nat", "-A", "POSTROUTING",
-             "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE"])
+             "-s", "203.0.113.1/255.255.255.0", "-j", "MASQUERADE",
+             "-m", "comment", "--comment", "blueman-pan1"])
 
     @patch("blueman.main.NetConf.call", return_value=0)
     def test_value_with_space_stays_single_arg(self, call_mock: Mock) -> None:
@@ -326,12 +568,129 @@ class TestIptablesRuleArgs(TestCase):
         self.assertIn("1.2.3.4 -j ACCEPT", args)
         self.assertEqual(args.count("-j"), 0)
 
+    @patch("blueman.main.NetConf.run")
     @patch("blueman.main.NetConf.call", return_value=0)
-    def test_delete_uses_same_args(self, call_mock: Mock) -> None:
-        NetConf._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
-        call_mock.reset_mock()
+    def test_flush_deletes_kernel_rules_by_comment(self, call_mock: Mock, run_mock: Mock) -> None:
+        # The kernel reports a blueman-tagged rule plus an unrelated one; only
+        # the tagged rule must be deleted, regardless of in-memory state.
+        def fake_run(args: list, **_kwargs: object) -> Mock:
+            if args[2] == "filter" and args[4] == "FORWARD":
+                return Mock(stdout=(
+                    "-A FORWARD -i pan1 -j ACCEPT -m comment --comment blueman-pan1\n"
+                    "-A FORWARD -i eth0 -j ACCEPT\n"))
+            return Mock(stdout="")
+
+        run_mock.side_effect = fake_run
+        NetConf._ipt_rules = []  # simulate a restarted mechanism with no memory
         NetConf.unlock("iptables")
         NetConf._del_ipt_rules()
+
         call_mock.assert_called_once_with(
-            ["/sbin/iptables", "-t", "filter", "-D", "FORWARD", "-i", "pan1", "-j", "ACCEPT"])
+            ["/sbin/iptables", "-t", "filter", "-D", "FORWARD",
+             "-i", "pan1", "-j", "ACCEPT", "-m", "comment", "--comment", "blueman-pan1"])
         self.assertEqual(NetConf._ipt_rules, [])
+
+
+class TestExclusiveLock(TestCase):
+    def setUp(self) -> None:
+        self.run_dir = Path("/tmp/blueman-lock")
+        self.run_dir.mkdir(parents=True)
+        self.addCleanup(lambda: shutil.rmtree(self.run_dir))
+        self.patch = patch.object(NetConf, "_RUN_PATH", self.run_dir)
+        self.patch.start()
+        self.addCleanup(self.patch.stop)
+
+    @patch("blueman.main.NetConf.fcntl.flock")
+    def test_acquires_and_releases_exclusively(self, flock_mock: Mock) -> None:
+        with NetConf._exclusive_lock():
+            pass
+        modes = [c.args[1] for c in flock_mock.call_args_list]
+        self.assertEqual(modes, [fcntl.LOCK_EX, fcntl.LOCK_UN])
+        self.assertTrue((self.run_dir / "blueman-mechanism.lock").exists())
+
+    @patch("blueman.main.NetConf.fcntl.flock")
+    def test_releases_on_exception(self, flock_mock: Mock) -> None:
+        with self.assertRaises(ValueError):
+            with NetConf._exclusive_lock():
+                raise ValueError("boom")
+        modes = [c.args[1] for c in flock_mock.call_args_list]
+        self.assertIn(fcntl.LOCK_UN, modes)
+
+
+class TestCommunicateStderr(TestCase):
+    def test_returns_stderr_within_timeout(self) -> None:
+        p = Mock()
+        p.communicate.return_value = (b"", b"some error")
+        self.assertEqual(_communicate_stderr(p), b"some error")
+        p.communicate.assert_called_once_with(timeout=10)
+        p.kill.assert_not_called()
+
+    def test_kills_on_timeout(self) -> None:
+        p = Mock()
+        p.communicate.side_effect = [subprocess.TimeoutExpired(cmd="dnsmasq", timeout=10), (b"", b"")]
+        with self.assertLogs(level="WARNING"):
+            result = _communicate_stderr(p)
+        p.kill.assert_called_once_with()
+        self.assertIn(b"timed out", result)
+
+
+class TestPollPidFile(TestCase):
+    def setUp(self) -> None:
+        self.path = Path("/tmp/blueman-poll.pid")
+        self.addCleanup(lambda: self.path.unlink(missing_ok=True))
+
+    @patch("blueman.main.NetConf.sleep")
+    def test_returns_pid_immediately_when_present(self, sleep_mock: Mock) -> None:
+        self.path.write_text("4321")
+        self.assertEqual(_poll_pid_file(self.path), 4321)
+        sleep_mock.assert_not_called()
+
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 4)
+    def test_returns_none_after_attempts(self, sleep_mock: Mock) -> None:
+        self.assertIsNone(_poll_pid_file(self.path))
+        # Sleeps between attempts but not after the final one.
+        self.assertEqual(sleep_mock.call_count, 3)
+
+    @patch("blueman.main.NetConf.sleep")
+    @patch("blueman.main.NetConf._PID_POLL_ATTEMPTS", 5)
+    def test_returns_pid_when_it_appears_late(self, sleep_mock: Mock) -> None:
+        calls = {"n": 0}
+
+        def write_on_third(_delay: float) -> None:
+            calls["n"] += 1
+            if calls["n"] == 2:
+                self.path.write_text("77")
+
+        sleep_mock.side_effect = write_on_third
+        self.assertEqual(_poll_pid_file(self.path), 77)
+
+
+class TestPidPath(TestCase):
+    def test_pid_path_derives_from_run_path(self) -> None:
+        with patch.object(NetConf, "_RUN_PATH", Path("/run")):
+            self.assertEqual(DnsMasqHandler()._pid_path, Path("/run/dnsmasq.pan1.pid"))
+
+    def test_pid_path_follows_run_path_override(self) -> None:
+        with patch.object(NetConf, "_RUN_PATH", Path("/var/run")):
+            self.assertEqual(UdhcpdHandler()._pid_path, Path("/var/run/udhcpd.pan1.pid"))
+
+
+class TestIptablesResolution(TestCase):
+    @patch("blueman.main.NetConf.have", return_value=Path("/usr/sbin/iptables"))
+    def test_resolves_via_have(self, have_mock: Mock) -> None:
+        self.assertEqual(NetConf._iptables(), "/usr/sbin/iptables")
+        have_mock.assert_called_with("iptables")
+
+    @patch("blueman.main.NetConf.have", return_value=None)
+    def test_missing_iptables_raises(self, _have_mock: Mock) -> None:
+        with self.assertRaises(FileNotFoundError):
+            NetConf._iptables()
+
+    @patch("blueman.main.NetConf.have", return_value=Path("/usr/sbin/iptables"))
+    @patch("blueman.main.NetConf.call", return_value=0)
+    def test_add_rule_uses_resolved_path(self, call_mock: Mock, _have_mock: Mock) -> None:
+        self.addCleanup(lambda: setattr(NetConf, "_ipt_rules", []))
+        NetConf._ipt_rules = []
+        NetConf._add_ipt_rule("filter", "FORWARD", "-i", "pan1", "-j", "ACCEPT")
+        self.assertEqual(call_mock.call_args.args[0][0], "/usr/sbin/iptables")
