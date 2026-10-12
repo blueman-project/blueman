@@ -1,4 +1,5 @@
 from collections.abc import Callable, Iterable
+from typing import Literal
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -24,7 +25,7 @@ class Fade(AnimBase):
 
 
 class _NotificationDialog(Gtk.MessageDialog):
-    def __init__(self, summary: str, message: str, _timeout: int = -1, _transient: bool = False,
+    def __init__(self, summary: str, message: str, timeout: int = -1, _transient: bool = False,
                  actions: Iterable[tuple[str, str]] | None = None,
                  actions_cb: Callable[[str], None] | None = None, icon_name: str | None = None,
                  image_data: GdkPixbuf.Pixbuf | None = None) -> None:
@@ -70,6 +71,9 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.entered = False
 
+        if timeout !=0:
+            GLib.timeout_add_seconds(timeout if timeout > 0 else 10, self.close)
+
         def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
             if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
@@ -101,8 +105,9 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.present()
         self.set_opacity(OPACITY_START)
 
-    def close(self) -> None:
+    def close(self) -> Literal[False]:
         self.hide()
+        return False
 
     def add_action(self, _action_id: str, _label: str, _callback: Callable[[str], None] | None = None) -> None:
         logging.warning("stub")
