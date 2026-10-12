@@ -281,7 +281,8 @@ def Notification(
     actions: Iterable[tuple[str, str]] | None = None,
     actions_cb: Callable[[str], None] | None = None,
     icon_name: str | None = None,
-    image_data: GdkPixbuf.Pixbuf | None = None
+    image_data: GdkPixbuf.Pixbuf | None = None,
+    force_dialog: bool = False,
 ) -> _NotificationBubble | _NotificationDialog:
 
     forced_fallback = not Gio.Settings(schema_id='org.blueman.general')['notification-daemon']
@@ -293,8 +294,9 @@ def Notification(
     except GLib.Error:
         caps = []
 
-    if forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
+    if force_dialog or forced_fallback or 'body' not in caps or (actions and 'actions' not in caps):
         # Use fallback in the case:
+        # * the caller explicitly requires a dialog
         # * user does not want to use a notification daemon
         # * the notification daemon is not available
         # * we have to show actions and the notification daemon does not provide them
