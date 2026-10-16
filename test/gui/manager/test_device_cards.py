@@ -48,6 +48,7 @@ class FakeDeviceList(GObject.Object):
         self.treeview = Gtk.TreeView(model=self.filter)
         self.selection = self.treeview.get_selection()
         self.batteries: dict[str, float] = {}
+        self.get_calls = 0
 
     def add(self, device: FakeDevice) -> Gtk.TreeIter:
         return self.liststore.append([
@@ -60,6 +61,7 @@ class FakeDeviceList(GObject.Object):
         ])
 
     def get(self, tree_iter: Gtk.TreeIter, *keys: str) -> dict[str, object]:
+        self.get_calls += 1
         return {key: self.liststore.get_value(tree_iter, self.COLUMNS[key]) for key in keys}
 
     @staticmethod
@@ -140,6 +142,19 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(cards.cards_by_path[connected.object_path].snapshot.group, DeviceGroup.CONNECTED)
         self.assertFalse(cards._section_containers[DeviceGroup.PAIRED].get_visible())
         self.assertEqual(cards._section_titles[DeviceGroup.CONNECTED].get_text(), "Connected (1)")
+
+        device_list.get_calls = 0
+        cards.search_entry.set_text("00:11:22")
+        cards._apply_search()
+        self.assertTrue(cards.cards_by_path[connected.object_path].get_visible())
+        self.assertTrue(cards.cards_by_path[available.object_path].get_visible())
+        cards.search_entry.set_text("HEADPHONES")
+        cards._apply_search()
+        self.assertTrue(cards.cards_by_path[connected.object_path].get_visible())
+        self.assertFalse(cards.cards_by_path[available.object_path].get_visible())
+        self.assertEqual(device_list.get_calls, 0, "search must not query the backing model or D-Bus")
+        cards.search_entry.set_text("")
+        cards._apply_search()
 
         connected_card = cards.cards_by_path[connected.object_path]
         device_list.liststore.set_value(

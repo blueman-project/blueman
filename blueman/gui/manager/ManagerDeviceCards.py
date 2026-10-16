@@ -228,6 +228,15 @@ class ManagerDeviceCards(Gtk.Box):
         self._signal_handlers: list[tuple[object, int]] = []
         self._changing_selection = False
 
+        self.search_entry = Gtk.SearchEntry(
+            placeholder_text=_("Search devices by name or address"),
+            visible=True,
+        )
+        self.search_entry.get_style_context().add_class("search-entry")
+        self.search_entry.get_accessible().set_name(_("Search Bluetooth devices"))
+        self.search_entry.connect("search-changed", self._on_search_changed)
+        self.pack_start(self.search_entry, False, False, 0)
+
         for group in DeviceGroup:
             section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, visible=True)
             title = Gtk.Label(xalign=0, visible=True)
@@ -298,15 +307,28 @@ class ManagerDeviceCards(Gtk.Box):
             self.cards_by_path[snapshot.object_path] = card
             self._sections[snapshot.group].add(card)
         self.show_all()
+        self._apply_search()
+        self._sync_source = 0
+        self._sync_selection()
+        return GLib.SOURCE_REMOVE
+
+    def _apply_search(self) -> None:
+        query = self.search_entry.get_text().strip().casefold()
+        for card in self.cards_by_path.values():
+            searchable = f"{card.snapshot.name} {card.snapshot.address}".casefold()
+            card.set_visible(not query or query in searchable)
         for group, cards in self._sections.items():
-            count = len(cards.get_children())
+            count = sum(card.get_visible() for card in cards.get_children())
             self._section_titles[group].set_text(_("%(group)s (%(count)d)") % {
                 "group": self.GROUP_TITLES[group], "count": count
             })
             self._section_containers[group].set_visible(count > 0)
-        self._sync_source = 0
-        self._sync_selection()
-        return GLib.SOURCE_REMOVE
+
+    def _on_search_changed(self, _entry: Gtk.SearchEntry) -> None:
+        self._apply_search()
+
+    def focus_search(self) -> None:
+        self.search_entry.grab_focus()
 
     def _schedule_structure_sync(self, *_args: object) -> None:
         if not self._sync_source:
@@ -329,6 +351,7 @@ class ManagerDeviceCards(Gtk.Box):
             self._schedule_structure_sync()
         else:
             card.update(snapshot)
+            self._apply_search()
 
     def _on_card_selected(self, _list_box: Gtk.ListBox, row: Gtk.ListBoxRow | None) -> None:
         if self._changing_selection or not isinstance(row, DeviceCard):

@@ -97,6 +97,8 @@ class Blueman(Gtk.Application):
         self.register_action("plugins", self.simple_action)
         self.register_action("services", self.simple_action)
         self.register_action("preferences", self.simple_action)
+        self.register_action("focus-search", self.simple_action)
+        self.set_accels_for_action("app.focus-search", ["<Ctrl>k"])
 
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -321,6 +323,9 @@ class Blueman(Gtk.Application):
                 launch("blueman-services", name=_("Service Preferences"))
             case "preferences":
                 self.adapter_properties()
+            case "focus-search":
+                if self.Cards is not None:
+                    self.Cards.focus_search()
             case _ as name:
                 logging.error(f"Unknown action: {name}")
 
