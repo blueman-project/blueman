@@ -53,10 +53,10 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 - **Constraints:** [security, performance, compatibility, deployment, design]
 
 ## 7. Current State
-- **Updated (UTC):** 2026-10-16 06:35
+- **Updated (UTC):** 2026-10-16
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** R5 device-card slice ready for its phase checkpoint; local watchdog artifacts must not be committed.
-- **Active task:** T-005
+- **Working tree:** T-007 local launcher is verified and ready for its checkpoint commit.
+- **Active task:** T-007
 - **Overall status:** Redesign takes priority over existing and future bug work. R1–R5 now include branding, themes, a responsive compatible shell, and opt-in real device cards synchronized to the legacy model.
 
 ## 8. Task Board
@@ -69,16 +69,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-004 | High | DONE | Deliver redesign slices R1–R4: generated brand identity, installable theme preferences/resources, then the compatible manager shell. | Checkpoint `38a180a5`; visual/hardware verification remains for hardening. |
 | T-005 | High | DONE | R5 card/model selection bridge with real model data, targeted updates, filtering/removal handling, and legacy fallback. | Card preview is opt-in until action/menu compatibility passes in R6. |
 | T-006 | High | TODO | R6 card actions and exclusive Connected/Paired/Available grouping while preserving plugin menu items. | Next phase; requires a phase checkpoint before work starts. |
+| T-007 | High | DONE | Provide a repository-local build-and-run command that cannot replace the system Blueman installation. | Use `./blueman-next`; `./blueman` is occupied by the Python package directory. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-005
-- **Goal:** Provide real, read-only device cards without replacing the legacy model/controller contract.
-- **Acceptance criteria:** Cards use actual BlueZ/model data; groups are exclusive; card selection selects the matching filtered TreeIter; property changes update one card; structure changes handle filtering/removal; unknown battery is omitted and real 0% is shown.
-- **Relevant files:** ManagerDeviceCards.py, ManagerDeviceList.py, ManagerWindow.py, Manager.py, manager tests/build list.
-- **Changes made:** Added object-path-keyed cards grouped as Connected/Paired/Available, actual alias/class/address/icon/status/Battery1 presentation, targeted property updates, structure resync, and two-way card-to-TreeIter selection. Added an opt-in header toggle with the classic list as the default compatibility fallback. Battery1 signals now update card snapshots without fabricated values.
-- **Verification:** Nine focused tests pass, including fake model insertion/removal, targeted in-place card update, selection bridging, 0% battery, real GTK widget construction, and shell fallback toggling. Compileall, strict schema, and diff checks pass.
-- **Blockers / risks:** Full application and Bluetooth hardware verification still require a functioning BlueZ environment. Card actions and plugin-provided menus intentionally remain on the classic view until R6.
-- **Next action:** Commit R5, then start R6 by routing Connect/Disconnect/Pair/Send/More through existing Manager handlers with explicit device targets.
+- **Task ID:** T-007
+- **Goal:** Build and run the redesigned manager from the checkout without installing or replacing the distribution package.
+- **Acceptance criteria:** One root command configures and compiles into an ignored local directory; no install target is invoked; build-only mode exists; the source manager receives normal CLI arguments; generated constants, schema, and native module resolve from local build outputs.
+- **Relevant files:** `blueman-next`, `tools/run-local-manager.py`, `docs/LOCAL_BUILD.md`.
+- **Changes made:** Added the local launcher, source manager entry point, and usage documentation.
+- **Verification:** `sh -n`, Python byte-compilation, launcher help, a mocked configure/compile flow, and an audit for install-target invocations pass. A real Meson setup correctly stopped without changing the system because this machine lacks the `pygobject-3.0` development dependency.
+- **Blockers / risks:** Full native compilation and launch require the documented build dependencies; `pygobject-3.0` metadata is absent on this machine.
+- **Next action:** Commit T-007 as a tooling checkpoint; only then begin R6/T-006.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -98,15 +99,16 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-15 | T-001 | Reviewed four documents; recorded findings in INSTRUCTIONS.md and response. | Static inspection; tests not run. |
 | 2026-10-15 | T-002 | Updated plan to prioritize redesign; existing bugs deferred. | Documentation inspection; tests not run. |
 | 2026-10-16 | T-003 | Completed Phase 0 audit/baseline/upstream comparison and recorded bounded redesign slices. | Static review and attempted baseline as documented in IMPLEMENTATION_PLAN.md. |
+| 2026-10-16 | T-007 | Added `./blueman-next` for local Meson build and source execution without installation. | Syntax/help and mocked build flow pass; real setup is blocked by missing `pygobject-3.0` development metadata. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R5 are checkpoint-ready. Cards mirror real visible rows, preserve filtered TreeIter selection, update changed cards in place, and retain the classic view by default.
+- **What is done:** R1–R5 are committed. T-007 adds a non-installing `./blueman-next` local build-and-run workflow.
 - **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** After committing R5, implement explicit-device card actions and reuse `ManagerDeviceMenu` so plugin menu items remain available.
-- **Files touched:** ManagerDeviceCards.py, ManagerDeviceList.py, ManagerWindow.py, Manager.py, manager build/test lists, tests, and INSTRUCTIONS.md.
-- **Checks run and results:** Nine focused tests, compileall, strict schema, and diff checks passed. Full application/hardware and Autotools checks not run.
+- **Exact next step:** Commit T-007, then implement explicit-device card actions and reuse `ManagerDeviceMenu` so plugin menu items remain available.
+- **Files touched:** `blueman-next`, `tools/run-local-manager.py`, `docs/LOCAL_BUILD.md`, and `INSTRUCTIONS.md`.
+- **Checks run and results:** Launcher syntax/help, Python byte-compilation, mocked build flow, and no-install audit pass. Real Meson setup stops at missing `pygobject-3.0`; no package installation was attempted.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 
