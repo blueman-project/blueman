@@ -35,6 +35,16 @@ class TestManagerWindowShell(unittest.TestCase):
 
         self.assertIs(window.get_child(), shell.main_paned)
         self.assertIs(content.get_parent(), shell.main_paned)
+
+        legacy = Gtk.ScrolledWindow(visible=True)
+        content.attach(legacy, 0, 2, 1, 1)
+        cards = Gtk.Box(visible=True)
+        shell.install_device_cards(cards, legacy)
+        self.assertTrue(legacy.get_visible())
+        self.assertFalse(shell._card_view.get_visible())
+        shell._view_toggle.set_active(True)
+        self.assertFalse(legacy.get_visible())
+        self.assertTrue(shell._card_view.get_visible())
         window.destroy()
 
 

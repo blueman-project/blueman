@@ -48,8 +48,11 @@ class ManagerWindowShell:
         display_name: str,
     ) -> None:
         self.window = window
+        self._content = content
         self._sidebar_labels: list[Gtk.Label] = []
         self._compact = False
+        self._legacy_view: Gtk.Widget | None = None
+        self._card_view: Gtk.Widget | None = None
 
         self.header = self._create_header(display_name)
         self.sidebar = self._create_sidebar()
@@ -88,6 +91,14 @@ class ManagerWindowShell:
         header.pack_end(self._icon_button(
             "open-menu-symbolic", _("Application menu"), menu=self._application_menu()
         ))
+        self._view_toggle = Gtk.ToggleButton(visible=True, sensitive=False)
+        self._view_toggle.set_image(Gtk.Image.new_from_icon_name(
+            "view-grid-symbolic", Gtk.IconSize.BUTTON
+        ))
+        self._view_toggle.set_tooltip_text(_("Preview device cards"))
+        self._view_toggle.get_accessible().set_name(_("Toggle device card view"))
+        self._view_toggle.connect("toggled", self._on_view_toggled)
+        header.pack_end(self._view_toggle)
         header.pack_end(self._icon_button(
             "preferences-system-symbolic", _("Adapter settings"), action="app.preferences"
         ))
@@ -95,6 +106,34 @@ class ManagerWindowShell:
             "edit-find-symbolic", _("Scan for devices"), action="app.inquiry"
         ))
         return header
+
+    def install_device_cards(
+        self,
+        cards: Gtk.Widget,
+        legacy_scrollview: Gtk.ScrolledWindow,
+    ) -> None:
+        """Install an opt-in card preview while retaining the classic list."""
+        card_scrollview = Gtk.ScrolledWindow(
+            hexpand=True,
+            vexpand=True,
+            overlay_scrolling=False,
+        )
+        card_scrollview.add(cards)
+        self._content.attach(card_scrollview, 0, 2, 1, 1)
+        self._legacy_view = legacy_scrollview
+        self._card_view = card_scrollview
+        self._view_toggle.set_sensitive(True)
+        self._on_view_toggled(self._view_toggle)
+
+    def _on_view_toggled(self, button: Gtk.ToggleButton) -> None:
+        if self._legacy_view is None or self._card_view is None:
+            return
+        show_cards = button.get_active()
+        self._legacy_view.set_visible(not show_cards)
+        self._card_view.set_visible(show_cards)
+        button.set_tooltip_text(
+            _("Show classic device list") if show_cards else _("Preview device cards")
+        )
 
     @staticmethod
     def _application_menu() -> Gio.Menu:

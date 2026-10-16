@@ -1,6 +1,7 @@
 bluemandir = $(pythondir)/blueman/gui/manager
 blueman_PYTHON = 			\
 	ManagerDeviceList.py	\
+	ManagerDeviceCards.py	\
 	ManagerDeviceMenu.py	\
 	ManagerMenu.py			\
 	ManagerProgressbar.py	\

@@ -54,10 +54,10 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 
 ## 7. Current State
 - **Updated (UTC):** 2026-10-16 06:35
-- **Branch / commit:** feature/redesign / 38a180a5
-- **Working tree:** Redesign work is committed. Only local watchdog artifacts remain untracked and must not be committed.
-- **Active task:** T-004
-- **Overall status:** Redesign takes priority over existing and future bug work. R1–R4 foundations now include branding, themes, and a responsive compatible manager shell; full build remains environment-blocked before the dependency-complete stage.
+- **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
+- **Working tree:** R5 device-card slice ready for its phase checkpoint; local watchdog artifacts must not be committed.
+- **Active task:** T-005
+- **Overall status:** Redesign takes priority over existing and future bug work. R1–R5 now include branding, themes, a responsive compatible shell, and opt-in real device cards synchronized to the legacy model.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -66,17 +66,19 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-002 | High | DONE | Record redesign-first priority and remove bug-fix prerequisites from the implementation plan. | Existing bugs deferred until after Phases 1–8. |
 
 | T-003 | High | DONE | Complete Phase 0 audit corrections, current baseline, upstream comparison, and actionable redesign plan. | Results and environmental limits are recorded in IMPLEMENTATION_PLAN.md. |
-| T-004 | High | IN_PROGRESS | Deliver redesign slices R1–R4: generated brand identity, installable theme preferences/resources, then the compatible manager shell. | R1–R4 foundations implemented and focused checks pass; visual/hardware verification remains. |
+| T-004 | High | DONE | Deliver redesign slices R1–R4: generated brand identity, installable theme preferences/resources, then the compatible manager shell. | Checkpoint `38a180a5`; visual/hardware verification remains for hardening. |
+| T-005 | High | DONE | R5 card/model selection bridge with real model data, targeted updates, filtering/removal handling, and legacy fallback. | Card preview is opt-in until action/menu compatibility passes in R6. |
+| T-006 | High | TODO | R6 card actions and exclusive Connected/Paired/Available grouping while preserving plugin menu items. | Next phase; requires a phase checkpoint before work starts. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-004
-- **Goal:** Deliver the first redesign milestone incrementally, starting with build-integrated branding and theme foundations.
-- **Acceptance criteria:** A single branding input feeds runtime/build metadata; theme resources and Python modules install under both build systems; schema defaults are compatible; focused static/unit checks pass.
-- **Relevant files:** meson.build, configure.ac, data build files/templates/schema, blueman/Constants.py.in, blueman/gui/theme/, docs/BRANDING.md.
-- **Changes made:** Added shared branding and generated metadata; packaged theme preferences/resources; added `ManagerWindowShell` with a branded header, live Bluetooth state, action-backed navigation, application menu, power control, and a sidebar that compacts below 1050 px. The legacy grid is wrapped rather than replaced, preserving all controller/plugin widget IDs and existing menus/toolbars during card migration. New/default windows use 1400×850 with a 900×600 minimum.
-- **Verification:** Five focused branding/shell tests pass, including wrapping actual GTK content on the available display. The real `manager-main.ui` was wrapped and required compatibility widgets remained present. Both GTK CSS files parse; strict schema, compileall and diff checks pass. Desktop/AppStream metadata validation passed earlier. Meson parsed changes but configuration stops at missing `pygobject-3.0` pkg-config metadata; Autotools unavailable.
-- **Blockers / risks:** No display/Xvfb, hardware, or complete build dependencies. DesignTokens still mirrors CSS values and should be generated from one palette input before claiming R3 fully complete.
-- **Next action:** Start R5 with a read-only card presentation keyed by BlueZ object path and synchronized to the existing TreeModel/TreeIter selection; keep the TreeView as the compatibility authority until action/menu tests pass.
+- **Task ID:** T-005
+- **Goal:** Provide real, read-only device cards without replacing the legacy model/controller contract.
+- **Acceptance criteria:** Cards use actual BlueZ/model data; groups are exclusive; card selection selects the matching filtered TreeIter; property changes update one card; structure changes handle filtering/removal; unknown battery is omitted and real 0% is shown.
+- **Relevant files:** ManagerDeviceCards.py, ManagerDeviceList.py, ManagerWindow.py, Manager.py, manager tests/build list.
+- **Changes made:** Added object-path-keyed cards grouped as Connected/Paired/Available, actual alias/class/address/icon/status/Battery1 presentation, targeted property updates, structure resync, and two-way card-to-TreeIter selection. Added an opt-in header toggle with the classic list as the default compatibility fallback. Battery1 signals now update card snapshots without fabricated values.
+- **Verification:** Nine focused tests pass, including fake model insertion/removal, targeted in-place card update, selection bridging, 0% battery, real GTK widget construction, and shell fallback toggling. Compileall, strict schema, and diff checks pass.
+- **Blockers / risks:** Full application and Bluetooth hardware verification still require a functioning BlueZ environment. Card actions and plugin-provided menus intentionally remain on the classic view until R6.
+- **Next action:** Commit R5, then start R6 by routing Connect/Disconnect/Pair/Send/More through existing Manager handlers with explicit device targets.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -100,11 +102,11 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** Phase 0 is recorded. R1–R3 branding/theme foundations are integrated. R4 adds a modern responsive header/sidebar around the unchanged legacy content and routes every visible destination to a working existing action.
-- **What remains:** R5–R7 device-card compatibility work, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** Add a read-only device-card view synchronized with the existing TreeModel and selection, keyed by device object path; do not move actions off the TreeView yet.
-- **Files touched:** Previous branding/theme files plus `blueman/gui/manager/ManagerWindow.py`, manager build list, Manager.py, schema geometry default, shell tests, CSS, and INSTRUCTIONS.md.
-- **Checks run and results:** Five focused tests, schema/CSS parsing, actual Builder shell wrapping, metadata validators, compileall, and diff checks passed. Meson setup is blocked at missing pygobject pkg-config metadata; full application/hardware and Autotools checks not run.
+- **What is done:** R1–R5 are checkpoint-ready. Cards mirror real visible rows, preserve filtered TreeIter selection, update changed cards in place, and retain the classic view by default.
+- **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
+- **Exact next step:** After committing R5, implement explicit-device card actions and reuse `ManagerDeviceMenu` so plugin menu items remain available.
+- **Files touched:** ManagerDeviceCards.py, ManagerDeviceList.py, ManagerWindow.py, Manager.py, manager build/test lists, tests, and INSTRUCTIONS.md.
+- **Checks run and results:** Nine focused tests, compileall, strict schema, and diff checks passed. Full application/hardware and Autotools checks not run.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 

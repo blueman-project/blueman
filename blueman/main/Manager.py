@@ -10,6 +10,7 @@ from blueman.bluez.Manager import Manager
 from blueman.Constants import BRAND_DISPLAY_NAME, BRAND_ICON_NAME, WEBSITE
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+from blueman.gui.manager.ManagerDeviceCards import ManagerDeviceCards
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
@@ -76,6 +77,7 @@ class Blueman(Gtk.Application):
         self.Theme = ThemeManager.get_default()
         self.Theme.apply(self.Config)
         self.Shell: ManagerWindowShell | None = None
+        self.Cards: ManagerDeviceCards | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -177,6 +179,10 @@ class Blueman(Gtk.Application):
 
         if self.List.is_valid_adapter():
             self.List.populate_devices()
+
+        self.Cards = ManagerDeviceCards(self.List)
+        if self.Shell is not None:
+            self.Shell.install_device_cards(self.Cards, sw)
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
 

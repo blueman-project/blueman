@@ -86,6 +86,8 @@ class ManagerDeviceList(DeviceList):
         self.manager.connect_signal("battery-created", self.on_battery_created)
         self.manager.connect_signal("battery-removed", self.on_battery_removed)
         self._batteries: dict[str, Battery] = {}
+        self._battery_handlers: dict[str, int] = {}
+        self._battery_percentages: dict[str, float] = {}
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
         self.Config.connect('changed', self._on_settings_changed)
@@ -113,6 +115,15 @@ class ManagerDeviceList(DeviceList):
         self.set_search_equal_func(self.search_func)
         self.filter.set_visible_func(self.filter_func)
 
+    def destroy(self) -> None:
+        for object_path, battery in list(self._batteries.items()):
+            battery.disconnect_signal(self._battery_handlers[object_path])
+            battery.destroy()
+        self._batteries.clear()
+        self._battery_handlers.clear()
+        self._battery_percentages.clear()
+        super().destroy()
+
     def _on_settings_changed(self, settings: Gio.Settings, key: str) -> None:
         if key in ('sort-by', 'sort-descending'):
             sort_by = settings['sort-by']
@@ -136,12 +147,58 @@ class ManagerDeviceList(DeviceList):
         if obj_path not in self._batteries:
             battery_proxy = Battery(obj_path=obj_path)
             self._batteries[obj_path] = battery_proxy
-            logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
+            percentage = float(battery_proxy["Percentage"])
+            self._battery_percentages[obj_path] = percentage
+            self._battery_handlers[obj_path] = battery_proxy.connect_signal(
+                "property-changed", self._on_battery_property_changed
+            )
+            logging.debug(f"{obj_path} {percentage}")
+            tree_iter = self.find_device_by_path(obj_path)
+            if tree_iter is not None:
+                device = self.get(tree_iter, "device")["device"]
+                self.emit(
+                    "device-property-changed",
+                    device,
+                    tree_iter,
+                    ("Battery", percentage),
+                )
 
     def on_battery_removed(self, _manager: Manager, obj_path: str) -> None:
         if obj_path in self._batteries:
             battery = self._batteries.pop(obj_path)
+            handler = self._battery_handlers.pop(obj_path)
+            battery.disconnect_signal(handler)
+            self._battery_percentages.pop(obj_path, None)
             battery.destroy()
+            tree_iter = self.find_device_by_path(obj_path)
+            if tree_iter is not None:
+                device = self.get(tree_iter, "device")["device"]
+                self.emit("device-property-changed", device, tree_iter, ("Battery", None))
+
+    def get_battery_percentage(self, object_path: str) -> float | None:
+        """Return a real Battery1 percentage, including zero, when available."""
+        return self._battery_percentages.get(object_path)
+
+    def _on_battery_property_changed(
+        self,
+        _battery: Battery,
+        key: str,
+        value: object,
+        object_path: str,
+    ) -> None:
+        if key != "Percentage" or value is None:
+            return
+        percentage = float(value)
+        self._battery_percentages[object_path] = percentage
+        tree_iter = self.find_device_by_path(object_path)
+        if tree_iter is not None:
+            device = self.get(tree_iter, "device")["device"]
+            self.emit(
+                "device-property-changed",
+                device,
+                tree_iter,
+                ("Battery", percentage),
+            )
 
     def search_func(self, model: Gtk.TreeModel, column: int, key: str, tree_iter: Gtk.TreeIter) -> bool:
         row = self.get(tree_iter, "caption")
