@@ -6,6 +6,7 @@ blueman_PYTHON = 			\
 	ManagerProgressbar.py	\
 	ManagerStats.py			\
 	ManagerToolbar.py		\
+	ManagerWindow.py		\
 	__init__.py
 
 CLEANFILES =		\
@@ -16,4 +17,3 @@ DISTCLEANFILES = \
 
 clean-local:
 	rm -rf *.pyc *.pyo 
-

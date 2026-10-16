@@ -1,11 +1,17 @@
 import os
 import pathlib
 
-__all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH", "BIN_DIR", "BLUETOOTHD_PATH"]
+__all__ = ["VERSION", "PACKAGE", "WEBSITE", "ICON_PATH", "PIXMAP_PATH", "UI_PATH", "THEME_PATH", "BIN_DIR",
+           "BLUETOOTHD_PATH", "BRAND_DISPLAY_NAME", "BRAND_DESCRIPTION", "BRAND_NOTIFICATION_APP_NAME",
+           "BRAND_ICON_NAME"]
 
 VERSION = "@VERSION@"
 PACKAGE = "@PACKAGE@"
-WEBSITE = "https://github.com/blueman-project/blueman"
+WEBSITE = "@BRAND_WEBSITE@"
+BRAND_DISPLAY_NAME = "@BRAND_DISPLAY_NAME@"
+BRAND_DESCRIPTION = "@BRAND_DESCRIPTION@"
+BRAND_NOTIFICATION_APP_NAME = "@BRAND_NOTIFICATION_APP_NAME@"
+BRAND_ICON_NAME = "@BRAND_ICON_NAME@"
 PREFIX = pathlib.Path("@prefix@")
 BIN_DIR = pathlib.Path("@BINDIR@")
 LOCALEDIR = pathlib.Path("@LOCALEDIR@")
@@ -13,6 +19,7 @@ ICON_PATH = pathlib.Path("@icondir@")
 PIXMAP_PATH = pathlib.Path("@pkgdatadir@/pixmaps")
 BLUETOOTHD_PATH = pathlib.Path("@bluetoothd_path@")
 UI_PATH = pathlib.Path("@pkgdatadir@/ui")
+THEME_PATH = pathlib.Path("@pkgdatadir@/themes")
 DHCP_CONFIG_FILE = pathlib.Path("@dhconfig@")
 POLKIT = @POLKIT@
 GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@"
@@ -25,3 +32,4 @@ if 'BLUEMAN_SOURCE' in os.environ:
     ICON_PATH = _dirname / "data" / "icons"
     PIXMAP_PATH = _dirname / "data" / "icons" / "pixmaps"
     UI_PATH = _dirname / "data" / "ui"
+    THEME_PATH = _dirname / "data" / "themes"

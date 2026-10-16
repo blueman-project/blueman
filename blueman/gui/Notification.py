@@ -9,6 +9,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
 from blueman.gui.GtkAnimation import AnimBase
+from blueman.Constants import BRAND_NOTIFICATION_APP_NAME
 import logging
 
 OPACITY_START = 0.7
@@ -132,7 +133,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
         self.init()
 
-        self._app_name = 'blueman'
+        self._app_name = BRAND_NOTIFICATION_APP_NAME
         self._app_icon = ''
         self._actions: list[str] = []
         self._callbacks: dict[str, Callable[[str], None]] = {}

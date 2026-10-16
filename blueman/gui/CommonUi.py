@@ -2,7 +2,7 @@ from datetime import datetime
 from gettext import gettext as _
 from typing import overload, Literal
 
-from blueman.Constants import WEBSITE, VERSION
+from blueman.Constants import BRAND_DESCRIPTION, BRAND_ICON_NAME, WEBSITE, VERSION
 
 import gi
 gi.require_version("Gtk", "3.0")
@@ -59,11 +59,11 @@ def show_about_dialog(app_name: str, run: bool = True, parent: Gtk.Window | None
                         'Copyright © 2008 Tadas Dailyda\n'
                         f'Copyright © 2008 - {datetime.now().year} blueman project'
                         )
-    about.set_comments(_('Blueman is a GTK+ Bluetooth manager'))
+    about.set_comments(_(BRAND_DESCRIPTION))
     about.set_website(WEBSITE)
     about.set_website_label(WEBSITE)
-    about.set_icon_name('blueman')
-    about.set_logo_icon_name('blueman')
+    about.set_icon_name(BRAND_ICON_NAME)
+    about.set_logo_icon_name(BRAND_ICON_NAME)
     about.set_authors(['Valmantas Palikša <walmis@balticum-tv.lt>',
                        'Tadas Dailyda <tadas@dailyda.com>',
                        f'{WEBSITE}/graphs/contributors'

@@ -1,0 +1,693 @@
+/* Blueman Next — Dark theme
+ *
+ * Colour tokens for the redesigned Blueman Next manager window.
+ * These values are mirrored in ``blueman/gui/theme/DesignTokens.py``
+ * because GTK 3 does not expose CSS custom properties to Python.
+ *
+ * GTK 3 CSS is not equivalent to browser CSS.  We deliberately avoid
+ * ``backdrop-filter`` and other compositor-specific effects; surfaces
+ * rely on layered opacity and borders to evoke a glass-like feel.
+ */
+
+@define-color bg-primary #0B1118;
+@define-color bg-secondary #121B25;
+@define-color bg-card #1A2532;
+@define-color bg-elevated #202D3C;
+@define-color bg-inspector #0F1822;
+@define-color accent-primary #477BFF;
+@define-color accent-primary-hover #5C8FFF;
+@define-color accent-primary-active #2E5FE0;
+@define-color accent-secondary #7C5CFF;
+@define-color status-connected #42D98B;
+@define-color status-warning #FFB84D;
+@define-color status-disconnected #8B95A7;
+@define-color status-error #FF6475;
+@define-color status-connecting #477BFF;
+@define-color text-primary #F5F7FB;
+@define-color text-secondary #A2ADBE;
+@define-color text-muted #697587;
+@define-color border-subtle rgba(255, 255, 255, 0.09);
+@define-color border-hover rgba(255, 255, 255, 0.16);
+@define-color border-focus rgba(92, 143, 255, 0.75);
+
+.app-window {
+    background-color: @bg-primary;
+    color: @text-primary;
+}
+
+.app-window GtkHeaderBar {
+    background-color: @bg-primary;
+    border-bottom: 1px solid @border-subtle;
+    color: @text-primary;
+    min-height: 56px;
+    padding: 0 8px;
+}
+
+.app-window GtkHeaderBar .title {
+    color: @text-primary;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.app-window GtkHeaderBar .subtitle {
+    color: @text-secondary;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.app-window .header-status {
+    color: @text-secondary;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background-color: alpha(@bg-elevated, 0.72);
+}
+
+.app-window GtkHeaderBar GtkButton {
+    background-color: transparent;
+    color: @text-secondary;
+    border-radius: 8px;
+    border: none;
+    padding: 6px;
+    min-height: 32px;
+    min-width: 32px;
+}
+
+.app-window GtkHeaderBar GtkButton:hover {
+    background-color: alpha(@accent-primary, 0.16);
+    color: @text-primary;
+}
+
+.app-window GtkHeaderBar GtkButton:active,
+.app-window GtkHeaderBar GtkButton:checked {
+    background-color: alpha(@accent-primary, 0.28);
+    color: @text-primary;
+}
+
+.app-window .app-sidebar {
+    background-color: @bg-secondary;
+    border-right: 1px solid @border-subtle;
+}
+
+.app-window .sidebar-section {
+    padding: 16px 14px 8px 14px;
+}
+
+.app-window .sidebar-section-title {
+    color: @text-muted;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 0 8px 8px 8px;
+}
+
+.app-window .sidebar-item {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    color: @text-secondary;
+    padding: 10px 12px;
+    margin: 1px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 36px;
+}
+
+.app-window .sidebar-item:hover {
+    background-color: alpha(white, 0.04);
+    color: @text-primary;
+}
+
+.app-window .sidebar-item:active {
+    background-color: alpha(white, 0.08);
+}
+
+.app-window .sidebar-item-active,
+.app-window .sidebar-item:checked {
+    background-color: alpha(@accent-primary, 0.18);
+    color: @text-primary;
+    border-color: alpha(@accent-primary, 0.45);
+}
+
+.app-window .sidebar-item-active:hover {
+    background-color: alpha(@accent-primary, 0.24);
+}
+
+.app-window .sidebar-item-image {
+    color: inherit;
+    margin-right: 10px;
+}
+
+.app-window .sidebar-item-label {
+    color: inherit;
+}
+
+.app-window .sidebar-card {
+    background-color: @bg-card;
+    border: 1px solid @border-subtle;
+    border-radius: 12px;
+    padding: 14px 14px;
+    margin: 6px 10px;
+}
+
+.app-window .sidebar-card-title {
+    color: @text-primary;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.app-window .sidebar-card-subtitle {
+    color: @text-secondary;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.app-window .app-main {
+    background-color: @bg-primary;
+}
+
+.app-window .dashboard-header {
+    padding: 24px 28px 8px 28px;
+}
+
+.app-window .dashboard-title {
+    color: @text-primary;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.app-window .dashboard-subtitle {
+    color: @text-secondary;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.app-window .dashboard-section {
+    padding: 12px 28px 24px 28px;
+}
+
+.app-window .section-header {
+    padding: 8px 0 12px 0;
+}
+
+.app-window .section-title {
+    color: @text-primary;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.app-window .section-count {
+    color: @text-muted;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 6px;
+}
+
+.app-window .section-empty {
+    color: @text-muted;
+    font-size: 12px;
+    padding: 18px 14px;
+    border-radius: 12px;
+    background-color: alpha(white, 0.02);
+    border: 1px dashed @border-subtle;
+}
+
+.app-window .device-card {
+    background-color: @bg-card;
+    border: 1px solid @border-subtle;
+    border-radius: 18px;
+    padding: 16px;
+    margin: 0 0 10px 0;
+}
+
+.app-window .device-card:hover {
+    background-color: @bg-elevated;
+    border-color: @border-hover;
+}
+
+.app-window .device-card-selected,
+.app-window .device-card:selected {
+    background-color: alpha(@accent-primary, 0.16);
+    border-color: @border-focus;
+}
+
+.app-window .device-card-connected {
+    border-left: 3px solid @status-connected;
+}
+
+.app-window .device-card-disconnected {
+    border-left: 3px solid transparent;
+}
+
+.app-window .device-card-pairing {
+    border-left: 3px solid @accent-secondary;
+}
+
+.app-window .device-card-error {
+    border-left: 3px solid @status-error;
+}
+
+.app-window .device-name {
+    color: @text-primary;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.app-window .device-subtitle {
+    color: @text-secondary;
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+.app-window .device-mac {
+    color: @text-muted;
+    font-size: 11px;
+    font-family: monospace;
+    margin-top: 2px;
+}
+
+.app-window .device-status {
+    color: @text-secondary;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.app-window .device-status-connected {
+    color: @status-connected;
+}
+
+.app-window .device-status-warning {
+    color: @status-warning;
+}
+
+.app-window .device-status-disconnected {
+    color: @status-disconnected;
+}
+
+.app-window .device-status-error {
+    color: @status-error;
+}
+
+.app-window .device-status-connecting {
+    color: @status-connecting;
+}
+
+.app-window .device-avatar {
+    border-radius: 16px;
+    background-color: alpha(@accent-primary, 0.22);
+    color: @text-primary;
+    min-width: 56px;
+    min-height: 56px;
+    padding: 8px;
+}
+
+.app-window .device-avatar-speaker {
+    background-color: alpha(#FF8A4C, 0.22);
+}
+
+.app-window .device-avatar-headphones {
+    background-color: alpha(#7C5CFF, 0.22);
+}
+
+.app-window .device-avatar-phone {
+    background-color: alpha(#42A5F5, 0.22);
+}
+
+.app-window .device-avatar-keyboard {
+    background-color: alpha(#26A69A, 0.22);
+}
+
+.app-window .device-avatar-mouse {
+    background-color: alpha(#AB7BFF, 0.22);
+}
+
+.app-window .device-avatar-controller {
+    background-color: alpha(#EC407A, 0.22);
+}
+
+.app-window .device-avatar-computer {
+    background-color: alpha(#5C8FFF, 0.22);
+}
+
+.app-window .device-avatar-unknown {
+    background-color: alpha(@text-muted, 0.22);
+}
+
+.app-window .battery-indicator {
+    color: @text-secondary;
+    font-size: 11px;
+}
+
+.app-window .battery-low {
+    color: @status-warning;
+}
+
+.app-window .battery-critical {
+    color: @status-error;
+}
+
+.app-window .status-indicator {
+    border-radius: 999px;
+    min-width: 8px;
+    min-height: 8px;
+    background-color: @status-disconnected;
+    margin-right: 6px;
+}
+
+.app-window .status-indicator-connected {
+    background-color: @status-connected;
+}
+
+.app-window .status-indicator-connecting {
+    background-color: @status-connecting;
+}
+
+.app-window .status-indicator-warning {
+    background-color: @status-warning;
+}
+
+.app-window .status-indicator-error {
+    background-color: @status-error;
+}
+
+.app-window .status-indicator-pairing {
+    background-color: @accent-secondary;
+}
+
+.app-window .glass-panel {
+    background-color: alpha(white, 0.03);
+    border: 1px solid @border-subtle;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.app-window .search-entry {
+    background-color: @bg-card;
+    border: 1px solid @border-subtle;
+    border-radius: 10px;
+    padding: 8px 12px;
+    color: @text-primary;
+    min-height: 32px;
+    caret-color: @accent-primary;
+}
+
+.app-window .search-entry:focus {
+    border-color: @border-focus;
+    background-color: @bg-elevated;
+}
+
+.app-window .search-entry:disabled {
+    color: @text-muted;
+    background-color: alpha(white, 0.02);
+}
+
+.app-window .search-entry .placeholder {
+    color: @text-muted;
+}
+
+.app-window .primary-button {
+    background-color: @accent-primary;
+    border: 1px solid alpha(@accent-primary-hover, 0.7);
+    border-radius: 10px;
+    color: white;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 12px;
+    min-height: 32px;
+    min-width: 80px;
+}
+
+.app-window .primary-button:hover {
+    background-color: @accent-primary-hover;
+}
+
+.app-window .primary-button:active {
+    background-color: @accent-primary-active;
+}
+
+.app-window .primary-button:disabled {
+    background-color: alpha(white, 0.08);
+    color: @text-muted;
+    border-color: transparent;
+}
+
+.app-window .secondary-button {
+    background-color: @bg-elevated;
+    border: 1px solid @border-subtle;
+    border-radius: 10px;
+    color: @text-primary;
+    padding: 8px 14px;
+    font-weight: 500;
+    font-size: 12px;
+    min-height: 32px;
+}
+
+.app-window .secondary-button:hover {
+    background-color: @bg-card;
+    border-color: @border-hover;
+}
+
+.app-window .secondary-button:active {
+    background-color: alpha(@accent-primary, 0.18);
+}
+
+.app-window .secondary-button:disabled {
+    color: @text-muted;
+    background-color: alpha(white, 0.02);
+}
+
+.app-window .danger-button {
+    background-color: alpha(@status-error, 0.12);
+    border: 1px solid alpha(@status-error, 0.5);
+    border-radius: 10px;
+    color: @status-error;
+    padding: 8px 14px;
+    font-weight: 500;
+    font-size: 12px;
+    min-height: 32px;
+}
+
+.app-window .danger-button:hover {
+    background-color: alpha(@status-error, 0.20);
+}
+
+.app-window .ghost-button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: @text-secondary;
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.app-window .ghost-button:hover {
+    background-color: alpha(white, 0.06);
+    color: @text-primary;
+}
+
+.app-window .inspector-panel {
+    background-color: @bg-inspector;
+    border-left: 1px solid @border-subtle;
+    padding: 24px 22px;
+}
+
+.app-window .inspector-title {
+    color: @text-primary;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.app-window .inspector-subtitle {
+    color: @text-secondary;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.app-window .inspector-divider {
+    background-color: @border-subtle;
+    min-height: 1px;
+    margin: 16px 0;
+}
+
+.app-window .inspector-row {
+    padding: 6px 0;
+}
+
+.app-window .inspector-row-key {
+    color: @text-muted;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.app-window .inspector-row-value {
+    color: @text-primary;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.app-window .infobar {
+    background-color: alpha(@accent-primary, 0.14);
+    border-bottom: 1px solid alpha(@accent-primary, 0.4);
+    color: @text-primary;
+    padding: 8px 12px;
+}
+
+.app-window .infobar-error {
+    background-color: alpha(@status-error, 0.16);
+    border-bottom-color: alpha(@status-error, 0.5);
+}
+
+.app-window .infobar-warning {
+    background-color: alpha(@status-warning, 0.16);
+    border-bottom-color: alpha(@status-warning, 0.5);
+}
+
+.app-window .menu-item {
+    color: @text-primary;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.app-window .menu-item:hover,
+.app-window .menu-item:selected {
+    background-color: alpha(@accent-primary, 0.18);
+}
+
+.app-window GtkMenu {
+    background-color: @bg-elevated;
+    border: 1px solid @border-subtle;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+.app-window GtkScrolledWindow {
+    background-color: transparent;
+}
+
+.app-window GtkScrollbar {
+    background-color: transparent;
+    border: none;
+    min-width: 8px;
+    min-height: 8px;
+}
+
+.app-window GtkScrollbar.vertical slider {
+    background-color: alpha(white, 0.12);
+    border-radius: 999px;
+    min-width: 6px;
+    margin: 2px;
+}
+
+.app-window GtkScrollbar.vertical slider:hover {
+    background-color: alpha(white, 0.24);
+}
+
+.app-window GtkScrollbar.horizontal slider {
+    background-color: alpha(white, 0.12);
+    border-radius: 999px;
+    min-height: 6px;
+    margin: 2px;
+}
+
+.app-window GtkSwitch {
+    background-color: alpha(white, 0.10);
+    border-radius: 999px;
+    min-width: 38px;
+    min-height: 22px;
+    padding: 2px;
+}
+
+.app-window GtkSwitch:checked {
+    background-color: @status-connected;
+}
+
+.app-window GtkSwitch slider {
+    background-color: white;
+    border-radius: 999px;
+    min-width: 18px;
+    min-height: 18px;
+    margin: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.app-window GtkSwitch:checked slider {
+    margin-left: 16px;
+}
+
+.app-window GtkEntry {
+    background-color: @bg-card;
+    border: 1px solid @border-subtle;
+    border-radius: 10px;
+    color: @text-primary;
+    padding: 8px 10px;
+    caret-color: @accent-primary;
+}
+
+.app-window GtkEntry:focus {
+    border-color: @border-focus;
+}
+
+.app-window GtkListBox {
+    background-color: transparent;
+}
+
+.app-window GtkListBoxRow {
+    background-color: transparent;
+    border: none;
+}
+
+.app-window GtkListBoxRow:hover {
+    background-color: alpha(white, 0.04);
+}
+
+.app-window GtkListBoxRow:selected {
+    background-color: alpha(@accent-primary, 0.18);
+    border-radius: 10px;
+}
+
+.app-window GtkProgressBar {
+    background-color: alpha(white, 0.06);
+    border-radius: 999px;
+    min-height: 6px;
+}
+
+.app-window GtkProgressBar progress {
+    background-color: @accent-primary;
+    border-radius: 999px;
+    min-height: 6px;
+}
+
+.app-window GtkProgressBar trough {
+    background-color: alpha(white, 0.06);
+    border-radius: 999px;
+}
+
+.app-window .radar-canvas {
+    background-color: transparent;
+}
+
+.app-window .radar-canvas-disabled {
+    opacity: 0.4;
+}
+
+.app-window .toolbar {
+    background-color: @bg-secondary;
+    border-top: 1px solid @border-subtle;
+    padding: 4px 8px;
+}
+
+.app-window .statusbar {
+    background-color: @bg-secondary;
+    border-top: 1px solid @border-subtle;
+    color: @text-secondary;
+    padding: 4px 12px;
+    font-size: 11px;
+}
+
+.app-window .divider-vertical {
+    background-color: @border-subtle;
+    min-width: 1px;
+}
+
+.app-window .divider-horizontal {
+    background-color: @border-subtle;
+    min-height: 1px;
+}

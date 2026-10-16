@@ -7,13 +7,14 @@ from collections.abc import Callable
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
-from blueman.Constants import WEBSITE
+from blueman.Constants import BRAND_DISPLAY_NAME, BRAND_ICON_NAME, WEBSITE
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.gui.manager.ManagerWindow import ManagerWindowShell
 from blueman.main.Builder import Builder
 from blueman.gui.CommonUi import ErrorDialog, show_about_dialog
 from blueman.main.DBusProxies import (
@@ -24,6 +25,7 @@ from blueman.main.DBusProxies import (
     AppletServiceApplication
 )
 from blueman.gui.Notification import Notification
+from blueman.gui.theme.ThemeManager import ThemeManager
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -39,6 +41,7 @@ class Blueman(Gtk.Application):
 
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
+        GLib.set_application_name(BRAND_DISPLAY_NAME)
         self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
 
         def do_quit(_: object) -> bool:
@@ -70,6 +73,9 @@ class Blueman(Gtk.Application):
         self.window = None
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
+        self.Theme = ThemeManager.get_default()
+        self.Theme.apply(self.Config)
+        self.Shell: ManagerWindowShell | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -104,6 +110,7 @@ class Blueman(Gtk.Application):
         Manager.watch_name_owner(self.on_dbus_name_appeared, self.on_dbus_name_vanished)
 
     def do_shutdown(self) -> None:
+        self.Theme.close()
         Gtk.Application.do_shutdown(self)
 
         if not self._applet_was_running:
@@ -113,6 +120,17 @@ class Blueman(Gtk.Application):
         if not self.window:
             self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
             self.window.set_application(self)
+            self.window.set_title(BRAND_DISPLAY_NAME)
+            self.window.set_icon_name(BRAND_ICON_NAME)
+            self.window.get_style_context().add_class("app-window")
+            self.window.set_size_request(900, 600)
+            content = self.builder.get_widget("grid", Gtk.Grid)
+            self.Shell = ManagerWindowShell(self.window, content, BRAND_DISPLAY_NAME)
+            power_action = self.lookup_action("bluetooth_status")
+            if power_action is not None:
+                state = power_action.get_state()
+                if state is not None:
+                    self.Shell.set_bluetooth_state(state.unpack())
             w, h, x, y = self.Config["window-properties"]
             if w and h:
                 self.window.resize(w, h)
@@ -190,6 +208,8 @@ class Blueman(Gtk.Application):
 
         state = state_variant.unpack()
         self.PowerManager.set_bluetooth_status(state)
+        if self.Shell is not None:
+            self.Shell.set_bluetooth_state(state)
 
         if state:
             icon_name = "bluetooth"
@@ -253,7 +273,7 @@ class Blueman(Gtk.Application):
             case "about":
                 widget = self.window.get_toplevel() if self.window else None
                 assert isinstance(widget, Gtk.Window)
-                show_about_dialog('Blueman ' + _('Device Manager'), parent=widget)
+                show_about_dialog(BRAND_DISPLAY_NAME, parent=widget)
             case "plugins":
                 self.Applet.OpenPluginDialog()
             case "services":
@@ -339,7 +359,7 @@ class Blueman(Gtk.Application):
         def error_handler(e: Exception) -> None:
             logging.exception(e)
             message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
-            Notification('Bluetooth', message, icon_name="blueman").show()
+            Notification('Bluetooth', message, icon_name=BRAND_ICON_NAME).show()
 
         device.pair(error_handler=error_handler)
 
