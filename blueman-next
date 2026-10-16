@@ -22,6 +22,7 @@ Build and run Blueman Next from this checkout without installing it.
 
 Launcher options:
   --build-only  Configure and compile, but do not start the manager
+  --no-deps     Do not install missing build/runtime dependencies
   --help        Show this help
 
 Everything after -- is passed to blueman-manager. Set BLUEMAN_BUILD_DIR to
@@ -35,19 +36,88 @@ EOF
 }
 
 build_only=false
-case "${1:-}" in
-    --build-only)
-        build_only=true
-        shift
-        ;;
-    --help|-h)
-        show_help
-        exit 0
-        ;;
-    --)
-        shift
-        ;;
-esac
+install_dependencies=true
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --build-only)
+            build_only=true
+            shift
+            ;;
+        --no-deps)
+            install_dependencies=false
+            shift
+            ;;
+        --help|-h)
+            show_help
+            exit 0
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+install_apt_dependencies() {
+    packages="
+        build-essential
+        pkg-config
+        meson
+        ninja-build
+        gettext
+        cython3
+        libglib2.0-dev
+        python3-dev
+        python-gi-dev
+        libbluetooth-dev
+        python3-gi
+        python3-cairo
+        gir1.2-gtk-3.0
+        gir1.2-nm-1.0
+        iproute2
+        bluez
+    "
+    missing=""
+
+    for package in $packages; do
+        if ! dpkg-query -W -f='${db:Status-Status}' "$package" 2>/dev/null | grep -q '^installed$'; then
+            missing="$missing $package"
+        fi
+    done
+
+    if [ -z "$missing" ]; then
+        return
+    fi
+
+    printf 'Installing missing Blueman build/runtime dependencies:%s\n' "$missing"
+
+    if [ "$(id -u)" -eq 0 ]; then
+        elevate=""
+    elif command -v sudo >/dev/null 2>&1; then
+        elevate="sudo"
+    else
+        printf '%s\n' 'error: sudo is required to install missing dependencies' >&2
+        exit 1
+    fi
+
+    # Package names are a fixed list maintained with the Ubuntu CI setup.
+    $elevate apt-get update
+    # shellcheck disable=SC2086
+    $elevate apt-get install -y --no-install-recommends $missing
+}
+
+if [ "$install_dependencies" = true ]; then
+    if command -v apt-get >/dev/null 2>&1 && command -v dpkg-query >/dev/null 2>&1; then
+        install_apt_dependencies
+    else
+        printf '%s\n' 'error: automatic dependency installation currently supports Debian/Ubuntu (apt)' >&2
+        printf '%s\n' '       install the dependencies in Dependencies.md, then use --no-deps' >&2
+        exit 1
+    fi
+fi
 
 for command in meson python3; do
     if ! command -v "$command" >/dev/null 2>&1; then

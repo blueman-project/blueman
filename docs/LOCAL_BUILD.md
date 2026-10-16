@@ -11,9 +11,18 @@ The command builds into the ignored `build-local/` directory and runs the
 manager directly from the checkout. It never runs `meson install`, writes to
 system directories, or changes the official `blueman` executable.
 
-The build dependencies listed in [`Dependencies.md`](../Dependencies.md) must
-already be available. The launcher deliberately does not install missing
-packages; Meson will report the dependency that needs to be provided.
+On Debian and Ubuntu, the launcher checks the required build/runtime packages
+and uses `apt-get` (through `sudo` when needed) to install only those that are
+missing. This installs development dependencies, not the Blueman application,
+and may ask for the user's sudo password. Package installation can be disabled
+for offline or pre-provisioned environments:
+
+```sh
+./blueman-next --no-deps
+```
+
+Other distributions should install the packages listed in
+[`Dependencies.md`](../Dependencies.md), then use `--no-deps`.
 
 To compile without launching the manager:
 
