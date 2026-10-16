@@ -6,11 +6,12 @@ from dataclasses import dataclass
 from enum import Enum
 from gettext import gettext as _
 from typing import TYPE_CHECKING
+from collections.abc import Callable
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk, Pango  # noqa: E402
+from gi.repository import GLib, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
 
@@ -22,6 +23,14 @@ class DeviceGroup(Enum):
     CONNECTED = "connected"
     PAIRED = "paired"
     AVAILABLE = "available"
+
+
+class DeviceCardAction(Enum):
+    PAIR = "pair"
+    CONNECT = "connect"
+    DISCONNECT = "disconnect"
+    SEND = "send"
+    MORE = "more"
 
 
 def group_for_state(*, connected: bool, paired: bool) -> DeviceGroup:
@@ -42,6 +51,7 @@ class DeviceCardSnapshot:
     connected: bool
     paired: bool
     trusted: bool
+    can_send: bool
     battery_percentage: float | None
 
     @property
@@ -56,9 +66,13 @@ class DeviceCardSnapshot:
 
 
 class DeviceCard(Gtk.ListBoxRow):
-    """Read-only device summary; actions continue to use the TreeView model."""
+    """Device summary with actions routed through the existing manager handlers."""
 
-    def __init__(self, snapshot: DeviceCardSnapshot) -> None:
+    def __init__(
+        self,
+        snapshot: DeviceCardSnapshot,
+        action_callback: Callable[["DeviceCard", DeviceCardAction, Gtk.Widget], None],
+    ) -> None:
         super().__init__(visible=True, selectable=True, activatable=False)
         self.snapshot = snapshot
         self.get_style_context().add_class("device-card")
@@ -89,7 +103,7 @@ class DeviceCard(Gtk.ListBoxRow):
         identity.pack_start(self._address, False, False, 0)
         content.pack_start(identity, True, True, 0)
 
-        status_box = Gtk.Box(
+        trailing = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=6,
             halign=Gtk.Align.END,
@@ -100,11 +114,53 @@ class DeviceCard(Gtk.ListBoxRow):
         self._status.get_style_context().add_class("device-status")
         self._battery = Gtk.Label(xalign=1)
         self._battery.get_style_context().add_class("battery-indicator")
-        status_box.pack_start(self._status, False, False, 0)
-        status_box.pack_start(self._battery, False, False, 0)
-        content.pack_end(status_box, False, False, 0)
+        status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
+        status.pack_end(self._battery, False, False, 0)
+        status.pack_end(self._status, False, False, 0)
+        trailing.pack_start(status, False, False, 0)
+
+        actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, visible=True)
+        actions.get_style_context().add_class("device-actions")
+        self._primary_action = Gtk.Button(visible=True)
+        self._primary_action.get_style_context().add_class("primary-button")
+        self._primary_action.connect("clicked", self._emit_primary_action, action_callback)
+        actions.pack_start(self._primary_action, False, False, 0)
+        self._send_action = self._icon_button("document-send-symbolic", _("Send files"))
+        self._send_action.connect(
+            "clicked", lambda button: action_callback(self, DeviceCardAction.SEND, button)
+        )
+        actions.pack_start(self._send_action, False, False, 0)
+        self._more_action = self._icon_button("view-more-symbolic", _("More device actions"))
+        self._more_action.connect(
+            "clicked", lambda button: action_callback(self, DeviceCardAction.MORE, button)
+        )
+        actions.pack_start(self._more_action, False, False, 0)
+        trailing.pack_start(actions, False, False, 0)
+        content.pack_end(trailing, False, False, 0)
         self.add(content)
         self.update(snapshot)
+
+    @staticmethod
+    def _icon_button(icon_name: str, accessible_name: str) -> Gtk.Button:
+        image = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        image.show()
+        button = Gtk.Button(image=image, visible=True)
+        button.get_style_context().add_class("secondary-button")
+        button.set_tooltip_text(accessible_name)
+        button.get_accessible().set_name(accessible_name)
+        return button
+
+    def _emit_primary_action(
+        self,
+        button: Gtk.Button,
+        action_callback: Callable[["DeviceCard", DeviceCardAction, Gtk.Widget], None],
+    ) -> None:
+        action = (
+            DeviceCardAction.DISCONNECT if self.snapshot.connected
+            else DeviceCardAction.CONNECT if self.snapshot.paired
+            else DeviceCardAction.PAIR
+        )
+        action_callback(self, action, button)
 
     def update(self, snapshot: DeviceCardSnapshot) -> None:
         self.snapshot = snapshot
@@ -113,7 +169,8 @@ class DeviceCard(Gtk.ListBoxRow):
         self._name.set_tooltip_text(snapshot.name)
         self._category.set_text(snapshot.category)
         self._address.set_text(snapshot.address)
-        self._status.set_text(_("Connected") if snapshot.connected else _("Disconnected"))
+        status = _("Connected") if snapshot.connected else _("Paired") if snapshot.paired else _("Available")
+        self._status.set_text(status)
         self._status.get_style_context().remove_class("device-status-connected")
         self._status.get_style_context().remove_class("device-status-disconnected")
         self._status.get_style_context().add_class(
@@ -128,6 +185,11 @@ class DeviceCard(Gtk.ListBoxRow):
         battery = snapshot.battery_label
         self._battery.set_text(_("Battery: %s") % battery if battery is not None else "")
         self._battery.set_visible(battery is not None)
+        primary_label = _("Disconnect") if snapshot.connected else _("Connect") if snapshot.paired else _("Pair")
+        self._primary_action.set_label(primary_label)
+        self._primary_action.set_tooltip_text(_("%s %s") % (primary_label, snapshot.name))
+        self._primary_action.get_accessible().set_name(_("%s %s") % (primary_label, snapshot.name))
+        self._send_action.set_visible(snapshot.can_send)
         self.get_accessible().set_name(f"{snapshot.name}, {self._status.get_text()}")
 
     def set_card_selected(self, selected: bool) -> None:
@@ -141,6 +203,14 @@ class DeviceCard(Gtk.ListBoxRow):
 class ManagerDeviceCards(Gtk.Box):
     """Mirror visible model rows and bridge card selection to TreeIter selection."""
 
+    __gsignals__ = {
+        "action-requested": (
+            GObject.SignalFlags.RUN_LAST,
+            None,
+            (str, str, object),
+        ),
+    }
+
     GROUP_TITLES = {
         DeviceGroup.CONNECTED: _("Connected"),
         DeviceGroup.PAIRED: _("Paired"),
@@ -153,10 +223,14 @@ class ManagerDeviceCards(Gtk.Box):
         self.cards_by_path: dict[str, DeviceCard] = {}
         self._sync_source = 0
         self._sections: dict[DeviceGroup, Gtk.ListBox] = {}
+        self._section_containers: dict[DeviceGroup, Gtk.Box] = {}
+        self._section_titles: dict[DeviceGroup, Gtk.Label] = {}
         self._signal_handlers: list[tuple[object, int]] = []
+        self._changing_selection = False
 
         for group in DeviceGroup:
-            title = Gtk.Label(label=self.GROUP_TITLES[group], xalign=0, visible=True)
+            section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, visible=True)
+            title = Gtk.Label(xalign=0, visible=True)
             title.get_style_context().add_class("section-title")
             cards = Gtk.ListBox(
                 selection_mode=Gtk.SelectionMode.SINGLE,
@@ -167,8 +241,11 @@ class ManagerDeviceCards(Gtk.Box):
             handler = cards.connect("row-selected", self._on_card_selected)
             self._signal_handlers.append((cards, handler))
             self._sections[group] = cards
-            self.pack_start(title, False, False, 0)
-            self.pack_start(cards, False, False, 0)
+            self._section_containers[group] = section
+            self._section_titles[group] = title
+            section.pack_start(title, False, False, 0)
+            section.pack_start(cards, False, False, 0)
+            self.pack_start(section, False, False, 0)
 
         for signal in ("row-inserted", "row-deleted", "rows-reordered"):
             handler = self.device_list.filter.connect(signal, self._schedule_structure_sync)
@@ -184,7 +261,7 @@ class ManagerDeviceCards(Gtk.Box):
 
     def _snapshot(self, tree_iter: Gtk.TreeIter) -> DeviceCardSnapshot:
         row = self.device_list.get(
-            tree_iter, "device", "alias", "connected", "paired", "trusted"
+            tree_iter, "device", "alias", "connected", "paired", "trusted", "objpush"
         )
         device: Device = row["device"]
         object_path = device.get_object_path()
@@ -197,6 +274,7 @@ class ManagerDeviceCards(Gtk.Box):
             connected=row["connected"],
             paired=row["paired"],
             trusted=row["trusted"],
+            can_send=row["objpush"],
             battery_percentage=self.device_list.get_battery_percentage(object_path),
         )
 
@@ -216,10 +294,16 @@ class ManagerDeviceCards(Gtk.Box):
         self.cards_by_path.clear()
 
         for snapshot in self._visible_snapshots():
-            card = DeviceCard(snapshot)
+            card = DeviceCard(snapshot, self._request_action)
             self.cards_by_path[snapshot.object_path] = card
             self._sections[snapshot.group].add(card)
         self.show_all()
+        for group, cards in self._sections.items():
+            count = len(cards.get_children())
+            self._section_titles[group].set_text(_("%(group)s (%(count)d)") % {
+                "group": self.GROUP_TITLES[group], "count": count
+            })
+            self._section_containers[group].set_visible(count > 0)
         self._sync_source = 0
         self._sync_selection()
         return GLib.SOURCE_REMOVE
@@ -247,14 +331,29 @@ class ManagerDeviceCards(Gtk.Box):
             card.update(snapshot)
 
     def _on_card_selected(self, _list_box: Gtk.ListBox, row: Gtk.ListBoxRow | None) -> None:
-        if not isinstance(row, DeviceCard):
+        if self._changing_selection or not isinstance(row, DeviceCard):
             return
-        child_iter = self.device_list.find_device_by_path(row.snapshot.object_path)
+        self._changing_selection = True
+        for cards in self._sections.values():
+            if cards is not _list_box:
+                cards.unselect_all()
+        self._changing_selection = False
+        self._select_card_device(row)
+
+    def _select_card_device(self, card: DeviceCard) -> bool:
+        child_iter = self.device_list.find_device_by_path(card.snapshot.object_path)
         if child_iter is None:
-            return
+            return False
         valid, filter_iter = self.device_list.filter.convert_child_iter_to_iter(child_iter)
         if valid:
             self.device_list.selection.select_iter(filter_iter)
+        return valid
+
+    def _request_action(
+        self, card: DeviceCard, action: DeviceCardAction, anchor: Gtk.Widget
+    ) -> None:
+        if self._select_card_device(card):
+            self.emit("action-requested", card.snapshot.object_path, action.value, anchor)
 
     def _on_tree_selection_changed(
         self,

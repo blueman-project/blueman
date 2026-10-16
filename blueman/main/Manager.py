@@ -10,7 +10,8 @@ from blueman.bluez.Manager import Manager
 from blueman.Constants import BRAND_DISPLAY_NAME, BRAND_ICON_NAME, WEBSITE
 from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
-from blueman.gui.manager.ManagerDeviceCards import ManagerDeviceCards
+from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
@@ -78,6 +79,7 @@ class Blueman(Gtk.Application):
         self.Theme.apply(self.Config)
         self.Shell: ManagerWindowShell | None = None
         self.Cards: ManagerDeviceCards | None = None
+        self.CardMenu: ManagerDeviceMenu | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -181,6 +183,7 @@ class Blueman(Gtk.Application):
             self.List.populate_devices()
 
         self.Cards = ManagerDeviceCards(self.List)
+        self.Cards.connect("action-requested", self._on_card_action_requested)
         if self.Shell is not None:
             self.Shell.install_device_cards(self.Cards, sw)
 
@@ -190,6 +193,38 @@ class Blueman(Gtk.Application):
         action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
         bt_status_action = self.lookup_action("bluetooth_status")
         bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
+
+    def _on_card_action_requested(
+        self,
+        _cards: ManagerDeviceCards,
+        object_path: str,
+        action_name: str,
+        anchor: Gtk.Widget,
+    ) -> None:
+        tree_iter = self.List.find_device_by_path(object_path)
+        if tree_iter is None:
+            return
+        device = self.List.get(tree_iter, "device")["device"]
+
+        try:
+            action = DeviceCardAction(action_name)
+        except ValueError:
+            logging.error(f"Unknown card action: {action_name}")
+            return
+
+        if action == DeviceCardAction.PAIR:
+            self.bond(device)
+        elif action == DeviceCardAction.SEND:
+            self.send(device)
+        else:
+            if self.CardMenu is None:
+                self.CardMenu = ManagerDeviceMenu(self)
+            if action == DeviceCardAction.CONNECT:
+                self.CardMenu.connect_service(device)
+            elif action == DeviceCardAction.DISCONNECT:
+                self.CardMenu.disconnect_service(device)
+            elif action == DeviceCardAction.MORE:
+                self.CardMenu.popup_for_device(device, anchor)
 
     def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)

@@ -7,6 +7,7 @@ from gi.repository import GObject, Gtk  # noqa: E402
 
 from blueman.gui.manager.ManagerDeviceCards import (
     DeviceCardSnapshot,
+    DeviceCardAction,
     DeviceGroup,
     group_for_state,
 )
@@ -36,11 +37,13 @@ class FakeDeviceList(GObject.Object):
         "device-selected": (GObject.SignalFlags.RUN_LAST, None, (object, object)),
     }
 
-    COLUMNS = {"device": 0, "alias": 1, "connected": 2, "paired": 3, "trusted": 4}
+    COLUMNS = {
+        "device": 0, "alias": 1, "connected": 2, "paired": 3, "trusted": 4, "objpush": 5
+    }
 
     def __init__(self) -> None:
         super().__init__()
-        self.liststore = Gtk.ListStore(object, str, bool, bool, bool)
+        self.liststore = Gtk.ListStore(object, str, bool, bool, bool, bool)
         self.filter = self.liststore.filter_new()
         self.treeview = Gtk.TreeView(model=self.filter)
         self.selection = self.treeview.get_selection()
@@ -53,6 +56,7 @@ class FakeDeviceList(GObject.Object):
             device["Connected"],
             device["Paired"],
             False,
+            True,
         ])
 
     def get(self, tree_iter: Gtk.TreeIter, *keys: str) -> dict[str, object]:
@@ -99,6 +103,7 @@ class TestDeviceCardSnapshot(unittest.TestCase):
             connected=True,
             paired=True,
             trusted=False,
+            can_send=True,
             battery_percentage=0,
         )
 
@@ -114,6 +119,7 @@ class TestDeviceCardSnapshot(unittest.TestCase):
             connected=False,
             paired=True,
             trusted=True,
+            can_send=False,
             battery_percentage=None,
         )
 
@@ -132,6 +138,8 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         cards = ManagerDeviceCards(device_list)
         self.assertEqual(set(cards.cards_by_path), {connected.object_path, available.object_path})
         self.assertEqual(cards.cards_by_path[connected.object_path].snapshot.group, DeviceGroup.CONNECTED)
+        self.assertFalse(cards._section_containers[DeviceGroup.PAIRED].get_visible())
+        self.assertEqual(cards._section_titles[DeviceGroup.CONNECTED].get_text(), "Connected (1)")
 
         connected_card = cards.cards_by_path[connected.object_path]
         device_list.liststore.set_value(
@@ -144,10 +152,27 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(connected_card.snapshot.name, "Office Headphones")
 
         available_card = cards.cards_by_path[available.object_path]
+        requested: list[tuple[str, str]] = []
+        cards.connect(
+            "action-requested",
+            lambda _cards, path, action, _anchor: requested.append((path, action)),
+        )
+        valid, connected_filter_iter = device_list.filter.convert_child_iter_to_iter(connected_iter)
+        self.assertTrue(valid)
+        device_list.selection.select_iter(connected_filter_iter)
+        available_card._primary_action.clicked()
+        self.assertEqual(
+            requested,
+            [(available.object_path, DeviceCardAction.PAIR.value)],
+        )
+        self.assertEqual(device_list.get_selected_device(), available)
+
         cards._sections[DeviceGroup.AVAILABLE].select_row(available_card)
         self.assertEqual(device_list.get_selected_device(), available)
 
         device_list.liststore.remove(available_iter)
+        available_card._more_action.clicked()
+        self.assertEqual(len(requested), 1, "a removed card must not dispatch an action")
         cards.sync_structure()
         self.assertNotIn(available.object_path, cards.cards_by_path)
         cards.destroy()

@@ -102,6 +102,17 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         super().popup_at_pointer(event)
 
+    def popup_for_device(self, device: Device, anchor: Gtk.Widget) -> None:
+        """Open the complete menu for an explicit card target."""
+        self.is_popup = True
+        self.generate(device)
+        super().popup_at_widget(
+            anchor,
+            Gdk.Gravity.SOUTH_EAST,
+            Gdk.Gravity.NORTH_EAST,
+            None,
+        )
+
     def clear(self) -> None:
         def remove_and_destroy(child: Gtk.Widget) -> None:
             self.remove(child)
@@ -258,10 +269,17 @@ class ManagerDeviceMenu(Gtk.Menu):
         # LE devices do not appear to expose certain properties like uuids until connect to at least once.
         return not device_uuids
 
-    def generate(self) -> None:
+    def generate(self, device: Device | None = None) -> None:
         self.clear()
 
-        if not self.is_popup or self.props.visible:
+        if device is not None:
+            child_iter = self.Blueman.List.find_device_by_path(device.get_object_path())
+            if child_iter is None:
+                return
+            row = self.Blueman.List.get(
+                child_iter, "alias", "paired", "connected", "trusted", "objpush", "device", "blocked"
+            )
+        elif not self.is_popup or self.props.visible:
             selected = self.Blueman.List.selected()
             if not selected:
                 return

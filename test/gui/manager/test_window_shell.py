@@ -40,11 +40,11 @@ class TestManagerWindowShell(unittest.TestCase):
         content.attach(legacy, 0, 2, 1, 1)
         cards = Gtk.Box(visible=True)
         shell.install_device_cards(cards, legacy)
-        self.assertTrue(legacy.get_visible())
-        self.assertFalse(shell._card_view.get_visible())
-        shell._view_toggle.set_active(True)
         self.assertFalse(legacy.get_visible())
         self.assertTrue(shell._card_view.get_visible())
+        shell._view_toggle.set_active(False)
+        self.assertTrue(legacy.get_visible())
+        self.assertFalse(shell._card_view.get_visible())
         window.destroy()
 
 

@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-16
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-008 dependency bootstrap is verified and ready for its checkpoint commit.
-- **Active task:** T-008
-- **Overall status:** Redesign takes priority over existing and future bug work. R1–R5 now include branding, themes, a responsive compatible shell, and opt-in real device cards synchronized to the legacy model.
+- **Working tree:** R6 card actions/grouping are verified and ready for their phase checkpoint; user-owned `BUGS_LOGS.md` remains untracked.
+- **Active task:** T-006
+- **Overall status:** Redesign takes priority over existing and future bug work. R1–R6 now include branding, themes, a responsive shell, model-backed device cards, and explicit-device card actions.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -68,19 +68,19 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-003 | High | DONE | Complete Phase 0 audit corrections, current baseline, upstream comparison, and actionable redesign plan. | Results and environmental limits are recorded in IMPLEMENTATION_PLAN.md. |
 | T-004 | High | DONE | Deliver redesign slices R1–R4: generated brand identity, installable theme preferences/resources, then the compatible manager shell. | Checkpoint `38a180a5`; visual/hardware verification remains for hardening. |
 | T-005 | High | DONE | R5 card/model selection bridge with real model data, targeted updates, filtering/removal handling, and legacy fallback. | Card preview is opt-in until action/menu compatibility passes in R6. |
-| T-006 | High | TODO | R6 card actions and exclusive Connected/Paired/Available grouping while preserving plugin menu items. | Next phase; requires a phase checkpoint before work starts. |
+| T-006 | High | DONE | R6 card actions and exclusive Connected/Paired/Available grouping while preserving plugin menu items. | Cards are now the default; the classic view remains available as a compatibility fallback. |
 | T-007 | High | DONE | Provide a repository-local build-and-run command that cannot replace the system Blueman installation. | Use `./blueman-next`; `./blueman` is occupied by the Python package directory. |
 | T-008 | High | DONE | Make `./blueman-next` install missing build/runtime dependencies without installing Blueman itself. | Debian/Ubuntu apt bootstrap installs only missing packages; `--no-deps` opts out. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-008
-- **Goal:** Bootstrap dependencies needed by the local build while preserving the non-installing application workflow.
-- **Acceptance criteria:** On Debian/Ubuntu, detect missing packages and install only those through apt/sudo; support opting out; never invoke Meson/Ninja install or replace the distribution Blueman package.
-- **Relevant files:** `blueman-next`, `tools/run-local-manager.py`, `docs/LOCAL_BUILD.md`.
-- **Changes made:** Added fixed apt package detection/bootstrap derived from Ubuntu CI and a `--no-deps` escape hatch; updated local-build documentation.
-- **Verification:** Shell/Python syntax, help output, mocked missing-package apt/sudo installation, mocked build completion, diff checks, and no-application-install audit pass. The real path correctly detected only `gettext`, `cython3`, `python-gi-dev`, and `libbluetooth-dev`, then stopped at the interactive sudo password prompt available only to the user.
-- **Blockers / risks:** The user must enter their sudo password on the next local run; after that the same command resumes configuration/build automatically.
-- **Next action:** Commit T-008, then have the user run `./blueman-next` interactively before R6/T-006 begins.
+- **Task ID:** T-006
+- **Goal:** Make model-backed cards the functional primary device presentation.
+- **Acceptance criteria:** Groups remain exclusive; Pair/Connect/Disconnect/Send target the clicked device through existing handlers; More opens the existing plugin-aware menu for that explicit device; removal races dispatch nothing; classic view remains available.
+- **Relevant files:** `ManagerDeviceCards.py`, `ManagerDeviceMenu.py`, `ManagerWindow.py`, `Manager.py`, and manager GUI tests.
+- **Changes made:** Added accessible per-card primary/send/more controls, group counts and empty-section hiding, cross-group selection exclusivity, explicit object-path action dispatch, explicit-target plugin menus, and made cards the default view with classic fallback.
+- **Verification:** All 15 manager GUI tests pass; focused wrong-device/removal-race action checks pass; Python compileall, strict schema, CSS parse in both themes, and diff checks pass.
+- **Blockers / risks:** Hardware Pair/Connect/Disconnect/Send and real third-party plugin behavior require interactive Bluetooth testing. Existing defects recorded by the user in `BUGS_LOGS.md` are intentionally deferred.
+- **Next action:** Commit R6, then begin R7 search/telemetry as the next redesign phase.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -102,15 +102,16 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-16 | T-003 | Completed Phase 0 audit/baseline/upstream comparison and recorded bounded redesign slices. | Static review and attempted baseline as documented in IMPLEMENTATION_PLAN.md. |
 | 2026-10-16 | T-007 | Added `./blueman-next` for local Meson build and source execution without installation. | Syntax/help and mocked build flow pass; real setup is blocked by missing `pygobject-3.0` development metadata. |
 | 2026-10-16 | T-008 | Added Debian/Ubuntu dependency bootstrapping to `./blueman-next`, with `--no-deps` opt-out. | Mocked apt/build flow passes; real package set detected and reached the sudo password prompt. |
+| 2026-10-16 | T-006 | Added explicit-device card actions/grouping and promoted cards to the default presentation. | 15 manager GUI tests, compileall, schema, CSS parse, and diff checks pass. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R5 are committed. T-007/T-008 add a non-installing `./blueman-next` workflow with automatic Debian/Ubuntu dependency bootstrap.
+- **What is done:** R1–R5 and local build tooling are committed. R6 is verified and ready to commit; cards now expose explicit-device actions and the plugin-aware More menu.
 - **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** User runs `./blueman-next` and enters the sudo password; after successful launch, begin R6 card actions.
-- **Files touched:** `blueman-next`, `docs/LOCAL_BUILD.md`, and `INSTRUCTIONS.md`.
-- **Checks run and results:** Syntax/help, mocked missing-package installation/build, diff, and no-install audit pass. Real execution detected four missing packages and reached sudo authentication; no credentials were entered or recorded.
+- **Exact next step:** Commit R6, then implement R7 case-insensitive name/address search without per-keystroke D-Bus access.
+- **Files touched:** manager cards/menu/window/application modules, two manager GUI tests, and `INSTRUCTIONS.md`. Do not add or modify user-owned `BUGS_LOGS.md`.
+- **Checks run and results:** 15 manager GUI tests, compileall, strict schema, both theme CSS loads, and diff checks pass. Hardware actions and third-party plugins are not run.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 

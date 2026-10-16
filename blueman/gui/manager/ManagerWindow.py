@@ -123,6 +123,7 @@ class ManagerWindowShell:
         self._legacy_view = legacy_scrollview
         self._card_view = card_scrollview
         self._view_toggle.set_sensitive(True)
+        self._view_toggle.set_active(True)
         self._on_view_toggled(self._view_toggle)
 
     def _on_view_toggled(self, button: Gtk.ToggleButton) -> None:
