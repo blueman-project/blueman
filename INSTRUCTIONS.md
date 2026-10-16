@@ -19,6 +19,7 @@ Implement the user's requested development tasks safely and efficiently. Preserv
 - Never claim a test passed unless it actually ran. Distinguish **not run**, **passed**, **failed**, and **blocked**.
 - Never record secrets, tokens, passwords, private keys, or sensitive environment values in this file.
 - Prefer actual code and verification over verbose explanations. Do not spend tokens repeating context already recorded here.
+- Before starting a new implementation phase, create a meaningful commit for the completed phase or verified slice. Never carry finished phase work uncommitted into the next phase.
 - Before any destructive or externally impactful action (deployments, database migrations, deletion, paid API usage), follow the user's authorization and project safeguards.
 - Do not mark a task done until its acceptance criteria are satisfied, or clearly document any unverified criteria.
 
@@ -53,8 +54,8 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 
 ## 7. Current State
 - **Updated (UTC):** 2026-10-16 06:35
-- **Branch / commit:** main / 67cea901
-- **Working tree:** User-provided Markdown files remain untracked. An interrupted prior implementation also left an untracked theme package and dark/light CSS; these are not integrated or verified yet.
+- **Branch / commit:** feature/redesign / 38a180a5
+- **Working tree:** Redesign work is committed. Only local watchdog artifacts remain untracked and must not be committed.
 - **Active task:** T-004
 - **Overall status:** Redesign takes priority over existing and future bug work. R1–R4 foundations now include branding, themes, and a responsive compatible manager shell; full build remains environment-blocked before the dependency-complete stage.
 
@@ -87,6 +88,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | Date | Decision | Reason / trade-off |
 | --- | --- | --- |
 | 2026-10-15 | Complete redesign before fixing any existing bug. | Explicit user priority; defer existing audit fixes to Phase 9, while addressing redesign regressions during implementation. |
+| 2026-10-16 | Always create a meaningful commit before starting a new phase. | Explicit user workflow requirement; ensures each phase has a verified rollback point. |
 
 ## 12. Completed Work
 | Date | Task | Result | Verification |
