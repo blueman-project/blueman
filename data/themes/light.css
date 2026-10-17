@@ -762,3 +762,72 @@
 .app-window .inspector-row-key { color: #647487; font-size: 12px; font-weight: 400; }
 .app-window .inspector-row-value { color: #33465C; font-size: 12px; }
 .app-window .quick-action-danger { min-height: 46px; border-radius: 12px; padding: 0 12px; color: #D93F55; background-color: alpha(#E84D62,0.08); border: none; }
+
+/* Reference-fidelity pass: scale, layered surfaces, and card hierarchy. */
+.app-window, .app-window.background { background-color: rgba(239,244,249,0.96); border-radius: 22px; }
+.app-window decoration { border-radius: 22px; box-shadow: 0 22px 55px alpha(#203247,0.26), inset 0 1px alpha(white,0.85); }
+.app-window .app-header { min-height: 34px; padding: 0 8px; background-color: rgba(247,249,252,0.94); }
+.app-window .app-sidebar { background-color: rgba(247,249,252,0.94); }
+.app-window .device-dashboard, .app-window .dashboard-scroll, .app-window .dashboard-scroll viewport { background-color: rgba(236,242,248,0.94); }
+.app-window .inspector-panel { background-color: rgba(247,249,252,0.94); }
+.app-window .sidebar-identity { padding-top: 10px; }
+.app-window .brand-icon-tile { min-width: 52px; min-height: 52px; border-radius: 14px; }
+.app-window .sidebar-brand-title { font-size: 20px; }
+.app-window .sidebar-brand-subtitle { font-size: 13px; }
+.app-window .sidebar-item { min-height: 52px; border-radius: 15px; font-size: 16px; padding-left: 18px; margin-top: 3px; margin-bottom: 3px; }
+.app-window .sidebar-item-image { -gtk-icon-transform: scale(1.18); }
+.app-window .sidebar-card { min-height: 275px; border-radius: 20px; padding: 20px; background-image: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(238,244,249,0.90)); box-shadow: inset 0 1px white, 0 12px 30px alpha(#203247,0.09); }
+.app-window .sidebar-card-title { font-size: 16px; }
+.app-window .sidebar-card-subtitle { font-size: 13px; }
+.app-window .sidebar-radar { min-width: 142px; min-height: 142px; box-shadow: 0 0 46px alpha(#2C7DFF,0.16), inset 0 0 24px alpha(white,0.28); }
+.app-window .dashboard-search { padding: 18px 28px 10px 28px; }
+.app-window .search-entry { min-height: 50px; border-radius: 17px; padding-left: 16px; padding-right: 92px; font-size: 14px; background-color: rgba(255,255,255,0.90); border-color: rgba(21,35,50,0.13); box-shadow: inset 0 1px white, 0 10px 26px alpha(#203247,0.09); }
+.app-window .shortcut-key { min-width: 25px; min-height: 24px; padding: 0 4px; border-radius: 7px; color: #526276; background-color: alpha(#203247,0.06); border: 1px solid alpha(#203247,0.08); font-size: 12px; font-weight: 600; }
+.app-window .dashboard-header { padding: 18px 28px 26px 28px; }
+.app-window .dashboard-title { font-size: 29px; }
+.app-window .dashboard-subtitle { font-size: 16px; }
+.app-window .pair-device-button { min-height: 48px; border-radius: 15px; padding-left: 22px; padding-right: 22px; font-size: 14px; background-image: linear-gradient(145deg,#58A4FF,#3868F4); }
+.app-window .section-title { font-size: 16px; padding-bottom: 4px; }
+.app-window .device-card { min-height: 118px; padding: 18px; margin-bottom: 14px; border-radius: 20px; background-image: linear-gradient(110deg,rgba(255,255,255,0.94),rgba(246,249,252,0.92)); box-shadow: inset 0 1px white,0 10px 28px alpha(#203247,0.08); }
+.app-window .device-card-selected, .app-window .device-card:selected { background-image: linear-gradient(110deg,rgba(235,245,255,0.96),rgba(224,239,255,0.94)); border-color:#4388EF; box-shadow: inset 0 1px white,0 0 0 1px alpha(#4388EF,0.10),0 13px 32px alpha(#203247,0.10); }
+.app-window .device-avatar { min-width:72px; min-height:72px; border-radius:18px; }
+.app-window .device-name { font-size:17px; }
+.app-window .device-subtitle { font-size:14px; margin-top:2px; }
+.app-window .device-mac { font-size:12px; margin-top:2px; }
+.app-window .device-status-row { margin-top:6px; }
+.app-window .device-status, .app-window .battery-indicator { font-size:13px; }
+.app-window .device-actions .secondary-button, .app-window .device-actions .primary-button { min-height:46px; border-radius:13px; padding-left:14px; padding-right:14px; }
+.app-window .device-actions .primary-button { min-width:84px; }
+.app-window .inspector-device-header { padding:18px 4px 8px 4px; }
+.app-window .inspector-avatar { min-width:102px; min-height:102px; border-radius:21px; }
+.app-window .inspector-title { font-size:20px; }
+.app-window .inspector-subtitle { font-size:14px; }
+.app-window .inspector-status-bar { padding:10px 5px; }
+.app-window .action-tile, .app-window .primary-action-tile { min-height:90px; border-radius:17px; font-size:13px; }
+.app-window .inspector-section { padding:18px; border-radius:19px; background-image:linear-gradient(145deg,rgba(255,255,255,0.94),rgba(241,246,250,0.92)); box-shadow:inset 0 1px white; }
+.app-window .inspector-section-title { font-size:14px; padding-bottom:12px; }
+.app-window .inspector-row { min-height:38px; }
+.app-window .inspector-row-key, .app-window .inspector-row-value { font-size:13px; }
+.app-window .quick-action-danger { min-height:52px; border-radius:14px; font-size:13px; }
+.app-window .device-avatar-speaker { background-image: linear-gradient(145deg,#BDE9D9,#83BEAB); }
+.app-window .device-avatar-headphones { background-image: linear-gradient(145deg,#D9A2F0,#A36BC7); }
+.app-window .device-avatar-phone { background-image: linear-gradient(145deg,#AED8FA,#78ABE0); }
+.app-window .device-avatar-keyboard { background-image: linear-gradient(145deg,#ABE0D8,#77B8AF); }
+.app-window .device-avatar-mouse { background-image: linear-gradient(145deg,#D0B5F2,#A185CD); }
+.app-window .device-avatar-controller { background-image: linear-gradient(145deg,#F0ABC2,#C87593); }
+.app-window .device-avatar-computer { background-image: linear-gradient(145deg,#B3D0F8,#82A8DD); }
+.app-window .device-avatar-unknown { background-image: linear-gradient(145deg,#CBD3DB,#9BA8B4); }
+.app-window .inspector-overview {
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(21,35,50,0.085);
+    background-image: linear-gradient(145deg,rgba(255,255,255,0.95),rgba(241,246,250,0.92));
+    box-shadow: inset 0 1px white,0 12px 30px alpha(#203247,0.08);
+}
+.app-window, .app-window.background, .app-window .app-main { background-color: transparent; }
+.app-window .app-header { background-color: rgba(247,249,252,0.90); }
+.app-window .app-sidebar { background-color: rgba(247,249,252,0.88); }
+.app-window .device-dashboard,
+.app-window .dashboard-scroll,
+.app-window .dashboard-scroll viewport { background-color: rgba(236,242,248,0.90); }
+.app-window .inspector-panel { background-color: rgba(247,249,252,0.88); }

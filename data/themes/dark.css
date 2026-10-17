@@ -874,3 +874,173 @@
     min-height: 46px; border-radius: 12px; padding: 0 12px;
     color: #FF7181; background-color: alpha(#FF6475, 0.08); border: none;
 }
+
+/* Reference-fidelity pass: scale, glass depth, and card hierarchy. */
+.app-window,
+.app-window.background {
+    background-color: rgba(8, 15, 21, 0.94);
+    border-radius: 22px;
+}
+.app-window decoration {
+    border-radius: 22px;
+    box-shadow: 0 22px 55px alpha(black, 0.52), inset 0 1px alpha(white, 0.10);
+}
+.app-window .app-header {
+    min-height: 34px;
+    padding: 0 8px;
+    background-color: rgba(12, 22, 29, 0.92);
+    border-bottom-color: rgba(255,255,255,0.055);
+}
+.app-window .app-sidebar {
+    background-color: rgba(12, 24, 31, 0.91);
+}
+.app-window .device-dashboard,
+.app-window .dashboard-scroll,
+.app-window .dashboard-scroll viewport {
+    background-color: rgba(8, 15, 22, 0.91);
+}
+.app-window .inspector-panel {
+    background-color: rgba(12, 23, 30, 0.91);
+}
+.app-window .sidebar-identity { padding-top: 10px; }
+.app-window .brand-icon-tile { min-width: 52px; min-height: 52px; border-radius: 14px; }
+.app-window .sidebar-brand-title { font-size: 20px; }
+.app-window .sidebar-brand-subtitle { font-size: 13px; }
+.app-window .sidebar-item {
+    min-height: 52px;
+    border-radius: 15px;
+    font-size: 16px;
+    padding-left: 18px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.app-window .sidebar-item-image { -gtk-icon-transform: scale(1.18); }
+.app-window .sidebar-card {
+    min-height: 275px;
+    border-radius: 20px;
+    padding: 20px;
+    background-image: linear-gradient(145deg, rgba(25, 39, 49, 0.88), rgba(13, 25, 33, 0.82));
+    box-shadow: inset 0 1px alpha(white, 0.05), 0 12px 30px alpha(black, 0.15);
+}
+.app-window .sidebar-card-title { font-size: 16px; }
+.app-window .sidebar-card-subtitle { font-size: 13px; }
+.app-window .sidebar-radar {
+    min-width: 142px;
+    min-height: 142px;
+    border-color: alpha(#4D91FF, 0.20);
+    background-image: radial-gradient(circle, #2F84F3 0%, alpha(#246BCB, 0.76) 22%, alpha(#174F92, 0.46) 44%, alpha(#123B6A, 0.17) 65%, transparent 70%);
+    box-shadow: 0 0 46px alpha(#2C7DFF, 0.24), inset 0 0 24px alpha(#78B5FF, 0.14);
+}
+.app-window .dashboard-search { padding: 18px 28px 10px 28px; }
+.app-window .search-entry {
+    min-height: 50px;
+    border-radius: 17px;
+    padding-left: 16px;
+    padding-right: 92px;
+    font-size: 14px;
+    background-color: rgba(29, 42, 52, 0.86);
+    border-color: rgba(255,255,255,0.13);
+    box-shadow: inset 0 1px alpha(white, 0.06), 0 10px 26px alpha(black, 0.15);
+}
+.app-window .shortcut-key {
+    min-width: 25px;
+    min-height: 24px;
+    padding: 0 4px;
+    border-radius: 7px;
+    color: #D8E0E9;
+    background-color: alpha(white, 0.08);
+    border: 1px solid alpha(white, 0.06);
+    font-size: 12px;
+    font-weight: 600;
+}
+.app-window .dashboard-header { padding: 18px 28px 26px 28px; }
+.app-window .dashboard-title { font-size: 29px; }
+.app-window .dashboard-subtitle { font-size: 16px; }
+.app-window .pair-device-button {
+    min-height: 48px;
+    border-radius: 15px;
+    padding-left: 22px;
+    padding-right: 22px;
+    font-size: 14px;
+    background-image: linear-gradient(145deg, #58A4FF, #3868F4);
+}
+.app-window .section-title { font-size: 16px; padding-bottom: 4px; }
+.app-window .device-card {
+    min-height: 118px;
+    padding: 18px;
+    margin-bottom: 14px;
+    border-radius: 20px;
+    background-image: linear-gradient(110deg, rgba(27, 40, 50, 0.90), rgba(20, 31, 40, 0.88));
+    box-shadow: inset 0 1px alpha(white, 0.035), 0 10px 28px alpha(black, 0.15);
+}
+.app-window .device-card-selected,
+.app-window .device-card:selected {
+    background-image: linear-gradient(110deg, rgba(39, 70, 106, 0.88), rgba(21, 39, 57, 0.90));
+    border-color: #62A3FF;
+    box-shadow: inset 0 1px alpha(white, 0.06), 0 0 0 1px alpha(#62A3FF,0.12), 0 13px 32px alpha(black,0.20);
+}
+.app-window .device-avatar {
+    min-width: 72px;
+    min-height: 72px;
+    border-radius: 18px;
+}
+.app-window .device-name { font-size: 17px; }
+.app-window .device-subtitle { font-size: 14px; margin-top: 2px; }
+.app-window .device-mac { font-size: 12px; margin-top: 2px; }
+.app-window .device-status-row { margin-top: 6px; }
+.app-window .device-status,
+.app-window .battery-indicator { font-size: 13px; }
+.app-window .device-actions .secondary-button,
+.app-window .device-actions .primary-button {
+    min-height: 46px;
+    border-radius: 13px;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+.app-window .device-actions .primary-button { min-width: 84px; }
+.app-window .inspector-device-header { padding: 18px 4px 8px 4px; }
+.app-window .inspector-avatar { min-width: 102px; min-height: 102px; border-radius: 21px; }
+.app-window .inspector-title { font-size: 20px; }
+.app-window .inspector-subtitle { font-size: 14px; }
+.app-window .inspector-status-bar { padding: 10px 5px; }
+.app-window .action-tile,
+.app-window .primary-action-tile {
+    min-height: 90px;
+    border-radius: 17px;
+    font-size: 13px;
+}
+.app-window .inspector-section {
+    padding: 18px;
+    border-radius: 19px;
+    background-image: linear-gradient(145deg, rgba(28, 41, 51, 0.88), rgba(18, 30, 38, 0.86));
+    box-shadow: inset 0 1px alpha(white,0.035);
+}
+.app-window .inspector-section-title { font-size: 14px; padding-bottom: 12px; }
+.app-window .inspector-row { min-height: 38px; }
+.app-window .inspector-row-key,
+.app-window .inspector-row-value { font-size: 13px; }
+.app-window .quick-action-danger { min-height: 52px; border-radius: 14px; font-size: 13px; }
+.app-window .device-avatar-speaker { background-image: linear-gradient(145deg, #79BDA6, #315F59); }
+.app-window .device-avatar-headphones { background-image: linear-gradient(145deg, #C278E4, #71449D); }
+.app-window .device-avatar-phone { background-image: linear-gradient(145deg, #71B5F2, #396CA8); }
+.app-window .device-avatar-keyboard { background-image: linear-gradient(145deg, #70BEB3, #356E69); }
+.app-window .device-avatar-mouse { background-image: linear-gradient(145deg, #B08AE8, #63508F); }
+.app-window .device-avatar-controller { background-image: linear-gradient(145deg, #E67BA0, #8E3D62); }
+.app-window .device-avatar-computer { background-image: linear-gradient(145deg, #75A9F2, #3E6098); }
+.app-window .device-avatar-unknown { background-image: linear-gradient(145deg, #6F7B88, #3B4651); }
+.app-window .inspector-overview {
+    padding: 16px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.075);
+    background-image: linear-gradient(145deg, rgba(29,43,53,0.88), rgba(17,29,37,0.86));
+    box-shadow: inset 0 1px alpha(white,0.04), 0 12px 30px alpha(black,0.13);
+}
+/* Keep the top-level canvas transparent so compositors can show the desktop
+ * through the layered GTK surfaces; no compositor-specific blur is required. */
+.app-window, .app-window.background, .app-window .app-main { background-color: transparent; }
+.app-window .app-header { background-color: rgba(12,22,29,0.88); }
+.app-window .app-sidebar { background-color: rgba(12,24,31,0.86); }
+.app-window .device-dashboard,
+.app-window .dashboard-scroll,
+.app-window .dashboard-scroll viewport { background-color: rgba(8,15,22,0.88); }
+.app-window .inspector-panel { background-color: rgba(12,23,30,0.86); }

@@ -11,9 +11,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, GObject, Gtk  # noqa: E402
 
 
-COMPACT_SIDEBAR_BREAKPOINT = 1050
-INSPECTOR_BREAKPOINT = 1180
-SIDEBAR_WIDTH = 268
+COMPACT_SIDEBAR_BREAKPOINT = 1120
+INSPECTOR_BREAKPOINT = 1280
+SIDEBAR_WIDTH = 320
 COMPACT_SIDEBAR_WIDTH = 76
 
 
@@ -90,31 +90,19 @@ class ManagerWindowShell:
         window.add(self.main_paned)
         window.connect("size-allocate", self._on_size_allocate)
 
-    def _create_header(self, display_name: str) -> Gtk.HeaderBar:
+    def _create_header(self, _display_name: str) -> Gtk.HeaderBar:
         header = Gtk.HeaderBar(
-            title=display_name,
-            subtitle=_("Bluetooth device manager"),
             show_close_button=True,
             visible=True,
         )
+        header.set_custom_title(Gtk.Box(visible=True))
         header.get_style_context().add_class("app-header")
 
         self._status_icon = Gtk.Image.new_from_icon_name(
             "bluetooth-disabled", Gtk.IconSize.BUTTON
         )
         self._status_label = Gtk.Label(label=_("Bluetooth off"))
-        status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, visible=True)
-        status.get_style_context().add_class("header-status")
-        status.pack_start(self._status_icon, False, False, 0)
-        status.pack_start(self._status_label, False, False, 0)
-        self._status_icon.show()
-        self._status_label.show()
-        header.pack_start(status)
-
-        header.pack_end(self._icon_button(
-            "open-menu-symbolic", _("Application menu"), menu=self._application_menu()
-        ))
-        self._inspector_toggle = Gtk.ToggleButton(visible=True, sensitive=False)
+        self._inspector_toggle = Gtk.ToggleButton(sensitive=False)
         self._inspector_toggle.set_image(Gtk.Image.new_from_icon_name(
             "sidebar-show-symbolic", Gtk.IconSize.BUTTON
         ))
@@ -122,9 +110,6 @@ class ManagerWindowShell:
         self._inspector_toggle.get_accessible().set_name(_("Toggle device details"))
         self._inspector_toggle.connect("toggled", self._on_inspector_toggled)
         header.pack_end(self._inspector_toggle)
-        header.pack_end(self._icon_button(
-            "preferences-system-symbolic", _("Settings"), action="app.settings"
-        ))
         return header
 
     def install_device_cards(
@@ -142,9 +127,23 @@ class ManagerWindowShell:
             parent.remove(search)
         search.set_placeholder_text(_("Search devices, files, or actions…"))
 
-        search_wrap = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, visible=True)
+        search_wrap = Gtk.Overlay(visible=True)
         search_wrap.get_style_context().add_class("dashboard-search")
-        search_wrap.pack_start(search, True, True, 0)
+        search_wrap.add(search)
+        shortcut = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=6,
+            halign=Gtk.Align.END,
+            valign=Gtk.Align.CENTER,
+            margin_end=12,
+            visible=True,
+        )
+        for text in (_("Ctrl"), "K"):
+            key = Gtk.Label(label=text, visible=True)
+            key.get_style_context().add_class("shortcut-key")
+            shortcut.pack_start(key, False, False, 0)
+        search_wrap.add_overlay(shortcut)
+        search_wrap.set_overlay_pass_through(shortcut, True)
         search.show()
         self._dashboard.pack_start(search_wrap, False, False, 0)
 
@@ -206,6 +205,7 @@ class ManagerWindowShell:
         wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
         self._wide_inspector = wide
         self._inspector_toggle.set_active(wide)
+        self._inspector_toggle.set_visible(not wide)
         revealer.set_reveal_child(wide)
 
     def _on_inspector_toggled(self, button: Gtk.ToggleButton) -> None:
@@ -366,3 +366,4 @@ class ManagerWindowShell:
             if wide != self._wide_inspector:
                 self._wide_inspector = wide
                 self._inspector_toggle.set_active(wide)
+                self._inspector_toggle.set_visible(not wide)

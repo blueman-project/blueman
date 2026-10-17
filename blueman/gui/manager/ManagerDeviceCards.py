@@ -106,28 +106,27 @@ class DeviceCard(Gtk.ListBoxRow):
         identity.pack_start(self._name, False, False, 0)
         identity.pack_start(self._category, False, False, 0)
         identity.pack_start(self._address, False, False, 0)
+        self._status_dot = Gtk.Label(label="●", visible=True)
+        self._status_dot.get_style_context().add_class("status-dot")
+        self._status = Gtk.Label(xalign=0, visible=True)
+        self._status.get_style_context().add_class("device-status")
+        self._battery = Gtk.Label(xalign=0)
+        self._battery.get_style_context().add_class("battery-indicator")
+        status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
+        status.get_style_context().add_class("device-status-row")
+        status.pack_start(self._status_dot, False, False, 0)
+        status.pack_start(self._status, False, False, 0)
+        status.pack_start(self._battery, False, False, 0)
+        identity.pack_start(status, False, False, 0)
         content.pack_start(identity, True, True, 0)
 
-        trailing = Gtk.Box(
-            orientation=Gtk.Orientation.VERTICAL,
-            spacing=6,
+        actions = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=10,
             halign=Gtk.Align.END,
             valign=Gtk.Align.CENTER,
             visible=True,
         )
-        self._status_dot = Gtk.Label(label="●", visible=True)
-        self._status_dot.get_style_context().add_class("status-dot")
-        self._status = Gtk.Label(xalign=1, visible=True)
-        self._status.get_style_context().add_class("device-status")
-        self._battery = Gtk.Label(xalign=1)
-        self._battery.get_style_context().add_class("battery-indicator")
-        status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
-        status.pack_start(self._status_dot, False, False, 0)
-        status.pack_end(self._battery, False, False, 0)
-        status.pack_end(self._status, False, False, 0)
-        trailing.pack_start(status, False, False, 0)
-
-        actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, visible=True)
         actions.get_style_context().add_class("device-actions")
         self._primary_action = Gtk.Button(visible=True)
         self._primary_action.get_style_context().add_class("primary-button")
@@ -143,8 +142,7 @@ class DeviceCard(Gtk.ListBoxRow):
             "clicked", lambda button: action_callback(self, DeviceCardAction.MORE, button)
         )
         actions.pack_start(self._more_action, False, False, 0)
-        trailing.pack_start(actions, False, False, 0)
-        content.pack_end(trailing, False, False, 0)
+        content.pack_end(actions, False, False, 0)
         self.add(content)
         self.update(snapshot)
 
@@ -173,6 +171,26 @@ class DeviceCard(Gtk.ListBoxRow):
     def update(self, snapshot: DeviceCardSnapshot) -> None:
         self.snapshot = snapshot
         self._icon.set_from_icon_name(snapshot.icon_name or "bluetooth", Gtk.IconSize.DIALOG)
+        avatar_context = self._icon.get_style_context()
+        avatar_classes = (
+            "device-avatar-speaker", "device-avatar-headphones", "device-avatar-phone",
+            "device-avatar-keyboard", "device-avatar-mouse", "device-avatar-controller",
+            "device-avatar-computer", "device-avatar-unknown",
+        )
+        for css_class in avatar_classes:
+            avatar_context.remove_class(css_class)
+        category = snapshot.category.casefold()
+        avatar_class = (
+            "device-avatar-headphones" if "head" in category
+            else "device-avatar-speaker" if "speaker" in category or "loud" in category
+            else "device-avatar-phone" if "phone" in category
+            else "device-avatar-keyboard" if "keyboard" in category
+            else "device-avatar-mouse" if "mouse" in category
+            else "device-avatar-controller" if "controller" in category or "game" in category
+            else "device-avatar-computer" if "computer" in category
+            else "device-avatar-unknown"
+        )
+        avatar_context.add_class(avatar_class)
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
         self._category.set_text(snapshot.category)

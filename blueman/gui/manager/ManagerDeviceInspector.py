@@ -20,8 +20,8 @@ class ManagerDeviceInspector(Gtk.Box):
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=14,
-            margin=16,
-            width_request=352,
+            margin=18,
+            width_request=410,
             visible=True,
         )
         self.cards = cards
@@ -45,6 +45,8 @@ class ManagerDeviceInspector(Gtk.Box):
         self.pack_start(self._empty, True, True, 0)
 
         self._content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
+        overview = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, visible=True)
+        overview.get_style_context().add_class("inspector-overview")
 
         header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
         header.get_style_context().add_class("inspector-device-header")
@@ -74,7 +76,7 @@ class ManagerDeviceInspector(Gtk.Box):
         header.pack_start(avatar, False, False, 0)
         header.pack_start(titles, True, True, 0)
         header.pack_end(rename, False, False, 0)
-        self._content.pack_start(header, False, False, 0)
+        overview.pack_start(header, False, False, 0)
 
         status_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
         status_bar.get_style_context().add_class("inspector-status-bar")
@@ -87,7 +89,7 @@ class ManagerDeviceInspector(Gtk.Box):
         status_bar.pack_start(self._status_dot, False, False, 0)
         status_bar.pack_start(self._status_text, True, True, 0)
         status_bar.pack_end(self._battery_inline, False, False, 0)
-        self._content.pack_start(status_bar, False, False, 0)
+        overview.pack_start(status_bar, False, False, 0)
 
         actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
         self._primary = self._action_tile("audio-volume-high-symbolic", _("Connect"), "primary-action-tile")
@@ -98,7 +100,8 @@ class ManagerDeviceInspector(Gtk.Box):
         for button, action in ((self._send, DeviceCardAction.SEND), (self._more, DeviceCardAction.MORE)):
             button.connect("clicked", self._request, action)
             actions.pack_start(button, True, True, 0)
-        self._content.pack_start(actions, False, False, 0)
+        overview.pack_start(actions, False, False, 0)
+        self._content.pack_start(overview, False, False, 0)
 
         information = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, visible=True)
         information.get_style_context().add_class("inspector-section")

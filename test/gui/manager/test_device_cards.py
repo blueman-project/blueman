@@ -185,6 +185,11 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         cards.set_discovery_state(False)
         self.assertEqual(set(cards.cards_by_path), {connected.object_path, available.object_path})
         self.assertEqual(cards.cards_by_path[connected.object_path].snapshot.group, DeviceGroup.CONNECTED)
+        self.assertTrue(
+            cards.cards_by_path[connected.object_path]._icon.get_style_context().has_class(
+                "device-avatar-headphones"
+            )
+        )
         self.assertFalse(cards._section_containers[DeviceGroup.PAIRED].get_visible())
         self.assertEqual(cards._section_titles[DeviceGroup.CONNECTED].get_text(), "Connected (1)")
 

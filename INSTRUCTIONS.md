@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-016 visual-fidelity polish is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-016
-- **Overall status:** The three-panel visual rebuild now closely matches the reference. Final fidelity work is focused on inspector action ordering, richer real device state, and responsive regression checks; bug work remains deferred.
+- **Working tree:** T-017 reference-fidelity pass is implemented and verified, ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-017
+- **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -79,16 +79,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-014 | High | DONE | R12 modern transfer/notification presentation preserving existing OBEX semantics. | Only real progress/speed/ETA display; unknown measurements are omitted; notification count/flows unchanged. |
 | T-015 | Critical | DONE | Rebuild the main manager presentation to closely match the supplied three-panel premium reference at 1400×850. | Removed visible legacy chrome, made System mode resolve to the custom palette, established the three-panel hierarchy, and verified both dark and light runtime screenshots. |
 | T-016 | High | DONE | Complete final manager visual-fidelity polish without inventing backend data. | Inspector actions now follow primary/Send/More order, actual paired/trusted state is shown, and card action sizing is stable. |
+| T-017 | Critical | DONE | Close the remaining large visual gap to the supplied screenshot through exact composition and scale work. | Removed title-heavy header content, widened columns, added search shortcut chrome, rebuilt card hierarchy, added category palettes and layered translucent surfaces, and inspected fresh dark runtime captures. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-016
-- **Goal:** Finish the main-window fidelity pass on top of the accepted T-015 structural rebuild.
-- **Acceptance criteria:** Primary inspector action precedes Send and More; real Paired and Trusted state appears in the information card; card action labels do not truncate at reference width; wide and compact tests pass; no fabricated metadata.
+- **Task ID:** T-017
+- **Goal:** Treat the supplied screenshot as the visual source of truth and correct scale, hierarchy, spacing, and surface treatment rather than merely sharing its three-column structure.
+- **Acceptance criteria:** At wide reference size the sidebar is about 320px, inspector about 400px, search has Ctrl/K affordances, cards place connection/battery beneath identity with icon-first actions, header does not consume a branded title row, panels use layered translucent surfaces, and a fresh dark runtime screenshot is inspected before completion.
 - **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Reordered inspector actions to primary, Send, More; added real paired/trusted information rows from the existing card snapshot; increased card primary-action minimum width; added focused state/order assertions.
-- **Verification:** 20 manager GUI tests and 21 import tests pass; compileall, strict schemas, local build, and diff checks pass.
-- **Blockers / risks:** The existing PowerManager `UnknownMethod` remains intentionally deferred. Real connected-device/audio action visuals require hardware state.
-- **Next action:** Commit T-016. Further work should address only a concrete remaining visual mismatch, not the deferred bug backlog.
+- **Changes made:** Reduced the native header to window controls only; set 320px sidebar/410px inspector proportions; added Ctrl/K search keys; increased type, card, avatar, action and radar scale; moved real status/battery beneath card identity; added category-specific avatar palettes; grouped the inspector header/status/actions into a rounded overview surface; enabled RGBA visuals and transparent layered panel backgrounds; retained actual backend state rather than imitating the reference's connected/battery values.
+- **Verification:** 20 manager GUI tests and 21 import tests pass; compileall, strict schemas, local build, CSS parsing and diff checks pass. Fresh dark captures `/tmp/blueman-next-phase17-final-dark.png` and `/tmp/blueman-next-phase17-desktop-dark.png` were produced; the foreign-window capture renders transparency against black, while the desktop compositor supplies the actual background.
+- **Blockers / risks:** GTK 3 cannot provide portable backdrop blur or reliably clip every child to a rounded toplevel on all X11/Wayland compositors. Actual hardware currently reports two paired, disconnected devices with no battery, so the UI correctly cannot reproduce the reference's connected/battery/available-device content.
+- **Next action:** Commit T-017 before another phase. Do not call visual parity exact; remaining differences are compositor blur, native Linux window controls, unavailable device artwork, and live hardware state.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -121,9 +122,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Ignore bug fixing and continue the UI redesign because the current runtime screenshot is far from the supplied target.
-- **What is done:** T-015 now produces a close GTK 3 implementation of the supplied three-panel target in both dark and light themes, with actual runtime screenshots inspected.
-- **What remains:** Checkpoint T-016; remaining checks are hardware-dependent connected/audio/OBEX states. Bugs remain deferred.
-- **Exact next step:** Commit T-016 before any new phase.
+- **What is done:** T-015/T-016 established the functional three-panel base and are checkpointed, but the user says the visual result remains far from the target.
+- **What remains:** Checkpoint T-017. Remaining visual differences are documented constraints rather than hidden: portable blur, native window controls, local-only category illustrations, and current device state. Bugs remain deferred.
+- **Exact next step:** Commit T-017 before any further phase.
 - **Files touched:** Manager shell/cards/inspector, ThemeManager, Manager default geometry, both themes, manager tests, and this tracker.
 - **Checks run and results:** 20 manager GUI tests, compileall, schemas, CSS parsing and local build pass; real light/dark runtime captures inspected.
 - **Important warnings:** Preserve user files and backend behavior. Do not touch `BUGS_LOGS.md`; the current task is visual redesign only.
