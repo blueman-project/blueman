@@ -84,10 +84,10 @@ class DeviceCard(Gtk.ListBoxRow):
 
         content = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=16,
+            spacing=18,
             visible=True,
         )
-        self._icon = Gtk.Image(pixel_size=48, visible=True)
+        self._icon = Gtk.Image(pixel_size=56, visible=True)
         self._icon.get_style_context().add_class("device-avatar")
         content.pack_start(self._icon, False, False, 0)
 
@@ -115,11 +115,14 @@ class DeviceCard(Gtk.ListBoxRow):
             valign=Gtk.Align.CENTER,
             visible=True,
         )
+        self._status_dot = Gtk.Label(label="●", visible=True)
+        self._status_dot.get_style_context().add_class("status-dot")
         self._status = Gtk.Label(xalign=1, visible=True)
         self._status.get_style_context().add_class("device-status")
         self._battery = Gtk.Label(xalign=1)
         self._battery.get_style_context().add_class("battery-indicator")
         status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
+        status.pack_start(self._status_dot, False, False, 0)
         status.pack_end(self._battery, False, False, 0)
         status.pack_end(self._status, False, False, 0)
         trailing.pack_start(status, False, False, 0)
@@ -178,9 +181,11 @@ class DeviceCard(Gtk.ListBoxRow):
         self._status.set_text(status)
         self._status.get_style_context().remove_class("device-status-connected")
         self._status.get_style_context().remove_class("device-status-disconnected")
-        self._status.get_style_context().add_class(
-            "device-status-connected" if snapshot.connected else "device-status-disconnected"
-        )
+        self._status_dot.get_style_context().remove_class("device-status-connected")
+        self._status_dot.get_style_context().remove_class("device-status-disconnected")
+        state_class = "device-status-connected" if snapshot.connected else "device-status-disconnected"
+        self._status.get_style_context().add_class(state_class)
+        self._status_dot.get_style_context().add_class(state_class)
         card_context = self.get_style_context()
         card_context.remove_class("device-card-connected")
         card_context.remove_class("device-card-disconnected")
@@ -278,7 +283,14 @@ class ManagerDeviceCards(Gtk.Box):
     }
 
     def __init__(self, device_list: "ManagerDeviceList") -> None:
-        super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=18, margin=24, visible=True)
+        super().__init__(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=20,
+            margin_start=28,
+            margin_end=28,
+            margin_bottom=28,
+            visible=True,
+        )
         self.device_list = device_list
         self.cards_by_path: dict[str, DeviceCard] = {}
         self._sync_source = 0
@@ -387,6 +399,8 @@ class ManagerDeviceCards(Gtk.Box):
         self.show_all()
         self._apply_search()
         self._sync_source = 0
+        if self.device_list.get_selected_device() is None and self.cards_by_path:
+            self._select_card_device(next(iter(self.cards_by_path.values())))
         self._sync_selection()
         self.emit("cards-changed")
         return GLib.SOURCE_REMOVE

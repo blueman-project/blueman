@@ -134,6 +134,7 @@ class Blueman(Gtk.Application):
             self.window.set_title(BRAND_DISPLAY_NAME)
             self.window.set_icon_name(BRAND_ICON_NAME)
             self.window.get_style_context().add_class("app-window")
+            self.window.set_default_size(1400, 850)
             self.window.set_size_request(900, 600)
             content = self.builder.get_widget("grid", Gtk.Grid)
             self.Shell = ManagerWindowShell(self.window, content, BRAND_DISPLAY_NAME)

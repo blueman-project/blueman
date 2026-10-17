@@ -720,3 +720,45 @@
     background-color: @border-subtle;
     min-height: 1px;
 }
+
+/* 2026 manager composition: high-fidelity three-panel dashboard. */
+.app-window .app-header { background-color: #F7F9FC; border-bottom: 1px solid rgba(21, 35, 50, 0.10); min-height: 48px; }
+.app-window .app-main, .app-window .device-dashboard, .app-window .dashboard-scroll, .app-window .dashboard-scroll viewport { background-color: #EDF2F7; }
+.app-window .app-sidebar { background-color: #F7F9FC; border-right: 1px solid rgba(21, 35, 50, 0.10); }
+.app-window .brand-icon-tile { min-width: 46px; min-height: 46px; border-radius: 13px; color: white; background-image: linear-gradient(145deg, #65B2FF, #3265ED); box-shadow: 0 8px 22px alpha(#256DFF, 0.22); }
+.app-window .sidebar-brand-title { color: #142033; font-size: 18px; font-weight: 700; }
+.app-window .sidebar-brand-subtitle { color: #6D7B8B; font-size: 11px; }
+.app-window .sidebar-item { min-height: 46px; border-radius: 13px; margin: 2px 0; padding: 2px 14px; font-size: 14px; }
+.app-window .sidebar-item-active { background-image: linear-gradient(100deg, alpha(#4383F5, 0.22), alpha(#77AFFF, 0.10)); border-color: alpha(#4C8DF5, 0.42); }
+.app-window .sidebar-card { min-height: 230px; padding: 18px; margin: 12px 14px 16px 14px; border-radius: 18px; background-image: linear-gradient(145deg, #FFFFFF, #F0F5FA); border-color: rgba(21,35,50,0.10); }
+.app-window .sidebar-radar { min-width: 118px; min-height: 118px; margin-top: 4px; border-radius: 999px; color: white; border: 1px solid alpha(#4D91FF, 0.28); background-image: radial-gradient(circle, #4895F5 0%, alpha(#3A83E5, 0.72) 25%, alpha(#75AEED, 0.38) 48%, alpha(#9AC8F5, 0.16) 70%, transparent 72%); }
+.app-window .dashboard-search { padding: 18px 28px 8px 28px; }
+.app-window .search-entry { min-height: 44px; border-radius: 14px; padding: 0 15px; background-color: #FFFFFF; border-color: rgba(21,35,50,0.12); box-shadow: 0 7px 18px alpha(#27425E, 0.08); }
+.app-window .dashboard-header { padding: 18px 28px 20px 28px; }
+.app-window .dashboard-title { font-size: 25px; }
+.app-window .dashboard-subtitle { font-size: 14px; }
+.app-window .pair-device-button { min-height: 44px; border-radius: 13px; padding: 0 20px; box-shadow: 0 8px 20px alpha(#356FFF, 0.20); }
+.app-window .device-card-list { background-color: transparent; }
+.app-window .device-card { min-height: 92px; margin-bottom: 12px; padding: 16px; border-radius: 18px; background-image: linear-gradient(110deg, #FFFFFF, #F8FAFC); border: 1px solid rgba(21,35,50,0.09); box-shadow: 0 9px 22px alpha(#27425E, 0.07); }
+.app-window .device-card-connected { border-left-width: 1px; }
+.app-window .device-card-selected, .app-window .device-card:selected { background-image: linear-gradient(110deg, #EFF6FF, #E7F1FF); border-color: #4388EF; box-shadow: 0 0 0 1px alpha(#4388EF, 0.12), 0 12px 28px alpha(#27425E, 0.10); }
+.app-window .device-avatar { min-width: 64px; min-height: 64px; padding: 8px; border-radius: 16px; background-image: linear-gradient(145deg, alpha(#73C2A0, 0.62), alpha(#A8DCCA, 0.48)); }
+.app-window .device-name { font-size: 16px; }
+.app-window .device-subtitle { font-size: 13px; }
+.app-window .status-dot { font-size: 12px; }
+.app-window .device-actions .secondary-button, .app-window .device-actions .primary-button { min-width: 38px; min-height: 38px; padding: 4px 10px; }
+.app-window .device-actions .primary-button { min-width: 74px; }
+.app-window .inspector-panel { background-color: #F7F9FC; border-left: 1px solid rgba(21,35,50,0.10); padding: 16px; }
+.app-window .inspector-device-header { padding: 12px 4px 4px 4px; }
+.app-window .inspector-avatar { min-width: 82px; min-height: 82px; border-radius: 18px; background-image: linear-gradient(145deg, #BDE7D7, #8CC7B1); }
+.app-window .inspector-title { font-size: 18px; }
+.app-window .inspector-edit-button { min-width: 34px; min-height: 34px; border-radius: 10px; color: #647487; background-color: alpha(#203040, 0.06); border: none; }
+.app-window .inspector-status-bar { padding: 8px 4px; }
+.app-window .action-tile, .app-window .primary-action-tile { min-height: 76px; border-radius: 15px; padding: 10px 8px; color: #223247; border: 1px solid rgba(21,35,50,0.09); background-image: linear-gradient(145deg, #FFFFFF, #EDF3F8); }
+.app-window .primary-action-tile { color: white; border-color: alpha(#4388EF,0.68); background-image: linear-gradient(145deg, #58A3FF, #3268E8); box-shadow: 0 8px 20px alpha(#2E70F0,0.18); }
+.app-window .inspector-section { padding: 15px; border-radius: 17px; border: 1px solid rgba(21,35,50,0.08); background-image: linear-gradient(145deg, #FFFFFF, #F2F6FA); }
+.app-window .inspector-section-title { color: #17263A; font-size: 13px; font-weight: 700; padding-bottom: 9px; }
+.app-window .inspector-row { min-height: 34px; padding: 2px 0; color: #647487; }
+.app-window .inspector-row-key { color: #647487; font-size: 12px; font-weight: 400; }
+.app-window .inspector-row-value { color: #33465C; font-size: 12px; }
+.app-window .quick-action-danger { min-height: 46px; border-radius: 12px; padding: 0 12px; color: #D93F55; background-color: alpha(#E84D62,0.08); border: none; }

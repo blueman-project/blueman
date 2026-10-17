@@ -25,10 +25,11 @@ class ThemeMode:
 
 
 class ThemeManager:
-    """Own the single CSS provider registered for an explicit theme.
+    """Own the application palette selected explicitly or from the desktop.
 
-    In ``system`` mode no application palette is installed, allowing the
-    desktop theme (including HighContrast) to remain authoritative.
+    ``system`` follows the desktop's light/dark preference but still loads the
+    Blueman Next design system.  Previously it installed no provider at all,
+    which made the default setting render as the legacy desktop theme.
     """
 
     _instance: Optional["ThemeManager"] = None
@@ -100,10 +101,9 @@ class ThemeManager:
         self._requested_mode = requested
         self._resolved_mode = self._detect_system_mode() if requested == ThemeMode.SYSTEM else requested
 
-        # System mode deliberately leaves GTK's provider stack untouched.
-        if requested == ThemeMode.SYSTEM or self._screen is None:
+        if self._screen is None:
             return
-        provider = self._providers.get(requested)
+        provider = self._providers.get(self._resolved_mode)
         if provider is not None:
             Gtk.StyleContext.add_provider_for_screen(
                 self._screen, provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION

@@ -1,19 +1,19 @@
-"""Compatible modern shell around the existing manager content."""
+"""Premium three-panel shell around the existing Blueman manager backend."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from gettext import gettext as _
+from gettext import gettext as _, ngettext
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk  # noqa: E402
+from gi.repository import Gio, GObject, Gtk  # noqa: E402
 
 
 COMPACT_SIDEBAR_BREAKPOINT = 1050
 INSPECTOR_BREAKPOINT = 1180
-SIDEBAR_WIDTH = 236
+SIDEBAR_WIDTH = 268
 COMPACT_SIDEBAR_WIDTH = 76
 
 
@@ -25,14 +25,12 @@ class NavigationItem:
 
 
 def navigation_items() -> tuple[NavigationItem, ...]:
-    """Return destinations backed by existing, functional actions."""
+    """Return the four primary destinations shown in the design."""
     return (
         NavigationItem(_("Devices"), "bluetooth-symbolic", None),
-        NavigationItem(_("Scan for Devices"), "view-refresh-symbolic", "app.inquiry"),
-        NavigationItem(_("Adapter"), "preferences-system-symbolic", "app.preferences"),
+        NavigationItem(_("Scan"), "network-wireless-signal-excellent-symbolic", "app.inquiry"),
+        NavigationItem(_("Files"), "document-send-symbolic", "app.send"),
         NavigationItem(_("Settings"), "emblem-system-symbolic", "app.settings"),
-        NavigationItem(_("Services"), "emblem-system-symbolic", "app.services"),
-        NavigationItem(_("Plugins"), "application-x-addon-symbolic", "app.plugins"),
     )
 
 
@@ -41,7 +39,11 @@ def should_compact_sidebar(window_width: int) -> bool:
 
 
 class ManagerWindowShell:
-    """Add a header and responsive sidebar without replacing legacy widgets."""
+    """Compose the visible manager from modern GTK widgets.
+
+    The Builder-owned legacy grid remains alive for backend/plugin compatibility,
+    but it is deliberately not parented into the default presentation.
+    """
 
     def __init__(
         self,
@@ -50,7 +52,7 @@ class ManagerWindowShell:
         display_name: str,
     ) -> None:
         self.window = window
-        self._content = content
+        self._legacy_content = content
         self._sidebar_labels: list[Gtk.Label] = []
         self._compact = False
         self._wide_inspector: bool | None = None
@@ -59,12 +61,28 @@ class ManagerWindowShell:
         self._inspector_revealer: Gtk.Revealer | None = None
 
         self.header = self._create_header(display_name)
-        self.sidebar = self._create_sidebar()
+        self.sidebar = self._create_sidebar(display_name)
         window.remove(content)
+
+        self._dashboard = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            hexpand=True,
+            vexpand=True,
+            visible=True,
+        )
+        self._dashboard.get_style_context().add_class("device-dashboard")
+        self._workspace = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            hexpand=True,
+            vexpand=True,
+            visible=True,
+        )
+        self._workspace.pack_start(self._dashboard, True, True, 0)
+
         self.main_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.main_paned.get_style_context().add_class("app-main")
         self.main_paned.pack1(self.sidebar, resize=False, shrink=False)
-        self.main_paned.pack2(content, resize=True, shrink=False)
+        self.main_paned.pack2(self._workspace, resize=True, shrink=False)
         self.main_paned.set_position(SIDEBAR_WIDTH)
         self.main_paned.show()
 
@@ -79,6 +97,7 @@ class ManagerWindowShell:
             show_close_button=True,
             visible=True,
         )
+        header.get_style_context().add_class("app-header")
 
         self._status_icon = Gtk.Image.new_from_icon_name(
             "bluetooth-disabled", Gtk.IconSize.BUTTON
@@ -103,19 +122,8 @@ class ManagerWindowShell:
         self._inspector_toggle.get_accessible().set_name(_("Toggle device details"))
         self._inspector_toggle.connect("toggled", self._on_inspector_toggled)
         header.pack_end(self._inspector_toggle)
-        self._view_toggle = Gtk.ToggleButton(visible=True, sensitive=False)
-        self._view_toggle.set_image(Gtk.Image.new_from_icon_name(
-            "view-grid-symbolic", Gtk.IconSize.BUTTON
-        ))
-        self._view_toggle.set_tooltip_text(_("Preview device cards"))
-        self._view_toggle.get_accessible().set_name(_("Toggle device card view"))
-        self._view_toggle.connect("toggled", self._on_view_toggled)
-        header.pack_end(self._view_toggle)
         header.pack_end(self._icon_button(
             "preferences-system-symbolic", _("Settings"), action="app.settings"
-        ))
-        header.pack_end(self._icon_button(
-            "edit-find-symbolic", _("Scan for devices"), action="app.inquiry"
         ))
         return header
 
@@ -124,19 +132,66 @@ class ManagerWindowShell:
         cards: Gtk.Widget,
         legacy_scrollview: Gtk.ScrolledWindow,
     ) -> None:
-        """Install an opt-in card preview while retaining the classic list."""
+        """Install cards as the only visible dashboard; retain the classic model offscreen."""
+        self._legacy_view = legacy_scrollview
+        legacy_scrollview.hide()
+
+        search = cards.search_entry
+        parent = search.get_parent()
+        if parent is not None:
+            parent.remove(search)
+        search.set_placeholder_text(_("Search devices, files, or actions…"))
+
+        search_wrap = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, visible=True)
+        search_wrap.get_style_context().add_class("dashboard-search")
+        search_wrap.pack_start(search, True, True, 0)
+        search.show()
+        self._dashboard.pack_start(search_wrap, False, False, 0)
+
+        heading = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, visible=True)
+        heading.get_style_context().add_class("dashboard-header")
+        titles = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, visible=True)
+        title = Gtk.Label(label=_("Bluetooth Devices"), xalign=0, visible=True)
+        title.get_style_context().add_class("dashboard-title")
+        subtitle = Gtk.Label(
+            label=_("Manage your connected devices, send files, and more."),
+            xalign=0,
+            visible=True,
+        )
+        subtitle.get_style_context().add_class("dashboard-subtitle")
+        titles.pack_start(title, False, False, 0)
+        titles.pack_start(subtitle, False, False, 0)
+        pair = Gtk.Button(label=_("＋  Pair New Device"), visible=True)
+        pair.set_action_name("app.inquiry")
+        pair.get_style_context().add_class("primary-button")
+        pair.get_style_context().add_class("pair-device-button")
+        heading.pack_start(titles, True, True, 0)
+        heading.pack_end(pair, False, False, 0)
+        self._dashboard.pack_start(heading, False, False, 0)
+
         card_scrollview = Gtk.ScrolledWindow(
             hexpand=True,
             vexpand=True,
-            overlay_scrolling=False,
+            overlay_scrolling=True,
+            visible=True,
         )
+        card_scrollview.get_style_context().add_class("dashboard-scroll")
         card_scrollview.add(cards)
-        self._content.attach(card_scrollview, 0, 2, 1, 1)
-        self._legacy_view = legacy_scrollview
+        cards.show()
+        self._dashboard.pack_start(card_scrollview, True, True, 0)
         self._card_view = card_scrollview
-        self._view_toggle.set_sensitive(True)
-        self._view_toggle.set_active(True)
-        self._on_view_toggled(self._view_toggle)
+
+        if GObject.signal_lookup("cards-changed", cards.__gtype__):
+            cards.connect("cards-changed", self._update_connected_count, cards)
+        self._update_connected_count(cards, cards)
+
+    def _update_connected_count(self, _source: object, cards: object) -> None:
+        connected = sum(
+            card.snapshot.connected for card in getattr(cards, "cards_by_path", {}).values()
+        )
+        self._identity_status.set_text(
+            ngettext("%d device connected", "%d devices connected", connected) % connected
+        )
 
     def install_device_inspector(self, inspector: Gtk.Widget) -> None:
         revealer = Gtk.Revealer(
@@ -145,7 +200,7 @@ class ManagerWindowShell:
             visible=True,
         )
         revealer.add(inspector)
-        self._content.attach(revealer, 1, 2, 1, 1)
+        self._workspace.pack_end(revealer, False, False, 0)
         self._inspector_revealer = revealer
         self._inspector_toggle.set_sensitive(True)
         wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
@@ -157,22 +212,12 @@ class ManagerWindowShell:
         if self._inspector_revealer is not None:
             self._inspector_revealer.set_reveal_child(button.get_active())
 
-    def _on_view_toggled(self, button: Gtk.ToggleButton) -> None:
-        if self._legacy_view is None or self._card_view is None:
-            return
-        show_cards = button.get_active()
-        self._legacy_view.set_visible(not show_cards)
-        self._card_view.set_visible(show_cards)
-        button.set_tooltip_text(
-            _("Show classic device list") if show_cards else _("Preview device cards")
-        )
-
     @staticmethod
     def _application_menu() -> Gio.Menu:
         menu = Gio.Menu()
+        menu.append(_("Adapter"), "app.preferences")
         menu.append(_("Plugins"), "app.plugins")
         menu.append(_("Services"), "app.services")
-        menu.append(_("Settings"), "app.settings")
         menu.append(_("About"), "app.about")
         menu.append(_("Quit"), "app.Quit")
         return menu
@@ -198,7 +243,7 @@ class ManagerWindowShell:
         image.show()
         return button
 
-    def _create_sidebar(self) -> Gtk.Box:
+    def _create_sidebar(self, display_name: str) -> Gtk.Box:
         sidebar = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             width_request=SIDEBAR_WIDTH,
@@ -206,9 +251,37 @@ class ManagerWindowShell:
         )
         sidebar.get_style_context().add_class("app-sidebar")
 
+        identity = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            spacing=13,
+            margin_start=20,
+            margin_end=16,
+            margin_top=22,
+            margin_bottom=18,
+            visible=True,
+        )
+        identity.get_style_context().add_class("sidebar-identity")
+        icon_tile = Gtk.Box(visible=True)
+        icon_tile.get_style_context().add_class("brand-icon-tile")
+        brand_icon = Gtk.Image.new_from_icon_name("blueman-symbolic", Gtk.IconSize.DIALOG)
+        brand_icon.show()
+        icon_tile.pack_start(brand_icon, True, True, 0)
+        labels = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=1, visible=True)
+        brand = Gtk.Label(label=_("Bluetooth"), xalign=0, visible=True)
+        brand.get_style_context().add_class("sidebar-brand-title")
+        self._identity_status = Gtk.Label(label=_("0 devices connected"), xalign=0, visible=True)
+        self._identity_status.get_style_context().add_class("sidebar-brand-subtitle")
+        labels.pack_start(brand, False, False, 0)
+        labels.pack_start(self._identity_status, False, False, 0)
+        identity.pack_start(icon_tile, False, False, 0)
+        identity.pack_start(labels, True, True, 0)
+        self._sidebar_labels.extend((brand, self._identity_status))
+        sidebar.pack_start(identity, False, False, 0)
+
         navigation = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            margin_top=16,
+            margin_start=10,
+            margin_end=10,
             visible=True,
         )
         for index, item in enumerate(navigation_items()):
@@ -220,14 +293,15 @@ class ManagerWindowShell:
         sidebar.pack_start(navigation, False, False, 0)
 
         power_card = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=10,
-            margin=12,
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=12,
+            margin=14,
             visible=True,
         )
         power_card.get_style_context().add_class("sidebar-card")
-        power_icon = Gtk.Image.new_from_icon_name("bluetooth-symbolic", Gtk.IconSize.BUTTON)
+        power_top = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
         power_label = Gtk.Label(label=_("Bluetooth"), xalign=0, visible=True)
+        power_label.get_style_context().add_class("sidebar-card-title")
         power_switch = Gtk.Switch(
             action_name="app.bluetooth_status",
             valign=Gtk.Align.CENTER,
@@ -235,17 +309,28 @@ class ManagerWindowShell:
         )
         power_switch.set_tooltip_text(_("Turn Bluetooth on or off"))
         power_switch.get_accessible().set_name(_("Bluetooth power"))
-        power_icon.show()
-        power_card.pack_start(power_icon, False, False, 0)
-        power_card.pack_start(power_label, True, True, 0)
-        power_card.pack_end(power_switch, False, False, 0)
-        self._sidebar_labels.append(power_label)
+        power_top.pack_start(power_label, True, True, 0)
+        power_top.pack_end(power_switch, False, False, 0)
+
+        visible_label = Gtk.Label(label=_("Visible as\nThis computer"), xalign=0, visible=True)
+        visible_label.get_style_context().add_class("sidebar-card-subtitle")
+        radar = Gtk.Box(halign=Gtk.Align.CENTER, visible=True)
+        radar.get_style_context().add_class("sidebar-radar")
+        radar_icon = Gtk.Image.new_from_icon_name("blueman-symbolic", Gtk.IconSize.DIALOG)
+        radar_icon.show()
+        radar.pack_start(radar_icon, True, True, 0)
+        power_card.pack_start(power_top, False, False, 0)
+        power_card.pack_start(visible_label, False, False, 0)
+        power_card.pack_start(radar, True, True, 0)
+        self._sidebar_labels.extend((power_label, visible_label))
         sidebar.pack_end(power_card, False, False, 0)
         return sidebar
 
     def _navigation_button(self, item: NavigationItem) -> Gtk.Button:
         image = Gtk.Image.new_from_icon_name(item.icon_name, Gtk.IconSize.BUTTON)
+        image.get_style_context().add_class("sidebar-item-image")
         label = Gtk.Label(label=item.label, xalign=0, visible=True)
+        label.get_style_context().add_class("sidebar-item-label")
         box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12, visible=True)
         image.show()
         box.pack_start(image, False, False, 0)

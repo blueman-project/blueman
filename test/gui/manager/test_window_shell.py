@@ -20,11 +20,11 @@ class TestManagerWindowShell(unittest.TestCase):
     def test_navigation_only_exposes_working_destinations(self) -> None:
         self.assertEqual(
             [item.action for item in navigation_items()],
-            [None, "app.inquiry", "app.preferences", "app.settings", "app.services", "app.plugins"],
+            [None, "app.inquiry", "app.send", "app.settings"],
         )
 
     @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
-    def test_shell_wraps_existing_content_without_replacing_it(self) -> None:
+    def test_shell_replaces_legacy_presentation_but_retains_widgets(self) -> None:
         from blueman.gui.manager.ManagerWindow import ManagerWindowShell
 
         window = Gtk.Window()
@@ -34,17 +34,16 @@ class TestManagerWindowShell(unittest.TestCase):
         shell = ManagerWindowShell(window, content, "Blueman Next")
 
         self.assertIs(window.get_child(), shell.main_paned)
-        self.assertIs(content.get_parent(), shell.main_paned)
+        self.assertIsNone(content.get_parent())
 
         legacy = Gtk.ScrolledWindow(visible=True)
         content.attach(legacy, 0, 2, 1, 1)
         cards = Gtk.Box(visible=True)
+        cards.search_entry = Gtk.SearchEntry(visible=True)
+        cards.cards_by_path = {}
         shell.install_device_cards(cards, legacy)
         self.assertFalse(legacy.get_visible())
         self.assertTrue(shell._card_view.get_visible())
-        shell._view_toggle.set_active(False)
-        self.assertTrue(legacy.get_visible())
-        self.assertFalse(shell._card_view.get_visible())
         inspector = Gtk.Box(visible=True)
         shell.install_device_inspector(inspector)
         shell._inspector_toggle.set_active(True)

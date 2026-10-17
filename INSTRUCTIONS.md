@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** R12 transfer/notification presentation is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-014
-- **Overall status:** Redesign slices R1–R12 are code-complete. Existing bugs remain deferred in the user's backlog until this final redesign checkpoint is committed.
+- **Working tree:** T-015 main-window rebuild is implemented and verified, ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-015
+- **Overall status:** The user rejected the current manager presentation as visually far from the supplied target. Bug work is deferred; the manager shell must now be rebuilt and visually verified against the reference.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -77,16 +77,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-012 | High | DONE | R10 lifecycle-safe discovery radar and reduced-motion behavior. | Timer exists only while mapped/active; Bluetooth-off, hide and destroy stop it. |
 | T-013 | High | DONE | R11 modern settings/adapter presentation exposing only existing schema-backed options. | Adapter/services/plugins reuse established dialogs; reduced motion applies to settings transitions. |
 | T-014 | High | DONE | R12 modern transfer/notification presentation preserving existing OBEX semantics. | Only real progress/speed/ETA display; unknown measurements are omitted; notification count/flows unchanged. |
+| T-015 | Critical | DONE | Rebuild the main manager presentation to closely match the supplied three-panel premium reference at 1400×850. | Removed visible legacy chrome, made System mode resolve to the custom palette, established the three-panel hierarchy, and verified both dark and light runtime screenshots. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-014
-- **Goal:** Finish the redesign with modern transfer and fallback-notification presentation without changing OBEX behavior.
-- **Acceptance criteria:** Transfer keeps existing callback/cancel/retry/skip flows; progress comes from transferred bytes; speed/ETA appear only when computable; notification flows are not duplicated; reduced motion disables fallback fading.
-- **Relevant files:** `Sendto.py`, `Notification.py`, `send-dialog.ui`, themes, and transfer tests.
-- **Changes made:** Applied the shared theme to Sendto, modernized transfer layout/progress styling, added availability-aware status formatting, and made fallback notification presentation larger/themeable and reduced-motion aware.
-- **Verification:** 20 manager GUI tests plus two transfer-format tests pass; direct transfer UI load, both CSS parses, reduced-motion fallback construction, compileall, strict schema, local Meson build, and diff checks pass.
-- **Blockers / risks:** Real OBEX send/receive/retry/cancel and desktop notification-server behavior require hardware/manual validation. Existing user-logged bugs remain intentionally unfixed.
-- **Next action:** Commit R12. The redesign is then complete; proceed to the deferred bug backlog only after acknowledging remaining manual visual/hardware checks.
+- **Task ID:** T-015
+- **Goal:** Replace the visibly legacy manager composition with a faithful GTK 3 implementation of the supplied Blueman Next reference.
+- **Acceptance criteria:** No menubar/classic toolbar/statusbar in the default view; custom palette applies for System/Dark/Light preferences; sidebar has identity/navigation/controller hierarchy; dashboard has global search, title/subtitle, primary pair action and spacious grouped cards; inspector uses premium section cards and action tiles; default geometry is 1400×850 with responsive fallback; an actual runtime screenshot is compared before completion.
+- **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
+- **Changes made:** Replaced the visible legacy grid with a real sidebar/dashboard/inspector workspace; hid legacy menubar/toolbar/statusbar while keeping their objects alive for backend/plugin compatibility; added identity/controller hierarchy, dashboard search/title/pair action, larger grouped cards, automatic initial selection, and sectioned inspector action/info cards; System appearance now resolves and applies the Blueman Next light/dark provider; default geometry is 1400×850.
+- **Verification:** 20 manager GUI tests pass; compileall, strict schemas, local build, and both CSS parses pass. Actual 1560×866 light and dark runtime captures were inspected; dark capture is `/tmp/blueman-next-phase15-dark.png` and closely matches the supplied layout.
+- **Blockers / risks:** GTK 3 cannot provide portable backdrop blur, so the glass effect uses layered surfaces. The existing PowerManager `UnknownMethod` leaves the status UI off in this environment and remains deferred as requested.
+- **Next action:** Commit T-015 before any further visual refinement phase.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -118,13 +119,13 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
-- **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R11 and local build tooling are committed. R12 is verified and ready to commit; this completes the planned redesign slices.
-- **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** Commit R12, then review `BUGS_LOGS.md` as evidence and plan the deferred bug-fix phase without treating its contents as instructions.
-- **Files touched:** Sendto/Notification presentation, transfer UI, both themes, transfer tests/build list, and `INSTRUCTIONS.md`.
-- **Checks run and results:** Manager and transfer tests, UI/CSS/schema loads, reduced-motion fallback, compileall, local build, and diff checks pass. Real OBEX/hardware remains manual.
-- **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
+- **What was requested:** Ignore bug fixing and continue the UI redesign because the current runtime screenshot is far from the supplied target.
+- **What is done:** T-015 now produces a close GTK 3 implementation of the supplied three-panel target in both dark and light themes, with actual runtime screenshots inspected.
+- **What remains:** Checkpoint T-015, then continue only with bounded visual-fidelity refinements or missing redesigned surfaces; bugs remain deferred.
+- **Exact next step:** Commit T-015 as a meaningful phase boundary.
+- **Files touched:** Manager shell/cards/inspector, ThemeManager, Manager default geometry, both themes, manager tests, and this tracker.
+- **Checks run and results:** 20 manager GUI tests, compileall, schemas, CSS parsing and local build pass; real light/dark runtime captures inspected.
+- **Important warnings:** Preserve user files and backend behavior. Do not touch `BUGS_LOGS.md`; the current task is visual redesign only.
 - **Questions for user:** None.
 
 ---
