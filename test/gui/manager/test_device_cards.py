@@ -11,6 +11,7 @@ from blueman.gui.manager.ManagerDeviceCards import (
     DeviceCardAction,
     DeviceGroup,
     group_for_state,
+    illustration_icon_name,
 )
 
 
@@ -91,6 +92,20 @@ class FakeDeviceList(GObject.Object):
 
 
 class TestDeviceCardSnapshot(unittest.TestCase):
+    def test_audio_categories_use_bundled_illustrations(self) -> None:
+        self.assertEqual(
+            illustration_icon_name("Loudspeaker", "audio-card"),
+            "blueman-next-speaker",
+        )
+        self.assertEqual(
+            illustration_icon_name("Headset", "audio-headset"),
+            "blueman-next-headphones",
+        )
+        self.assertEqual(
+            illustration_icon_name("Keyboard", "input-keyboard"),
+            "input-keyboard",
+        )
+
     def test_groups_are_mutually_exclusive(self) -> None:
         self.assertEqual(group_for_state(connected=True, paired=True), DeviceGroup.CONNECTED)
         self.assertEqual(group_for_state(connected=False, paired=True), DeviceGroup.PAIRED)

@@ -55,8 +55,8 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-018 responsive/light-mode correction is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-018
+- **Working tree:** T-019 category-artwork pass is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-019
 - **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
@@ -81,16 +81,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-016 | High | DONE | Complete final manager visual-fidelity polish without inventing backend data. | Inspector actions now follow primary/Send/More order, actual paired/trusted state is shown, and card action sizing is stable. |
 | T-017 | Critical | DONE | Close the remaining large visual gap to the supplied screenshot through exact composition and scale work. | Removed title-heavy header content, widened columns, added search shortcut chrome, rebuilt card hierarchy, added category palettes and layered translucent surfaces, and inspected fresh dark runtime captures. |
 | T-018 | Critical | DONE | Correct the real 1397×926 result shown by the user. | Added intermediate responsive column sizing, strengthened light surfaces over bright wallpaper, softened card buttons, and left the local preview in dark mode. |
+| T-019 | High | DONE | Replace generic system glyphs for the visible audio devices with bundled premium SVG illustrations. | Added local speaker/headphones SVGs, deterministic category mapping, shared card/inspector artwork, and fallback preservation. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-018
-- **Goal:** Fix the concrete narrow-center and washed-out-light-mode problems visible in the user's latest actual screenshot.
-- **Acceptance criteria:** Around 1400px wide, sidebar and inspector contract while all three columns remain usable and device names/actions do not collide; light mode remains legible over a bright wallpaper; dark mode is selected for the local preview because it is the supplied target appearance; tests cover the intermediate sizing decision.
+- **Task ID:** T-019
+- **Goal:** Close the obvious artwork gap in the speaker/headphone cards and inspector without downloading or fabricating product-specific images.
+- **Acceptance criteria:** Bundled speaker and headphones SVGs install with the existing icon tree; category mapping is deterministic and tested; cards and inspector use the same illustration; fallback remains the BlueZ icon.
 - **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Added a 1050/1500px three-tier sidebar and inspector sizing policy (76/270/320 sidebar, 340/410 inspector); made light panels nearly opaque over bright wallpaper; replaced black light-mode card actions with soft secondary controls; selected dark mode for the local Blueman Next preview to match the supplied target.
-- **Verification:** 21 manager GUI tests pass including intermediate-width assertions; compileall and both CSS parses pass. A non-maximized narrow capture is `/tmp/blueman-next-phase18-1397-dark.png`.
-- **Blockers / risks:** Window-manager scaling means the capture's physical dimensions differ from requested logical dimensions; the GTK allocation policy is tested directly.
-- **Next action:** Commit T-018 before beginning any device-illustration phase.
+- **Changes made:** Added detailed local speaker and headphones SVGs to the existing hicolor device icon tree; introduced tested category-to-illustration mapping; cards and inspector now share the mapping; unknown categories retain the BlueZ icon; increased artwork render sizes.
+- **Verification:** 22 manager GUI tests pass; both new icons resolve from the source icon theme; compileall, local build and diff checks pass. Runtime capture `/tmp/blueman-next-phase19-artwork-dark.png` confirms the new artwork in both card and inspector.
+- **Blockers / risks:** Artwork is intentionally category-level, not false product-specific imagery.
+- **Next action:** Commit T-019 before another visual phase.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]

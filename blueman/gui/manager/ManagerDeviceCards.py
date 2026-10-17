@@ -46,6 +46,16 @@ def group_for_state(*, connected: bool, paired: bool) -> DeviceGroup:
     return DeviceGroup.AVAILABLE
 
 
+def illustration_icon_name(category: str, fallback: str) -> str:
+    """Choose bundled category artwork without claiming product-specific art."""
+    normalized = category.casefold()
+    if "head" in normalized:
+        return "blueman-next-headphones"
+    if "speaker" in normalized or "loud" in normalized:
+        return "blueman-next-speaker"
+    return fallback or "bluetooth"
+
+
 @dataclass(frozen=True)
 class DeviceCardSnapshot:
     object_path: str
@@ -87,7 +97,7 @@ class DeviceCard(Gtk.ListBoxRow):
             spacing=18,
             visible=True,
         )
-        self._icon = Gtk.Image(pixel_size=56, visible=True)
+        self._icon = Gtk.Image(pixel_size=64, visible=True)
         self._icon.get_style_context().add_class("device-avatar")
         content.pack_start(self._icon, False, False, 0)
 
@@ -170,7 +180,10 @@ class DeviceCard(Gtk.ListBoxRow):
 
     def update(self, snapshot: DeviceCardSnapshot) -> None:
         self.snapshot = snapshot
-        self._icon.set_from_icon_name(snapshot.icon_name or "bluetooth", Gtk.IconSize.DIALOG)
+        self._icon.set_from_icon_name(
+            illustration_icon_name(snapshot.category, snapshot.icon_name),
+            Gtk.IconSize.DIALOG,
+        )
         avatar_context = self._icon.get_style_context()
         avatar_classes = (
             "device-avatar-speaker", "device-avatar-headphones", "device-avatar-phone",

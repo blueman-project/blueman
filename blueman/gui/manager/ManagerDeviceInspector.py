@@ -8,7 +8,11 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
-from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
+from blueman.gui.manager.ManagerDeviceCards import (
+    DeviceCardAction,
+    ManagerDeviceCards,
+    illustration_icon_name,
+)
 
 
 class ManagerDeviceInspector(Gtk.Box):
@@ -52,7 +56,7 @@ class ManagerDeviceInspector(Gtk.Box):
         header.get_style_context().add_class("inspector-device-header")
         avatar = Gtk.Box(visible=True)
         avatar.get_style_context().add_class("inspector-avatar")
-        self._icon = Gtk.Image(pixel_size=58, visible=True)
+        self._icon = Gtk.Image(pixel_size=72, visible=True)
         avatar.pack_start(self._icon, True, True, 0)
         titles = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
@@ -192,7 +196,10 @@ class ManagerDeviceInspector(Gtk.Box):
         snapshot = card.snapshot
         self._empty.hide()
         self._content.show_all()
-        self._icon.set_from_icon_name(snapshot.icon_name or "bluetooth", Gtk.IconSize.DIALOG)
+        self._icon.set_from_icon_name(
+            illustration_icon_name(snapshot.category, snapshot.icon_name),
+            Gtk.IconSize.DIALOG,
+        )
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
         self._category.set_text(snapshot.category)
