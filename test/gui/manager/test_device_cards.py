@@ -138,6 +138,15 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         available_iter = device_list.add(available)
 
         cards = ManagerDeviceCards(device_list)
+        self.assertFalse(cards._discovery_revealer.get_reveal_child())
+        cards.set_discovery_state(True, 0.42)
+        self.assertTrue(cards._discovery_revealer.get_reveal_child())
+        self.assertIn("42%", cards._discovery_label.get_text())
+        stop_requests: list[bool] = []
+        cards.connect("stop-discovery-requested", lambda _cards: stop_requests.append(True))
+        cards._stop_discovery.clicked()
+        self.assertEqual(stop_requests, [True])
+        cards.set_discovery_state(False)
         self.assertEqual(set(cards.cards_by_path), {connected.object_path, available.object_path})
         self.assertEqual(cards.cards_by_path[connected.object_path].snapshot.group, DeviceGroup.CONNECTED)
         self.assertFalse(cards._section_containers[DeviceGroup.PAIRED].get_visible())

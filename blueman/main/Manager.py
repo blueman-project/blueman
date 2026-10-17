@@ -188,6 +188,7 @@ class Blueman(Gtk.Application):
 
         self.Cards = ManagerDeviceCards(self.List)
         self.Cards.connect("action-requested", self._on_card_action_requested)
+        self.Cards.connect("stop-discovery-requested", lambda _cards: self.List.stop_discovery())
         self.Inspector = ManagerDeviceInspector(self.Cards)
         self.Inspector.connect("action-requested", self._on_card_action_requested)
         if self.Shell is not None:
@@ -365,11 +366,15 @@ class Blueman(Gtk.Application):
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
+                if self.Cards is not None:
+                    self.Cards.set_discovery_state(False)
 
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
 
         def on_progress(_lst: ManagerDeviceList, frac: float) -> None:
+            if self.Cards is not None:
+                self.Cards.set_discovery_state(True, frac)
             if abs(1.0 - frac) <= 0.00001:
                 if not prog.started():
                     prog.start()
@@ -381,8 +386,12 @@ class Blueman(Gtk.Application):
 
         def on_error(e: Exception) -> None:
             prog.finalize()
+            if self.Cards is not None:
+                self.Cards.set_discovery_state(False)
             self.infobar_update(*e_(e))
 
+        if self.Cards is not None:
+            self.Cards.set_discovery_state(True)
         self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)

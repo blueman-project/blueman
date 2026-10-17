@@ -212,6 +212,7 @@ class ManagerDeviceCards(Gtk.Box):
             (str, str, object),
         ),
         "cards-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
+        "stop-discovery-requested": (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
     GROUP_TITLES = {
@@ -239,6 +240,24 @@ class ManagerDeviceCards(Gtk.Box):
         self.search_entry.get_accessible().set_name(_("Search Bluetooth devices"))
         self.search_entry.connect("search-changed", self._on_search_changed)
         self.pack_start(self.search_entry, False, False, 0)
+
+        discovery_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
+        discovery_box.get_style_context().add_class("glass-panel")
+        self._discovery_spinner = Gtk.Spinner(active=True, visible=True)
+        self._discovery_label = Gtk.Label(label=_("Scanning for nearby devices…"), xalign=0, visible=True)
+        self._stop_discovery = Gtk.Button(label=_("Stop"), visible=True)
+        self._stop_discovery.get_style_context().add_class("secondary-button")
+        self._stop_discovery.connect("clicked", lambda _button: self.emit("stop-discovery-requested"))
+        discovery_box.pack_start(self._discovery_spinner, False, False, 0)
+        discovery_box.pack_start(self._discovery_label, True, True, 0)
+        discovery_box.pack_end(self._stop_discovery, False, False, 0)
+        self._discovery_revealer = Gtk.Revealer(
+            transition_type=Gtk.RevealerTransitionType.SLIDE_DOWN,
+            transition_duration=180,
+            visible=True,
+        )
+        self._discovery_revealer.add(discovery_box)
+        self.pack_start(self._discovery_revealer, False, False, 0)
 
         for group in DeviceGroup:
             section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, visible=True)
@@ -333,6 +352,20 @@ class ManagerDeviceCards(Gtk.Box):
 
     def focus_search(self) -> None:
         self.search_entry.grab_focus()
+
+    def set_discovery_state(self, active: bool, progress: float | None = None) -> None:
+        self._discovery_revealer.set_reveal_child(active)
+        if active:
+            self._discovery_spinner.start()
+            if progress is None:
+                self._discovery_label.set_text(_("Scanning for nearby devices…"))
+            else:
+                percent = max(0, min(100, round(progress * 100)))
+                self._discovery_label.set_text(_("Scanning for nearby devices… %(progress)d%%") % {
+                    "progress": percent
+                })
+        else:
+            self._discovery_spinner.stop()
 
     def _schedule_structure_sync(self, *_args: object) -> None:
         if not self._sync_source:

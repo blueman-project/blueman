@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** R8 selected-device inspector is verified and ready for its checkpoint; all unrelated untracked user files remain untouched.
-- **Active task:** T-010
-- **Overall status:** Redesign takes priority over existing and future bug work. R1–R8 now include branding, themes, a responsive shell, functional searchable cards, and a responsive device inspector.
+- **Working tree:** R9 pairing/discovery presentation is verified and ready for its checkpoint; all unrelated untracked user files remain untouched.
+- **Active task:** T-011
+- **Overall status:** Redesign takes priority over existing and future bug work. R1–R9 now include branding, themes, responsive searchable device management, an inspector, and modern pairing/discovery states.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -73,16 +73,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-008 | High | DONE | Make `./blueman-next` install missing build/runtime dependencies without installing Blueman itself. | Debian/Ubuntu apt bootstrap installs only missing packages; `--no-deps` opts out. |
 | T-009 | High | DONE | R7 case-insensitive device search without per-keystroke model/D-Bus reads; retain genuine battery telemetry semantics. | Ctrl+K focuses search; group counts/visibility follow matches. |
 | T-010 | High | DONE | R8 selection-bound device inspector with responsive reveal, existing actions, rename, and confirmed Forget. | Inspector actions use explicit object paths and the classic list remains available. |
+| T-011 | High | DONE | R9 pairing/discovery presentation without changing BluezAgent/AuthAgent control flow. | Pairing remains user-controlled; discovery state uses real callbacks and existing cancellation. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-010
-- **Goal:** Add the screenshot-aligned right-side inspector for the selected real device.
-- **Acceptance criteria:** Selection/property changes update identity, address, state and genuine battery; actions target the selected object path; rename reuses the existing dialog; Forget requires confirmation; inspector auto-shows wide and becomes user-toggleable narrow.
-- **Relevant files:** `ManagerDeviceInspector.py`, manager cards/menu/window/application modules, manager GUI tests, and install lists.
-- **Changes made:** Added the inspector panel, synchronized card snapshots, action routing, existing rename dialog reuse, destructive confirmation, header detail toggle, and breakpoint-controlled reveal behavior.
-- **Verification:** 16 manager GUI tests, compileall, strict schema, both theme CSS parses, local Meson build, launcher help, and diff checks pass. A five-second real startup loaded two BlueZ devices and remained alive until timeout.
-- **Blockers / risks:** Startup reproduced the existing PowerManager `UnknownMethod` D-Bus error; deferred to the user's bug backlog. Exact screenshot visual comparison and hardware action clicks remain manual.
-- **Next action:** Commit R8, then begin R9 pairing/discovery presentation.
+- **Task ID:** T-011
+- **Goal:** Modernize pairing and discovery presentation while retaining existing authentication and scan semantics.
+- **Acceptance criteria:** PIN/passkey input and accept/cancel remain controlled by existing agent callbacks; discovery shows real active/progress state and Stop calls existing cancellation; no fabricated progress or device data.
+- **Relevant files:** `data/ui/applet-passkey.ui`, `ManagerDeviceCards.py`, `Manager.py`, and card tests.
+- **Changes made:** Restyled the pairing dialog with accessible translated actions and clearer hierarchy; added an in-window discovery revealer, spinner, real callback progress, error/finalization cleanup, and Stop signal routed to `stop_discovery()`.
+- **Verification:** 16 manager GUI tests, direct GTK pairing UI load/assertions, compileall, strict schema, local Meson build, and diff checks pass.
+- **Blockers / risks:** Real pairing confirmation/PIN variants and scan cancellation still require hardware interaction. Existing PowerManager and other user-logged defects remain deferred.
+- **Next action:** Commit R9, then begin R10 reduced-motion-aware animation/radar lifecycle.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -107,15 +108,16 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-16 | T-006 | Added explicit-device card actions/grouping and promoted cards to the default presentation. | 15 manager GUI tests, compileall, schema, CSS parse, and diff checks pass. |
 | 2026-10-16 | T-009 | Added local name/address card search and Ctrl+K focus. | 15 manager GUI tests pass, including zero model reads while filtering. |
 | 2026-10-17 | T-010 | Added responsive selected-device inspector with explicit actions, rename, and confirmed Forget. | 16 manager GUI tests, local build, style/schema checks, and bounded real startup smoke pass. |
+| 2026-10-17 | T-011 | Modernized pairing dialog and added real discovery state/Stop presentation. | 16 manager GUI tests, direct GTK UI load, compileall, schema, build, and diff checks pass. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R7 and local build tooling are committed. R8 inspector is verified and ready to commit.
+- **What is done:** R1–R8 and local build tooling are committed. R9 pairing/discovery presentation is verified and ready to commit.
 - **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** Commit R8, then restyle pairing/discovery while preserving BluezAgent/AuthAgent behavior.
-- **Files touched:** inspector plus manager cards/menu/window/application, install list, tests, and `INSTRUCTIONS.md`. Do not add or modify any unrelated untracked files.
-- **Checks run and results:** 16 manager GUI tests, compileall, schema/CSS checks, local build/help, and bounded real startup pass. Existing PowerManager D-Bus error is deferred.
+- **Exact next step:** Commit R9, then implement R10 lifecycle-safe motion/radar with reduced-motion support.
+- **Files touched:** pairing UI, manager cards/application, card tests, and `INSTRUCTIONS.md`. Do not add or modify any unrelated untracked files.
+- **Checks run and results:** 16 manager GUI tests, pairing GtkBuilder assertions, compileall, strict schema, local build, and diff checks pass. Hardware pairing/discovery is not run.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 
