@@ -281,6 +281,8 @@ class Blueman(Gtk.Application):
         self.PowerManager.set_bluetooth_status(state)
         if self.Shell is not None:
             self.Shell.set_bluetooth_state(state)
+        if not state and self.Cards is not None:
+            self.Cards.set_discovery_state(False)
 
         if state:
             icon_name = "bluetooth"

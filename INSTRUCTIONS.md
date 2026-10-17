@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** R9 pairing/discovery presentation is verified and ready for its checkpoint; all unrelated untracked user files remain untouched.
-- **Active task:** T-011
-- **Overall status:** Redesign takes priority over existing and future bug work. R1–R9 now include branding, themes, responsive searchable device management, an inspector, and modern pairing/discovery states.
+- **Working tree:** R10 reduced-motion-aware discovery radar is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-012
+- **Overall status:** Redesign takes priority over existing and future bug work. R1–R10 now include branding, themes, responsive device management, inspector, pairing/discovery states, and lifecycle-safe motion.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -74,16 +74,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-009 | High | DONE | R7 case-insensitive device search without per-keystroke model/D-Bus reads; retain genuine battery telemetry semantics. | Ctrl+K focuses search; group counts/visibility follow matches. |
 | T-010 | High | DONE | R8 selection-bound device inspector with responsive reveal, existing actions, rename, and confirmed Forget. | Inspector actions use explicit object paths and the classic list remains available. |
 | T-011 | High | DONE | R9 pairing/discovery presentation without changing BluezAgent/AuthAgent control flow. | Pairing remains user-controlled; discovery state uses real callbacks and existing cancellation. |
+| T-012 | High | DONE | R10 lifecycle-safe discovery radar and reduced-motion behavior. | Timer exists only while mapped/active; Bluetooth-off, hide and destroy stop it. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-011
-- **Goal:** Modernize pairing and discovery presentation while retaining existing authentication and scan semantics.
-- **Acceptance criteria:** PIN/passkey input and accept/cancel remain controlled by existing agent callbacks; discovery shows real active/progress state and Stop calls existing cancellation; no fabricated progress or device data.
-- **Relevant files:** `data/ui/applet-passkey.ui`, `ManagerDeviceCards.py`, `Manager.py`, and card tests.
-- **Changes made:** Restyled the pairing dialog with accessible translated actions and clearer hierarchy; added an in-window discovery revealer, spinner, real callback progress, error/finalization cleanup, and Stop signal routed to `stop_discovery()`.
-- **Verification:** 16 manager GUI tests, direct GTK pairing UI load/assertions, compileall, strict schema, local Meson build, and diff checks pass.
-- **Blockers / risks:** Real pairing confirmation/PIN variants and scan cancellation still require hardware interaction. Existing PowerManager and other user-logged defects remain deferred.
-- **Next action:** Commit R9, then begin R10 reduced-motion-aware animation/radar lifecycle.
+- **Task ID:** T-012
+- **Goal:** Add a screenshot-aligned discovery radar without idle timer leaks or mandatory motion.
+- **Acceptance criteria:** Cairo radar follows real discovery state; no timer starts while hidden; unmap/destroy/Bluetooth-off stop it; reduced-motion renders a static frame without a recurring source.
+- **Relevant files:** `ManagerDeviceCards.py`, `Manager.py`, and card tests.
+- **Changes made:** Replaced the discovery spinner with a compact Cairo radar driven through the existing AnimationManager, gated by mapped/active state and stopped across all lifecycle exits.
+- **Verification:** 18 manager GUI tests pass, including unmap cleanup and reduced-motion zero-source assertions; compileall, local Meson build, and diff checks pass.
+- **Blockers / risks:** Actual idle CPU measurement remains a production-hardening check; user bug records remain deferred.
+- **Next action:** Commit R10, then begin R11 settings/adapter presentation.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -109,15 +110,16 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-16 | T-009 | Added local name/address card search and Ctrl+K focus. | 15 manager GUI tests pass, including zero model reads while filtering. |
 | 2026-10-17 | T-010 | Added responsive selected-device inspector with explicit actions, rename, and confirmed Forget. | 16 manager GUI tests, local build, style/schema checks, and bounded real startup smoke pass. |
 | 2026-10-17 | T-011 | Modernized pairing dialog and added real discovery state/Stop presentation. | 16 manager GUI tests, direct GTK UI load, compileall, schema, build, and diff checks pass. |
+| 2026-10-17 | T-012 | Added lifecycle-safe Cairo discovery radar with reduced-motion support. | 18 manager GUI tests, compileall, local build, and diff checks pass. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R8 and local build tooling are committed. R9 pairing/discovery presentation is verified and ready to commit.
+- **What is done:** R1–R9 and local build tooling are committed. R10 motion/radar is verified and ready to commit.
 - **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** Commit R9, then implement R10 lifecycle-safe motion/radar with reduced-motion support.
-- **Files touched:** pairing UI, manager cards/application, card tests, and `INSTRUCTIONS.md`. Do not add or modify any unrelated untracked files.
-- **Checks run and results:** 16 manager GUI tests, pairing GtkBuilder assertions, compileall, strict schema, local build, and diff checks pass. Hardware pairing/discovery is not run.
+- **Exact next step:** Commit R10, then implement R11 settings/adapter presentation using only existing schema-backed options.
+- **Files touched:** manager cards/application, card tests, and `INSTRUCTIONS.md`. Do not add or modify unrelated untracked files.
+- **Checks run and results:** 18 manager GUI tests, compileall, local build, and diff checks pass. Idle CPU and real scan hardware checks remain pending.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 

@@ -2,18 +2,21 @@
 
 from __future__ import annotations
 
+import math
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum
 from gettext import gettext as _
 from typing import TYPE_CHECKING
-from collections.abc import Callable
 
+import cairo
 import gi
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
+from blueman.gui.theme.AnimationManager import start_animation, stop_animation_safe
 
 if TYPE_CHECKING:
     from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
@@ -202,6 +205,59 @@ class DeviceCard(Gtk.ListBoxRow):
             context.remove_class("device-card-selected")
 
 
+class DiscoveryRadar(Gtk.DrawingArea):
+    """Small lifecycle-safe discovery pulse driven by observed scan state."""
+
+    def __init__(self) -> None:
+        super().__init__(width_request=48, height_request=48, visible=True)
+        self._active = False
+        self._phase = 0.0
+        self._animation_source = 0
+        self.connect("draw", self._on_draw)
+        self.connect("map", self._on_map)
+        self.connect("unmap", self._on_unmap)
+        self.connect("destroy", self._on_destroy)
+
+    def set_active(self, active: bool) -> None:
+        self._active = active
+        if active and self.get_mapped() and not self._animation_source:
+            self._animation_source = start_animation(33, self._tick, owner=self)
+        elif not active:
+            stop_animation_safe("_animation_source", self)
+            self._phase = 0.0
+            self.queue_draw()
+
+    def _tick(self, _tick: int, elapsed: float) -> bool:
+        self._phase = elapsed % 1.5 / 1.5
+        self.queue_draw()
+        return self._active
+
+    def _on_draw(self, _widget: Gtk.Widget, context: cairo.Context) -> bool:
+        allocation = self.get_allocation()
+        center_x, center_y = allocation.width / 2, allocation.height / 2
+        color = self.get_style_context().get_color(Gtk.StateFlags.NORMAL)
+        context.set_line_width(1.5)
+        for offset in (0.0, 0.33, 0.66):
+            progress = (self._phase + offset) % 1.0
+            context.set_source_rgba(color.red, color.green, color.blue, 0.55 * (1.0 - progress))
+            context.arc(center_x, center_y, 5 + progress * 17, 0, math.tau)
+            context.stroke()
+        context.set_source_rgba(color.red, color.green, color.blue, 1.0)
+        context.arc(center_x, center_y, 4, 0, math.tau)
+        context.fill()
+        return False
+
+    def _on_map(self, _widget: Gtk.Widget) -> None:
+        if self._active and not self._animation_source:
+            self._animation_source = start_animation(33, self._tick, owner=self)
+
+    def _on_unmap(self, _widget: Gtk.Widget) -> None:
+        stop_animation_safe("_animation_source", self)
+
+    def _on_destroy(self, _widget: Gtk.Widget) -> None:
+        stop_animation_safe("_animation_source", self)
+
+
 class ManagerDeviceCards(Gtk.Box):
     """Mirror visible model rows and bridge card selection to TreeIter selection."""
 
@@ -243,12 +299,12 @@ class ManagerDeviceCards(Gtk.Box):
 
         discovery_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
         discovery_box.get_style_context().add_class("glass-panel")
-        self._discovery_spinner = Gtk.Spinner(active=True, visible=True)
+        self._discovery_radar = DiscoveryRadar()
         self._discovery_label = Gtk.Label(label=_("Scanning for nearby devices…"), xalign=0, visible=True)
         self._stop_discovery = Gtk.Button(label=_("Stop"), visible=True)
         self._stop_discovery.get_style_context().add_class("secondary-button")
         self._stop_discovery.connect("clicked", lambda _button: self.emit("stop-discovery-requested"))
-        discovery_box.pack_start(self._discovery_spinner, False, False, 0)
+        discovery_box.pack_start(self._discovery_radar, False, False, 0)
         discovery_box.pack_start(self._discovery_label, True, True, 0)
         discovery_box.pack_end(self._stop_discovery, False, False, 0)
         self._discovery_revealer = Gtk.Revealer(
@@ -355,8 +411,8 @@ class ManagerDeviceCards(Gtk.Box):
 
     def set_discovery_state(self, active: bool, progress: float | None = None) -> None:
         self._discovery_revealer.set_reveal_child(active)
+        self._discovery_radar.set_active(active)
         if active:
-            self._discovery_spinner.start()
             if progress is None:
                 self._discovery_label.set_text(_("Scanning for nearby devices…"))
             else:
@@ -364,9 +420,6 @@ class ManagerDeviceCards(Gtk.Box):
                 self._discovery_label.set_text(_("Scanning for nearby devices… %(progress)d%%") % {
                     "progress": percent
                 })
-        else:
-            self._discovery_spinner.stop()
-
     def _schedule_structure_sync(self, *_args: object) -> None:
         if not self._sync_source:
             self._sync_source = GLib.idle_add(self.sync_structure)

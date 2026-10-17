@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import Mock, patch
 
 import gi
 
@@ -126,6 +127,41 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         )
 
         self.assertIsNone(snapshot.battery_label)
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_discovery_radar_stops_when_unmapped(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import DiscoveryRadar
+
+        window = Gtk.Window()
+        radar = DiscoveryRadar()
+        window.add(radar)
+        window.show_all()
+        while Gtk.events_pending():
+            Gtk.main_iteration_do(False)
+        radar.set_active(True)
+        self.assertGreater(radar._animation_source, 0)
+        window.hide()
+        while Gtk.events_pending():
+            Gtk.main_iteration_do(False)
+        self.assertEqual(radar._animation_source, 0)
+        window.destroy()
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_discovery_radar_respects_reduced_motion(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import DiscoveryRadar
+
+        window = Gtk.Window()
+        radar = DiscoveryRadar()
+        window.add(radar)
+        window.show_all()
+        while Gtk.events_pending():
+            Gtk.main_iteration_do(False)
+        theme = Mock()
+        theme.reduced_motion.return_value = True
+        with patch("blueman.gui.theme.ThemeManager.ThemeManager.get_default", return_value=theme):
+            radar.set_active(True)
+        self.assertEqual(radar._animation_source, 0)
+        window.destroy()
 
     @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
     def test_cards_follow_model_structure_and_bridge_selection(self) -> None:
