@@ -20,7 +20,7 @@ class TestManagerWindowShell(unittest.TestCase):
     def test_navigation_only_exposes_working_destinations(self) -> None:
         self.assertEqual(
             [item.action for item in navigation_items()],
-            [None, "app.inquiry", "app.preferences", "app.services", "app.plugins"],
+            [None, "app.inquiry", "app.preferences", "app.settings", "app.services", "app.plugins"],
         )
 
     @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")

@@ -13,6 +13,7 @@ from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
+from blueman.gui.manager.ManagerSettings import ManagerSettingsDialog
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
@@ -82,6 +83,7 @@ class Blueman(Gtk.Application):
         self.Cards: ManagerDeviceCards | None = None
         self.CardMenu: ManagerDeviceMenu | None = None
         self.Inspector: ManagerDeviceInspector | None = None
+        self.SettingsDialog: ManagerSettingsDialog | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -99,6 +101,7 @@ class Blueman(Gtk.Application):
         self.register_action("plugins", self.simple_action)
         self.register_action("services", self.simple_action)
         self.register_action("preferences", self.simple_action)
+        self.register_action("settings", self.simple_action)
         self.register_action("focus-search", self.simple_action)
         self.set_accels_for_action("app.focus-search", ["<Ctrl>k"])
 
@@ -353,6 +356,12 @@ class Blueman(Gtk.Application):
                 launch("blueman-services", name=_("Service Preferences"))
             case "preferences":
                 self.adapter_properties()
+            case "settings":
+                assert self.window is not None
+                if self.SettingsDialog is None:
+                    self.SettingsDialog = ManagerSettingsDialog(self.window, self, self.Config)
+                    self.SettingsDialog.connect("destroy", lambda _dialog: setattr(self, "SettingsDialog", None))
+                self.SettingsDialog.present()
             case "focus-search":
                 if self.Cards is not None:
                     self.Cards.focus_search()

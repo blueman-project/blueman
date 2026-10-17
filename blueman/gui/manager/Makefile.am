@@ -6,6 +6,7 @@ blueman_PYTHON = 			\
 	ManagerDeviceMenu.py	\
 	ManagerMenu.py			\
 	ManagerProgressbar.py	\
+	ManagerSettings.py	\
 	ManagerStats.py			\
 	ManagerToolbar.py		\
 	ManagerWindow.py		\

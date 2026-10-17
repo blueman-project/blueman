@@ -30,6 +30,7 @@ def navigation_items() -> tuple[NavigationItem, ...]:
         NavigationItem(_("Devices"), "bluetooth-symbolic", None),
         NavigationItem(_("Scan for Devices"), "view-refresh-symbolic", "app.inquiry"),
         NavigationItem(_("Adapter"), "preferences-system-symbolic", "app.preferences"),
+        NavigationItem(_("Settings"), "emblem-system-symbolic", "app.settings"),
         NavigationItem(_("Services"), "emblem-system-symbolic", "app.services"),
         NavigationItem(_("Plugins"), "application-x-addon-symbolic", "app.plugins"),
     )
@@ -111,7 +112,7 @@ class ManagerWindowShell:
         self._view_toggle.connect("toggled", self._on_view_toggled)
         header.pack_end(self._view_toggle)
         header.pack_end(self._icon_button(
-            "preferences-system-symbolic", _("Adapter settings"), action="app.preferences"
+            "preferences-system-symbolic", _("Settings"), action="app.settings"
         ))
         header.pack_end(self._icon_button(
             "edit-find-symbolic", _("Scan for devices"), action="app.inquiry"
@@ -171,6 +172,7 @@ class ManagerWindowShell:
         menu = Gio.Menu()
         menu.append(_("Plugins"), "app.plugins")
         menu.append(_("Services"), "app.services")
+        menu.append(_("Settings"), "app.settings")
         menu.append(_("About"), "app.about")
         menu.append(_("Quit"), "app.Quit")
         return menu
