@@ -379,6 +379,23 @@
     padding: 16px;
 }
 
+.transfer-progress trough {
+    background-color: @bg-elevated;
+    border: 1px solid @border-subtle;
+    border-radius: 999px;
+    min-height: 18px;
+}
+
+.transfer-progress progress {
+    background-color: @accent-primary;
+    border-radius: 999px;
+}
+
+.notification-dialog {
+    background-color: @bg-card;
+    color: @text-primary;
+}
+
 .app-window .search-entry {
     background-color: @bg-card;
     border: 1px solid @border-subtle;

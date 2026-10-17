@@ -49,9 +49,14 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
 
         self.props.secondary_use_markup = True
-        self.resize(350, 50)
+        self.set_default_size(420, -1)
+        self.set_border_width(12)
+        self.get_style_context().add_class("notification-dialog")
 
         self.fader = Fade(self)
+        self._reduced_motion = Gio.Settings(
+            schema_id='org.blueman.general'
+        ).get_boolean('reduced-motion')
 
         self.props.skip_taskbar_hint = False
 
@@ -72,12 +77,16 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.entered = False
 
         def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
+            if self._reduced_motion:
+                return False
             if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
             return False
 
         def on_leave(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
+            if self._reduced_motion:
+                return False
             if not Gdk.Window.at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
@@ -98,9 +107,10 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.hide()
 
     def show(self) -> None:
-        self.set_opacity(OPACITY_START)
+        opacity = 1.0 if self._reduced_motion else OPACITY_START
+        self.set_opacity(opacity)
         self.present()
-        self.set_opacity(OPACITY_START)
+        self.set_opacity(opacity)
 
     def close(self) -> None:
         self.hide()

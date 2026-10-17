@@ -9,4 +9,5 @@ EXTRA_DIST =    \
     test_gdbus_error.py \
     test_imports.py \
     test_netconf.py \
-    test_pulseaudio_utils.py
+    test_pulseaudio_utils.py \
+    test_sendto.py
