@@ -831,3 +831,23 @@
 .app-window .dashboard-scroll,
 .app-window .dashboard-scroll viewport { background-color: rgba(236,242,248,0.90); }
 .app-window .inspector-panel { background-color: rgba(247,249,252,0.88); }
+/* Bright wallpapers must not wash out the light appearance. */
+.app-window, .app-window.background { background-color: rgba(235,241,247,0.98); }
+.app-window .app-main { background-color: transparent; }
+.app-window .app-header { background-color: rgba(247,249,252,0.98); }
+.app-window .app-sidebar { background-color: rgba(247,249,252,0.97); }
+.app-window .device-dashboard,
+.app-window .dashboard-scroll,
+.app-window .dashboard-scroll viewport { background-color: rgba(235,241,247,0.98); }
+.app-window .inspector-panel { background-color: rgba(247,249,252,0.97); }
+.app-window .device-actions .primary-button {
+    color: #26364A;
+    background-color: #EEF3F8;
+    background-image: none;
+    border-color: #C9D4E0;
+    box-shadow: none;
+}
+.app-window .device-actions .primary-button:hover {
+    background-color: #E2EBF4;
+    border-color: #8FB7EA;
+}

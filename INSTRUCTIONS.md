@@ -55,8 +55,8 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-017 reference-fidelity pass is implemented and verified, ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-017
+- **Working tree:** T-018 responsive/light-mode correction is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-018
 - **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
@@ -80,16 +80,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-015 | Critical | DONE | Rebuild the main manager presentation to closely match the supplied three-panel premium reference at 1400×850. | Removed visible legacy chrome, made System mode resolve to the custom palette, established the three-panel hierarchy, and verified both dark and light runtime screenshots. |
 | T-016 | High | DONE | Complete final manager visual-fidelity polish without inventing backend data. | Inspector actions now follow primary/Send/More order, actual paired/trusted state is shown, and card action sizing is stable. |
 | T-017 | Critical | DONE | Close the remaining large visual gap to the supplied screenshot through exact composition and scale work. | Removed title-heavy header content, widened columns, added search shortcut chrome, rebuilt card hierarchy, added category palettes and layered translucent surfaces, and inspected fresh dark runtime captures. |
+| T-018 | Critical | DONE | Correct the real 1397×926 result shown by the user. | Added intermediate responsive column sizing, strengthened light surfaces over bright wallpaper, softened card buttons, and left the local preview in dark mode. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-017
-- **Goal:** Treat the supplied screenshot as the visual source of truth and correct scale, hierarchy, spacing, and surface treatment rather than merely sharing its three-column structure.
-- **Acceptance criteria:** At wide reference size the sidebar is about 320px, inspector about 400px, search has Ctrl/K affordances, cards place connection/battery beneath identity with icon-first actions, header does not consume a branded title row, panels use layered translucent surfaces, and a fresh dark runtime screenshot is inspected before completion.
+- **Task ID:** T-018
+- **Goal:** Fix the concrete narrow-center and washed-out-light-mode problems visible in the user's latest actual screenshot.
+- **Acceptance criteria:** Around 1400px wide, sidebar and inspector contract while all three columns remain usable and device names/actions do not collide; light mode remains legible over a bright wallpaper; dark mode is selected for the local preview because it is the supplied target appearance; tests cover the intermediate sizing decision.
 - **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Reduced the native header to window controls only; set 320px sidebar/410px inspector proportions; added Ctrl/K search keys; increased type, card, avatar, action and radar scale; moved real status/battery beneath card identity; added category-specific avatar palettes; grouped the inspector header/status/actions into a rounded overview surface; enabled RGBA visuals and transparent layered panel backgrounds; retained actual backend state rather than imitating the reference's connected/battery values.
-- **Verification:** 20 manager GUI tests and 21 import tests pass; compileall, strict schemas, local build, CSS parsing and diff checks pass. Fresh dark captures `/tmp/blueman-next-phase17-final-dark.png` and `/tmp/blueman-next-phase17-desktop-dark.png` were produced; the foreign-window capture renders transparency against black, while the desktop compositor supplies the actual background.
-- **Blockers / risks:** GTK 3 cannot provide portable backdrop blur or reliably clip every child to a rounded toplevel on all X11/Wayland compositors. Actual hardware currently reports two paired, disconnected devices with no battery, so the UI correctly cannot reproduce the reference's connected/battery/available-device content.
-- **Next action:** Commit T-017 before another phase. Do not call visual parity exact; remaining differences are compositor blur, native Linux window controls, unavailable device artwork, and live hardware state.
+- **Changes made:** Added a 1050/1500px three-tier sidebar and inspector sizing policy (76/270/320 sidebar, 340/410 inspector); made light panels nearly opaque over bright wallpaper; replaced black light-mode card actions with soft secondary controls; selected dark mode for the local Blueman Next preview to match the supplied target.
+- **Verification:** 21 manager GUI tests pass including intermediate-width assertions; compileall and both CSS parses pass. A non-maximized narrow capture is `/tmp/blueman-next-phase18-1397-dark.png`.
+- **Blockers / risks:** Window-manager scaling means the capture's physical dimensions differ from requested logical dimensions; the GTK allocation policy is tested directly.
+- **Next action:** Commit T-018 before beginning any device-illustration phase.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]

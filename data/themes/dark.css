@@ -1044,3 +1044,14 @@
 .app-window .dashboard-scroll,
 .app-window .dashboard-scroll viewport { background-color: rgba(8,15,22,0.88); }
 .app-window .inspector-panel { background-color: rgba(12,23,30,0.86); }
+.app-window .device-actions .primary-button {
+    color: #EEF4FA;
+    background-color: #26333F;
+    background-image: none;
+    border-color: rgba(255,255,255,0.11);
+    box-shadow: none;
+}
+.app-window .device-actions .primary-button:hover {
+    background-color: #314252;
+    border-color: alpha(#62A3FF,0.55);
+}

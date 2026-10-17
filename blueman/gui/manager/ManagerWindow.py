@@ -11,10 +11,14 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gio, GObject, Gtk  # noqa: E402
 
 
-COMPACT_SIDEBAR_BREAKPOINT = 1120
-INSPECTOR_BREAKPOINT = 1280
+COMPACT_SIDEBAR_BREAKPOINT = 1050
+NARROW_LAYOUT_BREAKPOINT = 1500
+INSPECTOR_BREAKPOINT = 1180
 SIDEBAR_WIDTH = 320
+NARROW_SIDEBAR_WIDTH = 270
 COMPACT_SIDEBAR_WIDTH = 76
+INSPECTOR_WIDTH = 410
+NARROW_INSPECTOR_WIDTH = 340
 
 
 @dataclass(frozen=True)
@@ -38,6 +42,18 @@ def should_compact_sidebar(window_width: int) -> bool:
     return window_width < COMPACT_SIDEBAR_BREAKPOINT
 
 
+def sidebar_width_for(window_width: int) -> int:
+    if should_compact_sidebar(window_width):
+        return COMPACT_SIDEBAR_WIDTH
+    if window_width < NARROW_LAYOUT_BREAKPOINT:
+        return NARROW_SIDEBAR_WIDTH
+    return SIDEBAR_WIDTH
+
+
+def inspector_width_for(window_width: int) -> int:
+    return NARROW_INSPECTOR_WIDTH if window_width < NARROW_LAYOUT_BREAKPOINT else INSPECTOR_WIDTH
+
+
 class ManagerWindowShell:
     """Compose the visible manager from modern GTK widgets.
 
@@ -59,6 +75,7 @@ class ManagerWindowShell:
         self._legacy_view: Gtk.Widget | None = None
         self._card_view: Gtk.Widget | None = None
         self._inspector_revealer: Gtk.Revealer | None = None
+        self._inspector: Gtk.Widget | None = None
 
         self.header = self._create_header(display_name)
         self.sidebar = self._create_sidebar(display_name)
@@ -193,6 +210,7 @@ class ManagerWindowShell:
         )
 
     def install_device_inspector(self, inspector: Gtk.Widget) -> None:
+        self._inspector = inspector
         revealer = Gtk.Revealer(
             transition_type=Gtk.RevealerTransitionType.SLIDE_LEFT,
             transition_duration=180,
@@ -203,6 +221,7 @@ class ManagerWindowShell:
         self._inspector_revealer = revealer
         self._inspector_toggle.set_sensitive(True)
         wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
+        inspector.set_size_request(inspector_width_for(self.window.get_allocated_width()), -1)
         self._wide_inspector = wide
         self._inspector_toggle.set_active(wide)
         self._inspector_toggle.set_visible(not wide)
@@ -354,13 +373,18 @@ class ManagerWindowShell:
 
     def _on_size_allocate(self, _window: Gtk.Widget, allocation: Gtk.Allocation) -> None:
         compact = should_compact_sidebar(allocation.width)
+        width = sidebar_width_for(allocation.width)
         if compact != self._compact:
             self._compact = compact
-            width = COMPACT_SIDEBAR_WIDTH if compact else SIDEBAR_WIDTH
-            self.sidebar.set_size_request(width, -1)
-            self.main_paned.set_position(width)
             for label in self._sidebar_labels:
                 label.set_visible(not compact)
+        if self.sidebar.get_size_request()[0] != width:
+            self.sidebar.set_size_request(width, -1)
+            self.main_paned.set_position(width)
+        if self._inspector is not None:
+            inspector_width = inspector_width_for(allocation.width)
+            if self._inspector.get_size_request()[0] != inspector_width:
+                self._inspector.set_size_request(inspector_width, -1)
         if self._inspector_revealer is not None:
             wide = allocation.width >= INSPECTOR_BREAKPOINT
             if wide != self._wide_inspector:

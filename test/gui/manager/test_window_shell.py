@@ -7,7 +7,14 @@ from gi.repository import Gtk  # noqa: E402
 
 from blueman.gui.manager.ManagerWindow import (
     COMPACT_SIDEBAR_BREAKPOINT,
+    INSPECTOR_WIDTH,
+    NARROW_INSPECTOR_WIDTH,
+    NARROW_LAYOUT_BREAKPOINT,
+    NARROW_SIDEBAR_WIDTH,
+    SIDEBAR_WIDTH,
+    inspector_width_for,
     navigation_items,
+    sidebar_width_for,
     should_compact_sidebar,
 )
 
@@ -16,6 +23,12 @@ class TestManagerWindowShell(unittest.TestCase):
     def test_sidebar_compacts_only_below_breakpoint(self) -> None:
         self.assertTrue(should_compact_sidebar(COMPACT_SIDEBAR_BREAKPOINT - 1))
         self.assertFalse(should_compact_sidebar(COMPACT_SIDEBAR_BREAKPOINT))
+
+    def test_intermediate_layout_preserves_dashboard_width(self) -> None:
+        self.assertEqual(sidebar_width_for(1397), NARROW_SIDEBAR_WIDTH)
+        self.assertEqual(inspector_width_for(1397), NARROW_INSPECTOR_WIDTH)
+        self.assertEqual(sidebar_width_for(NARROW_LAYOUT_BREAKPOINT), SIDEBAR_WIDTH)
+        self.assertEqual(inspector_width_for(NARROW_LAYOUT_BREAKPOINT), INSPECTOR_WIDTH)
 
     def test_navigation_only_exposes_working_destinations(self) -> None:
         self.assertEqual(
