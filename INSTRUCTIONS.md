@@ -55,9 +55,9 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-015 main-window rebuild is implemented and verified, ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-015
-- **Overall status:** The user rejected the current manager presentation as visually far from the supplied target. Bug work is deferred; the manager shell must now be rebuilt and visually verified against the reference.
+- **Working tree:** T-016 visual-fidelity polish is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-016
+- **Overall status:** The three-panel visual rebuild now closely matches the reference. Final fidelity work is focused on inspector action ordering, richer real device state, and responsive regression checks; bug work remains deferred.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -78,16 +78,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-013 | High | DONE | R11 modern settings/adapter presentation exposing only existing schema-backed options. | Adapter/services/plugins reuse established dialogs; reduced motion applies to settings transitions. |
 | T-014 | High | DONE | R12 modern transfer/notification presentation preserving existing OBEX semantics. | Only real progress/speed/ETA display; unknown measurements are omitted; notification count/flows unchanged. |
 | T-015 | Critical | DONE | Rebuild the main manager presentation to closely match the supplied three-panel premium reference at 1400×850. | Removed visible legacy chrome, made System mode resolve to the custom palette, established the three-panel hierarchy, and verified both dark and light runtime screenshots. |
+| T-016 | High | DONE | Complete final manager visual-fidelity polish without inventing backend data. | Inspector actions now follow primary/Send/More order, actual paired/trusted state is shown, and card action sizing is stable. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-015
-- **Goal:** Replace the visibly legacy manager composition with a faithful GTK 3 implementation of the supplied Blueman Next reference.
-- **Acceptance criteria:** No menubar/classic toolbar/statusbar in the default view; custom palette applies for System/Dark/Light preferences; sidebar has identity/navigation/controller hierarchy; dashboard has global search, title/subtitle, primary pair action and spacious grouped cards; inspector uses premium section cards and action tiles; default geometry is 1400×850 with responsive fallback; an actual runtime screenshot is compared before completion.
+- **Task ID:** T-016
+- **Goal:** Finish the main-window fidelity pass on top of the accepted T-015 structural rebuild.
+- **Acceptance criteria:** Primary inspector action precedes Send and More; real Paired and Trusted state appears in the information card; card action labels do not truncate at reference width; wide and compact tests pass; no fabricated metadata.
 - **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Replaced the visible legacy grid with a real sidebar/dashboard/inspector workspace; hid legacy menubar/toolbar/statusbar while keeping their objects alive for backend/plugin compatibility; added identity/controller hierarchy, dashboard search/title/pair action, larger grouped cards, automatic initial selection, and sectioned inspector action/info cards; System appearance now resolves and applies the Blueman Next light/dark provider; default geometry is 1400×850.
-- **Verification:** 20 manager GUI tests pass; compileall, strict schemas, local build, and both CSS parses pass. Actual 1560×866 light and dark runtime captures were inspected; dark capture is `/tmp/blueman-next-phase15-dark.png` and closely matches the supplied layout.
-- **Blockers / risks:** GTK 3 cannot provide portable backdrop blur, so the glass effect uses layered surfaces. The existing PowerManager `UnknownMethod` leaves the status UI off in this environment and remains deferred as requested.
-- **Next action:** Commit T-015 before any further visual refinement phase.
+- **Changes made:** Reordered inspector actions to primary, Send, More; added real paired/trusted information rows from the existing card snapshot; increased card primary-action minimum width; added focused state/order assertions.
+- **Verification:** 20 manager GUI tests and 21 import tests pass; compileall, strict schemas, local build, and diff checks pass.
+- **Blockers / risks:** The existing PowerManager `UnknownMethod` remains intentionally deferred. Real connected-device/audio action visuals require hardware state.
+- **Next action:** Commit T-016. Further work should address only a concrete remaining visual mismatch, not the deferred bug backlog.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -121,8 +122,8 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Ignore bug fixing and continue the UI redesign because the current runtime screenshot is far from the supplied target.
 - **What is done:** T-015 now produces a close GTK 3 implementation of the supplied three-panel target in both dark and light themes, with actual runtime screenshots inspected.
-- **What remains:** Checkpoint T-015, then continue only with bounded visual-fidelity refinements or missing redesigned surfaces; bugs remain deferred.
-- **Exact next step:** Commit T-015 as a meaningful phase boundary.
+- **What remains:** Checkpoint T-016; remaining checks are hardware-dependent connected/audio/OBEX states. Bugs remain deferred.
+- **Exact next step:** Commit T-016 before any new phase.
 - **Files touched:** Manager shell/cards/inspector, ThemeManager, Manager default geometry, both themes, manager tests, and this tracker.
 - **Checks run and results:** 20 manager GUI tests, compileall, schemas, CSS parsing and local build pass; real light/dark runtime captures inspected.
 - **Important warnings:** Preserve user files and backend behavior. Do not touch `BUGS_LOGS.md`; the current task is visual redesign only.

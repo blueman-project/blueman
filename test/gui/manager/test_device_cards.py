@@ -207,6 +207,9 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(inspector._name.get_text(), "Headphones")
         self.assertEqual(inspector._address.get_text(), "00:11:22:33:44:55")
         self.assertEqual(inspector._primary._tile_label.get_text(), "Disconnect")
+        self.assertEqual(inspector._paired.get_text(), "Yes")
+        self.assertEqual(inspector._trusted.get_text(), "No")
+        self.assertIs(inspector._primary.get_parent().get_children()[0], inspector._primary)
         device_list.liststore.set_value(connected_iter, device_list.COLUMNS["alias"], "Studio Headphones")
         device_list.emit(
             "device-property-changed", connected, connected_iter, ("Alias", "Studio Headphones")

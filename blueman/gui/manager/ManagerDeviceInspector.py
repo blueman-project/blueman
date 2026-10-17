@@ -93,11 +93,11 @@ class ManagerDeviceInspector(Gtk.Box):
         self._primary = self._action_tile("audio-volume-high-symbolic", _("Connect"), "primary-action-tile")
         self._send = self._action_tile("document-send-symbolic", _("Send File"), "action-tile")
         self._more = self._action_tile("view-more-symbolic", _("More"), "action-tile")
+        self._primary.connect("clicked", self._request_primary)
+        actions.pack_start(self._primary, True, True, 0)
         for button, action in ((self._send, DeviceCardAction.SEND), (self._more, DeviceCardAction.MORE)):
             button.connect("clicked", self._request, action)
             actions.pack_start(button, True, True, 0)
-        self._primary.connect("clicked", self._request_primary)
-        actions.pack_start(self._primary, True, True, 0)
         self._content.pack_start(actions, False, False, 0)
 
         information = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, visible=True)
@@ -108,6 +108,8 @@ class ManagerDeviceInspector(Gtk.Box):
         self._address = self._info_row(information, "bluetooth-symbolic", _("Address"))
         self._type = self._info_row(information, "phone-symbolic", _("Type"))
         self._status = self._info_row(information, "network-wireless-symbolic", _("Status"))
+        self._paired = self._info_row(information, "blueman-paired-emblem", _("Paired"))
+        self._trusted = self._info_row(information, "blueman-trusted-emblem", _("Trusted"))
         self._battery = self._info_row(information, "battery-symbolic", _("Battery"))
         self._content.pack_start(information, False, False, 0)
 
@@ -195,6 +197,8 @@ class ManagerDeviceInspector(Gtk.Box):
         self._type.set_text(snapshot.category)
         status = _("Connected") if snapshot.connected else _("Paired") if snapshot.paired else _("Available")
         self._status.set_text(status)
+        self._paired.set_text(_("Yes") if snapshot.paired else _("No"))
+        self._trusted.set_text(_("Yes") if snapshot.trusted else _("No"))
         self._status_text.set_text(status)
         status_context = self._status_text.get_style_context()
         dot_context = self._status_dot.get_style_context()
