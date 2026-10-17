@@ -31,6 +31,8 @@ class DeviceCardAction(Enum):
     DISCONNECT = "disconnect"
     SEND = "send"
     MORE = "more"
+    RENAME = "rename"
+    REMOVE = "remove"
 
 
 def group_for_state(*, connected: bool, paired: bool) -> DeviceGroup:
@@ -209,6 +211,7 @@ class ManagerDeviceCards(Gtk.Box):
             None,
             (str, str, object),
         ),
+        "cards-changed": (GObject.SignalFlags.RUN_LAST, None, ()),
     }
 
     GROUP_TITLES = {
@@ -310,6 +313,7 @@ class ManagerDeviceCards(Gtk.Box):
         self._apply_search()
         self._sync_source = 0
         self._sync_selection()
+        self.emit("cards-changed")
         return GLib.SOURCE_REMOVE
 
     def _apply_search(self) -> None:
@@ -352,6 +356,7 @@ class ManagerDeviceCards(Gtk.Box):
         else:
             card.update(snapshot)
             self._apply_search()
+            self.emit("cards-changed")
 
     def _on_card_selected(self, _list_box: Gtk.ListBox, row: Gtk.ListBoxRow | None) -> None:
         if self._changing_selection or not isinstance(row, DeviceCard):

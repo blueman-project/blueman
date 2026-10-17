@@ -45,6 +45,10 @@ class TestManagerWindowShell(unittest.TestCase):
         shell._view_toggle.set_active(False)
         self.assertTrue(legacy.get_visible())
         self.assertFalse(shell._card_view.get_visible())
+        inspector = Gtk.Box(visible=True)
+        shell.install_device_inspector(inspector)
+        shell._inspector_toggle.set_active(True)
+        self.assertTrue(shell._inspector_revealer.get_reveal_child())
         window.destroy()
 
 

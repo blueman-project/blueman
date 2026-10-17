@@ -12,6 +12,7 @@ from gi.repository import Gio, Gtk  # noqa: E402
 
 
 COMPACT_SIDEBAR_BREAKPOINT = 1050
+INSPECTOR_BREAKPOINT = 1180
 SIDEBAR_WIDTH = 236
 COMPACT_SIDEBAR_WIDTH = 76
 
@@ -51,8 +52,10 @@ class ManagerWindowShell:
         self._content = content
         self._sidebar_labels: list[Gtk.Label] = []
         self._compact = False
+        self._wide_inspector: bool | None = None
         self._legacy_view: Gtk.Widget | None = None
         self._card_view: Gtk.Widget | None = None
+        self._inspector_revealer: Gtk.Revealer | None = None
 
         self.header = self._create_header(display_name)
         self.sidebar = self._create_sidebar()
@@ -91,6 +94,14 @@ class ManagerWindowShell:
         header.pack_end(self._icon_button(
             "open-menu-symbolic", _("Application menu"), menu=self._application_menu()
         ))
+        self._inspector_toggle = Gtk.ToggleButton(visible=True, sensitive=False)
+        self._inspector_toggle.set_image(Gtk.Image.new_from_icon_name(
+            "sidebar-show-symbolic", Gtk.IconSize.BUTTON
+        ))
+        self._inspector_toggle.set_tooltip_text(_("Show device details"))
+        self._inspector_toggle.get_accessible().set_name(_("Toggle device details"))
+        self._inspector_toggle.connect("toggled", self._on_inspector_toggled)
+        header.pack_end(self._inspector_toggle)
         self._view_toggle = Gtk.ToggleButton(visible=True, sensitive=False)
         self._view_toggle.set_image(Gtk.Image.new_from_icon_name(
             "view-grid-symbolic", Gtk.IconSize.BUTTON
@@ -125,6 +136,25 @@ class ManagerWindowShell:
         self._view_toggle.set_sensitive(True)
         self._view_toggle.set_active(True)
         self._on_view_toggled(self._view_toggle)
+
+    def install_device_inspector(self, inspector: Gtk.Widget) -> None:
+        revealer = Gtk.Revealer(
+            transition_type=Gtk.RevealerTransitionType.SLIDE_LEFT,
+            transition_duration=180,
+            visible=True,
+        )
+        revealer.add(inspector)
+        self._content.attach(revealer, 1, 2, 1, 1)
+        self._inspector_revealer = revealer
+        self._inspector_toggle.set_sensitive(True)
+        wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
+        self._wide_inspector = wide
+        self._inspector_toggle.set_active(wide)
+        revealer.set_reveal_child(wide)
+
+    def _on_inspector_toggled(self, button: Gtk.ToggleButton) -> None:
+        if self._inspector_revealer is not None:
+            self._inspector_revealer.set_reveal_child(button.get_active())
 
     def _on_view_toggled(self, button: Gtk.ToggleButton) -> None:
         if self._legacy_view is None or self._card_view is None:
@@ -237,11 +267,15 @@ class ManagerWindowShell:
 
     def _on_size_allocate(self, _window: Gtk.Widget, allocation: Gtk.Allocation) -> None:
         compact = should_compact_sidebar(allocation.width)
-        if compact == self._compact:
-            return
-        self._compact = compact
-        width = COMPACT_SIDEBAR_WIDTH if compact else SIDEBAR_WIDTH
-        self.sidebar.set_size_request(width, -1)
-        self.main_paned.set_position(width)
-        for label in self._sidebar_labels:
-            label.set_visible(not compact)
+        if compact != self._compact:
+            self._compact = compact
+            width = COMPACT_SIDEBAR_WIDTH if compact else SIDEBAR_WIDTH
+            self.sidebar.set_size_request(width, -1)
+            self.main_paned.set_position(width)
+            for label in self._sidebar_labels:
+                label.set_visible(not compact)
+        if self._inspector_revealer is not None:
+            wide = allocation.width >= INSPECTOR_BREAKPOINT
+            if wide != self._wide_inspector:
+                self._wide_inspector = wide
+                self._inspector_toggle.set_active(wide)

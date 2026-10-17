@@ -12,6 +12,7 @@ from blueman.Functions import *
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
@@ -80,6 +81,7 @@ class Blueman(Gtk.Application):
         self.Shell: ManagerWindowShell | None = None
         self.Cards: ManagerDeviceCards | None = None
         self.CardMenu: ManagerDeviceMenu | None = None
+        self.Inspector: ManagerDeviceInspector | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -186,8 +188,11 @@ class Blueman(Gtk.Application):
 
         self.Cards = ManagerDeviceCards(self.List)
         self.Cards.connect("action-requested", self._on_card_action_requested)
+        self.Inspector = ManagerDeviceInspector(self.Cards)
+        self.Inspector.connect("action-requested", self._on_card_action_requested)
         if self.Shell is not None:
             self.Shell.install_device_cards(self.Cards, sw)
+            self.Shell.install_device_inspector(self.Inspector)
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
 
@@ -198,7 +203,7 @@ class Blueman(Gtk.Application):
 
     def _on_card_action_requested(
         self,
-        _cards: ManagerDeviceCards,
+        _source: object,
         object_path: str,
         action_name: str,
         anchor: Gtk.Widget,
@@ -227,6 +232,28 @@ class Blueman(Gtk.Application):
                 self.CardMenu.disconnect_service(device)
             elif action == DeviceCardAction.MORE:
                 self.CardMenu.popup_for_device(device, anchor)
+            elif action == DeviceCardAction.RENAME:
+                self.CardMenu.rename_device(device)
+            elif action == DeviceCardAction.REMOVE:
+                self._confirm_remove(device)
+
+    def _confirm_remove(self, device: Device) -> None:
+        def on_response(prompt: Gtk.MessageDialog, response: int) -> None:
+            if response == Gtk.ResponseType.ACCEPT:
+                self.remove(device)
+            prompt.destroy()
+
+        dialog = Gtk.MessageDialog(
+            transient_for=self.window,
+            modal=True,
+            message_type=Gtk.MessageType.WARNING,
+            buttons=Gtk.ButtonsType.CANCEL,
+            text=_("Forget %s?") % device.display_name,
+        )
+        dialog.add_button(_("Forget Device"), Gtk.ResponseType.ACCEPT)
+        dialog.format_secondary_text(_("You will need to pair with this device again."))
+        dialog.connect("response", on_response)
+        dialog.present()
 
     def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)

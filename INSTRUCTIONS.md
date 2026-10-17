@@ -53,11 +53,11 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 - **Constraints:** [security, performance, compatibility, deployment, design]
 
 ## 7. Current State
-- **Updated (UTC):** 2026-10-16
+- **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** R7 local card search/telemetry is verified and ready for its checkpoint; user-owned `BUGS_LOGS.md` remains untracked.
-- **Active task:** T-009
-- **Overall status:** Redesign takes priority over existing and future bug work. R1–R7 now include branding, themes, a responsive shell, functional model-backed cards, and local device search.
+- **Working tree:** R8 selected-device inspector is verified and ready for its checkpoint; all unrelated untracked user files remain untouched.
+- **Active task:** T-010
+- **Overall status:** Redesign takes priority over existing and future bug work. R1–R8 now include branding, themes, a responsive shell, functional searchable cards, and a responsive device inspector.
 
 ## 8. Task Board
 | ID | Priority | Status | Task / acceptance criteria | Notes |
@@ -72,16 +72,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-007 | High | DONE | Provide a repository-local build-and-run command that cannot replace the system Blueman installation. | Use `./blueman-next`; `./blueman` is occupied by the Python package directory. |
 | T-008 | High | DONE | Make `./blueman-next` install missing build/runtime dependencies without installing Blueman itself. | Debian/Ubuntu apt bootstrap installs only missing packages; `--no-deps` opts out. |
 | T-009 | High | DONE | R7 case-insensitive device search without per-keystroke model/D-Bus reads; retain genuine battery telemetry semantics. | Ctrl+K focuses search; group counts/visibility follow matches. |
+| T-010 | High | DONE | R8 selection-bound device inspector with responsive reveal, existing actions, rename, and confirmed Forget. | Inspector actions use explicit object paths and the classic list remains available. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-009
-- **Goal:** Add screenshot-aligned device search without introducing backend work while typing.
-- **Acceptance criteria:** Search matches name/address case-insensitively from card snapshots; group counts and empty sections update; Ctrl+K focuses search; battery remains sourced only from observed Battery1 data, including 0%.
-- **Relevant files:** `ManagerDeviceCards.py`, `Manager.py`, and card tests.
-- **Changes made:** Added accessible `Gtk.SearchEntry`, snapshot-only matching, filtered group counts/visibility, and Ctrl+K application action. Existing Battery1/unknown/0% behavior remains covered.
-- **Verification:** All 15 manager GUI tests pass, including an assertion that searching makes zero backing-model reads; compileall, strict schema, and diff checks pass.
-- **Blockers / risks:** Running-app keyboard and long translated text checks remain part of visual/hardware validation. User bug records remain deferred.
-- **Next action:** Commit R7, then begin R8 device inspector as the next redesign phase.
+- **Task ID:** T-010
+- **Goal:** Add the screenshot-aligned right-side inspector for the selected real device.
+- **Acceptance criteria:** Selection/property changes update identity, address, state and genuine battery; actions target the selected object path; rename reuses the existing dialog; Forget requires confirmation; inspector auto-shows wide and becomes user-toggleable narrow.
+- **Relevant files:** `ManagerDeviceInspector.py`, manager cards/menu/window/application modules, manager GUI tests, and install lists.
+- **Changes made:** Added the inspector panel, synchronized card snapshots, action routing, existing rename dialog reuse, destructive confirmation, header detail toggle, and breakpoint-controlled reveal behavior.
+- **Verification:** 16 manager GUI tests, compileall, strict schema, both theme CSS parses, local Meson build, launcher help, and diff checks pass. A five-second real startup loaded two BlueZ devices and remained alive until timeout.
+- **Blockers / risks:** Startup reproduced the existing PowerManager `UnknownMethod` D-Bus error; deferred to the user's bug backlog. Exact screenshot visual comparison and hardware action clicks remain manual.
+- **Next action:** Commit R8, then begin R9 pairing/discovery presentation.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -105,15 +106,16 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-16 | T-008 | Added Debian/Ubuntu dependency bootstrapping to `./blueman-next`, with `--no-deps` opt-out. | Mocked apt/build flow passes; real package set detected and reached the sudo password prompt. |
 | 2026-10-16 | T-006 | Added explicit-device card actions/grouping and promoted cards to the default presentation. | 15 manager GUI tests, compileall, schema, CSS parse, and diff checks pass. |
 | 2026-10-16 | T-009 | Added local name/address card search and Ctrl+K focus. | 15 manager GUI tests pass, including zero model reads while filtering. |
+| 2026-10-17 | T-010 | Added responsive selected-device inspector with explicit actions, rename, and confirmed Forget. | 16 manager GUI tests, local build, style/schema checks, and bounded real startup smoke pass. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Codex, 2026-10-15
 - **What was requested:** Do the redesign before fixing any existing bug.
-- **What is done:** R1–R6 and local build tooling are committed. R7 search/telemetry is verified and ready to commit.
+- **What is done:** R1–R7 and local build tooling are committed. R8 inspector is verified and ready to commit.
 - **What remains:** R6–R7 card actions/search/telemetry, later redesign phases, then deferred bug fixes. Generate Python/CSS palettes from one input rather than maintaining mirrored values.
-- **Exact next step:** Commit R7, then implement R8 selected-device inspector with responsive drawer behavior and confirmation for Forget.
-- **Files touched:** manager cards/application, card tests, and `INSTRUCTIONS.md`. Do not add or modify user-owned `BUGS_LOGS.md`.
-- **Checks run and results:** 15 manager GUI tests, compileall, strict schema, and diff checks pass. Running-app keyboard/hardware checks are not run.
+- **Exact next step:** Commit R8, then restyle pairing/discovery while preserving BluezAgent/AuthAgent behavior.
+- **Files touched:** inspector plus manager cards/menu/window/application, install list, tests, and `INSTRUCTIONS.md`. Do not add or modify any unrelated untracked files.
+- **Checks run and results:** 16 manager GUI tests, compileall, schema/CSS checks, local build/help, and bounded real startup pass. Existing PowerManager D-Bus error is deferred.
 - **Important warnings:** Preserve user files and backend behavior. Fix redesign-introduced regressions, but do not expand scope into existing bugs. Prior review findings remain recorded in T-001 and conversation.
 - **Questions for user:** None.
 

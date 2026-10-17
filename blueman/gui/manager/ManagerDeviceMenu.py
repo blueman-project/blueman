@@ -113,6 +113,23 @@ class ManagerDeviceMenu(Gtk.Menu):
             None,
         )
 
+    def rename_device(self, device: Device) -> None:
+        def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
+            if response_id == Gtk.ResponseType.ACCEPT:
+                device.set('Alias', alias_entry.get_text())
+            elif response_id == 1:
+                device.set('Alias', '')
+            dialog.destroy()
+
+        builder = Builder("rename-device.ui")
+        dialog = builder.get_widget("dialog", Gtk.Dialog)
+        dialog.set_transient_for(self.Blueman.window)
+        dialog.props.icon_name = "blueman"
+        alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
+        alias_entry.set_text(device['Alias'])
+        dialog.connect("response", on_response)
+        dialog.present()
+
     def clear(self) -> None:
         def remove_and_destroy(child: Gtk.Widget) -> None:
             self.remove(child)
@@ -423,26 +440,8 @@ class ManagerDeviceMenu(Gtk.Menu):
             item.show()
         item.props.tooltip_text = _("Block/Unblock this device")
 
-        def on_rename(_item: Gtk.MenuItem, device: Device) -> None:
-            def on_response(dialog: Gtk.Dialog, response_id: int) -> None:
-                if response_id == Gtk.ResponseType.ACCEPT:
-                    assert isinstance(alias_entry, Gtk.Entry)  # https://github.com/python/mypy/issues/2608
-                    device.set('Alias', alias_entry.get_text())
-                elif response_id == 1:
-                    device.set('Alias', '')
-                dialog.destroy()
-
-            builder = Builder("rename-device.ui")
-            dialog = builder.get_widget("dialog", Gtk.Dialog)
-            dialog.set_transient_for(self.Blueman.window)
-            dialog.props.icon_name = "blueman"
-            alias_entry = builder.get_widget("alias_entry", Gtk.Entry)
-            alias_entry.set_text(device['Alias'])
-            dialog.connect("response", on_response)
-            dialog.present()
-
         item = Gtk.MenuItem.new_with_mnemonic(_("R_ename device…"))
-        item.connect('activate', on_rename, self.SelectedDevice)
+        item.connect('activate', lambda _item: self.rename_device(self.SelectedDevice))
         self.append(item)
         item.show()
 

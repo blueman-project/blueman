@@ -156,6 +156,25 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         cards.search_entry.set_text("")
         cards._apply_search()
 
+        from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
+        inspector = ManagerDeviceInspector(cards)
+        device_list.emit("device-selected", connected, connected_iter)
+        self.assertEqual(inspector._name.get_text(), "Headphones")
+        self.assertEqual(inspector._address.get_text(), "00:11:22:33:44:55")
+        self.assertEqual(inspector._primary.get_label(), "Disconnect")
+        device_list.liststore.set_value(connected_iter, device_list.COLUMNS["alias"], "Studio Headphones")
+        device_list.emit(
+            "device-property-changed", connected, connected_iter, ("Alias", "Studio Headphones")
+        )
+        self.assertEqual(inspector._name.get_text(), "Studio Headphones")
+        inspector_requests: list[tuple[str, str]] = []
+        inspector.connect(
+            "action-requested",
+            lambda _inspector, path, action, _anchor: inspector_requests.append((path, action)),
+        )
+        inspector._primary.clicked()
+        self.assertEqual(inspector_requests, [(connected.object_path, DeviceCardAction.DISCONNECT.value)])
+
         connected_card = cards.cards_by_path[connected.object_path]
         device_list.liststore.set_value(
             connected_iter, device_list.COLUMNS["alias"], "Office Headphones"
@@ -191,6 +210,7 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         cards.sync_structure()
         self.assertNotIn(available.object_path, cards.cards_by_path)
         cards.destroy()
+        inspector.destroy()
 
 
 if __name__ == "__main__":
