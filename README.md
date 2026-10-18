@@ -1,3 +1,6 @@
+# blueman-next
+![Blueman redesign](blueman-next.png)
+
 ## Description
 
 Blueman is a GTK+ Bluetooth Manager
