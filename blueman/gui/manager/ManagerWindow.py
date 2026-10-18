@@ -88,13 +88,11 @@ class ManagerWindowShell:
             visible=True,
         )
         self._dashboard.get_style_context().add_class("device-dashboard")
-        self._workspace = Gtk.Box(
-            orientation=Gtk.Orientation.HORIZONTAL,
-            hexpand=True,
-            vexpand=True,
-            visible=True,
-        )
-        self._workspace.pack_start(self._dashboard, True, True, 0)
+        self._workspace = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
+        self._workspace.set_hexpand(True)
+        self._workspace.set_vexpand(True)
+        self._workspace.set_visible(True)
+        self._workspace.pack1(self._dashboard, resize=True, shrink=False)
 
         self.main_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.main_paned.get_style_context().add_class("app-main")
@@ -144,7 +142,7 @@ class ManagerWindowShell:
             parent.remove(search)
         search.set_placeholder_text(_("Search devices, files, or actions…"))
 
-        search_wrap = Gtk.Overlay(visible=True)
+        search_wrap = Gtk.Overlay(hexpand=True, visible=True)
         search_wrap.get_style_context().add_class("dashboard-search")
         search_wrap.add(search)
         shortcut = Gtk.Box(
@@ -164,7 +162,11 @@ class ManagerWindowShell:
         search.show()
         self._dashboard.pack_start(search_wrap, False, False, 0)
 
-        heading = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, visible=True)
+        heading = Gtk.Box(
+            orientation=Gtk.Orientation.HORIZONTAL,
+            hexpand=True,
+            visible=True,
+        )
         heading.get_style_context().add_class("dashboard-header")
         titles = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, visible=True)
         title = Gtk.Label(label=_("Bluetooth Devices"), xalign=0, visible=True)
@@ -217,7 +219,7 @@ class ManagerWindowShell:
             visible=True,
         )
         revealer.add(inspector)
-        self._workspace.pack_end(revealer, False, False, 0)
+        self._workspace.pack2(revealer, resize=False, shrink=False)
         self._inspector_revealer = revealer
         self._inspector_toggle.set_sensitive(True)
         wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
@@ -380,6 +382,7 @@ class ManagerWindowShell:
                 label.set_visible(not compact)
         if self.sidebar.get_size_request()[0] != width:
             self.sidebar.set_size_request(width, -1)
+        if self.main_paned.get_position() != width:
             self.main_paned.set_position(width)
         if self._inspector is not None:
             inspector_width = inspector_width_for(allocation.width)

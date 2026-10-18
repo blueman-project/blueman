@@ -317,6 +317,7 @@ class ManagerDeviceCards(Gtk.Box):
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL,
             spacing=20,
+            hexpand=True,
             margin_start=28,
             margin_end=28,
             margin_bottom=28,
@@ -359,12 +360,18 @@ class ManagerDeviceCards(Gtk.Box):
         self.pack_start(self._discovery_revealer, False, False, 0)
 
         for group in DeviceGroup:
-            section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, visible=True)
+            section = Gtk.Box(
+                orientation=Gtk.Orientation.VERTICAL,
+                spacing=8,
+                hexpand=True,
+                visible=True,
+            )
             title = Gtk.Label(xalign=0, visible=True)
             title.get_style_context().add_class("section-title")
             cards = Gtk.ListBox(
                 selection_mode=Gtk.SelectionMode.SINGLE,
                 activate_on_single_click=False,
+                hexpand=True,
                 visible=True,
             )
             cards.get_style_context().add_class("device-card-list")

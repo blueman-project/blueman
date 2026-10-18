@@ -55,8 +55,8 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 ## 7. Current State
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
-- **Working tree:** T-019 category-artwork pass is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-019
+- **Working tree:** T-020 dashboard expansion fix is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
+- **Active task:** T-020
 - **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
@@ -82,16 +82,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-017 | Critical | DONE | Close the remaining large visual gap to the supplied screenshot through exact composition and scale work. | Removed title-heavy header content, widened columns, added search shortcut chrome, rebuilt card hierarchy, added category palettes and layered translucent surfaces, and inspected fresh dark runtime captures. |
 | T-018 | Critical | DONE | Correct the real 1397×926 result shown by the user. | Added intermediate responsive column sizing, strengthened light surfaces over bright wallpaper, softened card buttons, and left the local preview in dark mode. |
 | T-019 | High | DONE | Replace generic system glyphs for the visible audio devices with bundled premium SVG illustrations. | Added local speaker/headphones SVGs, deterministic category mapping, shared card/inspector artwork, and fallback preservation. |
+| T-020 | Critical | DONE | Remove the unintended unused strip in the central dashboard visible in wide captures. | Search, heading, sections, lists and cards now fill the center pane; nested panes keep sidebar/dashboard/inspector adjacent. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-019
-- **Goal:** Close the obvious artwork gap in the speaker/headphone cards and inspector without downloading or fabricating product-specific images.
-- **Acceptance criteria:** Bundled speaker and headphones SVGs install with the existing icon tree; category mapping is deterministic and tested; cards and inspector use the same illustration; fallback remains the BlueZ icon.
+- **Task ID:** T-020
+- **Goal:** Fix the central-column expansion defect that makes the implementation visibly unlike the reference even when the window is wide.
+- **Acceptance criteria:** Search, heading, grouped lists and every card consume the dashboard width minus intentional 28px margins; the pair action aligns near the inspector; no 100px+ dead strip remains.
 - **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Added detailed local speaker and headphones SVGs to the existing hicolor device icon tree; introduced tested category-to-illustration mapping; cards and inspector now share the mapping; unknown categories retain the BlueZ icon; increased artwork render sizes.
-- **Verification:** 22 manager GUI tests pass; both new icons resolve from the source icon theme; compileall, local build and diff checks pass. Runtime capture `/tmp/blueman-next-phase19-artwork-dark.png` confirms the new artwork in both card and inspector.
-- **Blockers / risks:** Artwork is intentionally category-level, not false product-specific imagery.
-- **Next action:** Commit T-019 before another visual phase.
+- **Changes made:** Enabled horizontal expansion throughout dashboard/search/sections/lists; replaced the workspace box with a nested horizontal paned layout so dashboard and inspector remain adjacent; made the outer sidebar divider position self-correct after allocation.
+- **Verification:** 22 manager GUI tests pass; compileall and diff checks pass. Runtime capture `/tmp/blueman-next-phase20-expanded.png` confirms full-width search, heading and device cards with no unintended dead strip.
+- **Blockers / risks:** None specific to this layout correction.
+- **Next action:** Commit T-020 before any new visual phase.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]

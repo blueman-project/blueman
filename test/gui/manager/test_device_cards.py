@@ -189,6 +189,9 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         available_iter = device_list.add(available)
 
         cards = ManagerDeviceCards(device_list)
+        self.assertTrue(cards.get_hexpand())
+        self.assertTrue(all(section.get_hexpand() for section in cards._section_containers.values()))
+        self.assertTrue(all(section.get_hexpand() for section in cards._sections.values()))
         self.assertFalse(cards._discovery_revealer.get_reveal_child())
         cards.set_discovery_state(True, 0.42)
         self.assertTrue(cards._discovery_revealer.get_reveal_child())
