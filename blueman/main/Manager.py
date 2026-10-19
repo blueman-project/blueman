@@ -139,6 +139,7 @@ class Blueman(Gtk.Application):
                 action.change_state(GLib.Variant.new_boolean(status))
 
             self.Toolbar._update_buttons(self.List.Adapter)
+            self.Toolbar.on_discovering(self.List, self.List.Adapter, self.List.discovering)
 
     def on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
         logging.info(f"{name} {owner}")
@@ -268,9 +269,8 @@ class Blueman(Gtk.Application):
             self.List.populate_devices()
 
     def inquiry(self) -> None:
-        def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]) -> None:
-            key, value = key_value
-            if key == "Discovering" and not value:
+        def on_discovering(_lst: ManagerDeviceList, _adapter: Adapter | None, state: bool) -> None:
+            if not state:
                 prog.finalize()
 
                 self.List.disconnect(s1)
@@ -293,7 +293,7 @@ class Blueman(Gtk.Application):
         self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)
-        s2 = self.List.connect("adapter-property-changed", prop_changed)
+        s2 = self.List.connect("discovering", on_discovering)
 
     def infobar_update(self, message: str, bt: str | None = None, icon_name: str = "dialog-warning") -> None:
         if icon_name == "dialog-warning":

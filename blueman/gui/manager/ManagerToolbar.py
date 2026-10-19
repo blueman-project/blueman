@@ -24,6 +24,7 @@ class ManagerToolbar:
         self.blueman.List.connect("device-property-changed", self.on_device_propery_changed)
         self.blueman.List.connect("adapter-changed", self.on_adapter_changed)
         self.blueman.List.connect("adapter-property-changed", self.on_adapter_property_changed)
+        self.blueman.List.connect("discovering", self.on_discovering)
 
         self.b_search = blueman.builder.get_widget("b_search", Gtk.ToolButton)
         self.b_bond = blueman.builder.get_widget("b_bond", Gtk.ToolButton)
@@ -44,15 +45,21 @@ class ManagerToolbar:
 
         self.on_adapter_changed(blueman.List, blueman.List.get_adapter_path())
 
-    def on_adapter_property_changed(self, _lst: ManagerDeviceList, adapter: Adapter,
-                                    key_value: tuple[str, object]) -> None:
-        key, value = key_value
-        if key == "Discovering" or key == "Powered":
-            self._update_buttons(adapter)
+    def on_discovering(self, _lst: ManagerDeviceList, adapter: Adapter | None, state: bool) -> None:
+        logging.debug(f"discovering state: {state}")
+        self.b_search.props.sensitive = not state and (adapter is not None and adapter["Powered"])
 
-    def on_adapter_changed(self, _lst: ManagerDeviceList, adapter_path: ObjectPath | None) -> None:
+    def on_adapter_property_changed(self, lst: ManagerDeviceList, adapter: Adapter,
+                                    key_value: tuple[str, object]) -> None:
+
+        key, value = key_value
+        if key == "Powered":
+            self.on_discovering(lst, adapter, lst.discovering)
+
+    def on_adapter_changed(self, lst: ManagerDeviceList, adapter_path: ObjectPath | None) -> None:
         logging.debug(f"toolbar adapter {adapter_path}")
         self._update_buttons(None if adapter_path is None else Adapter(obj_path=adapter_path))
+        self.on_discovering(lst, lst.Adapter, lst.discovering)
 
     def on_device_selected(
         self,
@@ -61,14 +68,16 @@ class ManagerToolbar:
         _tree_iter: Gtk.TreeIter,
     ) -> None:
         self._update_buttons(dev_list.Adapter)
+        self.on_discovering(dev_list, dev_list.Adapter, dev_list.discovering)
 
     def _update_buttons(self, adapter: Adapter | None) -> None:
         powered = adapter is not None and adapter["Powered"]
-        self.b_search.props.sensitive = powered and not (adapter and adapter["Discovering"])
-
         pm_enabled = "PowerManager" in self.blueman.Applet.QueryPlugins()
         bt_status_box = self.blueman.builder.get_widget("bt_status_box", Gtk.Box)
         bt_status_box.set_visible(pm_enabled)
+
+        # We do need to update
+        self.on_discovering(self.blueman.List, self.blueman.List.Adapter, self.blueman.List.discovering)
 
         tree_iter = self.blueman.List.selected()
         opacity = 0.5
