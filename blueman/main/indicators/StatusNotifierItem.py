@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import Union, TypeVar, Any
+from typing import Union, TypeVar, Any, Optional
 from collections.abc import Iterable, Callable
 
 from gi.repository import Gio, GLib, Pango
@@ -28,25 +28,45 @@ class MenuService(DbusService):
                                             if idx in ids])
 
         self.add_signal("LayoutUpdated", ("u", "i"))
+        self._source_id: Optional[int] = None
+        self._layout_cache: Optional[tuple[int, tuple[int, dict[str, GLib.Variant], list[GLib.Variant]]]] = None
 
-        GLib.timeout_add(100, self._advertise_revision)
+    def unregister(self) -> None:
+        if self._source_id is not None:
+            GLib.source_remove(self._source_id)
+            self._source_id = None
+        super().unregister()
 
     def set_items(self, items: Iterable[MenuItemDict]) -> None:
         self._items = OrderedDict((item["id"], item) for item in items)
         self._revision += 1
+        self._layout_cache = None
+        if self._source_id is None:
+            self._source_id = GLib.timeout_add(100, self._advertise_revision)
 
     def _advertise_revision(self) -> bool:
+        self._source_id = None
         if self._revision != self._revision_advertised:
             self.emit_signal("LayoutUpdated", self._revision, 0)
             self._revision_advertised = self._revision
-        return True
+        return False
 
     def _get_layout(self, parent_id: int, _recursion_depth: int, _property_names: list[str]
                     ) -> tuple[int, tuple[int, dict[str, GLib.Variant], list[GLib.Variant]]]:
         if parent_id == 0:
-            return self._revision, (0, {'children-display': GLib.Variant("s", "submenu")},
-                                    self._render_menu(((item["id"] << 8, item) for item in self._items.values()),
-                                    self._render_submenu))
+            if self._layout_cache is None:
+                self._layout_cache = (
+                    self._revision,
+                    (
+                        0,
+                        {'children-display': GLib.Variant("s", "submenu")},
+                        self._render_menu(
+                            ((item["id"] << 8, item) for item in self._items.values()),
+                            self._render_submenu,
+                        ),
+                    ),
+                )
+            return self._layout_cache
         else:
             item = self._items[parent_id >> 8]
             if "submenu" in item and _recursion_depth != 0:
