@@ -12,7 +12,7 @@ from blueman.bluez.Device import Device, AnyDevice
 from blueman.bluez.errors import BluezDBusException, DBusNoSuchAdapterError
 from blueman.main.Builder import Builder
 from blueman.bluemantyping import GSignals, ObjectPath
-from blueman.bluez.Adapter import Adapter, AnyAdapter
+from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Manager import Manager
 from blueman.bluez.obex.ObjectPush import ObjectPush
 from blueman.bluez.obex.Manager import Manager as ObexManager
@@ -49,8 +49,6 @@ class SendTo:
         self._manager.connect_signal("device-created", self.__on_manager_signal, "device-added")
         self._manager.connect_signal("device-removed", self.__on_manager_signal, "device-removed")
 
-        self.__any_adapter = AnyAdapter()
-        self.__any_adapter.connect_signal("property-changed", self.__on_adapter_property_changed)
         self.__any_device = AnyDevice()
         self.__any_device.connect_signal("property-changed", self.__on_device_property_changed)
 
@@ -123,10 +121,6 @@ class SendTo:
             case _:
                 raise ValueError(f"Unhandled signal {signal_name}")
 
-    def __on_adapter_property_changed(self, _: AnyAdapter, key: str, value: Any, _object_path: ObjectPath) -> None:
-        if key == "Discovering":
-            self._device_selector.set_discovering(value)
-
     def __on_device_property_changed(self, _: AnyDevice, key: str, value: Any, object_path: ObjectPath) -> None:
         match key:
             case "Alias":
@@ -143,9 +137,10 @@ class SendTo:
         return False
 
     def _start_discovery(self, from_timer: bool = False) -> bool:
+        self._device_selector.set_discovering(True)
         for adapter in self._manager.get_adapters():
-            if not adapter["Discovering"]:
-                adapter.start_discovery()
+            adapter.start_discovery()
+            # FIXME: Look into using a DiscoveryFilter to search only devices that expose objpush
         if from_timer:
             return False
         return True
@@ -154,7 +149,6 @@ class SendTo:
         self._manager.destroy()
 
         del self.__any_device
-        del self.__any_adapter
         del self._manager
 
     def do_send(self) -> None:
@@ -304,10 +298,9 @@ class Sender(Gtk.Dialog):
         logging.info(f"Sending to {device['Address']}")
         self.l_dest.props.label = device.display_name
 
-        # Stop discovery if discovering and let adapter settle for a second
-        if self.adapter["Discovering"]:
-            self.adapter.stop_discovery()
-            time.sleep(1)
+        # Stop discovery and let adapter settle for a second
+        self.adapter.stop_discovery()
+        time.sleep(1)
 
         self.create_session()
 

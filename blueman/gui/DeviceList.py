@@ -31,6 +31,7 @@ class DeviceList(GenericList):
         'device-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Device, Gtk.TreeIter, object,)),
         # @param: adapter, (key, value)
         'adapter-property-changed': (GObject.SignalFlags.RUN_LAST, None, (Adapter, object,)),
+        'discovering': (GObject.SignalFlags.RUN_LAST, None, (Adapter, bool)),
         # @param: progress (0 to 1)
         'discovery-progress': (GObject.SignalFlags.RUN_LAST, None, (float,)),
 
@@ -67,7 +68,7 @@ class DeviceList(GenericList):
         self.__discovery_time: float = 0
         self.__adapter_path: ObjectPath | None = None
         self.Adapter: Adapter | None = None
-        self.discovering = False
+        self.__discovering = False
 
         data = tabledata + [
             {"id": "device", "type": object},
@@ -89,6 +90,15 @@ class DeviceList(GenericList):
         self.icon_theme.prepend_search_path(ICON_PATH.as_posix())
         # handle icon theme changes
         self.icon_theme.connect("changed", self.on_icon_theme_changed)
+
+    @property
+    def discovering(self) -> bool:
+        return self.__discovering
+
+    @discovering.setter
+    def discovering(self, state: bool) -> None:
+        self.__discovering = state
+        self.emit("discovering", self.Adapter, state)
 
     def destroy(self) -> None:
         self.any_device.disconnect(self._anydevhandler)
@@ -129,10 +139,6 @@ class DeviceList(GenericList):
     def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: ObjectPath) -> None:
         if not self.Adapter or self.Adapter.get_object_path() != path:
             return
-
-        if key == "Discovering" and not value:
-            self.discovering = False
-
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
     def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, path: ObjectPath) -> None:
@@ -180,7 +186,6 @@ class DeviceList(GenericList):
         self.clear()
         if self.discovering:
             self.stop_discovery()
-            self.emit("adapter-property-changed", self.Adapter, ("Discovering", False))
 
         adapter = adapter_path_to_name(adapter)
         adapter_path: ObjectPath | None = None
@@ -265,9 +270,9 @@ class DeviceList(GenericList):
         return self.__adapter_path if self.is_valid_adapter() else None
 
     def stop_discovery(self) -> None:
-        self.discovering = False
         if self.Adapter is not None:
             self.Adapter.stop_discovery()
+        self.discovering = False
 
     def get_selected_device(self) -> Device | None:
         selected = self.selected()
