@@ -160,6 +160,10 @@ class BluezAgent(DbusService):
             device.disconnect_signal(handlerid)
             self._on_cancel()
 
+    def _connect_device_signal(self, object_path: ObjectPath) -> None:
+        dev = Device(obj_path=object_path)
+        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
+
     def _on_release(self) -> None:
         logging.info("Agent.Release")
         self._on_cancel()
@@ -195,8 +199,7 @@ class BluezAgent(DbusService):
 
     def _on_display_passkey(self, object_path: ObjectPath, passkey: int, entered: int) -> None:
         logging.info(f"DisplayPasskey ({object_path}, {passkey:d} {entered:d})")
-        dev = Device(obj_path=object_path)
-        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
+        self._connect_device_signal(object_path)
 
         key = f"{passkey:06}"
         notify_message = _("Pairing passkey for") + f" {self.get_device_string(object_path)}: " \
@@ -207,8 +210,7 @@ class BluezAgent(DbusService):
 
     def _on_display_pin_code(self, object_path: ObjectPath, pin_code: str) -> None:
         logging.info(f'DisplayPinCode ({object_path}, {pin_code})')
-        dev = Device(obj_path=object_path)
-        self._devhandlerids[object_path] = dev.connect_signal("property-changed", self._on_device_property_changed)
+        self._connect_device_signal(object_path)
 
         notify_message = _("Pairing PIN code for") + f" {self.get_device_string(object_path)}: {pin_code}"
         self._notification = Notification("Bluetooth", notify_message, 0, icon_name="blueman")
@@ -223,6 +225,8 @@ class BluezAgent(DbusService):
                 err(BluezErrorCanceled("User canceled pairing"))
 
         logging.info("Agent.RequestConfirmation")
+        self._connect_device_signal(object_path)
+
         notify_message = _("Pairing request for:") + f"\n{self.get_device_string(object_path)}"
 
         if passkey:

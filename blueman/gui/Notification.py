@@ -257,6 +257,7 @@ class _NotificationBubble(Gio.DBusProxy):
             elif signal_val == 4:
                 logging.debug('Undefined/reserved reasons.')
         elif signal_name == 'ActionInvoked':
+            logging.debug('ActionInvoked handling callbacks.')
             if signal_val in self._callbacks:
                 self._callbacks[signal_val](signal_val)
 
