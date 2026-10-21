@@ -115,6 +115,11 @@ class Base(GObject.Object, metaclass=BaseMeta):
             else:
                 raise parse_dbus_error(e)
 
+    def get_cached_property(self, name: str) -> Any:
+        """Return the value that the proxy holds, or None, without a D-Bus call."""
+        prop = self.__proxy.get_cached_property(name)
+        return None if prop is None else prop.unpack()
+
     def set(self, name: str, value: str | int | bool) -> None:
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
