@@ -1,7 +1,7 @@
 import logging
 from gettext import gettext as _
 from typing import Any
-from blueman.bluemantyping import ObjectPath
+from blueman.bluemantyping import BtAddress, ObjectPath
 
 from blueman.bluez.Device import Device
 from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
@@ -15,6 +15,17 @@ class ConnectionNotifier(AppletPlugin):
     __icon__ = "bluetooth-symbolic"
     __description__ = _("Shows desktop notifications when devices get connected or disconnected.")
 
+    __gsettings__ = {
+        "schema": "org.blueman.general",
+        "path": None
+    }
+    __options__ = {
+        "connection-notification-disabled-devices": {
+            "type": list,
+            "default": []
+        }
+    }
+
     _notifications: dict[ObjectPath, _NotificationBubble | _NotificationDialog] = {}
 
     def on_load(self) -> None:
@@ -26,6 +37,10 @@ class ConnectionNotifier(AppletPlugin):
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
+            disabled_devices: list[BtAddress] = self.get_option("connection-notification-disabled-devices")
+            if BtAddress(device["Address"]) in disabled_devices:
+                return
+
             if value:
                 self._notifications[path] = notification = Notification(
                     device.display_name,

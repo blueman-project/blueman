@@ -4,6 +4,7 @@ SUBDIRS =
 bluemandir = $(pythondir)/blueman/plugins/manager
 
 blueman_PYTHON = \
+	ConnectionNotifier.py \
 	Info.py		\
 	Notes.py	\
 	Services.py	\
@@ -21,4 +22,3 @@ DISTCLEANFILES = \
 	
 clean-local:
 	rm -rf *.pyc *.pyo 
-
