@@ -139,8 +139,14 @@ class SendTo:
     def _start_discovery(self, from_timer: bool = False) -> bool:
         self._device_selector.set_discovering(True)
         for adapter in self._manager.get_adapters():
+            discover_filter = {}
+            discover_filter["Transport"] = GLib.Variant("s", "auto")
+            discover_filter["UUIDs"] = GLib.Variant("as", ["00001105-0000-1000-8000-00805f9b34fb"])
+            param = GLib.Variant("(a{sv])")
+
+            adapter.set_discovery_filter((param,))
             adapter.start_discovery()
-            # FIXME: Look into using a DiscoveryFilter to search only devices that expose objpush
+
         if from_timer:
             return False
         return True
