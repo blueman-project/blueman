@@ -79,6 +79,7 @@ class BluemanApplet(Gtk.Application):
         logging.info(f"{name} {owner}")
         self.manager_state = True
         self.plugin_run_state_changed = True
+        self.Manager.reconnect()
         for plugin in self.Plugins.get_loaded_plugins(AppletPlugin):
             plugin.on_manager_state_changed(self.manager_state)
 
