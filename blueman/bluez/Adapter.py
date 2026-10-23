@@ -21,6 +21,9 @@ class Adapter(Base):
     def stop_discovery(self) -> None:
         self._call('StopDiscovery')
 
+    def set_discovery_filter(self, param: GLib.Variant) -> None:
+        self._call("SetDiscoveryFilter", param)
+
     def remove_device(self, device: Device) -> None:
         param = GLib.Variant('(o)', (device.get_object_path(),))
         self._call('RemoveDevice', param)

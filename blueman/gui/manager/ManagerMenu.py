@@ -49,6 +49,7 @@ class ManagerMenu:
         self.blueman.List.connect("adapter-added", self.on_adapter_added)
         self.blueman.List.connect("adapter-removed", self.on_adapter_removed)
         self.blueman.List.connect("device-selected", self.on_device_selected)
+        self.blueman.List.connect("discovering", self.on_discovering)
 
         for adapter in self.blueman.List.manager.get_adapters():
             self.on_adapter_added(None, adapter.get_object_path())
@@ -98,16 +99,14 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
+    def on_discovering(self, lst: ManagerDeviceList, adapter: Adapter, state: bool) -> None:
+        if self.Search:
+            self.Search.props.sensitive = not state
+
     def on_adapter_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
         if name == "Name" or name == "Alias":
             item = self.adapter_items[path][0]
             item.set_label(value)
-        elif name == "Discovering":
-            if self.Search:
-                if value:
-                    self.Search.props.sensitive = False
-                else:
-                    self.Search.props.sensitive = True
         elif name == "Powered":
             self._update_power()
 
