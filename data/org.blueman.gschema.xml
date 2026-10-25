@@ -208,4 +208,11 @@
       <description>If this is set to true clicking the system tray icon will toggle the manager instead of focusing on it.</description>
     </key>
   </schema>
+  <schema id="org.blueman.plugins.connectionnotifier" path="/org/blueman/plugins/connectionnotifier/">
+    <key type="as" name="disabled-devices">
+      <default>[]</default>
+      <summary>Devices with connection notifications disabled</summary>
+      <description>Stores the Bluetooth addresses of devices whose connection and disconnection notifications are disabled.</description>
+    </key>
+  </schema>
 </schemalist>
