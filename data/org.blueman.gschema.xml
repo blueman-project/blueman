@@ -73,11 +73,6 @@
       <summary>Use notification daemon</summary>
       <description>If this is set to false blueman always uses its internal fallback notification dialog and does not invoke a notification daemon. Otherwise the fallback dialog will only be used if actions need to be displayed and the notification daemon does not report to support them.</description>
     </key>
-    <key type="as" name="connection-notification-disabled-devices">
-      <default>[]</default>
-      <summary>Devices with connection notifications disabled</summary>
-      <description>Stores the Bluetooth addresses of devices whose connection and disconnection notifications are disabled.</description>
-    </key>
     <key type="b" name="symbolic-status-icons">
       <default>false</default>
       <summary>Use symbolic icons in the status tray</summary>
@@ -211,6 +206,13 @@
       <default>false</default>
       <summary>Toggle the manager on clicking the system tray icon</summary>
       <description>If this is set to true clicking the system tray icon will toggle the manager instead of focusing on it.</description>
+    </key>
+  </schema>
+  <schema id="org.blueman.plugins.connectionnotifier" path="/org/blueman/plugins/connectionnotifier/">
+    <key type="as" name="disabled-devices">
+      <default>[]</default>
+      <summary>Devices with connection notifications disabled</summary>
+      <description>Stores the Bluetooth addresses of devices whose connection and disconnection notifications are disabled.</description>
     </key>
   </schema>
 </schemalist>

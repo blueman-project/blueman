@@ -16,11 +16,11 @@ class ConnectionNotifier(AppletPlugin):
     __description__ = _("Shows desktop notifications when devices get connected or disconnected.")
 
     __gsettings__ = {
-        "schema": "org.blueman.general",
+        "schema": "org.blueman.plugins.connectionnotifier",
         "path": None
     }
     __options__ = {
-        "connection-notification-disabled-devices": {
+        "disabled-devices": {
             "type": list,
             "default": []
         }
@@ -37,7 +37,7 @@ class ConnectionNotifier(AppletPlugin):
     def on_device_property_changed(self, path: ObjectPath, key: str, value: Any) -> None:
         if key == "Connected":
             device = Device(obj_path=path)
-            disabled_devices: list[BtAddress] = self.get_option("connection-notification-disabled-devices")
+            disabled_devices: list[BtAddress] = self.get_option("disabled-devices")
             if BtAddress(device["Address"]) in disabled_devices:
                 return
 

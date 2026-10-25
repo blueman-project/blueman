@@ -12,30 +12,30 @@ from gi.repository import Gtk
 
 class ConnectionNotifier(ManagerPlugin, MenuItemsProvider):
     __gsettings__ = {
-        "schema": "org.blueman.general",
+        "schema": "org.blueman.plugins.connectionnotifier",
         "path": None
     }
     __options__ = {
-        "connection-notification-disabled-devices": {
+        "disabled-devices": {
             "type": list,
             "default": []
         }
     }
 
     def _notifications_enabled(self, device: Device) -> bool:
-        disabled_devices: list[BtAddress] = self.get_option("connection-notification-disabled-devices")
+        disabled_devices: list[BtAddress] = self.get_option("disabled-devices")
         return BtAddress(device["Address"]) not in disabled_devices
 
     def _set_notifications_enabled(self, device: Device, enabled: bool) -> None:
         address = BtAddress(device["Address"])
-        disabled_devices: list[BtAddress] = self.get_option("connection-notification-disabled-devices")
+        disabled_devices: list[BtAddress] = self.get_option("disabled-devices")
 
         if enabled:
             disabled_devices = [dev for dev in disabled_devices if dev != address]
         elif address not in disabled_devices:
             disabled_devices.append(address)
 
-        self.set_option("connection-notification-disabled-devices", disabled_devices)
+        self.set_option("disabled-devices", disabled_devices)
 
     def on_request_menu_items(
         self,
