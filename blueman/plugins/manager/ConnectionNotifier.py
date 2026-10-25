@@ -43,9 +43,12 @@ class ConnectionNotifier(ManagerPlugin, MenuItemsProvider):
         device: Device,
         _powered: bool,
     ) -> list[DeviceMenuItem]:
-        item = Gtk.CheckMenuItem.new_with_mnemonic(_("Show _notifications"))
-        item.props.active = self._notifications_enabled(device)
-        item.props.tooltip_text = _("Show notifications when this device connects or disconnects")
+        item = Gtk.CheckMenuItem(
+            label=_("Show _notifications"),
+            visible=True,
+            tooltip_text=_("Show notifications when this device connects or disconnects"),
+            use_underline=True,
+            active = self._notifications_enabled(device)
+        )
         item.connect("toggled", lambda x: self._set_notifications_enabled(device, x.props.active))
-        item.show()
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 600)]

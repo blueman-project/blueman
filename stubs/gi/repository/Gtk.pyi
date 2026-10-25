@@ -9372,6 +9372,7 @@ class CheckMenuItem(MenuItem):
 
     def __init__(self,
         *,
+        active: bool = False,
         # MenuItem
         label: str = "",
         use_underline: bool = False,
