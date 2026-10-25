@@ -48,7 +48,7 @@ class ConnectionNotifier(ManagerPlugin, MenuItemsProvider):
             visible=True,
             tooltip_text=_("Show notifications when this device connects or disconnects"),
             use_underline=True,
-            active = self._notifications_enabled(device)
+            active=self._notifications_enabled(device)
         )
         item.connect("toggled", lambda x: self._set_notifications_enabled(device, x.props.active))
         return [DeviceMenuItem(item, DeviceMenuItem.Group.ACTIONS, 600)]
