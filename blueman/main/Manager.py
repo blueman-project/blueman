@@ -134,10 +134,12 @@ class Blueman(Gtk.Application):
             status = params.unpack()[0]
             action.change_state(GLib.Variant.new_boolean(status))
         elif signal_name == "PluginsChanged":
-            if "PowerManager" in self.Applet.QueryPlugins():
+            pm_available = "PowerManager" in self.Applet.QueryPlugins()
+            if pm_available:
                 status = self.PowerManager.get_bluetooth_status()
                 action.change_state(GLib.Variant.new_boolean(status))
 
+            self.builder.get_widget("bt_status_item", Gtk.MenuItem).set_visible(pm_available)
             self.Toolbar._update_buttons(self.List.Adapter)
 
     def on_dbus_name_appeared(self, _connection: Gio.DBusConnection, name: str, owner: str) -> None:
@@ -166,6 +168,7 @@ class Blueman(Gtk.Application):
         action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
         bt_status_action = self.lookup_action("bluetooth_status")
         bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
+        self.builder.get_widget("bt_status_item", Gtk.MenuItem).set_visible(pm_available)
 
     def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)
@@ -194,14 +197,23 @@ class Blueman(Gtk.Application):
         if state:
             icon_name = "bluetooth"
             tooltip_text = _("Click to disable.")
+            menu_label = _("Turn Bluetooth _Off")
+            menu_icon_name = "bluetooth-disabled-symbolic"
         else:
             icon_name = "bluetooth-disabled"
             tooltip_text = _("Click to enable.")
+            menu_label = _("Turn Bluetooth _On")
+            menu_icon_name = "bluetooth-symbolic"
 
         box = self.builder.get_widget("bt_status_box", Gtk.Box)
         image = self.builder.get_widget("im_bluetooth_status", Gtk.Image)
         box.set_tooltip_text(tooltip_text)
         image.props.icon_name = icon_name
+
+        menu_item = self.builder.get_widget("bt_status_item", Gtk.MenuItem)
+        menu_image = self.builder.get_widget("im_bt_status_item", Gtk.Image)
+        menu_item.set_label(menu_label)
+        menu_image.props.icon_name = menu_icon_name
 
     def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
         width, height, x, y = self.Config["window-properties"]
