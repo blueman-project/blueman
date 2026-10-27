@@ -26,7 +26,7 @@ class ManagerMenu:
 
         self.adapter_items: dict[str, tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
-        self._insert_adapter_item_pos = 2
+        self._insert_adapter_item_pos = 3
 
         self.item_adapter = self.blueman.builder.get_widget("item_adapter", Gtk.MenuItem)
         self.item_device = self.blueman.builder.get_widget("item_device", Gtk.MenuItem)
