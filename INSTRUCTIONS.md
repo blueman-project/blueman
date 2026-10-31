@@ -56,7 +56,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
 - **Working tree:** T-020 dashboard expansion fix is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-020
+- **Active task:** T-022
 - **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
@@ -83,6 +83,11 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-018 | Critical | DONE | Correct the real 1397×926 result shown by the user. | Added intermediate responsive column sizing, strengthened light surfaces over bright wallpaper, softened card buttons, and left the local preview in dark mode. |
 | T-019 | High | DONE | Replace generic system glyphs for the visible audio devices with bundled premium SVG illustrations. | Added local speaker/headphones SVGs, deterministic category mapping, shared card/inspector artwork, and fallback preservation. |
 | T-020 | Critical | DONE | Remove the unintended unused strip in the central dashboard visible in wide captures. | Search, heading, sections, lists and cards now fill the center pane; nested panes keep sidebar/dashboard/inspector adjacent. |
+| T-021 | Critical | DONE | Mockup chrome: traffic-light borderless window, drag areas, Cairo sidebar radar, real adapter alias, power switch fallback when the applet lacks PowerManager. | Fixes startup GLib.Error with distro applet 2.3.5 and the switch shown OFF while connected. |
+| T-022 | Critical | TODO | Mockup device cards: icon actions per state, audio sound-settings action, copy MAC, battery glyph, available refresh, untruncated names. | |
+| T-023 | Critical | TODO | Mockup inspector: Play Sound/Send File/More tiles, Address/Type/Class rows, Open Sound Settings + Forget quick actions, centered rename button. | |
+| T-024 | Critical | TODO | Consolidated dark/light CSS: remove dead GtkXxx selectors and stacked passes; opaque-enough surfaces (no blur in GTK 3), mockup tokens. | Baseline showed background apps bleeding through translucent panels. |
+| T-025 | High | TODO | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
 
 ## 9. Active Task Detail
 - **Task ID:** T-020

@@ -63,6 +63,64 @@ class TestManagerWindowShell(unittest.TestCase):
         self.assertTrue(shell._inspector_revealer.get_reveal_child())
         window.destroy()
 
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_borderless_chrome_uses_traffic_lights(self) -> None:
+        from unittest.mock import patch
+        from blueman.gui.manager.ManagerWindow import ManagerWindowShell
+
+        window = Gtk.Window()
+        content = Gtk.Grid(visible=True)
+        window.add(content)
+        shell = ManagerWindowShell(window, content, "Blueman Next")
+
+        self.assertIs(window.get_titlebar(), shell.header)
+        self.assertNotIsInstance(shell.header, Gtk.HeaderBar)
+        self.assertEqual(list(shell.traffic_light_buttons), ["close", "minimize", "maximize"])
+        with patch.object(window, "iconify") as iconify, patch.object(window, "close") as close:
+            shell.traffic_light_buttons["minimize"].clicked()
+            shell.traffic_light_buttons["close"].clicked()
+        iconify.assert_called_once_with()
+        close.assert_called_once_with()
+        window.destroy()
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_power_card_shows_real_adapter_name_and_radar_state(self) -> None:
+        from blueman.gui.manager.ManagerWindow import ManagerWindowShell
+
+        window = Gtk.Window()
+        content = Gtk.Grid(visible=True)
+        window.add(content)
+        shell = ManagerWindowShell(window, content, "Blueman Next")
+
+        shell.set_adapter_name("Dorin's PC")
+        self.assertEqual(shell._adapter_name.get_text(), "Dorin's PC")
+        shell.set_adapter_name(None)
+        self.assertEqual(shell._adapter_name.get_text(), "This computer")
+
+        shell.set_discovery_state(True)
+        self.assertTrue(shell.radar.active)
+        shell.set_bluetooth_state(False)
+        self.assertFalse(shell.radar.active)
+        self.assertTrue(shell.radar.get_style_context().has_class("sidebar-radar-off"))
+        window.destroy()
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_radar_timer_runs_only_while_mapped_and_active(self) -> None:
+        from blueman.gui.manager.ManagerWindow import SidebarRadar
+
+        window = Gtk.OffscreenWindow()
+        radar = SidebarRadar()
+        window.add(radar)
+        radar.set_active(True)
+        self.assertEqual(radar._animation_source, 0)  # not mapped yet
+        window.show_all()
+        self.assertNotEqual(radar._animation_source, 0)
+        radar.set_active(False)
+        self.assertEqual(radar._animation_source, 0)
+        radar.set_active(True)
+        window.destroy()
+        self.assertEqual(radar._animation_source, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

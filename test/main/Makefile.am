@@ -8,6 +8,7 @@ EXTRA_DIST =    \
     test_dbus_proxies.py \
     test_gdbus_error.py \
     test_imports.py \
+    test_manager_power.py \
     test_netconf.py \
     test_pulseaudio_utils.py \
     test_sendto.py

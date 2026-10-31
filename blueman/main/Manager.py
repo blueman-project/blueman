@@ -169,9 +169,7 @@ class Blueman(Gtk.Application):
             status = params.unpack()[0]
             action.change_state(GLib.Variant.new_boolean(status))
         elif signal_name == "PluginsChanged":
-            if "PowerManager" in self.Applet.QueryPlugins():
-                status = self.PowerManager.get_bluetooth_status()
-                action.change_state(GLib.Variant.new_boolean(status))
+            action.change_state(GLib.Variant.new_boolean(self._get_bluetooth_status()))
 
             self.Toolbar._update_buttons(self.List.Adapter)
 
@@ -205,11 +203,57 @@ class Blueman(Gtk.Application):
             self.Shell.install_device_inspector(self.Inspector)
 
         self.List.connect("adapter-changed", self.on_adapter_changed)
+        self.List.connect("adapter-property-changed", self._on_adapter_property_changed)
+        self._update_adapter_name()
 
-        pm_available = "PowerManager" in self.Applet.QueryPlugins()
-        action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
         bt_status_action = self.lookup_action("bluetooth_status")
-        bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
+        bt_status_action.change_state(GLib.Variant.new_boolean(self._get_bluetooth_status()))
+
+    def _get_bluetooth_status(self) -> bool:
+        """Read power state from the applet, or from the adapter when the applet cannot answer.
+
+        A distribution applet older than this manager may advertise the PowerManager plugin
+        without exporting the interface; the adapter's Powered property is the truth then.
+        """
+        if "PowerManager" in self.Applet.QueryPlugins():
+            try:
+                return self.PowerManager.get_bluetooth_status()
+            except GLib.Error as e:
+                logging.warning(f"PowerManager unavailable, using adapter state: {e.message}")
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        return bool(adapter["Powered"]) if adapter is not None else False
+
+    def _set_bluetooth_status(self, status: bool) -> None:
+        try:
+            self.PowerManager.set_bluetooth_status(status)
+            return
+        except GLib.Error as e:
+            logging.warning(f"PowerManager unavailable, setting adapter power: {e.message}")
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        if adapter is not None and bool(adapter["Powered"]) != status:
+            adapter["Powered"] = status
+
+    def _update_adapter_name(self) -> None:
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        if self.Shell is not None:
+            self.Shell.set_adapter_name(adapter["Alias"] if adapter is not None else None)
+
+    def _on_adapter_property_changed(
+        self, _lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]
+    ) -> None:
+        key, value = key_value
+        if key == "Alias":
+            self._update_adapter_name()
+        elif key == "Powered" and "PowerManager" not in self.Applet.QueryPlugins():
+            action = self.lookup_action("bluetooth_status")
+            if action is not None and action.get_state().unpack() != bool(value):
+                action.change_state(GLib.Variant.new_boolean(bool(value)))
+
+    def _set_discovery_state(self, active: bool, progress: float | None = None) -> None:
+        if self.Cards is not None:
+            self.Cards.set_discovery_state(active, progress)
+        if self.Shell is not None:
+            self.Shell.set_discovery_state(active)
 
     def _on_card_action_requested(
         self,
@@ -284,14 +328,16 @@ class Blueman(Gtk.Application):
         self.quit()
 
     def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
+        previous = action.get_state()
         action.set_state(state_variant)
 
         state = state_variant.unpack()
-        self.PowerManager.set_bluetooth_status(state)
+        if previous is None or previous.unpack() != state:
+            self._set_bluetooth_status(state)
         if self.Shell is not None:
             self.Shell.set_bluetooth_state(state)
-        if not state and self.Cards is not None:
-            self.Cards.set_discovery_state(False)
+        if not state:
+            self._set_discovery_state(False)
 
         if state:
             icon_name = "bluetooth"
@@ -377,21 +423,20 @@ class Blueman(Gtk.Application):
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
             self.List.populate_devices()
+        self._update_adapter_name()
 
     def inquiry(self) -> None:
         def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]) -> None:
             key, value = key_value
             if key == "Discovering" and not value:
                 prog.finalize()
-                if self.Cards is not None:
-                    self.Cards.set_discovery_state(False)
+                self._set_discovery_state(False)
 
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
 
         def on_progress(_lst: ManagerDeviceList, frac: float) -> None:
-            if self.Cards is not None:
-                self.Cards.set_discovery_state(True, frac)
+            self._set_discovery_state(True, frac)
             if abs(1.0 - frac) <= 0.00001:
                 if not prog.started():
                     prog.start()
@@ -403,12 +448,10 @@ class Blueman(Gtk.Application):
 
         def on_error(e: Exception) -> None:
             prog.finalize()
-            if self.Cards is not None:
-                self.Cards.set_discovery_state(False)
+            self._set_discovery_state(False)
             self.infobar_update(*e_(e))
 
-        if self.Cards is not None:
-            self.Cards.set_discovery_state(True)
+        self._set_discovery_state(True)
         self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)
