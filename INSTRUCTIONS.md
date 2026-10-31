@@ -88,6 +88,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-023 | Critical | DONE | Mockup inspector: Play Sound/Send File/More tiles, Address/Type/Class rows, Open Sound Settings + Forget quick actions, centered rename button. | |
 | T-024 | Critical | DONE | Consolidated dark/light CSS: remove dead GtkXxx selectors and stacked passes; opaque-enough surfaces (no blur in GTK 3), mockup tokens. | Baseline showed background apps bleeding through translucent panels. |
 | T-025 | High | DONE | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
+| T-026 | High | DONE | Known-brand presentation: brand label, Brand row, brand avatar tints, earbuds/watch artwork, name-derived kind only when the class is uninformative. | Names first, then Bluetooth SIG company IDs; no logos (trademarks). |
 
 ## 9. Active Task Detail
 - **Task ID:** T-020

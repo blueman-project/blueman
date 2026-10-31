@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="case" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3a3542"/>
+      <stop offset=".55" stop-color="#101114"/>
+      <stop offset="1" stop-color="#2b2433"/>
+    </linearGradient>
+    <linearGradient id="bud" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4a4256"/>
+      <stop offset=".6" stop-color="#0c0d10"/>
+      <stop offset="1" stop-color="#3b2e48"/>
+    </linearGradient>
+  </defs>
+  <rect x="10" y="34" width="44" height="24" rx="11" fill="url(#case)" stroke="#141018" stroke-width="1"/>
+  <path d="M10 43h44" stroke="#5d5068" stroke-width="1.2" opacity=".8"/>
+  <rect x="28" y="47" width="8" height="2.4" rx="1.2" fill="#8b7a99" opacity=".8"/>
+  <ellipse cx="22" cy="20" rx="8.5" ry="9" fill="url(#bud)" stroke="#141018" stroke-width="1"/>
+  <path d="M26 26l3 11" stroke="url(#bud)" stroke-width="5.5" stroke-linecap="round"/>
+  <ellipse cx="42" cy="20" rx="8.5" ry="9" fill="url(#bud)" stroke="#141018" stroke-width="1"/>
+  <path d="M38 26l-3 11" stroke="url(#bud)" stroke-width="5.5" stroke-linecap="round"/>
+  <ellipse cx="19.5" cy="17" rx="3" ry="2.4" fill="#8b7a99" opacity=".55"/>
+  <ellipse cx="44.5" cy="17" rx="3" ry="2.4" fill="#8b7a99" opacity=".55"/>
+</svg>

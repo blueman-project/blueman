@@ -17,7 +17,16 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk, GLib, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
+from blueman.bluez.errors import BluezDBusException
 from blueman.DeviceClass import get_major_class
+from blueman.gui.manager.DeviceBrands import (
+    BRAND_CSS_CLASSES,
+    Brand,
+    ProductKind,
+    brand_for,
+    display_category,
+    product_kind,
+)
 from blueman.gui.theme.AnimationManager import start_animation, stop_animation_safe
 
 if TYPE_CHECKING:
@@ -61,8 +70,18 @@ def group_for_state(*, connected: bool, paired: bool) -> DeviceGroup:
     return DeviceGroup.AVAILABLE
 
 
-def illustration_icon_name(category: str, fallback: str) -> str:
-    """Choose bundled category artwork without claiming product-specific art."""
+KIND_ARTWORK = {
+    ProductKind.EARBUDS: "blueman-next-earbuds",
+    ProductKind.HEADPHONES: "blueman-next-headphones",
+    ProductKind.SPEAKER: "blueman-next-speaker",
+    ProductKind.WATCH: "blueman-next-watch",
+}
+
+
+def illustration_icon_name(category: str, fallback: str, kind: str | None = None) -> str:
+    """Choose bundled generic artwork for the product kind or class; never product-specific art."""
+    if kind in KIND_ARTWORK:
+        return KIND_ARTWORK[kind]
     normalized = category.casefold()
     if "head" in normalized:
         return "blueman-next-headphones"
@@ -85,6 +104,17 @@ class DeviceCardSnapshot:
     battery_percentage: float | None
     major_class: str = ""
     audio: bool = False
+    brand: Brand | None = None
+    kind: str | None = None
+
+    @property
+    def artwork(self) -> str:
+        return illustration_icon_name(self.category, self.icon_name, self.kind)
+
+    @property
+    def search_text(self) -> str:
+        brand = self.brand.name if self.brand is not None else ""
+        return f"{self.name} {self.address} {brand}".casefold()
 
     @property
     def group(self) -> DeviceGroup:
@@ -131,6 +161,7 @@ AVATAR_CLASSES = (
     "device-avatar-speaker", "device-avatar-headphones", "device-avatar-phone",
     "device-avatar-keyboard", "device-avatar-mouse", "device-avatar-controller",
     "device-avatar-computer", "device-avatar-unknown", "device-avatar-available",
+    *BRAND_CSS_CLASSES,
 )
 
 
@@ -146,6 +177,50 @@ def avatar_class_for(category: str) -> str:
         else "device-avatar-computer" if "computer" in category
         else "device-avatar-unknown"
     )
+
+
+def avatar_class_for_snapshot(snapshot: DeviceCardSnapshot) -> str:
+    """Unlinked devices stay neutral; known brands get their tint; otherwise the class colour."""
+    if snapshot.group is DeviceGroup.AVAILABLE:
+        return "device-avatar-available"
+    if snapshot.brand is not None:
+        return snapshot.brand.css_class
+    return avatar_class_for(snapshot.category)
+
+
+def apply_avatar(avatar: Gtk.Widget, snapshot: DeviceCardSnapshot) -> None:
+    context = avatar.get_style_context()
+    for css_class in AVATAR_CLASSES:
+        context.remove_class(css_class)
+    context.add_class(avatar_class_for_snapshot(snapshot))
+
+
+class BrandSubtitle(Gtk.Box):
+    """"Brand · Category" line; just the category when no brand is known."""
+
+    def __init__(self, css_class: str) -> None:
+        super().__init__(orientation=Gtk.Orientation.HORIZONTAL, spacing=6, visible=True)
+        self._brand = Gtk.Label(xalign=0)
+        self._brand.get_style_context().add_class("device-brand")
+        self._separator = Gtk.Label(label="·")
+        self._separator.get_style_context().add_class(css_class)
+        self._category = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
+        self._category.get_style_context().add_class(css_class)
+        self.pack_start(self._brand, False, False, 0)
+        self.pack_start(self._separator, False, False, 0)
+        self.pack_start(self._category, True, True, 0)
+
+    def update(self, snapshot: DeviceCardSnapshot) -> None:
+        has_brand = snapshot.brand is not None
+        self._brand.set_text(snapshot.brand.name if snapshot.brand is not None else "")
+        self._brand.set_visible(has_brand)
+        self._separator.set_visible(has_brand)
+        self._category.set_text(snapshot.category)
+
+    def get_text(self) -> str:
+        if self._brand.get_visible():
+            return f"{self._brand.get_text()} · {self._category.get_text()}"
+        return self._category.get_text()
 
 
 def copy_to_clipboard(text: str) -> None:
@@ -207,8 +282,7 @@ class DeviceCard(Gtk.ListBoxRow):
         )
         self._name = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
         self._name.get_style_context().add_class("device-name")
-        self._category = Gtk.Label(xalign=0, visible=True)
-        self._category.get_style_context().add_class("device-subtitle")
+        self._category = BrandSubtitle("device-subtitle")
         address_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4, visible=True)
         self._address = Gtk.Label(xalign=0, selectable=True, visible=True)
         self._address.get_style_context().add_class("device-mac")
@@ -281,19 +355,13 @@ class DeviceCard(Gtk.ListBoxRow):
 
     def update(self, snapshot: DeviceCardSnapshot) -> None:
         self.snapshot = snapshot
-        self._icon.set_from_icon_name(
-            illustration_icon_name(snapshot.category, snapshot.icon_name),
-            Gtk.IconSize.DIALOG,
-        )
+        self._icon.set_from_icon_name(snapshot.artwork, Gtk.IconSize.DIALOG)
         available = snapshot.group is DeviceGroup.AVAILABLE
-        avatar_context = self._avatar.get_style_context()
-        for css_class in AVATAR_CLASSES:
-            avatar_context.remove_class(css_class)
-        avatar_context.add_class("device-avatar-available" if available else avatar_class_for(snapshot.category))
+        apply_avatar(self._avatar, snapshot)
 
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
-        self._category.set_text(snapshot.category)
+        self._category.update(snapshot)
         self._address.set_text(snapshot.address)
         self._status.set_text(snapshot.status_label)
         state_class = "device-status-connected" if snapshot.connected else "device-status-disconnected"
@@ -504,10 +572,12 @@ class ManagerDeviceCards(Gtk.Box):
         object_path = device.get_object_path()
         klass = device["Class"]
         icon_name = device["Icon"]
+        name = row["alias"]
+        kind = product_kind(name)
         return DeviceCardSnapshot(
             object_path=object_path,
-            name=row["alias"],
-            category=self.device_list.get_device_class(device),
+            name=name,
+            category=display_category(self.device_list.get_device_class(device), kind),
             address=device["Address"],
             icon_name=icon_name,
             connected=row["connected"],
@@ -517,7 +587,18 @@ class ManagerDeviceCards(Gtk.Box):
             battery_percentage=self.device_list.get_battery_percentage(object_path),
             major_class=major_class_name(klass),
             audio=is_audio_device(klass, icon_name),
+            brand=brand_for(name, self._company_ids(device)),
+            kind=kind,
         )
+
+    @staticmethod
+    def _company_ids(device: Device) -> tuple[int, ...]:
+        """Bluetooth SIG company identifiers the device advertises, if BlueZ has seen any."""
+        try:
+            data = device["ManufacturerData"]
+        except (KeyError, BluezDBusException):
+            return ()
+        return tuple(data) if isinstance(data, dict) else ()
 
     def _visible_snapshots(self) -> list[DeviceCardSnapshot]:
         snapshots: list[DeviceCardSnapshot] = []
@@ -549,8 +630,7 @@ class ManagerDeviceCards(Gtk.Box):
     def _apply_search(self) -> None:
         query = self.search_entry.get_text().strip().casefold()
         for card in self.cards_by_path.values():
-            searchable = f"{card.snapshot.name} {card.snapshot.address}".casefold()
-            card.set_visible(not query or query in searchable)
+            card.set_visible(not query or query in card.snapshot.search_text)
         for group, cards in self._sections.items():
             count = sum(card.get_visible() for card in cards.get_children())
             self._section_titles[group].set_text(_("%(group)s (%(count)d)") % {

@@ -9,14 +9,13 @@ from gi.repository import GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceCards import (
-    AVATAR_CLASSES,
+    BrandSubtitle,
     DeviceCardAction,
     DeviceCardSnapshot,
     DeviceGroup,
     ManagerDeviceCards,
-    avatar_class_for,
+    apply_avatar,
     copy_button,
-    illustration_icon_name,
     set_state_class,
 )
 
@@ -111,8 +110,7 @@ class ManagerDeviceInspector(Gtk.Box):
         self._name = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
         self._name.set_max_width_chars(18)
         self._name.get_style_context().add_class("inspector-title")
-        self._category = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
-        self._category.get_style_context().add_class("inspector-subtitle")
+        self._category = BrandSubtitle("inspector-subtitle")
         titles.pack_start(self._name, False, False, 0)
         titles.pack_start(self._category, False, False, 0)
         rename_icon = Gtk.Image.new_from_icon_name("document-edit-symbolic", Gtk.IconSize.BUTTON)
@@ -173,6 +171,7 @@ class ManagerDeviceInspector(Gtk.Box):
             information, "bluetooth-symbolic", _("Address"),
             copy_button(lambda: self._address.get_text()),
         )
+        self._brand_row, self._brand = self._info_row_widgets(information, "starred-symbolic", _("Brand"))
         self._type = self._info_row(information, "phone-symbolic", _("Type"))
         self._class = self._info_row(information, "view-grid-symbolic", _("Class"), last=True)
         return information
@@ -234,14 +233,25 @@ class ManagerDeviceInspector(Gtk.Box):
         content.pack_end(arrow, False, False, 0)
         return content
 
-    @staticmethod
+    @classmethod
     def _info_row(
+        cls,
         parent: Gtk.Box,
         icon_name: str,
         label: str,
         suffix: Gtk.Widget | None = None,
         last: bool = False,
     ) -> Gtk.Label:
+        return cls._info_row_widgets(parent, icon_name, label, suffix, last)[1]
+
+    @staticmethod
+    def _info_row_widgets(
+        parent: Gtk.Box,
+        icon_name: str,
+        label: str,
+        suffix: Gtk.Widget | None = None,
+        last: bool = False,
+    ) -> tuple[Gtk.Box, Gtk.Label]:
         row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
         row.get_style_context().add_class("inspector-row")
         if last:
@@ -260,7 +270,7 @@ class ManagerDeviceInspector(Gtk.Box):
             row.pack_end(suffix, False, False, 0)
         row.pack_end(value, False, False, 0)
         parent.pack_start(row, False, False, 0)
-        return value
+        return row, value
 
     def _on_selected(self, _list: object, device: Device | None, _tree_iter: object) -> None:
         self._object_path = device.get_object_path() if device is not None else None
@@ -277,18 +287,14 @@ class ManagerDeviceInspector(Gtk.Box):
         self._show_snapshot(card.snapshot)
 
     def _show_snapshot(self, snapshot: DeviceCardSnapshot) -> None:
-        self._icon.set_from_icon_name(
-            illustration_icon_name(snapshot.category, snapshot.icon_name),
-            Gtk.IconSize.DIALOG,
-        )
+        self._icon.set_from_icon_name(snapshot.artwork, Gtk.IconSize.DIALOG)
         available = snapshot.group is DeviceGroup.AVAILABLE
-        avatar_context = self._avatar.get_style_context()
-        for css_class in AVATAR_CLASSES:
-            avatar_context.remove_class(css_class)
-        avatar_context.add_class("device-avatar-available" if available else avatar_class_for(snapshot.category))
+        apply_avatar(self._avatar, snapshot)
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
-        self._category.set_text(snapshot.category)
+        self._category.update(snapshot)
+        self._brand.set_text(snapshot.brand.name if snapshot.brand is not None else "")
+        self._brand_row.set_visible(snapshot.brand is not None)
         self._address.set_text(snapshot.address)
         self._type.set_text(snapshot.category)
         self._class.set_text(snapshot.major_class)

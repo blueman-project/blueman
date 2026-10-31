@@ -567,5 +567,38 @@ RULES = """
 .notification-dialog { background-color: @surface-card; color: @text-primary; }
 """
 
-(ROOT / "dark.css").write_text(DARK + COMMON_TOKENS + RULES)
-(ROOT / "light.css").write_text(LIGHT + COMMON_TOKENS + RULES)
+# Avatar tints for known brands (blueman/gui/manager/DeviceBrands.py). Colours evoke each
+# brand without reproducing logos, and stay mid-tone so the dark artwork reads in both themes.
+BRAND_TINTS = {
+    "apple": ("#D3D7DC", "#7D848C"),
+    "beats": ("#F2707F", "#A3182E"),
+    "samsung": ("#7FA6F2", "#2A4FA8"),
+    "sony": ("#9AA0A8", "#3F444B"),
+    "bose": ("#A6ACB3", "#4A4F56"),
+    "jbl": ("#FFA36B", "#D8501A"),
+    "philips": ("#7FB0F2", "#2A5DB8"),
+    "oneplus": ("#F28A8E", "#B0242C"),
+    "realme": ("#FFDD70", "#D9A400"),
+    "xiaomi": ("#FFAE75", "#E0601A"),
+    "huawei": ("#F2848B", "#B3202B"),
+    "google": ("#9CC0F8", "#3B6FD0"),
+    "microsoft": ("#A8CCEB", "#4A7FB0"),
+    "logitech": ("#8ADDF6", "#1E8AB8"),
+    "sennheiser": ("#B0B6BC", "#555B62"),
+    "jabra": ("#FFE88A", "#D9B400"),
+    "anker": ("#8AD7F2", "#1E8EBF"),
+    "marshall": ("#C2A678", "#4E3F2A"),
+    "bang-olufsen": ("#DDD7CD", "#8C8478"),
+    "nothing": ("#ECECEC", "#9C9C9C"),
+    "garmin": ("#8ABDEA", "#2F6FA8"),
+    "amazfit": ("#A8E4CE", "#3B9A7A"),
+    "nintendo": ("#F28A8A", "#C4262B"),
+    "skullcandy": ("#C2C2C2", "#4F4F4F"),
+}
+BRAND_RULES = "\n/* ---------------------------------------------------------- brand tints */\n\n" + "".join(
+    f".app-window .brand-{key} {{ background-image: linear-gradient(150deg, {start}, {end}); }}\n"
+    for key, (start, end) in BRAND_TINTS.items()
+) + ".app-window .device-brand { font-size: 16px; font-weight: 600; color: @text-primary; }\n"
+
+(ROOT / "dark.css").write_text(DARK + COMMON_TOKENS + RULES + BRAND_RULES)
+(ROOT / "light.css").write_text(LIGHT + COMMON_TOKENS + RULES + BRAND_RULES)

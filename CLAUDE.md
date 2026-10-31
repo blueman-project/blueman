@@ -57,6 +57,7 @@ There are two build systems, and both must stay in sync:
   - `ManagerWindow.py`: three-panel shell (sidebar / dashboard / inspector) built with nested `Gtk.Paned`.
   - `ManagerDeviceCards.py`: card view fed from the device list model through immutable `DeviceCardSnapshot`s. Devices are grouped into Connected/Paired/Available, with local search (Ctrl+K) and the discovery radar. Card actions are emitted as `action-requested` with explicit object paths and handled in `Manager.py`.
   - `ManagerDeviceInspector.py`: details panel bound to the selected card.
+  - `DeviceBrands.py`: known-brand catalogue (name regexes, then Bluetooth SIG company IDs from `ManufacturerData`) and name-derived product kinds. Brand tints live in `BRAND_TINTS` in `tools/generate-themes.py`; add a brand in both places. No logos are bundled.
   - `ManagerSettings.py`: settings dialog exposing only existing GSettings keys from `data/org.blueman.gschema.xml`.
   - The classic TreeView remains as a compatibility fallback.
 - **Theming** (`blueman/gui/theme/`): `ThemeManager` singleton loads `data/themes/{dark,light}.css` as GTK CSS providers. `system` mode resolves to light or dark from the desktop but still applies the Blueman Next palette. `DesignTokens.py` and `AnimationManager.py` hold the shared tokens and reduced-motion handling.
