@@ -1,13 +1,15 @@
-"""Schema-backed settings dialog for the redesigned manager."""
+"""Schema-backed settings page shown inside the redesigned manager window."""
 
 from gettext import gettext as _
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gio, Gtk  # noqa: E402
+from gi.repository import Gio, Gtk, Pango  # noqa: E402
 
 
+# Only keys the redesigned window honours. show-toolbar/show-statusbar are left out:
+# the classic toolbar and status bar are no longer displayed, so those switches did nothing.
 EXPOSED_SETTINGS = frozenset({
     "hide-unnamed",
     "sort-by",
@@ -16,108 +18,169 @@ EXPOSED_SETTINGS = frozenset({
     "symbolic-status-icons",
     "theme-variant",
     "reduced-motion",
-    "show-toolbar",
-    "show-statusbar",
 })
 
 
-class ManagerSettingsDialog(Gtk.Dialog):
-    def __init__(self, parent: Gtk.Window, application: Gtk.Application, settings: Gio.Settings) -> None:
-        super().__init__(
-            title=_("Settings"),
-            transient_for=parent,
-            modal=True,
-            destroy_with_parent=True,
-            use_header_bar=True,
-        )
-        self.set_default_size(720, 520)
-        self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
-        self.connect("response", lambda dialog, _response: dialog.destroy())
+class SegmentedChoice(Gtk.Box):
+    """Pill-shaped radio group kept in sync with a string GSettings key."""
 
-        stack = Gtk.Stack(
-            transition_type=Gtk.StackTransitionType.CROSSFADE,
-            transition_duration=0 if settings.get_boolean("reduced-motion") else 180,
+    def __init__(self, settings: Gio.Settings, key: str, choices: tuple[tuple[str, str], ...]) -> None:
+        super().__init__(orientation=Gtk.Orientation.HORIZONTAL, valign=Gtk.Align.CENTER, visible=True)
+        self.get_style_context().add_class("segmented")
+        self.get_style_context().add_class("linked")
+        self._settings = settings
+        self._key = key
+        self.buttons: dict[str, Gtk.RadioButton] = {}
+        group: Gtk.RadioButton | None = None
+        for value, label in choices:
+            button = Gtk.RadioButton(label=label, visible=True)
+            button.join_group(group)
+            button.set_mode(False)
+            button.connect("toggled", self._on_toggled, value)
+            self.pack_start(button, False, False, 0)
+            self.buttons[value] = button
+            group = group or button
+        self._sync()
+        self._handler = settings.connect(f"changed::{key}", lambda _settings, _key: self._sync())
+        self.connect("destroy", lambda _widget: settings.disconnect(self._handler))
+
+    def _sync(self) -> None:
+        button = self.buttons.get(self._settings.get_string(self._key))
+        if button is not None and not button.get_active():
+            button.set_active(True)
+
+    def _on_toggled(self, button: Gtk.RadioButton, value: str) -> None:
+        if button.get_active() and self._settings.get_string(self._key) != value:
+            self._settings.set_string(self._key, value)
+
+
+class ManagerSettingsPage(Gtk.ScrolledWindow):
+    def __init__(self, application: Gtk.Application, settings: Gio.Settings) -> None:
+        super().__init__(
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
             hexpand=True,
             vexpand=True,
             visible=True,
         )
-        sidebar = Gtk.StackSidebar(stack=stack, width_request=190, visible=True)
-        layout = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0, visible=True)
-        layout.pack_start(sidebar, False, False, 0)
-        layout.pack_start(stack, True, True, 0)
-        self.get_content_area().pack_start(layout, True, True, 0)
+        self.get_style_context().add_class("settings-scroll")
+        self._application = application
+        self._settings = settings
+        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=20, visible=True)
+        content.get_style_context().add_class("settings-page")
+        self.add(content)
 
-        general = self._page()
-        self._switch_row(general, settings, "hide-unnamed", _("Hide unnamed devices"))
-        self._choice_row(general, settings, "sort-by", _("Sort devices by"), (
-            ("timestamp", _("Recently seen")), ("alias", _("Name")),
-        ))
-        self._switch_row(general, settings, "sort-descending", _("Reverse sort order"))
-        stack.add_titled(general, "general", _("General"))
-
-        appearance = self._page()
-        self._choice_row(appearance, settings, "theme-variant", _("Color scheme"), (
-            ("system", _("System")), ("dark", _("Dark")), ("light", _("Light")),
-        ))
-        self._switch_row(appearance, settings, "reduced-motion", _("Reduce interface motion"))
-        stack.add_titled(appearance, "appearance", _("Appearance"))
-
-        notifications = self._page()
-        self._switch_row(notifications, settings, "notification-daemon", _("Use desktop notifications"))
-        self._switch_row(notifications, settings, "symbolic-status-icons", _("Use symbolic tray icons"))
-        stack.add_titled(notifications, "notifications", _("Notifications"))
-
-        advanced = self._page()
-        self._switch_row(advanced, settings, "show-toolbar", _("Show classic toolbar"))
-        self._switch_row(advanced, settings, "show-statusbar", _("Show classic status bar"))
-        for label, action in (
-            (_("Adapter Settings"), "preferences"),
-            (_("Service Preferences"), "services"),
-            (_("Plugin Manager"), "plugins"),
-        ):
-            button = Gtk.Button(label=label, visible=True)
-            button.get_style_context().add_class("secondary-button")
-            button.connect("clicked", lambda _button, name=action: application.activate_action(name, None))
-            advanced.pack_start(button, False, False, 0)
-        stack.add_titled(advanced, "advanced", _("Advanced"))
-        motion_handler = settings.connect(
-            "changed::reduced-motion",
-            lambda current, _key: stack.set_transition_duration(
-                0 if current.get_boolean("reduced-motion") else 180
-            ),
+        title = Gtk.Label(label=_("Settings"), xalign=0, visible=True)
+        title.get_style_context().add_class("dashboard-title")
+        subtitle = Gtk.Label(
+            label=_("Choose how Bluetooth looks and behaves on this computer."),
+            xalign=0,
+            wrap=True,
+            visible=True,
         )
-        self.connect("destroy", lambda _dialog: settings.disconnect(motion_handler))
-        self.show_all()
+        subtitle.get_style_context().add_class("dashboard-subtitle")
+        heading = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=4, visible=True)
+        heading.get_style_context().add_class("settings-heading")
+        heading.pack_start(title, False, False, 0)
+        heading.pack_start(subtitle, False, False, 0)
+        content.pack_start(heading, False, False, 0)
+
+        self.controls: dict[str, Gtk.Widget] = {}
+
+        general = self._section(content, _("Devices"))
+        self._row(general, "view-list-symbolic", _("Sort devices by"),
+                  _("Order of devices inside each section."),
+                  self._choice("sort-by", (("timestamp", _("Recently seen")), ("alias", _("Name")))))
+        self._row(general, "view-sort-descending-symbolic", _("Reverse sort order"),
+                  _("Show the oldest or last-named devices first."), self._switch("sort-descending"))
+        self._row(general, "view-conceal-symbolic", _("Hide unnamed devices"),
+                  _("Skip devices that only advertise an address."), self._switch("hide-unnamed"), last=True)
+
+        appearance = self._section(content, _("Appearance"))
+        self._row(appearance, "weather-clear-night-symbolic", _("Color scheme"),
+                  _("Follow the desktop or keep a fixed look."),
+                  self._choice("theme-variant", (("system", _("System")), ("dark", _("Dark")), ("light", _("Light")))))
+        self._row(appearance, "preferences-desktop-accessibility-symbolic", _("Reduce motion"),
+                  _("Turn off page transitions and the scanning pulse."), self._switch("reduced-motion"), last=True)
+
+        notifications = self._section(content, _("Notifications"))
+        self._row(notifications, "preferences-system-notifications-symbolic", _("Desktop notifications"),
+                  _("Use the desktop's notification service."), self._switch("notification-daemon"))
+        self._row(notifications, "emblem-photos-symbolic", _("Symbolic tray icons"),
+                  _("Monochrome icons that match the panel."), self._switch("symbolic-status-icons"), last=True)
+
+        system = self._section(content, _("Bluetooth System"))
+        for icon_name, label, description, action in (
+            ("bluetooth-active-symbolic", _("Adapter Settings"), _("Name, visibility and discovery timeout."),
+             "preferences"),
+            ("network-workgroup-symbolic", _("Service Preferences"), _("Network access and file transfer."),
+             "services"),
+            ("application-x-addon-symbolic", _("Plugin Manager"), _("Enable or configure applet plugins."),
+             "plugins"),
+        ):
+            self._link_row(system, icon_name, label, description, action)
 
     @staticmethod
-    def _page() -> Gtk.Box:
-        return Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin=24, visible=True)
+    def _section(parent: Gtk.Box, title: str) -> Gtk.Box:
+        section = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, visible=True)
+        for css_class in ("inspector-section", "settings-section"):
+            section.get_style_context().add_class(css_class)
+        label = Gtk.Label(label=title, xalign=0, visible=True)
+        label.get_style_context().add_class("inspector-section-title")
+        section.pack_start(label, False, False, 0)
+        parent.pack_start(section, False, False, 0)
+        return section
 
     @staticmethod
-    def _switch_row(page: Gtk.Box, settings: Gio.Settings, key: str, label: str) -> None:
-        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12, visible=True)
-        row.get_style_context().add_class("inspector-row")
-        title = Gtk.Label(label=label, xalign=0, visible=True)
+    def _row_content(icon_name: str, title: str, description: str) -> Gtk.Box:
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=16, visible=True)
+        badge = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
+        badge.get_style_context().add_class("quick-action-badge")
+        icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        icon.show()
+        badge.pack_start(icon, True, True, 0)
+        texts = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, valign=Gtk.Align.CENTER, visible=True)
+        heading = Gtk.Label(label=title, xalign=0, visible=True)
+        heading.get_style_context().add_class("settings-row-title")
+        detail = Gtk.Label(label=description, xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
+        detail.get_style_context().add_class("settings-row-subtitle")
+        texts.pack_start(heading, False, False, 0)
+        texts.pack_start(detail, False, False, 0)
+        row.pack_start(badge, False, False, 0)
+        row.pack_start(texts, True, True, 0)
+        return row
+
+    def _row(self, section: Gtk.Box, icon_name: str, title: str, description: str,
+             control: Gtk.Widget, last: bool = False) -> None:
+        row = self._row_content(icon_name, title, description)
+        row.get_style_context().add_class("settings-row")
+        if last:
+            row.get_style_context().add_class("settings-row-last")
+        row.pack_end(control, False, False, 0)
+        section.pack_start(row, False, False, 0)
+
+    def _link_row(self, section: Gtk.Box, icon_name: str, title: str, description: str, action: str) -> None:
+        button = Gtk.Button(visible=True)
+        button.get_style_context().add_class("settings-link")
+        content = self._row_content(icon_name, title, description)
+        arrow = Gtk.Image.new_from_icon_name("go-next-symbolic", Gtk.IconSize.BUTTON)
+        arrow.show()
+        arrow.get_style_context().add_class("quick-action-arrow")
+        content.pack_end(arrow, False, False, 0)
+        button.add(content)
+        button.connect("clicked", self._activate, action)
+        self.controls[action] = button
+        section.pack_start(button, False, False, 0)
+
+    def _activate(self, _button: Gtk.Button, action: str) -> None:
+        self._application.activate_action(action, None)
+
+    def _switch(self, key: str) -> Gtk.Switch:
         switch = Gtk.Switch(valign=Gtk.Align.CENTER, visible=True)
-        settings.bind(key, switch, "active", Gio.SettingsBindFlags.DEFAULT)
-        row.pack_start(title, True, True, 0)
-        row.pack_end(switch, False, False, 0)
-        page.pack_start(row, False, False, 0)
+        self._settings.bind(key, switch, "active", Gio.SettingsBindFlags.DEFAULT)
+        self.controls[key] = switch
+        return switch
 
-    @staticmethod
-    def _choice_row(
-        page: Gtk.Box,
-        settings: Gio.Settings,
-        key: str,
-        label: str,
-        choices: tuple[tuple[str, str], ...],
-    ) -> None:
-        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12, visible=True)
-        title = Gtk.Label(label=label, xalign=0, visible=True)
-        combo = Gtk.ComboBoxText(visible=True)
-        for value, text in choices:
-            combo.append(value, text)
-        settings.bind(key, combo, "active-id", Gio.SettingsBindFlags.DEFAULT)
-        row.pack_start(title, True, True, 0)
-        row.pack_end(combo, False, False, 0)
-        page.pack_start(row, False, False, 0)
+    def _choice(self, key: str, choices: tuple[tuple[str, str], ...]) -> SegmentedChoice:
+        choice = SegmentedChoice(self._settings, key, choices)
+        self.controls[key] = choice
+        return choice

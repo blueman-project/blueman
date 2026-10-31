@@ -14,12 +14,12 @@ from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
 from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
 from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
 from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
-from blueman.gui.manager.ManagerSettings import ManagerSettingsDialog
+from blueman.gui.manager.ManagerSettings import ManagerSettingsPage
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
-from blueman.gui.manager.ManagerWindow import ManagerWindowShell
+from blueman.gui.manager.ManagerWindow import ManagerWindowShell, Page
 from blueman.main.Builder import Builder
 from blueman.gui.CommonUi import ErrorDialog, show_about_dialog
 from blueman.main.DBusProxies import (
@@ -102,7 +102,6 @@ class Blueman(Gtk.Application):
         self.Cards: ManagerDeviceCards | None = None
         self.CardMenu: ManagerDeviceMenu | None = None
         self.Inspector: ManagerDeviceInspector | None = None
-        self.SettingsDialog: ManagerSettingsDialog | None = None
 
         self.builder = Builder("manager-main.ui")
 
@@ -123,6 +122,7 @@ class Blueman(Gtk.Application):
         self.register_action("settings", self.simple_action)
         self.register_action("focus-search", self.simple_action)
         self.set_accels_for_action("app.focus-search", ["<Ctrl>k"])
+        self.set_accels_for_action("app.settings", ["<Ctrl>comma"])
 
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -163,6 +163,7 @@ class Blueman(Gtk.Application):
             self.window.set_size_request(900, 600)
             content = self.builder.get_widget("grid", Gtk.Grid)
             self.Shell = ManagerWindowShell(self.window, content, BRAND_DISPLAY_NAME)
+            self.Shell.install_settings_page(ManagerSettingsPage(self, self.Config))
             power_action = self.lookup_action("bluetooth_status")
             if power_action is not None:
                 state = power_action.get_state()
@@ -431,12 +432,11 @@ class Blueman(Gtk.Application):
             case "preferences":
                 self.adapter_properties()
             case "settings":
-                assert self.window is not None
-                if self.SettingsDialog is None:
-                    self.SettingsDialog = ManagerSettingsDialog(self.window, self, self.Config)
-                    self.SettingsDialog.connect("destroy", lambda _dialog: setattr(self, "SettingsDialog", None))
-                self.SettingsDialog.present()
+                if self.Shell is not None:
+                    self.Shell.show_page(Page.SETTINGS)
             case "focus-search":
+                if self.Shell is not None:
+                    self.Shell.show_page(Page.DEVICES)
                 if self.Cards is not None:
                     self.Cards.focus_search()
             case _ as name:

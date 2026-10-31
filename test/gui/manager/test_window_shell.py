@@ -1,4 +1,5 @@
 import unittest
+import unittest.mock
 
 import gi
 
@@ -32,9 +33,44 @@ class TestManagerWindowShell(unittest.TestCase):
 
     def test_navigation_only_exposes_working_destinations(self) -> None:
         self.assertEqual(
-            [item.action for item in navigation_items()],
-            [None, "app.inquiry", "app.send", "app.settings"],
+            [(item.action, item.page) for item in navigation_items()],
+            [(None, "devices"), ("app.inquiry", "devices"), ("app.send", None), (None, "settings")],
         )
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_settings_is_a_page_and_hides_the_inspector(self) -> None:
+        from unittest.mock import patch
+        from blueman.gui.manager.ManagerWindow import ManagerWindowShell, Page
+
+        window = Gtk.Window()
+        content = Gtk.Grid(visible=True)
+        window.add(content)
+        shell = ManagerWindowShell(window, content, "Blueman Next")
+        cards = Gtk.Box(visible=True)
+        cards.search_entry = Gtk.SearchEntry(visible=True)
+        cards.cards_by_path = {}
+        shell.install_device_cards(cards, Gtk.ScrolledWindow())
+        shell.install_device_inspector(Gtk.Box(visible=True))
+        shell.install_settings_page(Gtk.Box(visible=True))
+        shell._inspector_toggle.set_active(True)
+        self.assertTrue(shell._inspector_revealer.get_reveal_child())
+
+        shell._nav_buttons[Page.SETTINGS].clicked()
+        self.assertEqual(shell.page, Page.SETTINGS)
+        self.assertEqual(shell.pages.get_visible_child_name(), Page.SETTINGS)
+        self.assertFalse(shell._inspector_revealer.get_reveal_child())
+        self.assertTrue(shell._nav_buttons[Page.SETTINGS].get_style_context().has_class("sidebar-item-active"))
+        self.assertFalse(shell._nav_buttons[Page.DEVICES].get_style_context().has_class("sidebar-item-active"))
+
+        theme = unittest.mock.Mock()
+        theme.reduced_motion.return_value = True
+        with patch("blueman.gui.theme.ThemeManager.ThemeManager.get_default", return_value=theme):
+            shell.show_page(Page.DEVICES)
+        self.assertEqual(shell.pages.get_transition_duration(), 0)
+        self.assertTrue(shell._inspector_revealer.get_reveal_child())
+        shell.show_page("missing")
+        self.assertEqual(shell.page, Page.DEVICES)
+        window.destroy()
 
     @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
     def test_shell_replaces_legacy_presentation_but_retains_widgets(self) -> None:

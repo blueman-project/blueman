@@ -484,6 +484,63 @@
     color: @danger;
 }
 
+/* ------------------------------------------------------------- settings */
+
+.app-window .app-pages,
+.app-window .settings-scroll,
+.app-window .settings-scroll viewport { background: none; border: none; }
+.app-window .settings-page { padding: 26px 30px 30px 30px; }
+.app-window .settings-heading { margin-bottom: 6px; }
+.app-window .settings-section { padding: 20px 22px 8px 22px; }
+.app-window .settings-row,
+.app-window button.settings-link {
+    min-height: 68px;
+    border-bottom: 1px solid @border-subtle;
+}
+.app-window .settings-row-last { border-bottom: none; }
+.app-window button.settings-link {
+    padding: 0;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    background: none;
+    box-shadow: none;
+}
+.app-window button.settings-link:last-child { border-bottom: none; }
+.app-window button.settings-link:hover .settings-row-title { color: @accent-start; }
+.app-window .settings-row-title { font-size: 16px; font-weight: 600; }
+.app-window .settings-row-subtitle { color: @text-secondary; font-size: 14px; }
+
+.app-window .segmented {
+    padding: 4px;
+    border-radius: 14px;
+    background-color: @control-bg;
+    border: 1px solid @control-border;
+}
+.app-window .segmented button,
+.app-window .segmented radiobutton {
+    min-height: 36px;
+    padding: 0 16px;
+    margin: 0;
+    border: none;
+    border-radius: 10px;
+    background-image: none;
+    background-color: transparent;
+    box-shadow: none;
+    color: @text-secondary;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 180ms ease, color 180ms ease;
+}
+.app-window .segmented button:hover { color: @text-primary; }
+.app-window .segmented button:checked {
+    background-image: linear-gradient(150deg, @accent-start, @accent-end);
+    color: @text-on-accent;
+    box-shadow: 0 4px 12px alpha(@accent-end, 0.30);
+}
+.app-window .segmented button:checked label { color: @text-on-accent; }
+
 /* --------------------------------------------------- dialogs and popups */
 
 .transfer-progress trough {

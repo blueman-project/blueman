@@ -89,6 +89,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-024 | Critical | DONE | Consolidated dark/light CSS: remove dead GtkXxx selectors and stacked passes; opaque-enough surfaces (no blur in GTK 3), mockup tokens. | Baseline showed background apps bleeding through translucent panels. |
 | T-025 | High | DONE | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
 | T-026 | High | DONE | Known-brand presentation: brand label, Brand row, brand avatar tints, earbuds/watch artwork, name-derived kind only when the class is uninformative. | Names first, then Bluetooth SIG company IDs; no logos (trademarks). |
+| T-027 | High | DONE | Settings as an in-window page: sidebar navigation slides Devices/Settings (reduced-motion aware), inspector slides out, section cards with segmented choices, Ctrl+, shortcut. | Replaces the modal dialog; drops show-toolbar/show-statusbar switches, which had no visible effect in the redesign. |
 
 ## 9. Active Task Detail
 - **Task ID:** T-020

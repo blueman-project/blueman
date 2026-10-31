@@ -30,20 +30,34 @@ INSPECTOR_WIDTH = 410
 NARROW_INSPECTOR_WIDTH = 340
 
 
+class Page:
+    DEVICES = "devices"
+    SETTINGS = "settings"
+
+
+PAGE_TRANSITION_MS = 260
+
+
+def motion_duration(milliseconds: int) -> int:
+    from blueman.gui.theme.ThemeManager import ThemeManager
+    return 0 if ThemeManager.get_default().reduced_motion() else milliseconds
+
+
 @dataclass(frozen=True)
 class NavigationItem:
     label: str
     icon_name: str
     action: str | None
+    page: str | None = None
 
 
 def navigation_items() -> tuple[NavigationItem, ...]:
     """Return the four primary destinations shown in the design."""
     return (
-        NavigationItem(_("Devices"), "blueman-next-devices-symbolic", None),
-        NavigationItem(_("Scan"), "blueman-next-scan-symbolic", "app.inquiry"),
+        NavigationItem(_("Devices"), "blueman-next-devices-symbolic", None, Page.DEVICES),
+        NavigationItem(_("Scan"), "blueman-next-scan-symbolic", "app.inquiry", Page.DEVICES),
         NavigationItem(_("Files"), "document-send-symbolic", "app.send"),
-        NavigationItem(_("Settings"), "emblem-system-symbolic", "app.settings"),
+        NavigationItem(_("Settings"), "emblem-system-symbolic", None, Page.SETTINGS),
     )
 
 
@@ -207,6 +221,8 @@ class ManagerWindowShell:
         self._inspector_revealer: Gtk.Revealer | None = None
         self._inspector: Gtk.Widget | None = None
         self._position_source = 0
+        self._page = Page.DEVICES
+        self._nav_buttons: dict[str, Gtk.Button] = {}
 
         self.header = self._create_titlebar()
         self._inspector_toggle = self._create_inspector_toggle()
@@ -224,7 +240,12 @@ class ManagerWindowShell:
         self._workspace.set_hexpand(True)
         self._workspace.set_vexpand(True)
         self._workspace.set_visible(True)
-        self._workspace.pack1(self._dashboard, resize=True, shrink=False)
+        self.pages = Gtk.Stack(hexpand=True, vexpand=True, visible=True)
+        self.pages.set_transition_type(Gtk.StackTransitionType.SLIDE_UP_DOWN)
+        self.pages.set_transition_duration(PAGE_TRANSITION_MS)
+        self.pages.get_style_context().add_class("app-pages")
+        self.pages.add_named(self._dashboard, Page.DEVICES)
+        self._workspace.pack1(self.pages, resize=True, shrink=False)
 
         self.main_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.main_paned.get_style_context().add_class("app-main")
@@ -411,11 +432,40 @@ class ManagerWindowShell:
         self._wide_inspector = wide
         self._inspector_toggle.set_active(wide)
         self._inspector_toggle.set_visible(not wide)
-        revealer.set_reveal_child(wide)
+        self._update_inspector_reveal()
 
-    def _on_inspector_toggled(self, button: Gtk.ToggleButton) -> None:
-        if self._inspector_revealer is not None:
-            self._inspector_revealer.set_reveal_child(button.get_active())
+    def install_settings_page(self, page: Gtk.Widget) -> None:
+        self.pages.add_named(page, Page.SETTINGS)
+
+    @property
+    def page(self) -> str:
+        return self._page
+
+    def show_page(self, name: str) -> None:
+        """Slide between Devices and Settings; the inspector only belongs to Devices."""
+        if self.pages.get_child_by_name(name) is None:
+            return
+        self._page = name
+        self.pages.set_transition_duration(motion_duration(PAGE_TRANSITION_MS))
+        self.pages.set_visible_child_name(name)
+        for page, button in self._nav_buttons.items():
+            context = button.get_style_context()
+            if page == name:
+                context.add_class("sidebar-item-active")
+            else:
+                context.remove_class("sidebar-item-active")
+        self._update_inspector_reveal()
+
+    def _update_inspector_reveal(self) -> None:
+        if self._inspector_revealer is None:
+            return
+        self._inspector_revealer.set_transition_duration(motion_duration(180))
+        self._inspector_revealer.set_reveal_child(
+            self._page == Page.DEVICES and self._inspector_toggle.get_active()
+        )
+
+    def _on_inspector_toggled(self, _button: Gtk.ToggleButton) -> None:
+        self._update_inspector_reveal()
 
     @staticmethod
     def _application_menu() -> Gio.Menu:
@@ -495,12 +545,12 @@ class ManagerWindowShell:
             margin_end=18,
             visible=True,
         )
-        for index, item in enumerate(navigation_items()):
+        for item in navigation_items():
             button = self._navigation_button(item)
-            if index == 0:
-                button.set_sensitive(False)
-                button.get_style_context().add_class("sidebar-item-active")
+            if item.page is not None and item.action is None:
+                self._nav_buttons[item.page] = button
             navigation.pack_start(button, False, False, 0)
+        self._nav_buttons[Page.DEVICES].get_style_context().add_class("sidebar-item-active")
         sidebar.pack_start(navigation, False, False, 0)
 
         power_card = Gtk.Box(
@@ -571,6 +621,9 @@ class ManagerWindowShell:
         button.get_style_context().add_class("sidebar-item")
         if item.action is not None:
             button.set_action_name(item.action)
+        if item.page is not None:
+            page = item.page
+            button.connect("clicked", lambda _button: self.show_page(page))
         self._sidebar_labels.append(label)
         return button
 
