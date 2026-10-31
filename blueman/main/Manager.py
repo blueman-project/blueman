@@ -1,4 +1,5 @@
 import logging
+import shutil
 import signal
 from gettext import gettext as _
 from typing import Any
@@ -38,6 +39,24 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gio, Gdk, GLib
+
+
+# Desktop sound panels in preference order; the first installed one is launched.
+SOUND_SETTINGS_COMMANDS = (
+    "pavucontrol",
+    "gnome-control-center sound",
+    "cinnamon-settings sound",
+    "mate-volume-control",
+    "pavucontrol-qt",
+    "systemsettings kcm_pulseaudio",
+)
+
+
+def sound_settings_command() -> str | None:
+    for command in SOUND_SETTINGS_COMMANDS:
+        if shutil.which(command.split()[0]) is not None:
+            return command
+    return None
 
 
 class Blueman(Gtk.Application):
@@ -275,6 +294,8 @@ class Blueman(Gtk.Application):
 
         if action == DeviceCardAction.PAIR:
             self.bond(device)
+        elif action == DeviceCardAction.SOUND_SETTINGS:
+            self.open_sound_settings()
         elif action == DeviceCardAction.SEND:
             self.send(device)
         else:
@@ -504,6 +525,13 @@ class Blueman(Gtk.Application):
             Notification('Bluetooth', message, icon_name=BRAND_ICON_NAME).show()
 
         device.pair(error_handler=error_handler)
+
+    def open_sound_settings(self) -> None:
+        command = sound_settings_command()
+        if command is None:
+            self.infobar_update(_("No sound settings application was found."), icon_name="dialog-information")
+            return
+        launch(command, system=True, name=_("Sound Settings"))
 
     @staticmethod
     def adapter_properties() -> None:

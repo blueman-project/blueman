@@ -16,12 +16,16 @@ from blueman.gui.manager.ManagerDeviceCards import (
 
 
 class FakeDevice:
-    def __init__(self, object_path: str, name: str, connected: bool, paired: bool) -> None:
+    def __init__(
+        self, object_path: str, name: str, connected: bool, paired: bool,
+        klass: int = 0, icon: str = "bluetooth",
+    ) -> None:
         self.object_path = object_path
         self.display_name = name
         self.properties = {
             "Address": "00:11:22:33:44:55",
-            "Icon": "bluetooth",
+            "Icon": icon,
+            "Class": klass,
             "Connected": connected,
             "Paired": paired,
         }
@@ -204,7 +208,7 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(set(cards.cards_by_path), {connected.object_path, available.object_path})
         self.assertEqual(cards.cards_by_path[connected.object_path].snapshot.group, DeviceGroup.CONNECTED)
         self.assertTrue(
-            cards.cards_by_path[connected.object_path]._icon.get_style_context().has_class(
+            cards.cards_by_path[connected.object_path]._avatar.get_style_context().has_class(
                 "device-avatar-headphones"
             )
         )
@@ -265,7 +269,8 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         valid, connected_filter_iter = device_list.filter.convert_child_iter_to_iter(connected_iter)
         self.assertTrue(valid)
         device_list.selection.select_iter(connected_filter_iter)
-        available_card._primary_action.clicked()
+        self.assertEqual(available_card.visible_actions, (DeviceCardAction.PAIR,))
+        available_card._action_buttons[DeviceCardAction.PAIR].clicked()
         self.assertEqual(
             requested,
             [(available.object_path, DeviceCardAction.PAIR.value)],
@@ -276,12 +281,108 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(device_list.get_selected_device(), available)
 
         device_list.liststore.remove(available_iter)
-        available_card._more_action.clicked()
+        available_card._action_buttons[DeviceCardAction.MORE].clicked()
         self.assertEqual(len(requested), 1, "a removed card must not dispatch an action")
         cards.sync_structure()
         self.assertNotIn(available.object_path, cards.cards_by_path)
         cards.destroy()
         inspector.destroy()
+
+
+def snapshot_for(*, connected: bool, paired: bool, audio: bool) -> DeviceCardSnapshot:
+    return DeviceCardSnapshot(
+        object_path="/org/bluez/hci0/dev_00_00_00_00_00_00",
+        name="Device",
+        category="Loudspeaker" if audio else "Keyboard",
+        address="00:00:00:00:00:00",
+        icon_name="audio-card" if audio else "input-keyboard",
+        connected=connected,
+        paired=paired,
+        trusted=False,
+        can_send=False,
+        battery_percentage=None,
+        audio=audio,
+    )
+
+
+class TestDeviceCardActions(unittest.TestCase):
+    def test_audio_detection_uses_major_class_or_audio_icon(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import is_audio_device, major_class_name
+
+        self.assertTrue(is_audio_device(0x240414, "bluetooth"))  # Audio/video loudspeaker
+        self.assertTrue(is_audio_device(0, "audio-headset"))  # LE device without a class
+        self.assertFalse(is_audio_device(0x000540, "input-keyboard"))
+        self.assertEqual(major_class_name(0x240414), "Audio/video")
+        self.assertEqual(major_class_name(0), "Unknown")
+
+    def test_card_actions_follow_device_state(self) -> None:
+        self.assertEqual(
+            snapshot_for(connected=True, paired=True, audio=True).card_actions,
+            (DeviceCardAction.SOUND_SETTINGS, DeviceCardAction.MORE),
+        )
+        self.assertEqual(
+            snapshot_for(connected=True, paired=True, audio=False).card_actions,
+            (DeviceCardAction.DISCONNECT, DeviceCardAction.MORE),
+        )
+        self.assertEqual(
+            snapshot_for(connected=False, paired=True, audio=True).card_actions,
+            (DeviceCardAction.CONNECT, DeviceCardAction.MORE),
+        )
+        self.assertEqual(
+            snapshot_for(connected=False, paired=False, audio=True).card_actions,
+            (DeviceCardAction.PAIR,),
+        )
+
+    def test_battery_glyph_tracks_real_percentage_only(self) -> None:
+        snapshot = snapshot_for(connected=True, paired=True, audio=True)
+        self.assertIsNone(snapshot.battery_icon_name)
+        from dataclasses import replace
+        self.assertEqual(replace(snapshot, battery_percentage=83).battery_icon_name, "battery-level-80-symbolic")
+        self.assertEqual(replace(snapshot, battery_percentage=0).battery_icon_name, "battery-level-0-symbolic")
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_card_shows_only_state_actions_and_copies_address(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import DeviceCard
+
+        requested: list[DeviceCardAction] = []
+        card = DeviceCard(
+            snapshot_for(connected=True, paired=True, audio=True),
+            lambda _card, action, _anchor: requested.append(action),
+        )
+        self.assertEqual(card.visible_actions, (DeviceCardAction.SOUND_SETTINGS, DeviceCardAction.MORE))
+        self.assertFalse(card._battery.get_visible())
+        card._action_buttons[DeviceCardAction.SOUND_SETTINGS].clicked()
+        self.assertEqual(requested, [DeviceCardAction.SOUND_SETTINGS])
+
+        with patch("blueman.gui.manager.ManagerDeviceCards.copy_to_clipboard") as copy:
+            copy_buttons = [
+                child for child in card.get_children()[0].get_children()[1].get_children()[2].get_children()
+                if isinstance(child, Gtk.Button)
+            ]
+            copy_buttons[0].clicked()
+        copy.assert_called_once_with("00:00:00:00:00:00")
+
+        card.update(snapshot_for(connected=False, paired=False, audio=True))
+        self.assertEqual(card.visible_actions, (DeviceCardAction.PAIR,))
+        self.assertFalse(card._status_row.get_visible())
+        self.assertTrue(card._avatar.get_style_context().has_class("device-avatar-available"))
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_structure_sync_does_not_reveal_hidden_actions(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import ManagerDeviceCards
+
+        device_list = FakeDeviceList()
+        device = FakeDevice("/device/speaker", "Speaker", True, True, klass=0x240414)
+        device_list.add(device)
+        cards = ManagerDeviceCards(device_list)
+        card = cards.cards_by_path[device.object_path]
+        self.assertTrue(card.snapshot.audio)
+        self.assertEqual(card.snapshot.major_class, "Audio/video")
+        self.assertEqual(card.visible_actions, (DeviceCardAction.SOUND_SETTINGS, DeviceCardAction.MORE))
+        self.assertEqual(
+            cards._section_titles[DeviceGroup.AVAILABLE].get_text(), "Available Devices (0)"
+        )
+        cards.destroy()
 
 
 if __name__ == "__main__":

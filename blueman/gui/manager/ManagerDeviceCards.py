@@ -13,9 +13,11 @@ import cairo
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, GObject, Gtk, Pango  # noqa: E402
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gdk, GLib, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
+from blueman.DeviceClass import get_major_class
 from blueman.gui.theme.AnimationManager import start_animation, stop_animation_safe
 
 if TYPE_CHECKING:
@@ -36,6 +38,19 @@ class DeviceCardAction(Enum):
     MORE = "more"
     RENAME = "rename"
     REMOVE = "remove"
+    SOUND_SETTINGS = "sound-settings"
+
+
+AUDIO_MAJOR_CLASS = 4
+
+
+def is_audio_device(klass: int, icon_name: str) -> bool:
+    """Audio/video major class, or an audio icon for LE devices that report no class."""
+    return (klass >> 8) & 0x1F == AUDIO_MAJOR_CLASS or icon_name.startswith("audio")
+
+
+def major_class_name(klass: int) -> str:
+    return get_major_class(klass) if klass else _("Unknown")
 
 
 def group_for_state(*, connected: bool, paired: bool) -> DeviceGroup:
@@ -68,16 +83,95 @@ class DeviceCardSnapshot:
     trusted: bool
     can_send: bool
     battery_percentage: float | None
+    major_class: str = ""
+    audio: bool = False
 
     @property
     def group(self) -> DeviceGroup:
         return group_for_state(connected=self.connected, paired=self.paired)
 
     @property
+    def status_label(self) -> str:
+        return _("Connected") if self.connected else _("Paired") if self.paired else _("Available")
+
+    @property
+    def primary_action(self) -> DeviceCardAction:
+        """The headline action for this state: sound for connected audio, otherwise the next link step."""
+        if self.connected:
+            return DeviceCardAction.SOUND_SETTINGS if self.audio else DeviceCardAction.DISCONNECT
+        return DeviceCardAction.CONNECT if self.paired else DeviceCardAction.PAIR
+
+    @property
+    def card_actions(self) -> tuple[DeviceCardAction, ...]:
+        if self.group is DeviceGroup.AVAILABLE:
+            return (DeviceCardAction.PAIR,)
+        return (self.primary_action, DeviceCardAction.MORE)
+
+    @property
+    def battery_icon_name(self) -> str | None:
+        if self.battery_percentage is None:
+            return None
+        level = max(0, min(100, int(round(self.battery_percentage / 10.0)) * 10))
+        return f"battery-level-{level}-symbolic"
+
+    @property
     def battery_label(self) -> str | None:
         if self.battery_percentage is None:
             return None
         return f"{round(self.battery_percentage):d}%"
+
+
+ACTION_PRESENTATION = {
+    DeviceCardAction.SOUND_SETTINGS: ("audio-volume-high-symbolic", _("Open sound settings")),
+    DeviceCardAction.DISCONNECT: ("network-offline-symbolic", _("Disconnect")),
+    DeviceCardAction.MORE: ("view-more-horizontal-symbolic", _("More device actions")),
+}
+
+AVATAR_CLASSES = (
+    "device-avatar-speaker", "device-avatar-headphones", "device-avatar-phone",
+    "device-avatar-keyboard", "device-avatar-mouse", "device-avatar-controller",
+    "device-avatar-computer", "device-avatar-unknown", "device-avatar-available",
+)
+
+
+def avatar_class_for(category: str) -> str:
+    category = category.casefold()
+    return (
+        "device-avatar-headphones" if "head" in category
+        else "device-avatar-speaker" if "speaker" in category or "loud" in category
+        else "device-avatar-phone" if "phone" in category
+        else "device-avatar-keyboard" if "keyboard" in category
+        else "device-avatar-mouse" if "mouse" in category
+        else "device-avatar-controller" if "controller" in category or "game" in category
+        else "device-avatar-computer" if "computer" in category
+        else "device-avatar-unknown"
+    )
+
+
+def copy_to_clipboard(text: str) -> None:
+    clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+    clipboard.set_text(text, -1)
+    clipboard.store()
+
+
+def copy_button(get_text: Callable[[], str]) -> Gtk.Button:
+    """Small inline button that copies a value such as a device address."""
+    image = Gtk.Image.new_from_icon_name("edit-copy-symbolic", Gtk.IconSize.MENU)
+    image.show()
+    button = Gtk.Button(image=image, valign=Gtk.Align.CENTER, visible=True)
+    button.set_relief(Gtk.ReliefStyle.NONE)
+    button.get_style_context().add_class("copy-button")
+    button.set_tooltip_text(_("Copy address"))
+    button.get_accessible().set_name(_("Copy address"))
+    button.connect("clicked", lambda _button: copy_to_clipboard(get_text()))
+    return button
+
+
+def set_state_class(widget: Gtk.Widget, active: str, choices: tuple[str, ...]) -> None:
+    context = widget.get_style_context()
+    for css_class in choices:
+        context.remove_class(css_class)
+    context.add_class(active)
 
 
 class DeviceCard(Gtk.ListBoxRow):
@@ -94,89 +188,88 @@ class DeviceCard(Gtk.ListBoxRow):
 
         content = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=18,
+            spacing=20,
             visible=True,
         )
-        self._icon = Gtk.Image(pixel_size=64, visible=True)
-        self._icon.get_style_context().add_class("device-avatar")
-        content.pack_start(self._icon, False, False, 0)
+        avatar = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
+        avatar.get_style_context().add_class("device-avatar")
+        self._avatar = avatar
+        self._icon = Gtk.Image(pixel_size=56, visible=True)
+        avatar.pack_start(self._icon, True, True, 0)
+        content.pack_start(avatar, False, False, 0)
 
         identity = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            spacing=3,
+            spacing=2,
             hexpand=True,
+            valign=Gtk.Align.CENTER,
             visible=True,
         )
         self._name = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
         self._name.get_style_context().add_class("device-name")
         self._category = Gtk.Label(xalign=0, visible=True)
         self._category.get_style_context().add_class("device-subtitle")
+        address_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=4, visible=True)
         self._address = Gtk.Label(xalign=0, selectable=True, visible=True)
         self._address.get_style_context().add_class("device-mac")
+        address_row.pack_start(self._address, False, False, 0)
+        address_row.pack_start(copy_button(lambda: self.snapshot.address), False, False, 0)
         identity.pack_start(self._name, False, False, 0)
         identity.pack_start(self._category, False, False, 0)
-        identity.pack_start(self._address, False, False, 0)
-        self._status_dot = Gtk.Label(label="●", visible=True)
+        identity.pack_start(address_row, False, False, 0)
+
+        self._status_row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
+        self._status_row.get_style_context().add_class("device-status-row")
+        self._status_dot = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
         self._status_dot.get_style_context().add_class("status-dot")
         self._status = Gtk.Label(xalign=0, visible=True)
         self._status.get_style_context().add_class("device-status")
+        self._battery_icon = Gtk.Image(pixel_size=16)
+        self._battery_icon.get_style_context().add_class("battery-icon")
         self._battery = Gtk.Label(xalign=0)
         self._battery.get_style_context().add_class("battery-indicator")
-        status = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
-        status.get_style_context().add_class("device-status-row")
-        status.pack_start(self._status_dot, False, False, 0)
-        status.pack_start(self._status, False, False, 0)
-        status.pack_start(self._battery, False, False, 0)
-        identity.pack_start(status, False, False, 0)
+        self._status_row.pack_start(self._status_dot, False, False, 0)
+        self._status_row.pack_start(self._status, False, False, 0)
+        self._status_row.pack_start(self._battery_icon, False, False, 6)
+        self._status_row.pack_start(self._battery, False, False, 0)
+        identity.pack_start(self._status_row, False, False, 0)
         content.pack_start(identity, True, True, 0)
 
         actions = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
-            spacing=10,
+            spacing=14,
             halign=Gtk.Align.END,
             valign=Gtk.Align.CENTER,
             visible=True,
         )
         actions.get_style_context().add_class("device-actions")
-        self._primary_action = Gtk.Button(visible=True)
-        self._primary_action.get_style_context().add_class("primary-button")
-        self._primary_action.connect("clicked", self._emit_primary_action, action_callback)
-        actions.pack_start(self._primary_action, False, False, 0)
-        self._send_action = self._icon_button("document-send-symbolic", _("Send files"))
-        self._send_action.connect(
-            "clicked", lambda button: action_callback(self, DeviceCardAction.SEND, button)
-        )
-        actions.pack_start(self._send_action, False, False, 0)
-        self._more_action = self._icon_button("view-more-symbolic", _("More device actions"))
-        self._more_action.connect(
-            "clicked", lambda button: action_callback(self, DeviceCardAction.MORE, button)
-        )
-        actions.pack_start(self._more_action, False, False, 0)
+        self._action_buttons: dict[DeviceCardAction, Gtk.Button] = {}
+        for action in (DeviceCardAction.CONNECT, DeviceCardAction.PAIR):
+            button = Gtk.Button(label=_("Connect") if action is DeviceCardAction.CONNECT else _("Pair"))
+            button.get_style_context().add_class("pill-button")
+            self._action_buttons[action] = button
+        for action, (icon_name, tooltip) in ACTION_PRESENTATION.items():
+            self._action_buttons[action] = self._icon_button(icon_name, tooltip)
+        for action, button in self._action_buttons.items():
+            button.connect("clicked", lambda b, a=action: action_callback(self, a, b))
+            actions.pack_start(button, False, False, 0)
         content.pack_end(actions, False, False, 0)
         self.add(content)
         self.update(snapshot)
 
     @staticmethod
     def _icon_button(icon_name: str, accessible_name: str) -> Gtk.Button:
-        image = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        image = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.LARGE_TOOLBAR)
         image.show()
-        button = Gtk.Button(image=image, visible=True)
-        button.get_style_context().add_class("secondary-button")
+        button = Gtk.Button(image=image)
+        button.get_style_context().add_class("round-icon-button")
         button.set_tooltip_text(accessible_name)
         button.get_accessible().set_name(accessible_name)
         return button
 
-    def _emit_primary_action(
-        self,
-        button: Gtk.Button,
-        action_callback: Callable[["DeviceCard", DeviceCardAction, Gtk.Widget], None],
-    ) -> None:
-        action = (
-            DeviceCardAction.DISCONNECT if self.snapshot.connected
-            else DeviceCardAction.CONNECT if self.snapshot.paired
-            else DeviceCardAction.PAIR
-        )
-        action_callback(self, action, button)
+    @property
+    def visible_actions(self) -> tuple[DeviceCardAction, ...]:
+        return tuple(action for action, button in self._action_buttons.items() if button.get_visible())
 
     def update(self, snapshot: DeviceCardSnapshot) -> None:
         self.snapshot = snapshot
@@ -184,54 +277,44 @@ class DeviceCard(Gtk.ListBoxRow):
             illustration_icon_name(snapshot.category, snapshot.icon_name),
             Gtk.IconSize.DIALOG,
         )
-        avatar_context = self._icon.get_style_context()
-        avatar_classes = (
-            "device-avatar-speaker", "device-avatar-headphones", "device-avatar-phone",
-            "device-avatar-keyboard", "device-avatar-mouse", "device-avatar-controller",
-            "device-avatar-computer", "device-avatar-unknown",
-        )
-        for css_class in avatar_classes:
+        available = snapshot.group is DeviceGroup.AVAILABLE
+        avatar_context = self._avatar.get_style_context()
+        for css_class in AVATAR_CLASSES:
             avatar_context.remove_class(css_class)
-        category = snapshot.category.casefold()
-        avatar_class = (
-            "device-avatar-headphones" if "head" in category
-            else "device-avatar-speaker" if "speaker" in category or "loud" in category
-            else "device-avatar-phone" if "phone" in category
-            else "device-avatar-keyboard" if "keyboard" in category
-            else "device-avatar-mouse" if "mouse" in category
-            else "device-avatar-controller" if "controller" in category or "game" in category
-            else "device-avatar-computer" if "computer" in category
-            else "device-avatar-unknown"
-        )
-        avatar_context.add_class(avatar_class)
+        avatar_context.add_class("device-avatar-available" if available else avatar_class_for(snapshot.category))
+
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
         self._category.set_text(snapshot.category)
         self._address.set_text(snapshot.address)
-        status = _("Connected") if snapshot.connected else _("Paired") if snapshot.paired else _("Available")
-        self._status.set_text(status)
-        self._status.get_style_context().remove_class("device-status-connected")
-        self._status.get_style_context().remove_class("device-status-disconnected")
-        self._status_dot.get_style_context().remove_class("device-status-connected")
-        self._status_dot.get_style_context().remove_class("device-status-disconnected")
+        self._status.set_text(snapshot.status_label)
         state_class = "device-status-connected" if snapshot.connected else "device-status-disconnected"
-        self._status.get_style_context().add_class(state_class)
-        self._status_dot.get_style_context().add_class(state_class)
-        card_context = self.get_style_context()
-        card_context.remove_class("device-card-connected")
-        card_context.remove_class("device-card-disconnected")
-        card_context.add_class(
-            "device-card-connected" if snapshot.connected else "device-card-disconnected"
+        states = ("device-status-connected", "device-status-disconnected")
+        set_state_class(self._status, state_class, states)
+        set_state_class(self._status_dot, state_class, states)
+        set_state_class(
+            self,
+            "device-card-connected" if snapshot.connected else "device-card-disconnected",
+            ("device-card-connected", "device-card-disconnected"),
         )
+        # Available devices are not linked yet; the mockup omits their status line.
+        self._status_row.set_visible(not available)
+
         battery = snapshot.battery_label
-        self._battery.set_text(_("Battery: %s") % battery if battery is not None else "")
+        self._battery.set_text(battery or "")
         self._battery.set_visible(battery is not None)
-        primary_label = _("Disconnect") if snapshot.connected else _("Connect") if snapshot.paired else _("Pair")
-        self._primary_action.set_label(primary_label)
-        self._primary_action.set_tooltip_text(_("%s %s") % (primary_label, snapshot.name))
-        self._primary_action.get_accessible().set_name(_("%s %s") % (primary_label, snapshot.name))
-        self._send_action.set_visible(snapshot.can_send)
-        self.get_accessible().set_name(f"{snapshot.name}, {self._status.get_text()}")
+        if snapshot.battery_icon_name is not None:
+            self._battery_icon.set_from_icon_name(snapshot.battery_icon_name, Gtk.IconSize.MENU)
+        self._battery_icon.set_visible(snapshot.battery_icon_name is not None)
+
+        wanted = snapshot.card_actions
+        for action, button in self._action_buttons.items():
+            button.set_visible(action in wanted)
+            if action in (DeviceCardAction.CONNECT, DeviceCardAction.PAIR,
+                          DeviceCardAction.DISCONNECT, DeviceCardAction.SOUND_SETTINGS):
+                label = button.get_tooltip_text() or button.get_label() or ""
+                button.get_accessible().set_name(f"{label} {snapshot.name}")
+        self.get_accessible().set_name(f"{snapshot.name}, {snapshot.status_label}")
 
     def set_card_selected(self, selected: bool) -> None:
         context = self.get_style_context()
@@ -310,7 +393,7 @@ class ManagerDeviceCards(Gtk.Box):
     GROUP_TITLES = {
         DeviceGroup.CONNECTED: _("Connected"),
         DeviceGroup.PAIRED: _("Paired"),
-        DeviceGroup.AVAILABLE: _("Available"),
+        DeviceGroup.AVAILABLE: _("Available Devices"),
     }
 
     def __init__(self, device_list: "ManagerDeviceList") -> None:
@@ -366,8 +449,17 @@ class ManagerDeviceCards(Gtk.Box):
                 hexpand=True,
                 visible=True,
             )
-            title = Gtk.Label(xalign=0, visible=True)
+            header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
+            header.get_style_context().add_class("section-header")
+            title = Gtk.Label(xalign=0, valign=Gtk.Align.CENTER, visible=True)
             title.get_style_context().add_class("section-title")
+            header.pack_start(title, True, True, 0)
+            if group is DeviceGroup.AVAILABLE:
+                refresh = DeviceCard._icon_button("view-refresh-symbolic", _("Search for devices"))
+                refresh.set_action_name("app.inquiry")
+                refresh.get_style_context().add_class("section-action")
+                refresh.show()
+                header.pack_end(refresh, False, False, 0)
             cards = Gtk.ListBox(
                 selection_mode=Gtk.SelectionMode.SINGLE,
                 activate_on_single_click=False,
@@ -380,7 +472,7 @@ class ManagerDeviceCards(Gtk.Box):
             self._sections[group] = cards
             self._section_containers[group] = section
             self._section_titles[group] = title
-            section.pack_start(title, False, False, 0)
+            section.pack_start(header, False, False, 0)
             section.pack_start(cards, False, False, 0)
             self.pack_start(section, False, False, 0)
 
@@ -402,17 +494,21 @@ class ManagerDeviceCards(Gtk.Box):
         )
         device: Device = row["device"]
         object_path = device.get_object_path()
+        klass = device["Class"]
+        icon_name = device["Icon"]
         return DeviceCardSnapshot(
             object_path=object_path,
             name=row["alias"],
             category=self.device_list.get_device_class(device),
             address=device["Address"],
-            icon_name=device["Icon"],
+            icon_name=icon_name,
             connected=row["connected"],
             paired=row["paired"],
             trusted=row["trusted"],
             can_send=row["objpush"],
             battery_percentage=self.device_list.get_battery_percentage(object_path),
+            major_class=major_class_name(klass),
+            audio=is_audio_device(klass, icon_name),
         )
 
     def _visible_snapshots(self) -> list[DeviceCardSnapshot]:
@@ -434,7 +530,6 @@ class ManagerDeviceCards(Gtk.Box):
             card = DeviceCard(snapshot, self._request_action)
             self.cards_by_path[snapshot.object_path] = card
             self._sections[snapshot.group].add(card)
-        self.show_all()
         self._apply_search()
         self._sync_source = 0
         if self.device_list.get_selected_device() is None and self.cards_by_path:
