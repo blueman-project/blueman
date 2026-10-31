@@ -56,7 +56,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 - **Updated (UTC):** 2026-10-17
 - **Branch / commit:** feature/redesign (see `git log` for current phase checkpoint)
 - **Working tree:** T-020 dashboard expansion fix is verified and ready for its checkpoint; unrelated untracked user files remain untouched.
-- **Active task:** T-025
+- **Active task:** None (mockup redesign complete; bugs phase may start)
 - **Overall status:** The user explicitly rejected the T-015/T-016 visual result as still far from the reference. Continue redesign only; bug work remains deferred.
 
 ## 8. Task Board
@@ -87,7 +87,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-022 | Critical | DONE | Mockup device cards: icon actions per state, audio sound-settings action, copy MAC, battery glyph, available refresh, untruncated names. | |
 | T-023 | Critical | DONE | Mockup inspector: Play Sound/Send File/More tiles, Address/Type/Class rows, Open Sound Settings + Forget quick actions, centered rename button. | |
 | T-024 | Critical | DONE | Consolidated dark/light CSS: remove dead GtkXxx selectors and stacked passes; opaque-enough surfaces (no blur in GTK 3), mockup tokens. | Baseline showed background apps bleeding through translucent panels. |
-| T-025 | High | TODO | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
+| T-025 | High | DONE | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
 
 ## 9. Active Task Detail
 - **Task ID:** T-020
@@ -128,15 +128,14 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-17 | T-014 | Modernized outgoing transfer and fallback notification presentation without changing OBEX flow. | Transfer/UI/style/reduced-motion tests and local build pass. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
-- **Last agent/session:** Codex, 2026-10-15
-- **What was requested:** Ignore bug fixing and continue the UI redesign because the current runtime screenshot is far from the supplied target.
-- **What is done:** T-015/T-016 established the functional three-panel base and are checkpointed, but the user says the visual result remains far from the target.
-- **What remains:** Checkpoint T-017. Remaining visual differences are documented constraints rather than hidden: portable blur, native window controls, local-only category illustrations, and current device state. Bugs remain deferred.
-- **Exact next step:** Commit T-017 before any further phase.
-- **Files touched:** Manager shell/cards/inspector, ThemeManager, Manager default geometry, both themes, manager tests, and this tracker.
-- **Checks run and results:** 20 manager GUI tests, compileall, schemas, CSS parsing and local build pass; real light/dark runtime captures inspected.
-- **Important warnings:** Preserve user files and backend behavior. Do not touch `BUGS_LOGS.md`; the current task is visual redesign only.
-- **Questions for user:** None.
+- **Last agent/session:** Claude Code, 2026-10-31
+- **What was requested:** Match `expected-mockup.png`; fix bugs introduced by the redesign; defer pre-existing bugs.
+- **What is done:** T-021–T-025. Traffic-light borderless chrome, Cairo sidebar radar, real adapter alias, per-state card actions (sound settings for connected audio), Play Sound/Send File/More inspector, generated opaque dark/light themes, responsive minimum size.
+- **Redesign bugs fixed:** startup GLib.Error/switch OFF with distro applet 2.3.5; translucent panels showing other windows; app-paintable suppressing backgrounds; inspector clipped by revealer; show_all() revealing hidden actions; minimum window 1289×815 blocking compact layouts; stale paned position; dead GtkXxx CSS selectors; flake8 issues.
+- **Checks run and results:** 340 unittest tests pass (python-dbusmock in a scratch venv); flake8 clean on blueman/test/tools/apps; strict mypy shows no new errors vs 4d9730ba (pre-existing stub errors remain); runtime captures at 1580×935, 1400×850, 1300×800, 1100×640, 1000×700 in dark and light, plus a fixture gallery for connected/battery/available states.
+- **Not verified on hardware:** connected-device runtime (no device was connected; covered by fixture gallery and tests), real sound-settings launch, discovery radar pulse during a live scan.
+- **Exact next step:** Phase 9 bug work from BUG_AUDIT.md / BUGS_LOGS.md if the user approves.
+- **Important warnings:** Edit `tools/generate-themes.py`, not the CSS. Do not touch `BUGS_LOGS.md`.
 
 ---
 

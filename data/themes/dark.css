@@ -181,7 +181,7 @@
     color: @radar-glyph;
     background-image: radial-gradient(circle, @radar-core-start, @radar-core-end);
     border: 1px solid alpha(@accent-start, 0.55);
-    box-shadow: 0 0 34px alpha(@accent-start, 0.45), inset 0 1px alpha(white, 0.18);
+    box-shadow: 0 0 18px alpha(@accent-start, 0.40), inset 0 1px alpha(white, 0.18);
 }
 .app-window .sidebar-radar-off { color: @status-disconnected; }
 .app-window .sidebar-radar-off .sidebar-radar-core {
@@ -400,13 +400,14 @@
 
 /* ------------------------------------------------------------ inspector */
 
-.app-window .inspector-panel {
-    padding: 22px 16px;
+.app-window .inspector-scroll {
     background-color: @surface-inspector;
     border-left: 1px solid @border-subtle;
     border-radius: 0 16px 16px 0;
 }
-.app-window.maximized .inspector-panel { border-radius: 0; }
+.app-window.maximized .inspector-scroll { border-radius: 0; }
+.app-window .inspector-scroll viewport { background: none; border: none; }
+.app-window .inspector-panel { padding: 22px 16px; }
 .app-window .inspector-overview,
 .app-window .inspector-section {
     padding: 18px;

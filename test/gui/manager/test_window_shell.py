@@ -105,6 +105,26 @@ class TestManagerWindowShell(unittest.TestCase):
         window.destroy()
 
     @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_minimum_width_allows_compact_breakpoints(self) -> None:
+        """Side panes must shrink, or the window can never become narrow enough to compact."""
+        from blueman.gui.manager.ManagerWindow import ManagerWindowShell
+
+        window = Gtk.Window()
+        content = Gtk.Grid(visible=True)
+        window.add(content)
+        shell = ManagerWindowShell(window, content, "Blueman Next")
+        cards = Gtk.Box(visible=True, width_request=500)
+        cards.search_entry = Gtk.SearchEntry(visible=True)
+        cards.cards_by_path = {}
+        shell.install_device_cards(cards, Gtk.ScrolledWindow())
+        shell.install_device_inspector(Gtk.Box(visible=True, width_request=INSPECTOR_WIDTH))
+        shell._inspector_revealer.set_reveal_child(True)
+
+        minimum = shell.main_paned.get_preferred_width()[0]
+        self.assertLess(minimum, COMPACT_SIDEBAR_BREAKPOINT)
+        window.destroy()
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
     def test_radar_timer_runs_only_while_mapped_and_active(self) -> None:
         from blueman.gui.manager.ManagerWindow import SidebarRadar
 

@@ -60,6 +60,10 @@ There are two build systems, and both must stay in sync:
   - `ManagerSettings.py`: settings dialog exposing only existing GSettings keys from `data/org.blueman.gschema.xml`.
   - The classic TreeView remains as a compatibility fallback.
 - **Theming** (`blueman/gui/theme/`): `ThemeManager` singleton loads `data/themes/{dark,light}.css` as GTK CSS providers. `system` mode resolves to light or dark from the desktop but still applies the Blueman Next palette. `DesignTokens.py` and `AnimationManager.py` hold the shared tokens and reduced-motion handling.
+  - Both stylesheets are **generated** by `tools/generate-themes.py` (per-theme palette tokens plus one shared rule set). Edit the generator and rerun it; never hand-edit the CSS.
+  - Use GTK ≥3.20 CSS node names (`switch`, `row`, `entry`, `paned > separator`); `GtkXxx` type selectors are silently ignored.
+  - Surfaces must stay opaque: GTK 3 has no blur, and translucency shows other windows through. Don't call `set_app_paintable(True)` on the window, since it suppresses the CSS background.
+- **Window chrome**: the manager uses an empty titlebar widget (CSD with no header strip), custom traffic-light buttons in the sidebar, and drag areas (`_drag_area` in `ManagerWindow.py`). Responsive breakpoints are measured on `main_paned` (content), not the toplevel (which includes CSD shadow margins). Side panes are packed `shrink=True` so the window's minimum size stays below the compact breakpoints.
 - **C extension** (`module/_blueman.pyx`, Cython): low-level helpers (rfcomm, conn info). It is built into `build-local/module/`.
 
 ## Redesign constraints
@@ -68,3 +72,5 @@ There are two build systems, and both must stay in sync:
 - Don't change pairing/agent control flow (`BluezAgent`, `AuthAgent`) or OBEX semantics while redesigning their UI.
 - Timers and animations exist only while a widget is mapped and active, and they respect reduced motion.
 - Manager GUI tests live in `test/gui/manager/` and use fake device lists, not D-Bus. Add tests there for new UI behavior.
+- The distribution applet may be older than this checkout (e.g. 2.3.5 advertises `PowerManager` but does not export its interface). Power state falls back to the adapter's `Powered` property; keep D-Bus calls to the applet guarded.
+- `test.main` D-Bus tests need `python-dbusmock`; flake8 and mypy may not be installed system-wide.

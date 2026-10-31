@@ -12,7 +12,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
-from gi.repository import Gdk, Gio, GObject, Gtk, Pango  # noqa: E402
+from gi.repository import Gdk, Gio, GLib, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.gui.theme.AnimationManager import start_animation, stop_animation_safe
 
@@ -25,7 +25,7 @@ NARROW_LAYOUT_BREAKPOINT = 1500
 INSPECTOR_BREAKPOINT = 1180
 SIDEBAR_WIDTH = 320
 NARROW_SIDEBAR_WIDTH = 270
-COMPACT_SIDEBAR_WIDTH = 76
+COMPACT_SIDEBAR_WIDTH = 112
 INSPECTOR_WIDTH = 410
 NARROW_INSPECTOR_WIDTH = 340
 
@@ -47,26 +47,29 @@ def navigation_items() -> tuple[NavigationItem, ...]:
     )
 
 
+class _RadarCanvas(Gtk.DrawingArea):
+    """Prefers the full beacon size but can shrink, so short windows keep fitting."""
+
+    def do_get_preferred_width(self) -> tuple[int, int]:
+        return SidebarRadar.MIN_SIZE, SidebarRadar.MAX_SIZE
+
+    def do_get_preferred_height(self) -> tuple[int, int]:
+        return SidebarRadar.MIN_SIZE, SidebarRadar.MAX_SIZE
+
+
 class SidebarRadar(Gtk.Overlay):
     """Concentric Bluetooth beacon; pulses only while discovery is running."""
 
-    SIZE = 168
+    MAX_SIZE = 168
+    MIN_SIZE = 112
 
     def __init__(self) -> None:
-        super().__init__(
-            halign=Gtk.Align.CENTER,
-            valign=Gtk.Align.CENTER,
-            visible=True,
-        )
+        super().__init__(visible=True)
         self.get_style_context().add_class("sidebar-radar")
         self._active = False
         self._phase = 0.0
         self._animation_source = 0
-        self._canvas = Gtk.DrawingArea(
-            width_request=self.SIZE,
-            height_request=self.SIZE,
-            visible=True,
-        )
+        self._canvas = _RadarCanvas(visible=True)
         self._canvas.connect("draw", self._on_draw)
         self.add(self._canvas)
         self._core = Gtk.Box(
@@ -104,7 +107,7 @@ class SidebarRadar(Gtk.Overlay):
     def _on_draw(self, widget: Gtk.Widget, context: "DrawContext") -> bool:
         width, height = widget.get_allocated_width(), widget.get_allocated_height()
         cx, cy = width / 2, height / 2
-        radius = min(width, height) / 2
+        radius = min(width, height, self.MAX_SIZE) / 2
         accent = self.get_style_context().get_color(Gtk.StateFlags.NORMAL)
         red, green, blue = accent.red, accent.green, accent.blue
 
@@ -203,6 +206,7 @@ class ManagerWindowShell:
         self._card_view: Gtk.Widget | None = None
         self._inspector_revealer: Gtk.Revealer | None = None
         self._inspector: Gtk.Widget | None = None
+        self._position_source = 0
 
         self.header = self._create_titlebar()
         self._inspector_toggle = self._create_inspector_toggle()
@@ -224,14 +228,17 @@ class ManagerWindowShell:
 
         self.main_paned = Gtk.Paned.new(Gtk.Orientation.HORIZONTAL)
         self.main_paned.get_style_context().add_class("app-main")
-        self.main_paned.pack1(self.sidebar, resize=False, shrink=False)
+        # Shrinkable sides keep the window's minimum size below the compact breakpoints;
+        # _on_size_allocate then switches to the compact sidebar and hidden inspector.
+        self.main_paned.pack1(self.sidebar, resize=False, shrink=True)
         self.main_paned.pack2(self._workspace, resize=True, shrink=False)
         self.main_paned.set_position(SIDEBAR_WIDTH)
         self.main_paned.show()
 
         window.set_titlebar(self.header)
         window.add(self.main_paned)
-        window.connect("size-allocate", self._on_size_allocate)
+        # Measure the content, not the toplevel: client-side shadows widen the window allocation.
+        self.main_paned.connect("size-allocate", self._on_size_allocate)
 
     @staticmethod
     def _create_titlebar() -> Gtk.Box:
@@ -358,6 +365,7 @@ class ManagerWindowShell:
             hexpand=True,
             vexpand=True,
             overlay_scrolling=True,
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
             visible=True,
         )
         card_scrollview.get_style_context().add_class("dashboard-scroll")
@@ -386,12 +394,20 @@ class ManagerWindowShell:
             visible=True,
         )
         revealer.get_style_context().add_class("inspector-column")
-        revealer.add(inspector)
-        self._workspace.pack2(revealer, resize=False, shrink=False)
+        scroller = Gtk.ScrolledWindow(
+            hscrollbar_policy=Gtk.PolicyType.NEVER,
+            vscrollbar_policy=Gtk.PolicyType.AUTOMATIC,
+            visible=True,
+        )
+        scroller.get_style_context().add_class("inspector-scroll")
+        scroller.add(inspector)
+        revealer.add(scroller)
+        self._workspace.pack2(revealer, resize=False, shrink=True)
         self._inspector_revealer = revealer
         self._inspector_toggle.set_sensitive(True)
-        wide = self.window.get_allocated_width() >= INSPECTOR_BREAKPOINT
-        inspector.set_size_request(inspector_width_for(self.window.get_allocated_width()), -1)
+        content_width = self.main_paned.get_allocated_width()
+        wide = content_width >= INSPECTOR_BREAKPOINT
+        inspector.set_size_request(inspector_width_for(content_width), -1)
         self._wide_inspector = wide
         self._inspector_toggle.set_active(wide)
         self._inspector_toggle.set_visible(not wide)
@@ -435,7 +451,6 @@ class ManagerWindowShell:
     def _create_sidebar(self, display_name: str) -> Gtk.Box:
         sidebar = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            width_request=SIDEBAR_WIDTH,
             visible=True,
         )
         sidebar.get_style_context().add_class("app-sidebar")
@@ -529,7 +544,7 @@ class ManagerWindowShell:
         power_card.pack_start(visible_caption, False, False, 0)
         power_card.pack_start(visible_row, False, False, 0)
         power_card.pack_start(self.radar, True, True, 0)
-        self._power_card_details = (power_label, visible_caption, visible_row)
+        self._power_card = power_card
         sidebar.pack_end(power_card, False, False, 0)
         return sidebar
 
@@ -568,6 +583,11 @@ class ManagerWindowShell:
             self.radar.set_active(False)
         self.radar.queue_draw()
 
+    def _apply_sidebar_width(self, width: int) -> bool:
+        self._position_source = 0
+        self.main_paned.set_position(width)
+        return False
+
     def _on_size_allocate(self, _window: Gtk.Widget, allocation: Gtk.Allocation) -> None:
         compact = should_compact_sidebar(allocation.width)
         width = sidebar_width_for(allocation.width)
@@ -575,12 +595,10 @@ class ManagerWindowShell:
             self._compact = compact
             for label in self._sidebar_labels:
                 label.set_visible(not compact)
-            for widget in (*self._power_card_details, self.radar):
-                widget.set_visible(not compact)
-        if self.sidebar.get_size_request()[0] != width:
-            self.sidebar.set_size_request(width, -1)
-        if self.main_paned.get_position() != width:
-            self.main_paned.set_position(width)
+            self._power_card.set_visible(not compact)
+        if self.main_paned.get_position() != width and not self._position_source:
+            # Paned ignores position changes made while it is being allocated.
+            self._position_source = GLib.idle_add(lambda: self._apply_sidebar_width(width))
         if self._inspector is not None:
             inspector_width = inspector_width_for(allocation.width)
             if self._inspector.get_size_request()[0] != inspector_width:
