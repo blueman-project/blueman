@@ -234,8 +234,8 @@ class TestDeviceCardSnapshot(unittest.TestCase):
         self.assertEqual(inspector._name.get_text(), "Headphones")
         self.assertEqual(inspector._address.get_text(), "00:11:22:33:44:55")
         self.assertEqual(inspector._primary._tile_label.get_text(), "Disconnect")
-        self.assertEqual(inspector._paired.get_text(), "Yes")
-        self.assertEqual(inspector._trusted.get_text(), "No")
+        self.assertEqual(inspector._class.get_text(), "Unknown")
+        self.assertFalse(inspector._sound_settings.get_visible())
         self.assertIs(inspector._primary.get_parent().get_children()[0], inspector._primary)
         device_list.liststore.set_value(connected_iter, device_list.COLUMNS["alias"], "Studio Headphones")
         device_list.emit(
@@ -382,6 +382,33 @@ class TestDeviceCardActions(unittest.TestCase):
         self.assertEqual(
             cards._section_titles[DeviceGroup.AVAILABLE].get_text(), "Available Devices (0)"
         )
+        cards.destroy()
+
+    @unittest.skipUnless(Gtk.init_check()[0], "GTK display is unavailable")
+    def test_inspector_offers_sound_for_connected_audio_devices(self) -> None:
+        from blueman.gui.manager.ManagerDeviceCards import ManagerDeviceCards
+        from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
+
+        device_list = FakeDeviceList()
+        device = FakeDevice("/device/speaker", "Philips TAB8505", True, True, klass=0x240414)
+        tree_iter = device_list.add(device)
+        device_list.batteries[device.object_path] = 80
+        cards = ManagerDeviceCards(device_list)
+        inspector = ManagerDeviceInspector(cards)
+        device_list.emit("device-selected", device, tree_iter)
+
+        self.assertEqual(inspector._primary._tile_label.get_text(), "Play Sound")
+        self.assertEqual(inspector._class.get_text(), "Audio/video")
+        self.assertTrue(inspector._sound_settings.get_visible())
+        self.assertTrue(inspector._battery_inline.get_visible())
+        self.assertEqual(inspector._battery_inline.get_text(), "80%")
+        self.assertEqual(inspector._rename.get_valign(), Gtk.Align.START)
+        requests: list[str] = []
+        inspector.connect("action-requested", lambda _i, _p, action, _a: requests.append(action))
+        inspector._primary.clicked()
+        inspector._sound_settings.clicked()
+        self.assertEqual(requests, [DeviceCardAction.SOUND_SETTINGS.value] * 2)
+        inspector.destroy()
         cards.destroy()
 
 

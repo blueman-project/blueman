@@ -9,10 +9,24 @@ from gi.repository import GObject, Gtk, Pango  # noqa: E402
 
 from blueman.bluez.Device import Device
 from blueman.gui.manager.ManagerDeviceCards import (
+    AVATAR_CLASSES,
     DeviceCardAction,
+    DeviceCardSnapshot,
+    DeviceGroup,
     ManagerDeviceCards,
+    avatar_class_for,
+    copy_button,
     illustration_icon_name,
+    set_state_class,
 )
+
+
+PRIMARY_TILES = {
+    DeviceCardAction.SOUND_SETTINGS: ("audio-volume-high-symbolic", _("Play Sound")),
+    DeviceCardAction.DISCONNECT: ("network-offline-symbolic", _("Disconnect")),
+    DeviceCardAction.CONNECT: ("blueman-next-devices-symbolic", _("Connect")),
+    DeviceCardAction.PAIR: ("list-add-symbolic", _("Pair")),
+}
 
 
 class ManagerDeviceInspector(Gtk.Box):
@@ -23,14 +37,14 @@ class ManagerDeviceInspector(Gtk.Box):
     def __init__(self, cards: ManagerDeviceCards) -> None:
         super().__init__(
             orientation=Gtk.Orientation.VERTICAL,
-            spacing=14,
-            margin=18,
+            spacing=16,
             width_request=410,
             visible=True,
         )
         self.cards = cards
         self.device_list = cards.device_list
         self._object_path: str | None = None
+        self._primary_action = DeviceCardAction.CONNECT
         self.get_style_context().add_class("inspector-panel")
 
         self._empty = Gtk.Box(
@@ -48,19 +62,31 @@ class ManagerDeviceInspector(Gtk.Box):
         self._empty.pack_start(empty_label, False, False, 0)
         self.pack_start(self._empty, True, True, 0)
 
-        self._content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12)
-        overview = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, visible=True)
+        self._content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=16, visible=True)
+        self._content.pack_start(self._create_overview(), False, False, 0)
+        self._content.pack_start(self._create_information(), False, False, 0)
+        self._content.pack_start(self._create_quick_actions(), False, False, 0)
+        self.pack_start(self._content, True, True, 0)
+
+        self.device_list.connect("device-selected", self._on_selected)
+        self.cards.connect("cards-changed", lambda _cards: self._refresh())
+        selected = self.device_list.get_selected_device()
+        self._object_path = selected.get_object_path() if selected is not None else None
+        self._refresh()
+
+    def _create_overview(self) -> Gtk.Box:
+        overview = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=18, visible=True)
         overview.get_style_context().add_class("inspector-overview")
 
-        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
+        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=18, visible=True)
         header.get_style_context().add_class("inspector-device-header")
-        avatar = Gtk.Box(visible=True)
-        avatar.get_style_context().add_class("inspector-avatar")
-        self._icon = Gtk.Image(pixel_size=72, visible=True)
-        avatar.pack_start(self._icon, True, True, 0)
+        self._avatar = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
+        self._avatar.get_style_context().add_class("inspector-avatar")
+        self._icon = Gtk.Image(pixel_size=76, visible=True)
+        self._avatar.pack_start(self._icon, True, True, 0)
         titles = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
-            spacing=3,
+            spacing=4,
             valign=Gtk.Align.CENTER,
             hexpand=True,
             visible=True,
@@ -73,105 +99,136 @@ class ManagerDeviceInspector(Gtk.Box):
         titles.pack_start(self._category, False, False, 0)
         rename_icon = Gtk.Image.new_from_icon_name("document-edit-symbolic", Gtk.IconSize.BUTTON)
         rename_icon.show()
-        rename = Gtk.Button(image=rename_icon, visible=True)
-        rename.set_tooltip_text(_("Rename device"))
-        rename.get_style_context().add_class("inspector-edit-button")
-        rename.connect("clicked", self._request, DeviceCardAction.RENAME)
-        header.pack_start(avatar, False, False, 0)
+        self._rename = Gtk.Button(
+            image=rename_icon,
+            valign=Gtk.Align.START,
+            halign=Gtk.Align.END,
+            visible=True,
+        )
+        self._rename.set_tooltip_text(_("Rename device"))
+        self._rename.get_accessible().set_name(_("Rename device"))
+        self._rename.get_style_context().add_class("inspector-edit-button")
+        self._rename.connect("clicked", self._request, DeviceCardAction.RENAME)
+        header.pack_start(self._avatar, False, False, 0)
         header.pack_start(titles, True, True, 0)
-        header.pack_end(rename, False, False, 0)
+        header.pack_end(self._rename, False, False, 0)
         overview.pack_start(header, False, False, 0)
 
         status_bar = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8, visible=True)
         status_bar.get_style_context().add_class("inspector-status-bar")
-        self._status_dot = Gtk.Label(label="●", visible=True)
+        self._status_dot = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
         self._status_dot.get_style_context().add_class("status-dot")
         self._status_text = Gtk.Label(xalign=0, visible=True)
-        self._status_text.get_style_context().add_class("device-status-connected")
-        self._battery_inline = Gtk.Label(xalign=1, visible=True)
+        self._status_text.get_style_context().add_class("device-status")
+        self._battery_separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL, valign=Gtk.Align.CENTER)
+        self._battery_separator.get_style_context().add_class("status-separator")
+        self._battery_icon = Gtk.Image(pixel_size=16)
+        self._battery_inline = Gtk.Label(xalign=0)
         self._battery_inline.get_style_context().add_class("battery-indicator")
         status_bar.pack_start(self._status_dot, False, False, 0)
-        status_bar.pack_start(self._status_text, True, True, 0)
-        status_bar.pack_end(self._battery_inline, False, False, 0)
+        status_bar.pack_start(self._status_text, False, False, 0)
+        status_bar.pack_start(self._battery_separator, False, False, 8)
+        status_bar.pack_start(self._battery_icon, False, False, 0)
+        status_bar.pack_start(self._battery_inline, False, False, 0)
         overview.pack_start(status_bar, False, False, 0)
 
-        actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
+        actions = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=12, homogeneous=True, visible=True)
         self._primary = self._action_tile("audio-volume-high-symbolic", _("Connect"), "primary-action-tile")
         self._send = self._action_tile("document-send-symbolic", _("Send File"), "action-tile")
-        self._more = self._action_tile("view-more-symbolic", _("More"), "action-tile")
+        self._more = self._action_tile("view-more-horizontal-symbolic", _("More"), "action-tile")
         self._primary.connect("clicked", self._request_primary)
-        actions.pack_start(self._primary, True, True, 0)
-        for button, action in ((self._send, DeviceCardAction.SEND), (self._more, DeviceCardAction.MORE)):
-            button.connect("clicked", self._request, action)
+        self._send.connect("clicked", self._request, DeviceCardAction.SEND)
+        self._more.connect("clicked", self._request, DeviceCardAction.MORE)
+        for button in (self._primary, self._send, self._more):
             actions.pack_start(button, True, True, 0)
         overview.pack_start(actions, False, False, 0)
-        self._content.pack_start(overview, False, False, 0)
+        return overview
 
+    def _create_information(self) -> Gtk.Box:
         information = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0, visible=True)
         information.get_style_context().add_class("inspector-section")
         info_title = Gtk.Label(label=_("Device Information"), xalign=0, visible=True)
         info_title.get_style_context().add_class("inspector-section-title")
         information.pack_start(info_title, False, False, 0)
-        self._address = self._info_row(information, "bluetooth-symbolic", _("Address"))
+        self._address = self._info_row(
+            information, "bluetooth-symbolic", _("Address"),
+            copy_button(lambda: self._address.get_text()),
+        )
         self._type = self._info_row(information, "phone-symbolic", _("Type"))
-        self._status = self._info_row(information, "network-wireless-symbolic", _("Status"))
-        self._paired = self._info_row(information, "blueman-paired-emblem", _("Paired"))
-        self._trusted = self._info_row(information, "blueman-trusted-emblem", _("Trusted"))
-        self._battery = self._info_row(information, "battery-symbolic", _("Battery"))
-        self._content.pack_start(information, False, False, 0)
+        self._class = self._info_row(information, "view-grid-symbolic", _("Class"), last=True)
+        return information
 
-        quick = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8, visible=True)
+    def _create_quick_actions(self) -> Gtk.Box:
+        quick = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10, visible=True)
         quick.get_style_context().add_class("inspector-section")
         quick_title = Gtk.Label(label=_("Quick Actions"), xalign=0, visible=True)
         quick_title.get_style_context().add_class("inspector-section-title")
         quick.pack_start(quick_title, False, False, 0)
-        remove = Gtk.Button(visible=True)
-        remove.get_style_context().add_class("quick-action-danger")
-        remove.add(self._quick_action_content("edit-delete-symbolic", _("Forget Device")))
-        remove.connect("clicked", self._request, DeviceCardAction.REMOVE)
-        quick.pack_start(remove, False, False, 0)
-        self._content.pack_start(quick, False, False, 0)
-        self.pack_start(self._content, True, True, 0)
-
-        self.device_list.connect("device-selected", self._on_selected)
-        self.cards.connect("cards-changed", lambda _cards: self._refresh())
-        selected = self.device_list.get_selected_device()
-        if selected is not None:
-            self._object_path = selected.get_object_path()
-            self._refresh()
+        self._sound_settings = Gtk.Button(visible=True)
+        self._sound_settings.get_style_context().add_class("quick-action")
+        self._sound_settings.add(self._quick_action_content("emblem-system-symbolic", _("Open Sound Settings")))
+        self._sound_settings.connect("clicked", self._request, DeviceCardAction.SOUND_SETTINGS)
+        quick.pack_start(self._sound_settings, False, False, 0)
+        self._forget = Gtk.Button(visible=True)
+        self._forget.get_style_context().add_class("quick-action")
+        self._forget.get_style_context().add_class("quick-action-danger")
+        self._forget.add(self._quick_action_content("user-trash-symbolic", _("Forget Device")))
+        self._forget.connect("clicked", self._request, DeviceCardAction.REMOVE)
+        quick.pack_start(self._forget, False, False, 0)
+        return quick
 
     @staticmethod
     def _action_tile(icon_name: str, label: str, css_class: str) -> Gtk.Button:
-        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=7, visible=True)
+        content = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=8,
+            valign=Gtk.Align.CENTER,
+            visible=True,
+        )
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.LARGE_TOOLBAR)
         text = Gtk.Label(label=label, visible=True)
         button = Gtk.Button(visible=True)
+        button._tile_icon = icon  # type: ignore[attr-defined]
         button._tile_label = text  # type: ignore[attr-defined]
         icon.show()
         content.pack_start(icon, False, False, 0)
         content.pack_start(text, False, False, 0)
         button.add(content)
+        button.get_accessible().set_name(label)
         button.get_style_context().add_class(css_class)
         return button
 
     @staticmethod
     def _quick_action_content(icon_name: str, text: str) -> Gtk.Box:
-        content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
+        content = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
+        badge = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
+        badge.get_style_context().add_class("quick-action-badge")
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        icon.show()
+        badge.pack_start(icon, True, True, 0)
         label = Gtk.Label(label=text, xalign=0, visible=True)
         arrow = Gtk.Image.new_from_icon_name("go-next-symbolic", Gtk.IconSize.BUTTON)
-        icon.show()
+        arrow.get_style_context().add_class("quick-action-arrow")
         arrow.show()
-        content.pack_start(icon, False, False, 0)
+        content.pack_start(badge, False, False, 0)
         content.pack_start(label, True, True, 0)
         content.pack_end(arrow, False, False, 0)
         return content
 
     @staticmethod
-    def _info_row(parent: Gtk.Box, icon_name: str, label: str) -> Gtk.Label:
-        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10, visible=True)
+    def _info_row(
+        parent: Gtk.Box,
+        icon_name: str,
+        label: str,
+        suffix: Gtk.Widget | None = None,
+        last: bool = False,
+    ) -> Gtk.Label:
+        row = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
         row.get_style_context().add_class("inspector-row")
+        if last:
+            row.get_style_context().add_class("inspector-row-last")
         icon = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+        icon.get_style_context().add_class("inspector-row-icon")
         key = Gtk.Label(label=label, xalign=0, visible=True)
         key.get_style_context().add_class("inspector-row-key")
         value = Gtk.Label(xalign=1, selectable=True, ellipsize=Pango.EllipsizeMode.END, visible=True)
@@ -179,6 +236,8 @@ class ManagerDeviceInspector(Gtk.Box):
         icon.show()
         row.pack_start(icon, False, False, 0)
         row.pack_start(key, True, True, 0)
+        if suffix is not None:
+            row.pack_end(suffix, False, False, 0)
         row.pack_end(value, False, False, 0)
         parent.pack_start(row, False, False, 0)
         return value
@@ -193,49 +252,52 @@ class ManagerDeviceInspector(Gtk.Box):
             self._empty.show()
             self._content.hide()
             return
-        snapshot = card.snapshot
         self._empty.hide()
-        self._content.show_all()
+        self._content.show()
+        self._show_snapshot(card.snapshot)
+
+    def _show_snapshot(self, snapshot: DeviceCardSnapshot) -> None:
         self._icon.set_from_icon_name(
             illustration_icon_name(snapshot.category, snapshot.icon_name),
             Gtk.IconSize.DIALOG,
         )
+        available = snapshot.group is DeviceGroup.AVAILABLE
+        avatar_context = self._avatar.get_style_context()
+        for css_class in AVATAR_CLASSES:
+            avatar_context.remove_class(css_class)
+        avatar_context.add_class("device-avatar-available" if available else avatar_class_for(snapshot.category))
         self._name.set_text(snapshot.name)
         self._name.set_tooltip_text(snapshot.name)
         self._category.set_text(snapshot.category)
         self._address.set_text(snapshot.address)
         self._type.set_text(snapshot.category)
-        status = _("Connected") if snapshot.connected else _("Paired") if snapshot.paired else _("Available")
-        self._status.set_text(status)
-        self._paired.set_text(_("Yes") if snapshot.paired else _("No"))
-        self._trusted.set_text(_("Yes") if snapshot.trusted else _("No"))
-        self._status_text.set_text(status)
-        status_context = self._status_text.get_style_context()
-        dot_context = self._status_dot.get_style_context()
-        for css_class in ("device-status-connected", "device-status-disconnected"):
-            status_context.remove_class(css_class)
-            dot_context.remove_class(css_class)
+        self._class.set_text(snapshot.major_class)
+
+        self._status_text.set_text(snapshot.status_label)
         state_class = "device-status-connected" if snapshot.connected else "device-status-disconnected"
-        status_context.add_class(state_class)
-        dot_context.add_class(state_class)
+        states = ("device-status-connected", "device-status-disconnected")
+        set_state_class(self._status_text, state_class, states)
+        set_state_class(self._status_dot, state_class, states)
         battery = snapshot.battery_label
-        self._battery.set_text(battery or _("Not reported"))
-        self._battery_inline.set_text(("▰  " + battery) if battery else "")
-        self._battery_inline.set_visible(battery is not None)
-        primary_label = _("Disconnect") if snapshot.connected else _("Connect") if snapshot.paired else _("Pair")
-        self._primary._tile_label.set_text(primary_label)  # type: ignore[attr-defined]
+        self._battery_inline.set_text(battery or "")
+        if snapshot.battery_icon_name is not None:
+            self._battery_icon.set_from_icon_name(snapshot.battery_icon_name, Gtk.IconSize.MENU)
+        for widget in (self._battery_separator, self._battery_icon, self._battery_inline):
+            widget.set_visible(battery is not None)
+
+        self._primary_action = snapshot.primary_action
+        icon_name, label = PRIMARY_TILES[self._primary_action]
+        self._primary._tile_icon.set_from_icon_name(icon_name, Gtk.IconSize.LARGE_TOOLBAR)  # type: ignore
+        self._primary._tile_label.set_text(label)  # type: ignore[attr-defined]
+        self._primary.get_accessible().set_name(f"{label} {snapshot.name}")
         self._send.set_visible(snapshot.can_send)
+        self._more.set_visible(not available)
+        self._sound_settings.set_visible(snapshot.audio)
+        self._forget.set_visible(snapshot.paired)
 
     def _request_primary(self, button: Gtk.Button) -> None:
-        card = self.cards.cards_by_path.get(self._object_path or "")
-        if card is None:
-            return
-        action = (
-            DeviceCardAction.DISCONNECT if card.snapshot.connected
-            else DeviceCardAction.CONNECT if card.snapshot.paired
-            else DeviceCardAction.PAIR
-        )
-        self._request(button, action)
+        if self.cards.cards_by_path.get(self._object_path or "") is not None:
+            self._request(button, self._primary_action)
 
     def _request(self, button: Gtk.Button, action: DeviceCardAction) -> None:
         if self._object_path is not None:
