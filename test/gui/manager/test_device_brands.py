@@ -59,6 +59,9 @@ class TestBrandDetection(unittest.TestCase):
     def test_product_kind_only_replaces_uninformative_classes(self) -> None:
         self.assertEqual(product_kind("realme Watch 5"), ProductKind.WATCH)
         self.assertEqual(product_kind("OnePlus Nord Buds 3 Pro"), ProductKind.EARBUDS)
+        self.assertEqual(product_kind("Galaxy Watch6"), ProductKind.WATCH)
+        self.assertEqual(product_kind("Galaxy Buds2 Pro"), ProductKind.EARBUDS)
+        self.assertIsNone(product_kind("Watchtower Hub"))
         self.assertIsNone(product_kind("Philips TAB8505"))
         self.assertEqual(display_category("Unknown", ProductKind.WATCH), "Smartwatch")
         self.assertEqual(display_category("Headset", ProductKind.EARBUDS), "Headset")

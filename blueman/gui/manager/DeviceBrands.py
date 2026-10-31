@@ -82,9 +82,10 @@ class ProductKind:
     CONTROLLER = "controller"
 
 
+# Model numbers often follow the product word directly ("Watch6", "Buds2"), hence the \d*.
 _KIND_PATTERNS = (
-    (ProductKind.WATCH, r"\bwatch\b|\bband\b|\bforerunner\b|\bf[eē]nix\b|\bvenu\b|\bamazfit\b"),
-    (ProductKind.EARBUDS, r"\bbuds\b|\bairpods\b|\bearbuds\b|\bfreebuds\b|\blinkbuds\b|\bwf-\w+|\bear ?\(\d"),
+    (ProductKind.WATCH, r"\bwatch\d*\b|\bband\d*\b|\bforerunner\b|\bf[eē]nix\b|\bvenu\b|\bamazfit\b"),
+    (ProductKind.EARBUDS, r"\bbuds\d*\b|\bairpods\b|\bearbuds\b|\bfreebuds\b|\blinkbuds\b|\bwf-\w+|\bear ?\(\d"),
     (ProductKind.HEADPHONES, r"\bheadphones?\b|\bwh-\w+|\bquietcomfort\b|\bmomentum\b"),
     (ProductKind.SPEAKER, r"\bspeaker\b|\bsoundlink\b|\bsoundbar\b|\bsrs-\w+"),
     (ProductKind.CONTROLLER, r"\bcontroller\b|\bdualsense\b|\bjoy-con\b|\bgamepad\b"),
