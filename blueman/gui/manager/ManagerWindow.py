@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 from gettext import gettext as _, ngettext
 
 import cairo
@@ -14,6 +15,9 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gdk, Gio, GObject, Gtk, Pango  # noqa: E402
 
 from blueman.gui.theme.AnimationManager import start_animation, stop_animation_safe
+
+if TYPE_CHECKING:
+    DrawContext = cairo.Context[cairo.Surface]
 
 
 COMPACT_SIDEBAR_BREAKPOINT = 1050
@@ -71,9 +75,7 @@ class SidebarRadar(Gtk.Overlay):
             visible=True,
         )
         self._core.get_style_context().add_class("sidebar-radar-core")
-        glyph = Gtk.Image.new_from_icon_name("bluetooth-symbolic", Gtk.IconSize.DND)
-        glyph.set_pixel_size(30)
-        glyph.show()
+        glyph = Gtk.Image(icon_name="blueman-next-bluetooth-symbolic", pixel_size=36, visible=True)
         self._core.pack_start(glyph, True, True, 0)
         self.add_overlay(self._core)
         self.set_overlay_pass_through(self._core, True)
@@ -99,7 +101,7 @@ class SidebarRadar(Gtk.Overlay):
         self._canvas.queue_draw()
         return self._active
 
-    def _on_draw(self, widget: Gtk.Widget, context: cairo.Context) -> bool:
+    def _on_draw(self, widget: Gtk.Widget, context: "DrawContext") -> bool:
         width, height = widget.get_allocated_width(), widget.get_allocated_height()
         cx, cy = width / 2, height / 2
         radius = min(width, height) / 2
@@ -139,7 +141,8 @@ class SidebarRadar(Gtk.Overlay):
 
 def _drag_area(child: Gtk.Widget, window: Gtk.Window) -> Gtk.EventBox:
     """Wrap ``child`` so empty space moves the borderless window like a title bar."""
-    area = Gtk.EventBox(visible=True, visible_window=False)
+    area = Gtk.EventBox(visible=True)
+    area.set_visible_window(False)
     area.add(child)
 
     def on_press(_area: Gtk.EventBox, event: Gdk.EventButton) -> bool:
@@ -262,7 +265,8 @@ class ManagerWindowShell:
             ("minimize", _("Minimize"), lambda _b: self.window.iconify()),
             ("maximize", _("Maximize"), lambda _b: _toggle_maximized(self.window)),
         ):
-            button = Gtk.Button(visible=True, can_focus=False, valign=Gtk.Align.CENTER)
+            button = Gtk.Button(visible=True, valign=Gtk.Align.CENTER)
+            button.set_can_focus(False)
             button.get_style_context().add_class("traffic-light")
             button.get_style_context().add_class(f"tl-{name}")
             button.set_tooltip_text(tooltip)

@@ -155,8 +155,9 @@ class Blueman(Gtk.Application):
             screen = self.window.get_screen()
             rgba_visual = screen.get_rgba_visual()
             if rgba_visual is not None and screen.is_composited():
+                # Rounded client-side corners need an alpha visual; GTK still paints the
+                # CSS background, which keeps the surfaces opaque.
                 self.window.set_visual(rgba_visual)
-                self.window.set_app_paintable(True)
             self.window.get_style_context().add_class("app-window")
             self.window.set_default_size(1560, 880)
             self.window.set_size_request(900, 600)

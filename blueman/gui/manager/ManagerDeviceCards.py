@@ -251,7 +251,7 @@ class DeviceCard(Gtk.ListBoxRow):
         for action, (icon_name, tooltip) in ACTION_PRESENTATION.items():
             self._action_buttons[action] = self._icon_button(icon_name, tooltip)
         for action, button in self._action_buttons.items():
-            button.connect("clicked", lambda b, a=action: action_callback(self, a, b))
+            button.connect("clicked", self._on_action_clicked, action, action_callback)
             actions.pack_start(button, False, False, 0)
         content.pack_end(actions, False, False, 0)
         self.add(content)
@@ -266,6 +266,14 @@ class DeviceCard(Gtk.ListBoxRow):
         button.set_tooltip_text(accessible_name)
         button.get_accessible().set_name(accessible_name)
         return button
+
+    def _on_action_clicked(
+        self,
+        button: Gtk.Button,
+        action: DeviceCardAction,
+        action_callback: Callable[["DeviceCard", DeviceCardAction, Gtk.Widget], None],
+    ) -> None:
+        action_callback(self, action, button)
 
     @property
     def visible_actions(self) -> tuple[DeviceCardAction, ...]:
@@ -567,6 +575,7 @@ class ManagerDeviceCards(Gtk.Box):
                 self._discovery_label.set_text(_("Scanning for nearby devices… %(progress)d%%") % {
                     "progress": percent
                 })
+
     def _schedule_structure_sync(self, *_args: object) -> None:
         if not self._sync_source:
             self._sync_source = GLib.idle_add(self.sync_structure)

@@ -4,7 +4,6 @@
 
 import gettext
 import logging
-import sys
 
 gettext.textdomain("blueman")
 

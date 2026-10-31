@@ -74,15 +74,32 @@ class ManagerDeviceInspector(Gtk.Box):
         self._object_path = selected.get_object_path() if selected is not None else None
         self._refresh()
 
+    def do_get_preferred_width(self) -> tuple[int, int]:
+        """Never ask for more than the column width.
+
+        The slide revealer allocates its child at the natural width, so a long device
+        name would otherwise push the panel past the window edge and clip it.
+        """
+        return self._cap_width(*Gtk.Box.do_get_preferred_width(self))
+
+    def do_get_preferred_width_for_height(self, height: int) -> tuple[int, int]:
+        return self._cap_width(*Gtk.Box.do_get_preferred_width_for_height(self, height))
+
+    def _cap_width(self, minimum: int, natural: int) -> tuple[int, int]:
+        request = self.get_size_request()[0]
+        if request > 0:
+            natural = max(minimum, min(natural, request))
+        return minimum, natural
+
     def _create_overview(self) -> Gtk.Box:
         overview = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=18, visible=True)
         overview.get_style_context().add_class("inspector-overview")
 
-        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=18, visible=True)
+        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=16, visible=True)
         header.get_style_context().add_class("inspector-device-header")
         self._avatar = Gtk.Box(valign=Gtk.Align.CENTER, visible=True)
         self._avatar.get_style_context().add_class("inspector-avatar")
-        self._icon = Gtk.Image(pixel_size=76, visible=True)
+        self._icon = Gtk.Image(pixel_size=68, visible=True)
         self._avatar.pack_start(self._icon, True, True, 0)
         titles = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
@@ -92,8 +109,9 @@ class ManagerDeviceInspector(Gtk.Box):
             visible=True,
         )
         self._name = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
+        self._name.set_max_width_chars(18)
         self._name.get_style_context().add_class("inspector-title")
-        self._category = Gtk.Label(xalign=0, visible=True)
+        self._category = Gtk.Label(xalign=0, ellipsize=Pango.EllipsizeMode.END, visible=True)
         self._category.get_style_context().add_class("inspector-subtitle")
         titles.pack_start(self._name, False, False, 0)
         titles.pack_start(self._category, False, False, 0)
@@ -123,6 +141,7 @@ class ManagerDeviceInspector(Gtk.Box):
         self._battery_separator = Gtk.Separator(orientation=Gtk.Orientation.VERTICAL, valign=Gtk.Align.CENTER)
         self._battery_separator.get_style_context().add_class("status-separator")
         self._battery_icon = Gtk.Image(pixel_size=16)
+        self._battery_icon.get_style_context().add_class("battery-icon")
         self._battery_inline = Gtk.Label(xalign=0)
         self._battery_inline.get_style_context().add_class("battery-indicator")
         status_bar.pack_start(self._status_dot, False, False, 0)
@@ -232,6 +251,7 @@ class ManagerDeviceInspector(Gtk.Box):
         key = Gtk.Label(label=label, xalign=0, visible=True)
         key.get_style_context().add_class("inspector-row-key")
         value = Gtk.Label(xalign=1, selectable=True, ellipsize=Pango.EllipsizeMode.END, visible=True)
+        value.set_max_width_chars(20)
         value.get_style_context().add_class("inspector-row-value")
         icon.show()
         row.pack_start(icon, False, False, 0)
