@@ -1,5 +1,41 @@
-# blueman-next
-![Blueman redesign](blueman-next.png)
+# Blueman Next
+
+A modern redesign of [Blueman](https://github.com/blueman-project/blueman), the GTK Bluetooth manager. It keeps
+Blueman's BlueZ backend and plugins, and puts a new GTK 3 interface on top.
+
+![Blueman Next: device dashboard in the dark theme](blueman-next.png)
+
+| Light theme | Settings |
+| --- | --- |
+| ![Device dashboard in the light theme](docs/screenshots/devices-light.png) | ![Settings page in the dark theme](docs/screenshots/settings-dark.png) |
+
+<sub>Screenshots use mocked devices with random addresses.</sub>
+
+## What's new
+
+* **Three-panel layout**: sidebar, device dashboard and a details panel for the selected device, in a borderless
+  window with macOS-style window buttons.
+* **Device cards** grouped into Connected, Paired and Available, with the actions that fit each state: sound settings
+  for connected audio devices, Connect, Pair, and a "…" menu that keeps all plugin actions.
+* **Known brands**: Sony, Apple, Samsung, Philips, JBL, Bose and 18 more are recognised from the device name or
+  its Bluetooth manufacturer ID, and shown with a brand label and colour. Earbuds, headphones, speakers and watches
+  get their own artwork.
+* **Real data only**: battery levels appear only when the device reports them, and no values are invented.
+* **Details panel** with Play Sound, Send File, address copy, type and class, plus quick actions.
+* **Settings as a page** inside the window, with smooth page transitions and a *Reduce motion* option.
+* **Dark and light themes** that follow the desktop or a fixed choice, and a layout that adapts down to small
+  windows.
+* Search with <kbd>Ctrl</kbd>+<kbd>K</kbd>; Settings with <kbd>Ctrl</kbd>+<kbd>,</kbd>.
+
+## Try it without installing
+
+```sh
+./blueman-next              # installs missing build dependencies (Debian/Ubuntu), builds, and runs
+./blueman-next --no-deps    # skip the dependency check on other distributions
+```
+
+This builds into `build-local/` and never replaces the Blueman installed by your distribution. See
+[docs/LOCAL_BUILD.md](docs/LOCAL_BUILD.md) for details.
 
 ## Description
 
