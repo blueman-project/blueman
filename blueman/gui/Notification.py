@@ -76,18 +76,15 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.entered = False
 
+        # Both handlers only fade; they always let the event propagate (return False).
         def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if self._reduced_motion:
-                return False
-            if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
+            if not self._reduced_motion and (self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered):
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
             return False
 
         def on_leave(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if self._reduced_motion:
-                return False
-            if not Gdk.Window.at_pointer():
+            if not self._reduced_motion and not Gdk.Window.at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
             return False

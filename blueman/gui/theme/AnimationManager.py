@@ -42,6 +42,16 @@ Used by :func:`stop_all_animations` for shutdown and by the cleanup
 helpers below."""
 
 
+def _paint_static_frame(callback: TickCallback) -> None:
+    """Reduced motion: the caller shows its static state.  Invoke the
+    callback once with tick=0 and frame_time=0 so the widget paints a
+    sensible initial frame, without starting a timer."""
+    try:
+        callback(0, 0.0)
+    except Exception:
+        log.exception("Initial animation frame failed")
+
+
 def start_animation(
     interval_ms: int,
     callback: TickCallback,
@@ -62,13 +72,7 @@ def start_animation(
     from blueman.gui.theme.ThemeManager import ThemeManager
 
     if ThemeManager.get_default().reduced_motion():
-        # Caller should display its static state.  We invoke the
-        # callback once with tick=0 and frame_time=0 so the widget
-        # paints a sensible initial frame, then stop.
-        try:
-            callback(0, 0.0)
-        except Exception:
-            log.exception("Initial animation frame failed")
+        _paint_static_frame(callback)
         return 0
 
     tick = {"value": 0}
@@ -132,7 +136,7 @@ def stop_all_animations() -> None:
     with ``start_animation`` from other threads (GTK is single-threaded
     so this is fine in practice).
     """
-    for sid in list(_animations.keys()):
+    for sid in _animations:
         try:
             GLib.source_remove(sid)
         except Exception:

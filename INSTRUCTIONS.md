@@ -90,6 +90,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-025 | High | DONE | Runtime screenshot comparison loop vs expected-mockup.png at 1680×935 and 1400×850, dark and light. | |
 | T-026 | High | DONE | Known-brand presentation: brand label, Brand row, brand avatar tints, earbuds/watch artwork, name-derived kind only when the class is uninformative. | Names first, then Bluetooth SIG company IDs; no logos (trademarks). |
 | T-027 | High | DONE | Settings as an in-window page: sidebar navigation slides Devices/Settings (reduced-motion aware), inspector slides out, section cards with segmented choices, Ctrl+, shortcut. | Replaces the modal dialog; drops show-toolbar/show-statusbar switches, which had no visible effect in the redesign. |
+| T-028 | Medium | DONE | Resolve SonarQube PR findings: flatten nested conditionals, split high-complexity functions (device menu, simple_action, start_animation), single-return notification handlers, drop unused `display_name`, redundant `list()` copies and a composite assert. | No behavior change. `card_actions` variable-length tuple kept on purpose (accepted in SonarQube). |
 
 ## 9. Active Task Detail
 - **Task ID:** T-020
@@ -128,6 +129,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-17 | T-012 | Added lifecycle-safe Cairo discovery radar with reduced-motion support. | 18 manager GUI tests, compileall, local build, and diff checks pass. |
 | 2026-10-17 | T-013 | Added schema-backed modern settings dialog and navigation. | 20 manager GUI tests, schema-key contract, dialog construction, build, and diff checks pass. |
 | 2026-10-17 | T-014 | Modernized outgoing transfer and fallback notification presentation without changing OBEX flow. | Transfer/UI/style/reduced-motion tests and local build pass. |
+| 2026-11-01 | T-028 | Fixed 17 of 18 SonarQube findings without behavior change. | 345 unit tests pass (2 dbusmock modules not importable, as before); flake8 clean on changed files; strict mypy adds no new errors over baseline. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING
 - **Last agent/session:** Claude Code, 2026-10-31

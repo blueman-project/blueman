@@ -209,7 +209,6 @@ class ManagerWindowShell:
         self,
         window: Gtk.ApplicationWindow,
         content: Gtk.Widget,
-        display_name: str,
     ) -> None:
         self.window = window
         self._legacy_content = content
@@ -226,7 +225,7 @@ class ManagerWindowShell:
 
         self.header = self._create_titlebar()
         self._inspector_toggle = self._create_inspector_toggle()
-        self.sidebar = self._create_sidebar(display_name)
+        self.sidebar = self._create_sidebar()
         window.remove(content)
 
         self._dashboard = Gtk.Box(
@@ -498,7 +497,7 @@ class ManagerWindowShell:
         image.show()
         return button
 
-    def _create_sidebar(self, display_name: str) -> Gtk.Box:
+    def _create_sidebar(self) -> Gtk.Box:
         sidebar = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
             visible=True,

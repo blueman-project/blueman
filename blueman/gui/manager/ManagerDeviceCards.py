@@ -122,7 +122,11 @@ class DeviceCardSnapshot:
 
     @property
     def status_label(self) -> str:
-        return _("Connected") if self.connected else _("Paired") if self.paired else _("Available")
+        if self.connected:
+            return _("Connected")
+        if self.paired:
+            return _("Paired")
+        return _("Available")
 
     @property
     def primary_action(self) -> DeviceCardAction:
@@ -165,18 +169,24 @@ AVATAR_CLASSES = (
 )
 
 
+AVATAR_CATEGORY_KEYWORDS: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("device-avatar-headphones", ("head",)),
+    ("device-avatar-speaker", ("speaker", "loud")),
+    ("device-avatar-phone", ("phone",)),
+    ("device-avatar-keyboard", ("keyboard",)),
+    ("device-avatar-mouse", ("mouse",)),
+    ("device-avatar-controller", ("controller", "game")),
+    ("device-avatar-computer", ("computer",)),
+)
+"""First match wins, so "headphones" resolves before "phone"."""
+
+
 def avatar_class_for(category: str) -> str:
     category = category.casefold()
-    return (
-        "device-avatar-headphones" if "head" in category
-        else "device-avatar-speaker" if "speaker" in category or "loud" in category
-        else "device-avatar-phone" if "phone" in category
-        else "device-avatar-keyboard" if "keyboard" in category
-        else "device-avatar-mouse" if "mouse" in category
-        else "device-avatar-controller" if "controller" in category or "game" in category
-        else "device-avatar-computer" if "computer" in category
-        else "device-avatar-unknown"
-    )
+    for css_class, keywords in AVATAR_CATEGORY_KEYWORDS:
+        if any(keyword in category for keyword in keywords):
+            return css_class
+    return "device-avatar-unknown"
 
 
 def avatar_class_for_snapshot(snapshot: DeviceCardSnapshot) -> str:

@@ -162,7 +162,7 @@ class Blueman(Gtk.Application):
             self.window.set_default_size(1560, 880)
             self.window.set_size_request(900, 600)
             content = self.builder.get_widget("grid", Gtk.Grid)
-            self.Shell = ManagerWindowShell(self.window, content, BRAND_DISPLAY_NAME)
+            self.Shell = ManagerWindowShell(self.window, content)
             self.Shell.install_settings_page(ManagerSettingsPage(self, self.Config))
             power_action = self.lookup_action("bluetooth_status")
             if power_action is not None:
@@ -398,27 +398,24 @@ class Blueman(Gtk.Application):
             self.add_action(action)
 
     def simple_action(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
-        match action.get_name():
+        name = action.get_name()
+        device_actions: dict[str, Callable[[Device], None]] = {
+            "bond": self.bond,
+            "trust-toggle": self.toggle_trust,
+            "remove": self.remove,
+            "send": self.send,
+        }
+        if name in device_actions:
+            device = self.List.get_selected_device()
+            if device is not None:
+                device_actions[name](device)
+            return
+
+        match name:
             case "Quit":
                 self.quit()
             case "inquiry":
                 self.inquiry()
-            case "bond":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.bond(device)
-            case "trust-toggle":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.toggle_trust(device)
-            case "remove":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.remove(device)
-            case "send":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.send(device)
             case "report":
                 launch(f"xdg-open {WEBSITE}/issues", system=True)
             case "about":
@@ -439,7 +436,7 @@ class Blueman(Gtk.Application):
                     self.Shell.show_page(Page.DEVICES)
                 if self.Cards is not None:
                     self.Cards.focus_search()
-            case _ as name:
+            case _:
                 logging.error(f"Unknown action: {name}")
 
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:

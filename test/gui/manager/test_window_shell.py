@@ -45,7 +45,7 @@ class TestManagerWindowShell(unittest.TestCase):
         window = Gtk.Window()
         content = Gtk.Grid(visible=True)
         window.add(content)
-        shell = ManagerWindowShell(window, content, "Blueman Next")
+        shell = ManagerWindowShell(window, content)
         cards = Gtk.Box(visible=True)
         cards.search_entry = Gtk.SearchEntry(visible=True)
         cards.cards_by_path = {}
@@ -80,7 +80,7 @@ class TestManagerWindowShell(unittest.TestCase):
         content = Gtk.Grid(visible=True)
         window.add(content)
 
-        shell = ManagerWindowShell(window, content, "Blueman Next")
+        shell = ManagerWindowShell(window, content)
 
         self.assertIs(window.get_child(), shell.main_paned)
         self.assertIsNone(content.get_parent())
@@ -107,7 +107,7 @@ class TestManagerWindowShell(unittest.TestCase):
         window = Gtk.Window()
         content = Gtk.Grid(visible=True)
         window.add(content)
-        shell = ManagerWindowShell(window, content, "Blueman Next")
+        shell = ManagerWindowShell(window, content)
 
         self.assertIs(window.get_titlebar(), shell.header)
         self.assertNotIsInstance(shell.header, Gtk.HeaderBar)
@@ -126,7 +126,7 @@ class TestManagerWindowShell(unittest.TestCase):
         window = Gtk.Window()
         content = Gtk.Grid(visible=True)
         window.add(content)
-        shell = ManagerWindowShell(window, content, "Blueman Next")
+        shell = ManagerWindowShell(window, content)
 
         shell.set_adapter_name("Dorin's PC")
         self.assertEqual(shell._adapter_name.get_text(), "Dorin's PC")
@@ -148,7 +148,7 @@ class TestManagerWindowShell(unittest.TestCase):
         window = Gtk.Window()
         content = Gtk.Grid(visible=True)
         window.add(content)
-        shell = ManagerWindowShell(window, content, "Blueman Next")
+        shell = ManagerWindowShell(window, content)
         cards = Gtk.Box(visible=True, width_request=500)
         cards.search_entry = Gtk.SearchEntry(visible=True)
         cards.cards_by_path = {}

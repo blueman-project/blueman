@@ -116,7 +116,7 @@ class ManagerDeviceList(DeviceList):
         self.filter.set_visible_func(self.filter_func)
 
     def destroy(self) -> None:
-        for object_path, battery in list(self._batteries.items()):
+        for object_path, battery in self._batteries.items():
             battery.disconnect_signal(self._battery_handlers[object_path])
             battery.destroy()
         self._batteries.clear()
