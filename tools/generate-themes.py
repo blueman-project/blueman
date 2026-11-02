@@ -485,6 +485,17 @@ RULES = """
     box-shadow: inset 0 1px @highlight;
 }
 .app-window .inspector-title { font-size: 21px; font-weight: 600; }
+.app-window .controller-notice {
+    margin: 0 30px 18px 30px;
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid alpha(@status-warning, 0.35);
+    background-color: @surface-card;
+    background-image: linear-gradient(alpha(@status-warning, 0.10), alpha(@status-warning, 0.10));
+}
+.app-window .controller-notice-icon { color: @status-warning; }
+.app-window .controller-notice-title { font-weight: 600; }
+.app-window .controller-notice-detail { color: @text-secondary; }
 .app-window .inspector-subtitle { color: @text-secondary; font-size: 17px; }
 .app-window .inspector-empty-icon { color: @text-muted; -gtk-icon-transform: scale(1.5); }
 .app-window .inspector-status-bar .device-status { font-size: 16px; }

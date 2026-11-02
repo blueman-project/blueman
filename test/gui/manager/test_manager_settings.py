@@ -37,7 +37,7 @@ class TestManagerSettings(unittest.TestCase):
         application = Mock()
         page = ManagerSettingsPage(application, settings)
 
-        self.assertEqual(set(page.controls) - {"preferences", "services", "plugins"}, EXPOSED_SETTINGS)
+        self.assertEqual(set(page.controls) - {"preferences", "services", "plugins", "reset-adapter"}, EXPOSED_SETTINGS)
         theme = page.controls["theme-variant"]
         theme.buttons["dark"].set_active(True)
         self.assertEqual(settings.get_string("theme-variant"), "dark")

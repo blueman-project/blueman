@@ -91,16 +91,17 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | T-026 | High | DONE | Known-brand presentation: brand label, Brand row, brand avatar tints, earbuds/watch artwork, name-derived kind only when the class is uninformative. | Names first, then Bluetooth SIG company IDs; no logos (trademarks). |
 | T-027 | High | DONE | Settings as an in-window page: sidebar navigation slides Devices/Settings (reduced-motion aware), inspector slides out, section cards with segmented choices, Ctrl+, shortcut. | Replaces the modal dialog; drops show-toolbar/show-statusbar switches, which had no visible effect in the redesign. |
 | T-028 | Medium | DONE | Resolve SonarQube PR findings: flatten nested conditionals, split high-complexity functions (device menu, simple_action, start_animation), single-return notification handlers, drop unused `display_name`, redundant `list()` copies and a composite assert. | No behavior change. `card_actions` variable-length tuple kept on purpose (accepted in SonarQube). |
+| T-029 | High | DONE | Controller recovery: reset a stuck Bluetooth controller (driver unbind/rebind, module reload fallback) through the mechanism with polkit; detect kernel faults and silent discovery stalls and offer the reset in a dashboard banner; manual Reset in Settings; opt-in reset when Bluetooth is turned on. | User request 2026-11-02 (Intel AC 3168 stops discovering until `modprobe -r btusb`). Root cause is likely btusb autosuspend; recommended `options btusb enable_autosuspend=n` to the user. |
 
 ## 9. Active Task Detail
-- **Task ID:** T-020
-- **Goal:** Fix the central-column expansion defect that makes the implementation visibly unlike the reference even when the window is wide.
-- **Acceptance criteria:** Search, heading, grouped lists and every card consume the dashboard width minus intentional 28px margins; the pair action aligns near the inspector; no 100px+ dead strip remains.
-- **Relevant files:** `ManagerWindow.py`, `ManagerDeviceCards.py`, `ManagerDeviceInspector.py`, `ThemeManager.py`, `Manager.py`, theme CSS, and manager GUI tests.
-- **Changes made:** Enabled horizontal expansion throughout dashboard/search/sections/lists; replaced the workspace box with a nested horizontal paned layout so dashboard and inspector remain adjacent; made the outer sidebar divider position self-correct after allocation.
-- **Verification:** 22 manager GUI tests pass; compileall and diff checks pass. Runtime capture `/tmp/blueman-next-phase20-expanded.png` confirms full-width search, heading and device cards with no unintended dead strip.
-- **Blockers / risks:** None specific to this layout correction.
-- **Next action:** Commit T-020 before any new visual phase.
+- **Task ID:** T-029
+- **Goal:** Let the manager recover a controller that silently stops discovering, without the user running modprobe.
+- **Acceptance criteria:** Mechanism `ResetAdapter(s)` behind polkit `org.blueman.adapter.reset` rebinds the adapter's driver (module reload fallback); client falls back to `pkexec` when the installed mechanism lacks the method; kernel-log faults (`tx timeout`, `failed: -110`, `Resetting usb device`) and discovery that never starts or finds nothing raise a banner with Reset; Settings has a manual Reset and a `reset-adapter-on-power` switch (default off); no automatic reset without the user's action or opt-in; tests in test/main and test/gui/manager; both build systems list new files.
+- **Relevant files:** `blueman/main/AdapterReset.py`, `blueman/plugins/mechanism/AdapterReset.py`, `blueman/gui/manager/ControllerHealth.py`, `Manager.py`, `ManagerWindow.py`, `ManagerSettings.py`, gschema, polkit policy, Makefile.am files.
+- **Changes made:** `blueman/main/AdapterReset.py` (sysfs binding, unbind/bind with modprobe fallback, pkexec command, kernel-fault parser); mechanism plugin `AdapterReset` (`ResetAdapter(s) -> s`); `gui/manager/ControllerHealth.py` (`KernelLogWatcher` via `journalctl --dmesg --follow`, `DiscoveryWatch`, `AdapterResetClient` with pkexec fallback, `ControllerRecovery`); `ControllerNotice` banner in `ManagerWindow`; Settings "Troubleshooting" section; `reset-adapter-on-power` key; polkit action; Manager wiring incl. `_syncing_power` guard and repopulating when the adapter returns under the same path; `data/meson.build` now rebuilds schemas when the XML changes.
+- **Verification:** 400 unittest tests run, all pass except the 2 dbusmock modules that cannot import (as before); flake8 clean; strict mypy adds only stub-limitation errors of the kind already present (MessageDialog/Revealer kwargs). Live: sysfs binding resolves `hci0 -> 1-9:1.0 / btusb`; watcher keeps following the journal; parser finds 15 faults in the Oct 31 boot log.
+- **Not verified:** an actual reset on hardware (needs the user's password; drops connections) and the banner in the running window (the user's manager instance was already running with older code).
+- **Next action:** User restarts the manager and tries Settings → Reset adapter; the installed 2.3.5 mechanism lacks `ResetAdapter`, so the pkexec fallback is what runs from source.
 
 ## 10. Technical Context
 - **Architecture:** [components, dependencies, data flow]
@@ -129,6 +130,7 @@ Use statuses: `TODO`, `IN_PROGRESS`, `BLOCKED`, `DONE`.
 | 2026-10-17 | T-012 | Added lifecycle-safe Cairo discovery radar with reduced-motion support. | 18 manager GUI tests, compileall, local build, and diff checks pass. |
 | 2026-10-17 | T-013 | Added schema-backed modern settings dialog and navigation. | 20 manager GUI tests, schema-key contract, dialog construction, build, and diff checks pass. |
 | 2026-10-17 | T-014 | Modernized outgoing transfer and fallback notification presentation without changing OBEX flow. | Transfer/UI/style/reduced-motion tests and local build pass. |
+| 2026-11-02 | T-029 | Added controller recovery: reset via mechanism/pkexec, kernel-log and discovery-stall detection with a dashboard banner, manual reset and opt-in reset on power-on. | 400 tests run (2 dbusmock import errors as before); flake8 clean; live sysfs/journal checks. |
 | 2026-11-01 | T-028 | Fixed 17 of 18 SonarQube findings without behavior change. | 345 unit tests pass (2 dbusmock modules not importable, as before); flake8 clean on changed files; strict mypy adds no new errors over baseline. |
 
 ## 13. Handoff — READ THIS FIRST WHEN RESUMING

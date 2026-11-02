@@ -18,6 +18,7 @@ EXPOSED_SETTINGS = frozenset({
     "symbolic-status-icons",
     "theme-variant",
     "reduced-motion",
+    "reset-adapter-on-power",
 })
 
 
@@ -118,6 +119,13 @@ class ManagerSettingsPage(Gtk.ScrolledWindow):
              "plugins"),
         ):
             self._link_row(system, icon_name, label, description, action)
+
+        troubleshooting = self._section(content, _("Troubleshooting"))
+        self._link_row(troubleshooting, "view-refresh-symbolic", _("Reset adapter"),
+                       _("Reload the controller's driver when devices stop appearing."), "reset-adapter")
+        self._row(troubleshooting, "system-reboot-symbolic", _("Reset when turning Bluetooth on"),
+                  _("Connected devices disconnect; may ask for your password."),
+                  self._switch("reset-adapter-on-power"), last=True)
 
     @staticmethod
     def _section(parent: Gtk.Box, title: str) -> Gtk.Box:

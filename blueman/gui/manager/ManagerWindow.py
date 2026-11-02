@@ -156,6 +156,78 @@ class SidebarRadar(Gtk.Overlay):
         stop_animation_safe("_animation_source", self)
 
 
+class ControllerNotice(Gtk.Revealer):
+    """Dashboard banner for controller problems, with an optional action button.
+
+    The legacy InfoBar lives in the hidden classic layout, so the redesigned window shows
+    its warnings here, between the heading and the device cards.
+    """
+
+    def __init__(self) -> None:
+        super().__init__(transition_type=Gtk.RevealerTransitionType.SLIDE_DOWN, visible=True)
+        box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=14, visible=True)
+        box.get_style_context().add_class("controller-notice")
+        icon = Gtk.Image.new_from_icon_name("dialog-warning-symbolic", Gtk.IconSize.LARGE_TOOLBAR)
+        icon.set_valign(Gtk.Align.CENTER)
+        icon.show()
+        icon.get_style_context().add_class("controller-notice-icon")
+        texts = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2, valign=Gtk.Align.CENTER, visible=True)
+        self.title = Gtk.Label(xalign=0, wrap=True, visible=True)
+        self.title.get_style_context().add_class("controller-notice-title")
+        self.detail = Gtk.Label(xalign=0, wrap=True, visible=True)
+        self.detail.get_style_context().add_class("controller-notice-detail")
+        texts.pack_start(self.title, False, False, 0)
+        texts.pack_start(self.detail, False, False, 0)
+        self.spinner = Gtk.Spinner(valign=Gtk.Align.CENTER)
+        self.action_button = Gtk.Button(valign=Gtk.Align.CENTER)
+        self.action_button.get_style_context().add_class("primary-button")
+        self.close_button = Gtk.Button(valign=Gtk.Align.CENTER, relief=Gtk.ReliefStyle.NONE, visible=True)
+        close_icon = Gtk.Image.new_from_icon_name("window-close-symbolic", Gtk.IconSize.BUTTON)
+        close_icon.show()
+        self.close_button.set_image(close_icon)
+        self.close_button.set_tooltip_text(_("Dismiss"))
+        self.close_button.get_accessible().set_name(_("Dismiss"))
+        self.close_button.get_style_context().add_class("icon-button")
+        self.close_button.connect("clicked", lambda _button: self.dismiss())
+        box.pack_start(icon, False, False, 0)
+        box.pack_start(texts, True, True, 0)
+        box.pack_end(self.close_button, False, False, 0)
+        box.pack_end(self.action_button, False, False, 0)
+        box.pack_end(self.spinner, False, False, 0)
+        self.add(box)
+        self.set_reveal_child(False)
+
+    @property
+    def shown(self) -> bool:
+        return self.get_reveal_child()
+
+    def present(self, title: str, detail: str, action_label: str | None = None,
+                action_name: str | None = None, busy: bool = False) -> None:
+        self.title.set_text(title)
+        self.detail.set_text(detail)
+        self.detail.set_visible(bool(detail))
+        if action_label is not None and action_name is not None:
+            self.action_button.set_label(action_label)
+            self.action_button.set_action_name(action_name)
+            self.action_button.show()
+        else:
+            self.action_button.set_action_name(None)
+            self.action_button.hide()
+        self.spinner.set_visible(busy)
+        if busy:
+            self.spinner.start()
+        else:
+            self.spinner.stop()
+        self.close_button.set_visible(not busy)
+        self.set_transition_duration(motion_duration(200))
+        self.set_reveal_child(True)
+
+    def dismiss(self) -> None:
+        self.spinner.stop()
+        self.set_transition_duration(motion_duration(200))
+        self.set_reveal_child(False)
+
+
 def _drag_area(child: Gtk.Widget, window: Gtk.Window) -> Gtk.EventBox:
     """Wrap ``child`` so empty space moves the borderless window like a title bar."""
     area = Gtk.EventBox(visible=True)
@@ -222,6 +294,7 @@ class ManagerWindowShell:
         self._position_source = 0
         self._page = Page.DEVICES
         self._nav_buttons: dict[str, Gtk.Button] = {}
+        self.notice = ControllerNotice()
 
         self.header = self._create_titlebar()
         self._inspector_toggle = self._create_inspector_toggle()
@@ -380,6 +453,7 @@ class ManagerWindowShell:
         heading.pack_start(titles, True, True, 0)
         heading.pack_end(pair, False, False, 0)
         self._dashboard.pack_start(_drag_area(heading, self.window), False, False, 0)
+        self._dashboard.pack_start(self.notice, False, False, 0)
 
         card_scrollview = Gtk.ScrolledWindow(
             hexpand=True,

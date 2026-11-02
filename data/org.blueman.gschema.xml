@@ -93,6 +93,11 @@
       <summary>Reduce interface motion</summary>
       <description>Disable non-essential interface animations</description>
     </key>
+    <key type="b" name="reset-adapter-on-power">
+      <default>false</default>
+      <summary>Reset the adapter when Bluetooth is turned on</summary>
+      <description>Rebind the Bluetooth controller's driver each time Bluetooth is turned on from the manager. Helps controllers that stop discovering devices; connected devices are dropped and administrator authorisation may be requested.</description>
+    </key>
   </schema>
   <schema id="org.blueman.gsmsettings" path="/org/blueman/gsmsettings/">
   </schema>
