@@ -10,6 +10,7 @@ SUBDIRS = 		\
 DIST_DOCS =			\
 	CHANGELOG.md		\
 	COPYING			\
+	docs/BRANDING.md	\
 	FAQ			\
 	README.md
 
@@ -17,6 +18,8 @@ EXTRA_DIST = 			\
 	${DIST_DOCS}		\
 	meson.build		\
 	meson_options.txt	\
+	build-aux/branding.py	\
+	data/branding.json	\
 	po/meson.build
 
 MAINTAINERCLEANFILES = 	\

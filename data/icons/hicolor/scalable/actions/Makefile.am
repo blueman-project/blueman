@@ -7,6 +7,9 @@ iconsdir = $(themedir)/$(size)/$(context)
 icons_DATA =			\
 	blueman-pair-symbolic.svg  \
 	blueman-block-symbolic.svg  \
+	blueman-next-bluetooth-symbolic.svg  \
+	blueman-next-devices-symbolic.svg  \
+	blueman-next-scan-symbolic.svg  \
 	blueman-send-symbolic.svg  \
 	blueman-trust-symbolic.svg  \
 	blueman-untrust-symbolic.svg

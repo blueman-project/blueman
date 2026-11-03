@@ -9,6 +9,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import GLib
 from gi.repository import Gio
 from blueman.gui.GtkAnimation import AnimBase
+from blueman.Constants import BRAND_NOTIFICATION_APP_NAME
 import logging
 
 OPACITY_START = 0.7
@@ -48,9 +49,14 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.actions[Gtk.ResponseType.DELETE_EVENT] = "close"
 
         self.props.secondary_use_markup = True
-        self.resize(350, 50)
+        self.set_default_size(420, -1)
+        self.set_border_width(12)
+        self.get_style_context().add_class("notification-dialog")
 
         self.fader = Fade(self)
+        self._reduced_motion = Gio.Settings(
+            schema_id='org.blueman.general'
+        ).get_boolean('reduced-motion')
 
         self.props.skip_taskbar_hint = False
 
@@ -70,14 +76,15 @@ class _NotificationDialog(Gtk.MessageDialog):
 
         self.entered = False
 
+        # Both handlers only fade; they always let the event propagate (return False).
         def on_enter(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered:
+            if not self._reduced_motion and (self.get_window() == Gdk.Window.at_pointer()[0] or not self.entered):
                 self.fader.animate(start=self.fader.get_state(), end=1.0, duration=500)
                 self.entered = True
             return False
 
         def on_leave(_widget: "_NotificationDialog", _event: Gdk.Event) -> bool:
-            if not Gdk.Window.at_pointer():
+            if not self._reduced_motion and not Gdk.Window.at_pointer():
                 self.entered = False
                 self.fader.animate(start=self.fader.get_state(), end=OPACITY_START, duration=500)
             return False
@@ -97,9 +104,10 @@ class _NotificationDialog(Gtk.MessageDialog):
         self.hide()
 
     def show(self) -> None:
-        self.set_opacity(OPACITY_START)
+        opacity = 1.0 if self._reduced_motion else OPACITY_START
+        self.set_opacity(opacity)
         self.present()
-        self.set_opacity(OPACITY_START)
+        self.set_opacity(opacity)
 
     def close(self) -> None:
         self.hide()
@@ -132,7 +140,7 @@ class _NotificationBubble(Gio.DBusProxy):
 
         self.init()
 
-        self._app_name = 'blueman'
+        self._app_name = BRAND_NOTIFICATION_APP_NAME
         self._app_icon = ''
         self._actions: list[str] = []
         self._callbacks: dict[str, Callable[[str], None]] = {}

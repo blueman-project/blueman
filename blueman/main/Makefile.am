@@ -3,6 +3,7 @@ SUBDIRS = applet indicators
 bluemandir = $(pythondir)/blueman/main
 
 blueman_PYTHON = \
+	AdapterReset.py \
 	PPPConnection.py \
 	DhcpClient.py \
 	__init__.py \

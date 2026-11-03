@@ -36,6 +36,16 @@ AC_ENABLE_STATIC(no)
 
 AM_PATH_PYTHON([3.11])
 
+dnl Load the user-facing identity from the same input consumed by Meson.
+branding_vars=`"$PYTHON" "$srcdir/build-aux/branding.py" --shell "$srcdir/data/branding.json"` ||
+    AC_MSG_ERROR([failed to read data/branding.json])
+eval "$branding_vars"
+AC_SUBST([BRAND_DISPLAY_NAME])
+AC_SUBST([BRAND_DESCRIPTION])
+AC_SUBST([BRAND_NOTIFICATION_APP_NAME])
+AC_SUBST([BRAND_ICON_NAME])
+AC_SUBST([BRAND_WEBSITE])
+
 PKG_CHECK_MODULES([PYTHON], [python-${PYTHON_VERSION}])
 AC_SUBST(PYTHON_LIBS)
 AC_SUBST(PYTHON_CFLAGS)
@@ -250,12 +260,16 @@ apps/blueman-services
 apps/blueman-tray
 blueman/Makefile
 blueman/Constants.py
+data/blueman.desktop.in
+data/blueman-manager.desktop.in
+data/org.blueman.Blueman.metainfo.xml.in
 blueman/bluez/Makefile
 blueman/bluez/obex/Makefile
 blueman/config/Makefile
 blueman/gui/Makefile
 blueman/gui/applet/Makefile
 blueman/gui/manager/Makefile
+blueman/gui/theme/Makefile
 blueman/plugins/Makefile
 blueman/plugins/services/Makefile
 blueman/plugins/applet/Makefile
@@ -268,6 +282,7 @@ blueman/services/Makefile
 blueman/services/meta/Makefile
 data/Makefile
 data/configs/Makefile
+data/themes/Makefile
 data/icons/Makefile
 data/icons/hicolor/Makefile
 data/icons/hicolor/16x16/Makefile

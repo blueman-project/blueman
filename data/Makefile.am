@@ -12,6 +12,13 @@ app_DATA = $(app_in_files:.desktop.in=.desktop)
 $(app_DATA): $(app_in_files)
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
+metainfodir = $(datadir)/metainfo
+metainfo_in_files = org.blueman.Blueman.metainfo.xml.in
+metainfo_DATA = $(metainfo_in_files:.xml.in=.xml)
+
+$(metainfo_DATA): $(metainfo_in_files)
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
+
 if HAVE_THUNAR
 thunardir = $(datadir)/Thunar/sendto
 thunar_in_files = thunar-sendto-blueman.desktop.in
@@ -50,8 +57,10 @@ update-icon-cache:
 			echo "***   $(gtk_update_icon_cache)"; \
 	fi
 
-EXTRA_DIST = 	$(autostart_in_files)	\
-		$(app_in_files)		\
+EXTRA_DIST = 	blueman.desktop.in.in	\
+		blueman-manager.desktop.in.in	\
+		org.blueman.Blueman.metainfo.xml.in.in	\
+		branding.json		\
 		$(thunar_in_files)	\
 		$(settings_in_files)	\
 		$(gsettings_SCHEMAS)    \
@@ -60,6 +69,7 @@ EXTRA_DIST = 	$(autostart_in_files)	\
 SUBDIRS = 		\
 	configs		\
 	icons		\
+	themes		\
 	ui		\
 	man
 
@@ -68,9 +78,13 @@ CLEANFILES =		\
 	blueman-adapters.desktop	\
 	blueman-manager.desktop	\
 	blueman.desktop		\
+	org.blueman.Blueman.metainfo.xml	\
 	$(BUILT_SOURCES)	\
 	*.gschema.valid	\
 	gschemas.compiled
 	
 DISTCLEANFILES = \
-	$(CLEANFILES)
+	$(CLEANFILES) \
+	blueman.desktop.in \
+	blueman-manager.desktop.in \
+	org.blueman.Blueman.metainfo.xml.in

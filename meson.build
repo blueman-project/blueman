@@ -40,6 +40,23 @@ endif
 
 # Setup congfiguration
 conf_data = configuration_data()
+# Keep all user-facing identity in one build-neutral file. Internal package,
+# executable, D-Bus and schema identifiers intentionally remain unchanged.
+branding_file = files('data/branding.json')
+branding_reader = files('build-aux/branding.py')
+foreach item: [
+    ['display_name', 'BRAND_DISPLAY_NAME'],
+    ['description', 'BRAND_DESCRIPTION'],
+    ['notification_app_name', 'BRAND_NOTIFICATION_APP_NAME'],
+    ['icon_name', 'BRAND_ICON_NAME'],
+    ['website', 'BRAND_WEBSITE'],
+]
+    value = run_command(
+        pyinstall, branding_reader, branding_file, item[0],
+        check: true,
+    ).stdout().strip()
+    conf_data.set(item[1], value)
+endforeach
 conf_data.set('BINDIR', join_paths(prefix, bindir))
 conf_data.set('LIBEXECDIR', join_paths(prefix, libexecdir))
 conf_data.set('VERSION', meson.project_version())
@@ -191,6 +208,12 @@ install_subdir(
     exclude_files: ['Makefile.am']
 )
 
+install_subdir(
+    'data/themes',
+    install_dir: pkgdatadir,
+    exclude_files: ['Makefile.am', 'meson.build'],
+)
+
 
 # Gsettings
 install_data('data/org.blueman.gschema.xml', install_dir: schemadir)
@@ -209,9 +232,25 @@ i18n.merge_file(
 # Polkit rules file
 install_data('data/configs/blueman.rules', install_dir: join_paths(polkitdir, 'rules.d'), install_mode: 'rw-r--r--')
 
-# Merge translations into desktop files
+# Merge translations into desktop files after substituting the shared brand.
+manager_desktop_input = configure_file(
+    input: 'data/blueman-manager.desktop.in.in',
+    output: 'blueman-manager.desktop.in',
+    configuration: conf_data,
+)
+applet_desktop_input = configure_file(
+    input: 'data/blueman.desktop.in.in',
+    output: 'blueman.desktop.in',
+    configuration: conf_data,
+)
+metainfo_input = configure_file(
+    input: 'data/org.blueman.Blueman.metainfo.xml.in.in',
+    output: 'org.blueman.Blueman.metainfo.xml.in',
+    configuration: conf_data,
+)
+
 i18n.merge_file(
-    input: 'data/blueman.desktop.in',
+    input: applet_desktop_input,
     output: 'blueman.desktop',
     type: 'desktop',
     po_dir: 'po',
@@ -229,12 +268,21 @@ i18n.merge_file(
 )
 
 i18n.merge_file(
-    input: 'data/blueman-manager.desktop.in',
+    input: manager_desktop_input,
     output: 'blueman-manager.desktop',
     type: 'desktop',
     po_dir: 'po',
     install: true,
     install_dir: join_paths([datadir,'applications']),
+)
+
+i18n.merge_file(
+    input: metainfo_input,
+    output: 'org.blueman.Blueman.metainfo.xml',
+    type: 'xml',
+    po_dir: 'po',
+    install: true,
+    install_dir: join_paths(datadir, 'metainfo'),
 )
 
 i18n.merge_file(
@@ -323,6 +371,7 @@ blueman_makefiles = [
     'config/Makefile.am',
     'gui/applet/Makefile.am',
     'gui/manager/Makefile.am',
+    'gui/theme/Makefile.am',
     'gui/Makefile.am',
     'main/applet/Makefile.am',
     'main/indicators/Makefile.am',

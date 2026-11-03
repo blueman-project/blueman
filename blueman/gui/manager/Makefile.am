@@ -1,11 +1,17 @@
 bluemandir = $(pythondir)/blueman/gui/manager
 blueman_PYTHON = 			\
+	ControllerHealth.py	\
+	DeviceBrands.py	\
 	ManagerDeviceList.py	\
+	ManagerDeviceCards.py	\
+	ManagerDeviceInspector.py	\
 	ManagerDeviceMenu.py	\
 	ManagerMenu.py			\
 	ManagerProgressbar.py	\
+	ManagerSettings.py	\
 	ManagerStats.py			\
 	ManagerToolbar.py		\
+	ManagerWindow.py		\
 	__init__.py
 
 CLEANFILES =		\
@@ -16,4 +22,3 @@ DISTCLEANFILES = \
 
 clean-local:
 	rm -rf *.pyc *.pyo 
-

@@ -4,18 +4,22 @@
   <!-- interface-name applet-passkey.ui -->
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkDialog" id="dialog">
-    <property name="border-width">5</property>
+    <property name="border-width">0</property>
     <property name="can-focus">False</property>
     <property name="resizable">False</property>
     <property name="title" translatable="yes">Pairing request</property>
     <property name="type-hint">dialog</property>
     <property name="urgency-hint">True</property>
     <property name="window-position">center</property>
+    <property name="default-width">440</property>
+    <style>
+      <class name="pairing-dialog"/>
+    </style>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
+        <property name="spacing">12</property>
         <property name="visible">True</property>
         <child internal-child="action_area">
           <object class="GtkButtonBox" id="dialog-action_area1">
@@ -25,10 +29,13 @@
             <child>
               <object class="GtkButton" id="reject">
                 <property name="can-focus">True</property>
-                <property name="label">_Stop</property>
+                <property name="label" translatable="yes">_Cancel</property>
                 <property name="receives-default">False</property>
                 <property name="use-underline">True</property>
                 <property name="visible">True</property>
+                <style>
+                  <class name="secondary-button"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -41,11 +48,14 @@
                 <property name="can-default">True</property>
                 <property name="can-focus">True</property>
                 <property name="has-default">True</property>
-                <property name="label">_OK</property>
+                <property name="label" translatable="yes">_Continue</property>
                 <property name="receives-default">True</property>
                 <property name="sensitive">False</property>
                 <property name="use-underline">True</property>
                 <property name="visible">True</property>
+                <style>
+                  <class name="primary-button"/>
+                </style>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -66,10 +76,15 @@
           <object class="GtkGrid" id="grid">
             <property name="can-focus">False</property>
             <property name="margin-bottom">10</property>
-            <property name="margin-end">5</property>
-            <property name="margin-start">5</property>
-            <property name="margin-top">10</property>
+            <property name="margin-end">24</property>
+            <property name="margin-start">24</property>
+            <property name="margin-top">24</property>
+            <property name="column-spacing">16</property>
+            <property name="row-spacing">8</property>
             <property name="visible">True</property>
+            <style>
+              <class name="glass-panel"/>
+            </style>
             <child>
               <object class="GtkImage" id="pairing_image">
                 <property name="can-focus">False</property>
@@ -79,6 +94,9 @@
                 <property name="margin-end">10</property>
                 <property name="pixel-size">48</property>
                 <property name="visible">True</property>
+                <style>
+                  <class name="device-avatar"/>
+                </style>
               </object>
               <packing>
                 <property name="height">5</property>
@@ -93,6 +111,9 @@
                 <property name="label" translatable="yes">Pairing request for device:</property>
                 <property name="valign">start</property>
                 <property name="visible">True</property>
+                <style>
+                  <class name="inspector-subtitle"/>
+                </style>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -109,6 +130,9 @@
                 <property name="visible">True</property>
                 <property name="width-request">280</property>
                 <property name="wrap">True</property>
+                <style>
+                  <class name="inspector-title"/>
+                </style>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -122,6 +146,11 @@
                 <property name="label" translatable="yes">This should be overwritten</property>
                 <property name="valign">start</property>
                 <property name="visible">True</property>
+                <property name="wrap">True</property>
+                <property name="max-width-chars">36</property>
+                <style>
+                  <class name="device-subtitle"/>
+                </style>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -133,6 +162,10 @@
                 <property name="activates-default">True</property>
                 <property name="can-focus">True</property>
                 <property name="visible">True</property>
+                <property name="placeholder-text" translatable="yes">Enter PIN or passkey</property>
+                <style>
+                  <class name="search-entry"/>
+                </style>
               </object>
               <packing>
                 <property name="left-attach">1</property>

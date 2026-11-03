@@ -1,19 +1,26 @@
 import logging
+import shutil
 import signal
-from gettext import gettext as _
+from gettext import gettext as _, ngettext
 from typing import Any
 from collections.abc import Callable
 
 from blueman.bluez.Adapter import Adapter
 from blueman.bluez.Device import Device
 from blueman.bluez.Manager import Manager
-from blueman.Constants import WEBSITE
+from blueman.Constants import BRAND_DISPLAY_NAME, BRAND_ICON_NAME, WEBSITE
 from blueman.Functions import *
+from blueman.gui.manager.ControllerHealth import ControllerRecovery
 from blueman.gui.manager.ManagerDeviceList import ManagerDeviceList
+from blueman.gui.manager.ManagerDeviceCards import DeviceCardAction, ManagerDeviceCards
+from blueman.gui.manager.ManagerDeviceMenu import ManagerDeviceMenu
+from blueman.gui.manager.ManagerDeviceInspector import ManagerDeviceInspector
+from blueman.gui.manager.ManagerSettings import ManagerSettingsPage
 from blueman.gui.manager.ManagerToolbar import ManagerToolbar
 from blueman.gui.manager.ManagerMenu import ManagerMenu
 from blueman.gui.manager.ManagerStats import ManagerStats
 from blueman.gui.manager.ManagerProgressbar import ManagerProgressbar
+from blueman.gui.manager.ManagerWindow import ManagerWindowShell, Page
 from blueman.main.Builder import Builder
 from blueman.gui.CommonUi import ErrorDialog, show_about_dialog
 from blueman.main.DBusProxies import (
@@ -24,6 +31,7 @@ from blueman.main.DBusProxies import (
     AppletServiceApplication
 )
 from blueman.gui.Notification import Notification
+from blueman.gui.theme.ThemeManager import ThemeManager
 from blueman.main.PluginManager import PluginManager
 import blueman.plugins.manager
 from blueman.plugins.ManagerPlugin import ManagerPlugin
@@ -34,11 +42,30 @@ gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gio, Gdk, GLib
 
 
+# Desktop sound panels in preference order; the first installed one is launched.
+SOUND_SETTINGS_COMMANDS = (
+    "pavucontrol",
+    "gnome-control-center sound",
+    "cinnamon-settings sound",
+    "mate-volume-control",
+    "pavucontrol-qt",
+    "systemsettings kcm_pulseaudio",
+)
+
+
+def sound_settings_command() -> str | None:
+    for command in SOUND_SETTINGS_COMMANDS:
+        if shutil.which(command.split()[0]) is not None:
+            return command
+    return None
+
+
 class Blueman(Gtk.Application):
     window: Gtk.ApplicationWindow | None
 
     def __init__(self) -> None:
         super().__init__(application_id="org.blueman.Manager")
+        GLib.set_application_name(BRAND_DISPLAY_NAME)
         self._applet_was_running = DBus().NameHasOwner("(s)", AppletService.NAME)
 
         def do_quit(_: object) -> bool:
@@ -70,6 +97,16 @@ class Blueman(Gtk.Application):
         self.window = None
 
         self.Config = Gio.Settings(schema_id="org.blueman.general")
+        self.Theme = ThemeManager.get_default()
+        self.Theme.apply(self.Config)
+        self.Shell: ManagerWindowShell | None = None
+        self.Cards: ManagerDeviceCards | None = None
+        self.CardMenu: ManagerDeviceMenu | None = None
+        self.Inspector: ManagerDeviceInspector | None = None
+        self.Recovery: ControllerRecovery | None = None
+        # True while the power switch mirrors an outside change, so opt-in reset only
+        # follows the user turning Bluetooth on.
+        self._syncing_power = False
 
         self.builder = Builder("manager-main.ui")
 
@@ -87,6 +124,11 @@ class Blueman(Gtk.Application):
         self.register_action("plugins", self.simple_action)
         self.register_action("services", self.simple_action)
         self.register_action("preferences", self.simple_action)
+        self.register_action("settings", self.simple_action)
+        self.register_action("focus-search", self.simple_action)
+        self.register_action("reset-adapter", self.simple_action)
+        self.set_accels_for_action("app.focus-search", ["<Ctrl>k"])
+        self.set_accels_for_action("app.settings", ["<Ctrl>comma"])
 
         self.register_action("Quit", self.simple_action)
         self.set_accels_for_action("app.Quit", ["<Ctrl>q", "<Ctrl>w"])
@@ -104,6 +146,9 @@ class Blueman(Gtk.Application):
         Manager.watch_name_owner(self.on_dbus_name_appeared, self.on_dbus_name_vanished)
 
     def do_shutdown(self) -> None:
+        if self.Recovery is not None:
+            self.Recovery.stop()
+        self.Theme.close()
         Gtk.Application.do_shutdown(self)
 
         if not self._applet_was_running:
@@ -113,6 +158,25 @@ class Blueman(Gtk.Application):
         if not self.window:
             self.window = self.builder.get_widget("manager_window", Gtk.ApplicationWindow)
             self.window.set_application(self)
+            self.window.set_title(BRAND_DISPLAY_NAME)
+            self.window.set_icon_name(BRAND_ICON_NAME)
+            screen = self.window.get_screen()
+            rgba_visual = screen.get_rgba_visual()
+            if rgba_visual is not None and screen.is_composited():
+                # Rounded client-side corners need an alpha visual; GTK still paints the
+                # CSS background, which keeps the surfaces opaque.
+                self.window.set_visual(rgba_visual)
+            self.window.get_style_context().add_class("app-window")
+            self.window.set_default_size(1560, 880)
+            self.window.set_size_request(900, 600)
+            content = self.builder.get_widget("grid", Gtk.Grid)
+            self.Shell = ManagerWindowShell(self.window, content)
+            self.Shell.install_settings_page(ManagerSettingsPage(self, self.Config))
+            power_action = self.lookup_action("bluetooth_status")
+            if power_action is not None:
+                state = power_action.get_state()
+                if state is not None:
+                    self.Shell.set_bluetooth_state(state.unpack())
             w, h, x, y = self.Config["window-properties"]
             if w and h:
                 self.window.resize(w, h)
@@ -132,11 +196,9 @@ class Blueman(Gtk.Application):
 
         if signal_name == 'BluetoothStatusChanged':
             status = params.unpack()[0]
-            action.change_state(GLib.Variant.new_boolean(status))
+            self._sync_power_state(action, status)
         elif signal_name == "PluginsChanged":
-            if "PowerManager" in self.Applet.QueryPlugins():
-                status = self.PowerManager.get_bluetooth_status()
-                action.change_state(GLib.Variant.new_boolean(status))
+            self._sync_power_state(action, self._get_bluetooth_status())
 
             self.Toolbar._update_buttons(self.List.Adapter)
 
@@ -160,12 +222,185 @@ class Blueman(Gtk.Application):
         if self.List.is_valid_adapter():
             self.List.populate_devices()
 
-        self.List.connect("adapter-changed", self.on_adapter_changed)
+        self.Cards = ManagerDeviceCards(self.List)
+        self.Cards.connect("action-requested", self._on_card_action_requested)
+        self.Cards.connect("stop-discovery-requested", lambda _cards: self.List.stop_discovery())
+        self.Inspector = ManagerDeviceInspector(self.Cards)
+        self.Inspector.connect("action-requested", self._on_card_action_requested)
+        if self.Shell is not None:
+            self.Shell.install_device_cards(self.Cards, sw)
+            self.Shell.install_device_inspector(self.Inspector)
 
-        pm_available = "PowerManager" in self.Applet.QueryPlugins()
-        action_status = self.PowerManager.get_bluetooth_status() if pm_available else False
+        self.List.connect("adapter-changed", self.on_adapter_changed)
+        self.List.connect("adapter-property-changed", self._on_adapter_property_changed)
+        self.List.connect("adapter-added", self._on_adapter_added)
+        self._update_adapter_name()
+        self._start_recovery()
+
         bt_status_action = self.lookup_action("bluetooth_status")
-        bt_status_action.change_state(GLib.Variant.new_boolean(action_status))
+        self._sync_power_state(bt_status_action, self._get_bluetooth_status())
+
+    def _start_recovery(self) -> None:
+        if self.Shell is None or self.Recovery is not None:
+            return
+        self.Recovery = ControllerRecovery(
+            self.Shell.notice,
+            adapter_path=self.List.get_adapter_path,
+            connected_count=self._connected_count,
+            set_powered=self._set_bluetooth_status,
+            confirm=self._confirm_reset,
+        )
+        recovery = self.Recovery
+        self.List.connect("device-property-changed", lambda *_args: recovery.discovery_activity())
+        self.List.manager.connect_signal("device-created", lambda *_args: recovery.discovery_activity())
+        recovery.start()
+
+    def _connected_count(self) -> int:
+        if self.Cards is None:
+            return 0
+        return sum(card.snapshot.connected for card in self.Cards.cards_by_path.values())
+
+    def _confirm_reset(self, connected: int, proceed: Callable[[], None]) -> None:
+        def on_response(prompt: Gtk.MessageDialog, response: int) -> None:
+            prompt.destroy()
+            if response == Gtk.ResponseType.ACCEPT:
+                proceed()
+
+        dialog = Gtk.MessageDialog(
+            transient_for=self.window,
+            modal=True,
+            message_type=Gtk.MessageType.WARNING,
+            buttons=Gtk.ButtonsType.CANCEL,
+            text=_("Reset the Bluetooth adapter?"),
+        )
+        dialog.add_button(_("Reset Adapter"), Gtk.ResponseType.ACCEPT)
+        dialog.format_secondary_text(ngettext(
+            "%d connected device will disconnect and reconnect when the adapter is back.",
+            "%d connected devices will disconnect and reconnect when the adapter is back.",
+            connected) % connected)
+        dialog.connect("response", on_response)
+        dialog.present()
+
+    def _on_adapter_added(self, lst: ManagerDeviceList, path: str) -> None:
+        # A reset brings the adapter back under the same path; DeviceList then keeps the
+        # adapter without emitting adapter-changed, so reload its devices here.
+        if path == lst.get_adapter_path():
+            lst.populate_devices()
+            self._update_adapter_name()
+            self._sync_power_state(self.lookup_action("bluetooth_status"), self._get_bluetooth_status())
+        if self.Recovery is not None:
+            self.Recovery.adapter_added(path)
+
+    def _sync_power_state(self, action: Gio.Action | None, status: bool) -> None:
+        if action is None:
+            return
+        self._syncing_power = True
+        try:
+            action.change_state(GLib.Variant.new_boolean(status))
+        finally:
+            self._syncing_power = False
+
+    def _get_bluetooth_status(self) -> bool:
+        """Read power state from the applet, or from the adapter when the applet cannot answer.
+
+        A distribution applet older than this manager may advertise the PowerManager plugin
+        without exporting the interface; the adapter's Powered property is the truth then.
+        """
+        if "PowerManager" in self.Applet.QueryPlugins():
+            try:
+                return self.PowerManager.get_bluetooth_status()
+            except GLib.Error as e:
+                logging.warning(f"PowerManager unavailable, using adapter state: {e.message}")
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        return bool(adapter["Powered"]) if adapter is not None else False
+
+    def _set_bluetooth_status(self, status: bool) -> None:
+        try:
+            self.PowerManager.set_bluetooth_status(status)
+            return
+        except GLib.Error as e:
+            logging.warning(f"PowerManager unavailable, setting adapter power: {e.message}")
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        if adapter is not None and bool(adapter["Powered"]) != status:
+            adapter["Powered"] = status
+
+    def _update_adapter_name(self) -> None:
+        adapter = self.List.Adapter if hasattr(self, "List") else None
+        if self.Shell is not None:
+            self.Shell.set_adapter_name(adapter["Alias"] if adapter is not None else None)
+
+    def _on_adapter_property_changed(
+        self, _lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]
+    ) -> None:
+        key, value = key_value
+        if key == "Alias":
+            self._update_adapter_name()
+        elif key == "Powered" and "PowerManager" not in self.Applet.QueryPlugins():
+            action = self.lookup_action("bluetooth_status")
+            if action is not None and action.get_state().unpack() != bool(value):
+                self._sync_power_state(action, bool(value))
+
+    def _set_discovery_state(self, active: bool, progress: float | None = None) -> None:
+        if self.Cards is not None:
+            self.Cards.set_discovery_state(active, progress)
+        if self.Shell is not None:
+            self.Shell.set_discovery_state(active)
+
+    def _on_card_action_requested(
+        self,
+        _source: object,
+        object_path: str,
+        action_name: str,
+        anchor: Gtk.Widget,
+    ) -> None:
+        tree_iter = self.List.find_device_by_path(object_path)
+        if tree_iter is None:
+            return
+        device = self.List.get(tree_iter, "device")["device"]
+
+        try:
+            action = DeviceCardAction(action_name)
+        except ValueError:
+            logging.error(f"Unknown card action: {action_name}")
+            return
+
+        if action == DeviceCardAction.PAIR:
+            self.bond(device)
+        elif action == DeviceCardAction.SOUND_SETTINGS:
+            self.open_sound_settings()
+        elif action == DeviceCardAction.SEND:
+            self.send(device)
+        else:
+            if self.CardMenu is None:
+                self.CardMenu = ManagerDeviceMenu(self)
+            if action == DeviceCardAction.CONNECT:
+                self.CardMenu.connect_service(device)
+            elif action == DeviceCardAction.DISCONNECT:
+                self.CardMenu.disconnect_service(device)
+            elif action == DeviceCardAction.MORE:
+                self.CardMenu.popup_for_device(device, anchor)
+            elif action == DeviceCardAction.RENAME:
+                self.CardMenu.rename_device(device)
+            elif action == DeviceCardAction.REMOVE:
+                self._confirm_remove(device)
+
+    def _confirm_remove(self, device: Device) -> None:
+        def on_response(prompt: Gtk.MessageDialog, response: int) -> None:
+            if response == Gtk.ResponseType.ACCEPT:
+                self.remove(device)
+            prompt.destroy()
+
+        dialog = Gtk.MessageDialog(
+            transient_for=self.window,
+            modal=True,
+            message_type=Gtk.MessageType.WARNING,
+            buttons=Gtk.ButtonsType.CANCEL,
+            text=_("Forget %s?") % device.display_name,
+        )
+        dialog.add_button(_("Forget Device"), Gtk.ResponseType.ACCEPT)
+        dialog.format_secondary_text(_("You will need to pair with this device again."))
+        dialog.connect("response", on_response)
+        dialog.present()
 
     def on_dbus_name_vanished(self, _connection: Gio.DBusConnection, name: str) -> None:
         logging.info(name)
@@ -186,10 +421,20 @@ class Blueman(Gtk.Application):
         self.quit()
 
     def _on_bt_state_changed(self, action: Gio.SimpleAction, state_variant: GLib.Variant) -> None:
+        previous = action.get_state()
         action.set_state(state_variant)
 
         state = state_variant.unpack()
-        self.PowerManager.set_bluetooth_status(state)
+        if previous is None or previous.unpack() != state:
+            if self._should_reset_on_power(previous, state):
+                assert self.Recovery is not None
+                self.Recovery.reset_then_power_on()
+            else:
+                self._set_bluetooth_status(state)
+        if self.Shell is not None:
+            self.Shell.set_bluetooth_state(state)
+        if not state:
+            self._set_discovery_state(False)
 
         if state:
             icon_name = "bluetooth"
@@ -202,6 +447,11 @@ class Blueman(Gtk.Application):
         image = self.builder.get_widget("im_bluetooth_status", Gtk.Image)
         box.set_tooltip_text(tooltip_text)
         image.props.icon_name = icon_name
+
+    def _should_reset_on_power(self, previous: GLib.Variant | None, state: bool) -> bool:
+        if not state or previous is None or self._syncing_power or self.Recovery is None:
+            return False
+        return bool(self.Config["reset-adapter-on-power"])
 
     def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
         width, height, x, y = self.Config["window-properties"]
@@ -227,56 +477,71 @@ class Blueman(Gtk.Application):
             self.add_action(action)
 
     def simple_action(self, action: Gio.SimpleAction, param: GLib.Variant | None) -> None:
-        match action.get_name():
+        name = action.get_name()
+        device_actions: dict[str, Callable[[Device], None]] = {
+            "bond": self.bond,
+            "trust-toggle": self.toggle_trust,
+            "remove": self.remove,
+            "send": self.send,
+        }
+        if name in device_actions:
+            device = self.List.get_selected_device()
+            if device is not None:
+                device_actions[name](device)
+            return
+
+        match name:
             case "Quit":
                 self.quit()
             case "inquiry":
                 self.inquiry()
-            case "bond":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.bond(device)
-            case "trust-toggle":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.toggle_trust(device)
-            case "remove":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.remove(device)
-            case "send":
-                device = self.List.get_selected_device()
-                if device is not None:
-                    self.send(device)
             case "report":
                 launch(f"xdg-open {WEBSITE}/issues", system=True)
             case "about":
                 widget = self.window.get_toplevel() if self.window else None
                 assert isinstance(widget, Gtk.Window)
-                show_about_dialog('Blueman ' + _('Device Manager'), parent=widget)
+                show_about_dialog(BRAND_DISPLAY_NAME, parent=widget)
             case "plugins":
                 self.Applet.OpenPluginDialog()
             case "services":
                 launch("blueman-services", name=_("Service Preferences"))
             case "preferences":
                 self.adapter_properties()
-            case _ as name:
+            case "settings":
+                if self.Shell is not None:
+                    self.Shell.show_page(Page.SETTINGS)
+            case "reset-adapter":
+                if self.Recovery is not None:
+                    self.Recovery.request_reset()
+            case "focus-search":
+                if self.Shell is not None:
+                    self.Shell.show_page(Page.DEVICES)
+                if self.Cards is not None:
+                    self.Cards.focus_search()
+            case _:
                 logging.error(f"Unknown action: {name}")
 
     def on_adapter_changed(self, lst: ManagerDeviceList, adapter: str) -> None:
         if adapter is not None:
             self.List.populate_devices()
+        self._update_adapter_name()
 
     def inquiry(self) -> None:
         def prop_changed(_lst: ManagerDeviceList, _adapter: Adapter, key_value: tuple[str, Any]) -> None:
             key, value = key_value
+            if key == "Discovering" and self.Recovery is not None:
+                self.Recovery.discovery_state(bool(value))
             if key == "Discovering" and not value:
                 prog.finalize()
+                self._set_discovery_state(False)
+                if self.Recovery is not None:
+                    self.Recovery.discovery_finished()
 
                 self.List.disconnect(s1)
                 self.List.disconnect(s2)
 
         def on_progress(_lst: ManagerDeviceList, frac: float) -> None:
+            self._set_discovery_state(True, frac)
             if abs(1.0 - frac) <= 0.00001:
                 if not prog.started():
                     prog.start()
@@ -288,8 +553,14 @@ class Blueman(Gtk.Application):
 
         def on_error(e: Exception) -> None:
             prog.finalize()
+            self._set_discovery_state(False)
             self.infobar_update(*e_(e))
+            if self.Recovery is not None:
+                self.Recovery.discovery_failed(str(e))
 
+        self._set_discovery_state(True)
+        if self.Recovery is not None and not self.List.discovering:
+            self.Recovery.discovery_started()
         self.List.discover_devices(error_handler=on_error)
 
         s1 = self.List.connect("discovery-progress", on_progress)
@@ -339,9 +610,16 @@ class Blueman(Gtk.Application):
         def error_handler(e: Exception) -> None:
             logging.exception(e)
             message = f"Pairing failed for:\n{device.display_name} ({device['Address']})"
-            Notification('Bluetooth', message, icon_name="blueman").show()
+            Notification('Bluetooth', message, icon_name=BRAND_ICON_NAME).show()
 
         device.pair(error_handler=error_handler)
+
+    def open_sound_settings(self) -> None:
+        command = sound_settings_command()
+        if command is None:
+            self.infobar_update(_("No sound settings application was found."), icon_name="dialog-information")
+            return
+        launch(command, system=True, name=_("Sound Settings"))
 
     @staticmethod
     def adapter_properties() -> None:

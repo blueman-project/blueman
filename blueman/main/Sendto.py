@@ -23,6 +23,7 @@ from blueman.Functions import format_bytes, log_system_info, bmexit, check_bluet
 from blueman.main.SpeedCalc import SpeedCalc
 from blueman.gui.CommonUi import ErrorDialog
 from blueman.gui.DeviceSelectorDialog import DeviceSelector
+from blueman.gui.theme.ThemeManager import ThemeManager
 from blueman.Sdp import ServiceUUID, OBEX_OBJPUSH_SVCLASS_ID
 
 import gi
@@ -34,6 +35,8 @@ from gi.repository import Gdk, Gtk, GObject, GLib, Gio
 class SendTo:
     def __init__(self, parsed_args: Namespace) -> None:
         setup_icon_path()
+        self._theme = ThemeManager.get_default()
+        self._theme.apply(Gio.Settings(schema_id="org.blueman.general"))
 
         check_bluetooth_status(_("Bluetooth needs to be turned on for file sending to work"), bmexit)
 
@@ -328,9 +331,7 @@ class Sender(Gtk.Dialog):
 
     def _update_pb_text(self, speed: float = 0.0, unit: str = "B", eta: str | None = None) -> None:
         num = self.num_files - len(self.files) + 1
-        eta = "∞" if eta is None else eta
-        text = "%s %d/%d %.2f (%s/s) %s %s" % (_("Sending File"), num, self.num_files, speed, unit, _("ETA:"), eta)
-        self.pb.set_text(text)
+        self.pb.set_text(format_transfer_status(num, self.num_files, speed, unit, eta))
 
     def on_transfer_started(self, _object_push: ObjectPush, transfer_path: ObjectPath, filename: str) -> None:
         if self.total_transferred == 0:
@@ -461,3 +462,22 @@ class Sender(Gtk.Dialog):
         d.run()
         d.destroy()
         self.emit("result", False)
+
+
+def format_transfer_status(
+    current_file: int,
+    total_files: int,
+    speed: float = 0.0,
+    unit: str = "B",
+    eta: str | None = None,
+) -> str:
+    """Format only backend-derived transfer measurements that are available."""
+    parts = [_('Sending file %(current)d of %(total)d') % {
+        "current": current_file,
+        "total": total_files,
+    }]
+    if speed > 0:
+        parts.append(_('%(speed).2f %(unit)s/s') % {"speed": speed, "unit": unit})
+    if eta is not None:
+        parts.append(_("ETA: %s") % eta)
+    return "  •  ".join(parts)
