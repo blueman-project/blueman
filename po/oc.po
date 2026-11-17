@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: blueman 2.2\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2025-05-09 15:00+0000\n"
+"PO-Revision-Date: 2025-12-23 09:00+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
-"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/2-4/oc/"
-">\n"
+"Language-Team: Occitan <https://hosted.weblate.org/projects/blueman/2-4/oc/>"
+"\n"
 "Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -63,7 +63,7 @@ msgstr "Mostrar l’entrada"
 
 #: data/ui/manager-main.ui:48
 msgid "Bluetooth Devices"
-msgstr "Periferic Bluetooth"
+msgstr "Periferics Bluetooth"
 
 #: data/ui/manager-main.ui:63
 msgid "_Adapter"
@@ -588,7 +588,7 @@ msgstr "o"
 
 #: blueman/Functions.py:169
 msgid "KB"
-msgstr "Ko"
+msgstr "ko"
 
 #: blueman/Functions.py:172
 msgid "MB"
@@ -854,6 +854,10 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
+"L'empeuton <b>%(0)s</b> es en conflicte amb <b>%(1)s</b>. Lo cargament de <b>"
+"%(1)s</b> descargarà <b>%(0)s</b>.\n"
+"\n"
+"Perseguir ?"
 
 #: blueman/gui/applet/PluginDialog.py:267
 msgid "No dependencies"
@@ -1812,7 +1816,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Sarralha"
 
 #: blueman/DeviceClass.py:334
 #, fuzzy
@@ -1857,8 +1861,6 @@ msgid "Power Strip"
 msgstr "Barra d’alimentacion"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
 msgstr "Ficha"
 
@@ -1900,7 +1902,7 @@ msgstr "Lampa LED"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "Lampa HID"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
@@ -1908,11 +1910,11 @@ msgstr ""
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "Malhum de LED"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "Malhum de LED multicolòr"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
@@ -1950,7 +1952,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Ecran exterior"
 
 #: blueman/DeviceClass.py:367
 #, fuzzy
@@ -2118,7 +2120,7 @@ msgstr "Micrò"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Grasilhapan"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
@@ -2130,7 +2132,7 @@ msgstr "Secador"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Cafetièra"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
@@ -2168,7 +2170,7 @@ msgstr "Aparelh de mobilitat personala generic"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Escotador"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
@@ -2240,7 +2242,7 @@ msgstr ""
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Lector de disques optics"
 
 #: blueman/DeviceClass.py:435
 #, fuzzy
@@ -2287,10 +2289,8 @@ msgid "Cochlear Implant"
 msgstr ""
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
-#| msgid "Generic Tag"
 msgid "Generic Gaming"
-msgstr "Etiqueta generica"
+msgstr "Jòc generic"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
