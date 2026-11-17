@@ -45,7 +45,7 @@
 # bambuhle <politik@philippoi.de>, 2014
 # qazwsxedc <qazwsxedc@gmx.net>, 2014
 # Tim Schulz <timschulz19980312@gmail.com>, 2015
-# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017, 2023, 2024.
+# Tobias Bannert <tobannert@gmail.com>, 2014-2015,2017, 2023, 2024, 2025.
 # jugendhacker <jugendhacker@gmail.com>, 2020.
 # Christopher Schramm <github@cschramm.eu>, 2020, 2021, 2022, 2023, 2024.
 # J. Lavoie <j.lavoie@net-c.ca>
@@ -57,20 +57,21 @@
 # Georg Schwarz <georg.schwarz@freenet.de>, 2023.
 # David <dawin@users.noreply.hosted.weblate.org>, 2024.
 # Markus Hackspacher <hackspacher@gmx.de>, 2025.
+# Hans-Fritz Pommes <valarmmail@gmx.de>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-05-17 22:25+0200\n"
-"PO-Revision-Date: 2025-02-16 21:26+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2026-04-23 09:09+0000\n"
+"Last-Translator: Hans-Fritz Pommes <valarmmail@gmx.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/blueman/2-4/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
@@ -307,7 +308,7 @@ msgstr "<b>NAP-Unterstützung</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Datei empfangen (Object Push)</b>"
+msgstr "<b>Datei wird empfangen (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
@@ -324,7 +325,8 @@ msgstr "Dateien von vertrauenswürdigen Geräten annehmen"
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
 msgstr ""
-"<span weight=\"bold\" size=\"large\">Dateien über Bluetooth versenden</span>"
+"<span weight=\"bold\" size=\"large\">Dateien werden über Bluetooth "
+"versendet</span>"
 
 #: data/ui/send-dialog.ui:71
 msgid "<b>To:</b>"
@@ -501,7 +503,7 @@ msgstr "_Stopp"
 
 #: blueman/main/Sendto.py:57 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "Verbinde"
+msgstr "wird verbunden"
 
 #: blueman/main/Sendto.py:111
 msgid "obexd not available"
@@ -515,11 +517,11 @@ msgstr ""
 
 #: blueman/main/Sendto.py:142
 msgid "Cancelling"
-msgstr "Abbruch"
+msgstr "wird abgebrochen"
 
 #: blueman/main/Sendto.py:154
 msgid "Sending File"
-msgstr "Sende Datei"
+msgstr "Datei wird gesendet"
 
 #: blueman/main/Sendto.py:154
 msgid "ETA:"
@@ -766,7 +768,7 @@ msgstr "Fehlgeschlagen"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:148
 msgid "Connecting…"
-msgstr "Verbinde…"
+msgstr "wird verbunden …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:171
 msgid "Disconnection Failed: "
@@ -823,7 +825,7 @@ msgstr "<b>Automatisch verbinden:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:353
 msgid "Send a _File…"
-msgstr "_Datei senden…"
+msgstr "_Datei wird gesendet …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:366
 msgid "_Pair"
@@ -851,11 +853,11 @@ msgstr "Dieses Gerät blockieren/entblocken"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:417
 msgid "R_ename device…"
-msgstr "G_erät umbenennen…"
+msgstr "G_erät umbenennen …"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:426
 msgid "_Remove…"
-msgstr "Entfe_rnen…"
+msgstr "Entfe_rnen …"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
@@ -924,7 +926,7 @@ msgstr "Adapterauswahl"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
 msgid "Discovering…"
-msgstr "Suche…"
+msgstr "wird gesucht …"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
@@ -989,12 +991,12 @@ msgstr "Laptop"
 #. translators: device class
 #: blueman/DeviceClass.py:37
 msgid "Handheld"
-msgstr "Handheld"
+msgstr "Hand-Gerät"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr "Palm"
+msgstr "Hand-Gerät (\"Palmtop\")"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
@@ -1279,7 +1281,7 @@ msgstr "IoT-Gateway"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr "Mini PC"
+msgstr "Mini-PC"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
@@ -2215,7 +2217,7 @@ msgstr "Radio"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr "Tuner"
+msgstr "Radio"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
@@ -2223,15 +2225,15 @@ msgstr "Plattenspieler"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr "CD Player"
+msgstr "CD-Spieler"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr "DVD Player"
+msgstr "DVD-Spieler"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr "Bluray Player"
+msgstr "Blu-ray-Spieler"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
@@ -3210,7 +3212,7 @@ msgstr "Adapter für diese Verbindung ist nicht verfügbar"
 
 #: blueman/plugins/applet/RecentConns.py:188
 msgid "Reconnect to…"
-msgstr "Wiederverbinden mit…"
+msgstr "Wiederverbinden mit …"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
@@ -3239,12 +3241,12 @@ msgstr "Ablehnen"
 
 #: blueman/plugins/applet/TransferService.py:136
 msgid "Receiving file"
-msgstr "empfange Datei"
+msgstr "Datei wird empfangen"
 
 #: blueman/plugins/applet/TransferService.py:137
 #, python-format
 msgid "Receiving file %(0)s from %(1)s"
-msgstr "Empfange Datei %(0)s von %(1)s"
+msgstr "Datei %(0)s von %(1)s wird empfangen"
 
 #: blueman/plugins/applet/TransferService.py:156
 msgid "Provides OBEX file transfer capabilities"
