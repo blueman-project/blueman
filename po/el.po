@@ -22,29 +22,30 @@
 # george k <norhorn@gmail.com>
 # Michalis <michalisntovas@yahoo.gr>, 2021.
 # Sander Sweers <infirit@gmail.com>, 2025.
+# Jim Spentzos <dspentzos@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: blueman-project\n"
 "Report-Msgid-Bugs-To: https://github.com/blueman-project/blueman/issues\n"
 "POT-Creation-Date: 2024-12-03 18:48+0000\n"
-"PO-Revision-Date: 2025-11-01 10:52+0000\n"
-"Last-Translator: Sander Sweers <infirit@gmail.com>\n"
-"Language-Team: Greek <https://hosted.weblate.org/projects/blueman/blueman/el/"
-">\n"
+"PO-Revision-Date: 2026-11-05 19:51+0000\n"
+"Last-Translator: Jim Spentzos <dspentzos@users.noreply.hosted.weblate.org>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/blueman/blueman/"
+"el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 2026.11.2.dev0\n"
 
 #: data/ui/adapters-tab.ui:30
 msgid "<b>Visibility Setting</b>"
-msgstr "<b>Ρύθμιση Ορατότητας</b>"
+msgstr "<b>Ρύθμιση ορατότητας</b>"
 
 #: data/ui/adapters-tab.ui:40 blueman/main/Adapter.py:165
 msgid "Hidden"
-msgstr "Σε απόκρυψη"
+msgstr "Απόκρυψη"
 
 #: data/ui/adapters-tab.ui:57
 msgid "Always visible"
@@ -55,17 +56,16 @@ msgid "Temporarily visible"
 msgstr "Προσωρινά ορατό"
 
 #: data/ui/adapters-tab.ui:110
-#, fuzzy
 msgid "<b>Name</b>"
-msgstr "<b>Συνδυασμένος</b>"
+msgstr "<b>Όνομα</b>"
 
 #: data/ui/applet-passkey.ui:8
 msgid "Pairing request"
-msgstr "Αίτηση ζεύξης"
+msgstr "Αίτημα σύζευξης"
 
 #: data/ui/applet-passkey.ui:94
 msgid "Pairing request for device:"
-msgstr "Αίτηση ζεύξης για συσκευή:"
+msgstr "Αίτημα σύζευξης για συσκευή:"
 
 #: data/ui/applet-passkey.ui:123
 msgid "This should be overwritten"
@@ -73,7 +73,7 @@ msgstr "Αυτό πρέπει να αντικατασταθεί"
 
 #: data/ui/applet-passkey.ui:143
 msgid "Show input"
-msgstr "Εμφάνιση εισαγομένων"
+msgstr "Εμφάνιση εισόδου"
 
 #: data/ui/manager-main.ui:48
 msgid "Bluetooth Devices"
@@ -81,21 +81,19 @@ msgstr "Συσκευές Bluetooth"
 
 #: data/ui/manager-main.ui:63
 msgid "_Adapter"
-msgstr "_Προσαρμογέας"
+msgstr "Προσαρμο_γέας"
 
 #: data/ui/manager-main.ui:71
 msgid "_Search"
-msgstr "_Αναζήτηση"
+msgstr "Αναζήτη_ση"
 
 #: data/ui/manager-main.ui:92
-#, fuzzy
 msgid "_Preferences"
-msgstr "Προτιμήσεις προσαρμογέα"
+msgstr "_Προτιμήσεις"
 
 #: data/ui/manager-main.ui:107 blueman/plugins/applet/ExitItem.py:12
-#, fuzzy
 msgid "_Exit"
-msgstr "Έξοδος"
+msgstr "Έ_ξοδος"
 
 #: data/ui/manager-main.ui:124
 msgid "_Device"
@@ -103,32 +101,31 @@ msgstr "_Συσκευή"
 
 #: data/ui/manager-main.ui:132
 msgid "_View"
-msgstr "_Προβολή"
+msgstr "Προ_βολή"
 
 #: data/ui/manager-main.ui:142
 msgid "Show _Toolbar"
-msgstr "Εμφάνιση ερ_γαλειοθήκης"
+msgstr "Εμφάνιση γρα_μμής εργαλείων"
 
 #: data/ui/manager-main.ui:150
 msgid "Show _Statusbar"
-msgstr "Εμφάνιση γραμμής_Κατάστασης"
+msgstr "Εμφάνιση γραμμής _κατάστασης"
 
 #: data/ui/manager-main.ui:158
-#, fuzzy
 msgid "Hide _unnamed devices"
-msgstr "Μετονομασία συσκευής"
+msgstr "Απόκρυψη συσκευών _χωρίς όνομα"
 
 #: data/ui/manager-main.ui:172
 msgid "S_ort By"
-msgstr "Τα_ξινόμηση ανά"
+msgstr "Τα_ξινόμηση κατά"
 
 #: data/ui/manager-main.ui:182
 msgid "_Name"
-msgstr "_Όνομα"
+msgstr "Ό_νομα"
 
 #: data/ui/manager-main.ui:191
 msgid "_Added"
-msgstr "_Προστέθηκε"
+msgstr "Σειρά προσ_θήκης"
 
 #: data/ui/manager-main.ui:207
 msgid "_Descending"
@@ -136,11 +133,11 @@ msgstr "_Φθίνουσα"
 
 #: data/ui/manager-main.ui:217 blueman/plugins/applet/StandardItems.py:68
 msgid "_Plugins"
-msgstr "_Πρόσθετα"
+msgstr "Π_ρόσθετα"
 
 #: data/ui/manager-main.ui:227 blueman/plugins/applet/StandardItems.py:59
 msgid "_Local Services"
-msgstr "_Τοπικές Υπηρεσίες"
+msgstr "_Τοπικές υπηρεσίες"
 
 #: data/ui/manager-main.ui:243 data/ui/manager-main.ui:267
 #: blueman/plugins/applet/StandardItems.py:65
@@ -149,11 +146,11 @@ msgstr "_Βοήθεια"
 
 #: data/ui/manager-main.ui:251
 msgid "_Report a Problem"
-msgstr "_Αναφορά Προβλήματος"
+msgstr "_Αναφορά προβλήματος"
 
 #: data/ui/manager-main.ui:294
 msgid "Search for nearby devices"
-msgstr "Αναζήτηση συσκευών που βρίσκονται κοντά"
+msgstr "Αναζήτηση κοντινών συσκευών"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:296
@@ -162,26 +159,26 @@ msgstr "Αναζήτηση"
 
 #: data/ui/manager-main.ui:319 blueman/gui/manager/ManagerDeviceMenu.py:370
 msgid "Create pairing with the device"
-msgstr "Δημιουργία ζεύξης με τη συσκευή"
+msgstr "Δημιουργία σύζευξης με τη συσκευή"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:320
 msgid "Pair"
-msgstr "Ζεύξη"
+msgstr "Σύζευξη"
 
 #: data/ui/manager-main.ui:333 blueman/gui/manager/ManagerDeviceMenu.py:388
 msgid "Mark/Unmark this device as trusted"
-msgstr "Σημείωση αυτής της συσκευής ως έμπιστης/μη έμπιστης"
+msgstr "Σήμανση συσκευής ως έμπιστης/μη έμπιστης"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:334 blueman/gui/manager/ManagerToolbar.py:39
 #: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Trust"
-msgstr "Έμπιστο"
+msgstr "Σήμανση ως έμπιστη"
 
 #: data/ui/manager-main.ui:347 blueman/gui/manager/ManagerDeviceMenu.py:433
 msgid "Remove this device from the known devices list"
-msgstr "Αφαίρεση αυτής της συσκευής από τη λίστα γνωστών συσκευών"
+msgstr "Αφαίρεση συσκευής από τη λίστα γνωστών συσκευών"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:348
@@ -190,12 +187,12 @@ msgstr "Αφαίρεση"
 
 #: data/ui/manager-main.ui:370
 msgid "Send file(s) to the device"
-msgstr "Αποστολή αρχείου(ων) στη συσκευή"
+msgstr "Αποστολή αρχείων στη συσκευή"
 
 #. translators: toolbar item: keep it as short as possible
 #: data/ui/manager-main.ui:372
 msgid "Send File"
-msgstr "Αποστολή Αρχείου"
+msgstr "Αποστολή αρχείου"
 
 #: data/ui/manager-main.ui:492
 msgid "Total data sent and rate of transmission"
@@ -223,15 +220,13 @@ msgstr "Επαναφο_ρά"
 
 #: data/ui/rename-device.ui:42 data/ui/note.ui:27 blueman/main/Sendto.py:233
 #: blueman/gui/DeviceSelectorDialog.py:19
-#, fuzzy
-#| msgid "Cancelling"
 msgid "_Cancel"
-msgstr "Ακύρωση"
+msgstr "Α_κύρωση"
 
 #: data/ui/rename-device.ui:56 data/ui/note.ui:42
 #: blueman/gui/DeviceSelectorDialog.py:19
 msgid "_OK"
-msgstr ""
+msgstr "_OK"
 
 #: data/ui/services-network.ui:32
 msgid "DHCP server type:"
@@ -243,7 +238,7 @@ msgstr "Συνιστάται"
 
 #: data/ui/services-network.ui:102
 msgid "<b>No DHCP servers installed</b>"
-msgstr "<b>Δεν υπάρχουν διακομιστές DHCP εγκατεστημένοι</b>"
+msgstr "<b>Δεν έχουν εγκατασταθεί διακομιστές DHCP</b>"
 
 #: data/ui/services-network.ui:143
 msgid "IP Address:"
@@ -255,17 +250,15 @@ msgstr "<b>Ρυθμίσεις NAP</b>"
 
 #: data/ui/services-network.ui:242
 msgid "Personal Area Network"
-msgstr ""
+msgstr "Δίκτυο προσωπικού χώρου (PAN)"
 
 #: data/ui/services-network.ui:243
 msgid "<b>PAN Support</b>"
 msgstr "<b>Υποστήριξη PAN</b>"
 
 #: data/ui/services-network.ui:317
-#, fuzzy
-#| msgid "Dialup Networking (DUN)"
 msgid "Dial-up Networking"
-msgstr "Σύνδεση μέσω τηλεφώνου (DUN)"
+msgstr "Δικτύωση μέσω τηλεφώνου (DUN)"
 
 #: data/ui/services-network.ui:318
 msgid "<b>DUN Support</b>"
@@ -273,17 +266,15 @@ msgstr "<b>Υποστήριξη DUN</b>"
 
 #: data/ui/services-network.ui:336
 msgid "Network Access Point (NAP)"
-msgstr "Σημείο Πρόσβασης Δικτύου (NAP)"
+msgstr "Σημείο πρόσβασης δικτύου (NAP)"
 
 #: data/ui/services-network.ui:348
-#, fuzzy
-#| msgid "<b>PAN Support</b>"
 msgid "<b>NAP Support</b>"
-msgstr "<b>Υποστήριξη PAN</b>"
+msgstr "<b>Υποστήριξη NAP</b>"
 
 #: data/ui/services-transfer.ui:18
 msgid "<b>File Receiving (Object Push)</b>"
-msgstr "<b>Λήψη Αρχείου (Object Push)</b>"
+msgstr "<b>Λήψη αρχείων (Object Push)</b>"
 
 #: data/ui/services-transfer.ui:32
 msgid "Incoming Folder:"
@@ -291,7 +282,7 @@ msgstr "Φάκελος εισερχομένων:"
 
 #: data/ui/services-transfer.ui:45
 msgid "Select folder for incoming file transfers"
-msgstr "Επιλέξτε φάκελο για μεταφορά εισερχομένων αρχείων"
+msgstr "Επιλέξτε φάκελο για τις εισερχόμενες μεταφορές αρχείων"
 
 #: data/ui/services-transfer.ui:54
 msgid "Accept files from trusted devices"
@@ -303,7 +294,7 @@ msgstr "Τοπικές υπηρεσίες"
 
 #: data/ui/services-window.ui:49
 msgid "_Apply"
-msgstr ""
+msgstr "Εφ_αρμογή"
 
 #: data/ui/send-dialog.ui:33
 msgid "<span weight=\"bold\" size=\"large\">Sending files via Bluetooth</span>"
@@ -320,19 +311,19 @@ msgstr "<b>Αρχείο:</b>"
 
 #: data/ui/applet-plugins-widget.ui:79
 msgid "Configuration"
-msgstr "Ρυθμίσεις"
+msgstr "Ρύθμιση"
 
 #: data/ui/applet-plugins-widget.ui:83
 msgid "Configure selected plugin's preferences"
-msgstr "Ρύθμιση προτιμήσεων της επιλεγμένης προσθήκης"
+msgstr "Ρύθμιση των προτιμήσεων του επιλεγμένου προσθέτου"
 
 #: data/ui/applet-plugins-widget.ui:129
 msgid "Not specified"
-msgstr "Ακαθόριστο"
+msgstr "Δεν έχει καθοριστεί"
 
 #: data/ui/applet-plugins-widget.ui:151
 msgid "<b>Author:</b>"
-msgstr "<b>Συγγραφέας:</b>"
+msgstr "<b>Δημιουργός:</b>"
 
 #. translators: device class
 #: data/ui/applet-plugins-widget.ui:167
@@ -347,11 +338,11 @@ msgstr "Άγνωστο"
 
 #: data/ui/applet-plugins-widget.ui:193
 msgid "<b>Depends on:</b>"
-msgstr "<b>Εξαρτάται από:</b>"
+msgstr "<b>Εξαρτήσεις:</b>"
 
 #: data/ui/applet-plugins-widget.ui:235
 msgid "<b>Conflicts with:</b>"
-msgstr "<b>Συγκρούεται με:</b>"
+msgstr "<b>Διενέξεις:</b>"
 
 #: data/ui/gsm-settings.ui:35
 msgid "<b>GSM settings</b>"
@@ -387,7 +378,7 @@ msgstr "<b>Σύνολο:</b>"
 
 #: data/ui/net-usage.ui:197
 msgid "<b>Log started:</b>"
-msgstr "<b>Καταγραφή ξεκίνησε:</b>"
+msgstr "<b>Έναρξη καταγραφής:</b>"
 
 #: data/ui/net-usage.ui:210
 msgid "<b>Log duration:</b>"
@@ -400,8 +391,8 @@ msgstr "Αποστολή σημείωσης"
 #: blueman/main/Adapter.py:60
 msgid "Bluetooth needs to be turned on for the adapter manager to work"
 msgstr ""
-"Πρέπει να ενεργοποιηθεί το Bluetooth για να μπορεί να λειτουργήσει ο "
-"διαχειριστής προσαρμογέα"
+"Το Bluetooth πρέπει να είναι ενεργοποιημένο για να λειτουργήσει η εφαρμογή "
+"διαχείρισης του προσαρμογέα"
 
 #: blueman/main/Adapter.py:100 data/blueman-adapters.desktop.in:3
 msgid "Bluetooth Adapters"
@@ -415,8 +406,8 @@ msgstr "Πάντα"
 #, python-format
 msgid "%(minutes)d Minute"
 msgid_plural "%(minutes)d Minutes"
-msgstr[0] "%(minutes)d Λεπτό"
-msgstr[1] "%(minutes)d Λεπτά"
+msgstr[0] "%(minutes)d λεπτό"
+msgstr[1] "%(minutes)d λεπτά"
 
 #: blueman/main/Adapter.py:233
 msgid "Adapter"
@@ -424,7 +415,7 @@ msgstr "Προσαρμογέας"
 
 #: blueman/main/DBusProxies.py:90
 msgid "Failed to reach blueman-manager"
-msgstr ""
+msgstr "Αποτυχία επικοινωνίας με το blueman-manager"
 
 #: blueman/main/DBusProxies.py:91
 msgid ""
@@ -434,10 +425,16 @@ msgid ""
 "environment, typically issued from xinitrc (respectively the Sway config or "
 "similar)."
 msgstr ""
+"Φαίνεται ότι δεν ήταν δυνατή η ενεργοποίηση του blueman-manager μέσω του D-"
+"Bus. Μια συνηθισμένη αιτία είναι η εσφαλμένη ρύθμιση του γραφικού "
+"περιβάλλοντος στο περιβάλλον ενεργοποίησης του D-Bus. Αυτό μπορεί συνήθως να "
+"διορθωθεί με την εκτέλεση της εντολής «dbus-update-activation-environment», "
+"συνήθως από το xinitrc (ή αντίστοιχα από τη ρύθμιση του Sway ή κάποιο "
+"παρόμοιο αρχείο)."
 
 #: blueman/main/Manager.py:113
 msgid "Connection to BlueZ failed"
-msgstr "Απέτυχε η σύνδεση με το BlueZ"
+msgstr "Αποτυχία σύνδεσης με το BlueZ"
 
 #: blueman/main/Manager.py:114
 msgid ""
@@ -445,18 +442,18 @@ msgid ""
 "This probably means that there were no Bluetooth adapters detected or "
 "Bluetooth daemon was not started."
 msgstr ""
-"Η διεργασία παρασκηνίου Bluez δεν εκτελείται, ο διαχειριστής blueman-manager "
-"δεν μπορεί να συνεχίσει.\n"
+"Η διεργασία παρασκηνίου του Bluez δεν εκτελείται, επομένως το blueman-"
+"manager δεν μπορεί να συνεχίσει.\n"
 "Αυτό πιθανότατα σημαίνει ότι δεν βρεθήκαν προσαρμογείς Bluetooth στο σύστημά "
-"σας ή ότι η διεργασία παρασκηνίου για το Bluetooth δεν ξεκίνησε."
+"σας ή ότι δεν ξεκίνησε η διεργασία παρασκηνίου για το Bluetooth."
 
 #: blueman/main/Manager.py:172
 msgid "Click to disable."
-msgstr ""
+msgstr "Κάντε κλικ για απενεργοποίηση."
 
 #: blueman/main/Manager.py:175
 msgid "Click to enable."
-msgstr ""
+msgstr "Κάντε κλικ για ενεργοποίηση."
 
 #: blueman/main/Manager.py:208
 msgid "Searching"
@@ -469,7 +466,7 @@ msgstr "Προτιμήσεις προσαρμογέα"
 #: blueman/main/Manager.py:286 blueman/gui/manager/ManagerDeviceList.py:179
 #: blueman/plugins/applet/StandardItems.py:89
 msgid "File Sender"
-msgstr "Αποστολέας αρχείων"
+msgstr "Αποστολή αρχείων"
 
 #: blueman/main/Sendto.py:33
 msgid "Bluetooth File Transfer"
@@ -477,11 +474,11 @@ msgstr "Μεταφορά αρχείων μέσω Bluetooth"
 
 #: blueman/main/Sendto.py:44
 msgid "_Stop"
-msgstr ""
+msgstr "_Διακοπή"
 
 #: blueman/main/Sendto.py:59 blueman/gui/manager/ManagerProgressbar.py:27
 msgid "Connecting"
-msgstr "Γίνεται σύνδεση"
+msgstr "Σύνδεση"
 
 #: blueman/main/Sendto.py:113
 msgid "obexd not available"
@@ -490,7 +487,8 @@ msgstr "Το obexd δεν είναι διαθέσιμο"
 #: blueman/main/Sendto.py:113
 msgid "Failed to autostart obex service. Make sure the obex daemon is running"
 msgstr ""
-"Η αυτόματη εκκίνηση της υπηρεσίας obex απέτυχε. Βεβαιωθείτε ότι εκτελείται"
+"Η αυτόματη εκκίνηση της υπηρεσίας obex απέτυχε. Βεβαιωθείτε ότι εκτελείται η "
+"διεργασία παρασκηνίου του obex"
 
 #: blueman/main/Sendto.py:144
 msgid "Cancelling"
@@ -498,27 +496,27 @@ msgstr "Ακύρωση"
 
 #: blueman/main/Sendto.py:156
 msgid "Sending File"
-msgstr "Αποστολή Αρχείου"
+msgstr "Αποστολή αρχείου"
 
 #: blueman/main/Sendto.py:156
 msgid "ETA:"
-msgstr "Χρόνος Που Απομένει:"
+msgstr "Εκτιμώμενο υπόλοιπο χρόνου:"
 
 #: blueman/main/Sendto.py:194
 #, python-format
 msgid "%(seconds)d Second"
 msgid_plural "%(seconds)d Seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(seconds)d δευτερόλεπτο"
+msgstr[1] "%(seconds)d δευτερόλεπτα"
 
 #: blueman/main/Sendto.py:227
 #, python-format
 msgid "Error occurred while sending file %s"
-msgstr "Παρουσιάστηκε σφάλμα κατα την αποστολή του αρχείου %s"
+msgstr "Προέκυψε σφάλμα κατά την αποστολή του αρχείου «%s»"
 
 #: blueman/main/Sendto.py:231
 msgid "Skip"
-msgstr "Παράλεψη"
+msgstr "Παράλειψη"
 
 #: blueman/main/Sendto.py:232
 msgid "Retry"
@@ -526,12 +524,12 @@ msgstr "Επανάληψη"
 
 #: blueman/main/Sendto.py:283
 msgid "Error occurred"
-msgstr "Παρουσιάστηκε σφάλμα"
+msgstr "Προέκυψε σφάλμα"
 
 #: blueman/main/applet/BluezAgent.py:142
 #, python-format
 msgid "Pairing request for %s"
-msgstr "Αίτηση ζεύξης για %s"
+msgstr "Αίτημα σύζευξης για το %s"
 
 #: blueman/main/applet/BluezAgent.py:153 blueman/main/applet/BluezAgent.py:265
 msgid "Bluetooth Authentication"
@@ -539,27 +537,27 @@ msgstr "Αυθεντικοποίηση Bluetooth"
 
 #: blueman/main/applet/BluezAgent.py:184
 msgid "Enter PIN code for authentication:"
-msgstr "Εισάγετε τον κωδικό PIN για αυθεντικοπίηση:"
+msgstr "Εισαγάγετε τον κωδικό PIN για αυθεντικοποίηση:"
 
 #: blueman/main/applet/BluezAgent.py:193
 msgid "Enter passkey for authentication:"
-msgstr "Εισάγετε φράση-κλειδιού πρόσβασης για την αυθεντικοποίηση:"
+msgstr "Εισαγάγετε το κλειδί πρόσβασης για αυθεντικοποίηση:"
 
 #: blueman/main/applet/BluezAgent.py:204
 msgid "Pairing passkey for"
-msgstr "Φράση-κλειδί ζεύξης για"
+msgstr "Κλειδί πρόσβασης σύζευξης για"
 
 #: blueman/main/applet/BluezAgent.py:215
 msgid "Pairing PIN code for"
-msgstr "Κωδικός ΡΙΝ ζεύξης για"
+msgstr "Κωδικός ΡΙΝ σύζευξης για"
 
 #: blueman/main/applet/BluezAgent.py:228
 msgid "Pairing request for:"
-msgstr "Αίτημα ζεύξης για:"
+msgstr "Αίτημα σύζευξης για:"
 
 #: blueman/main/applet/BluezAgent.py:231
 msgid "Confirm value for authentication:"
-msgstr "Επιβεβαίωση τιμής για αυθεντικοποίηση:"
+msgstr "Επιβεβαιώστε την τιμή για αυθεντικοποίηση:"
 
 #: blueman/main/applet/BluezAgent.py:232
 msgid "Confirm"
@@ -571,7 +569,7 @@ msgstr "Άρνηση"
 
 #: blueman/main/applet/BluezAgent.py:260
 msgid "Authorization request for:"
-msgstr "Αίτημα εξουσιοδότησης απο:"
+msgstr "Αίτημα εξουσιοδότησης για:"
 
 #: blueman/main/applet/BluezAgent.py:260
 msgid "Service:"
@@ -587,20 +585,15 @@ msgid "Accept"
 msgstr "Αποδοχή"
 
 #: blueman/main/PluginManager.py:67
-#, fuzzy
-#| msgid ""
-#| "<b>An error has occured while loading a plugin. Please notify the "
-#| "developers with the content of this message to our </b>\n"
-#| "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgid ""
 "<b>An error has occurred while loading a plugin. Please notify the "
 "developers with the content of this message to our </b>\n"
 "<a href=\"http://github.com/blueman-project/blueman/issues\">website.</a>"
 msgstr ""
-"<b>Παρουσιάστηκε σφάλμα κατά τη φόρτωση μιας προσθήκης. Παρακαλείσθε να "
-"ενημερώσετε τους προγραμματιστές σχετικά με το περιεχόμενο αυτού του "
-"μηνύματος</b>\n"
-"<a href=\"http://github.com/blueman-project/blueman/issues\">Ιστοσελίδα</a>"
+"<b>Προέκυψε σφάλμα κατά τη φόρτωση ενός προσθέτου. Κοινοποιήστε στους "
+"προγραμματιστές το περιεχόμενο αυτού του μηνύματος</b>\n"
+"<a href=\"http://github.com/blueman-project/blueman/issues\">μέσω του "
+"ιστοτόπου μας.</a>"
 
 #: blueman/Functions.py:71
 msgid "Bluetooth Turned Off"
@@ -616,55 +609,51 @@ msgstr "Ενεργοποίηση Bluetooth"
 
 #: blueman/Functions.py:167
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: blueman/Functions.py:170
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: blueman/Functions.py:173
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 #: blueman/Functions.py:176
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #: blueman/gui/manager/ManagerMenu.py:48
 msgid "Device Manager"
-msgstr "Διαχειριστής Συσκευών"
+msgstr "Διαχείριση συσκευών"
 
 #: blueman/gui/manager/ManagerMenu.py:81
 #: blueman/plugins/applet/StandardItems.py:102
 msgid "Service Preferences"
-msgstr "Προτιμήσεις Υπηρεσίας"
+msgstr "Προτιμήσεις υπηρεσίας"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:123
 #: blueman/DeviceClass.py:205
-#, fuzzy
 msgid "Keyboard"
-msgstr "πληκτρολόγιο"
+msgstr "Πληκτρολόγιο"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:159 blueman/DeviceClass.py:127
 msgid "Combo"
-msgstr ""
+msgstr "Συνδυασμός"
 
 #: blueman/gui/manager/ManagerDeviceList.py:342
-#, fuzzy
-#| msgid "Rename device"
 msgid "Unnamed device"
-msgstr "Μετονομασία συσκευής"
+msgstr "Συσκευή χωρίς όνομα"
 
 #. translators: device class
 #: blueman/gui/manager/ManagerDeviceList.py:349
 #: blueman/gui/manager/ManagerDeviceList.py:378 blueman/DeviceClass.py:24
 #: blueman/DeviceClass.py:29 blueman/DeviceClass.py:46
 #: blueman/DeviceClass.py:80 blueman/DeviceClass.py:121
-#, fuzzy
 msgid "Uncategorized"
-msgstr "ακατηγοριοποίητο"
+msgstr "Χωρίς κατηγορία"
 
 #. https://github.com/python/mypy/issues/2608
 #: blueman/gui/manager/ManagerDeviceList.py:569
@@ -676,25 +665,20 @@ msgid "Connected"
 msgstr "Συνδεδεμένο"
 
 #: blueman/gui/manager/ManagerDeviceList.py:571
-#, fuzzy
-#| msgid "Trust"
 msgid "Trusted"
 msgstr "Έμπιστο"
 
 #: blueman/gui/manager/ManagerDeviceList.py:573
-#, fuzzy
-#| msgid "Pair"
 msgid "Paired"
-msgstr "Ζεύξη"
+msgstr "Συζευγμένο"
 
 #: blueman/gui/manager/ManagerDeviceList.py:575
 msgid "Blocked"
-msgstr ""
+msgstr "Αποκλεισμένο"
 
 #: blueman/gui/manager/ManagerDeviceList.py:597
-#, fuzzy
 msgid "<b>Connected</b>"
-msgstr "_<b>Σύνδεση</b>"
+msgstr "<b>Συνδεδεμένο</b>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:611
 msgid "Poor"
@@ -703,7 +687,7 @@ msgstr "Κακή"
 #: blueman/gui/manager/ManagerDeviceList.py:613
 #: blueman/gui/manager/ManagerDeviceList.py:632
 msgid "Sub-optimal"
-msgstr "Ημί-βέλτιστη"
+msgstr "Ανεπαρκής"
 
 #: blueman/gui/manager/ManagerDeviceList.py:615
 #: blueman/gui/manager/ManagerDeviceList.py:634
@@ -721,34 +705,34 @@ msgstr "Ιδιαίτερα ικανοποιητική"
 #: blueman/gui/manager/ManagerDeviceList.py:622
 #, python-format
 msgid "<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "<b>Ισχύς ληφθέντος σήματος: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:625
 #, python-format
 msgid "Received Signal Strength: %(rssi)u%% <i>(%(rssi_state)s)</i>"
-msgstr ""
+msgstr "Ισχύς ληφθέντος σήματος: %(rssi)u%% <i>(%(rssi_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:630
 msgid "Low"
-msgstr "Χαμηλή"
+msgstr "Χαμηλό"
 
 #: blueman/gui/manager/ManagerDeviceList.py:636
 msgid "High"
-msgstr "Υψηλή"
+msgstr "Υψηλό"
 
 #: blueman/gui/manager/ManagerDeviceList.py:638
 msgid "Very High"
-msgstr "Πολύ Υψηλή"
+msgstr "Πολύ υψηλό"
 
 #: blueman/gui/manager/ManagerDeviceList.py:641
 #, python-format
 msgid "<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "<b>Επίπεδο ισχύος μετάδοσης: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceList.py:644
 #, python-format
 msgid "Transmit Power Level: %(tpl)u%% <i>(%(tpl_state)s)</i>"
-msgstr ""
+msgstr "Επίπεδο ισχύος μετάδοσης: %(tpl)u%% <i>(%(tpl_state)s)</i>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:139
 msgid "Success!"
@@ -759,9 +743,8 @@ msgid "Failed"
 msgstr "Αποτυχία"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:150
-#, fuzzy
 msgid "Connecting…"
-msgstr "Γίνεται σύνδεση"
+msgstr "Σύνδεση…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:173
 msgid "Disconnection Failed: "
@@ -769,45 +752,40 @@ msgstr "Αποτυχία αποσύνδεσης: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:197
 msgid "No audio endpoints registered"
-msgstr ""
+msgstr "Δεν έχουν καταχωριστεί τελικά σημεία ήχου"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:200
 msgid "Input/output error"
-msgstr ""
+msgstr "Σφάλμα εισόδου/εξόδου"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:202
-#, fuzzy
 msgid "Device did not respond"
-msgstr "Εμφάνιση πληροφορίες συσκευής"
+msgstr "Η συσκευή δεν αποκρίθηκε"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:206
-#, fuzzy
-#| msgid "Unknown"
 msgid "Unknown error"
-msgstr "Άγνωστο"
+msgstr "Άγνωστο σφάλμα"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:211
 msgid "Connection Failed: "
-msgstr "Η σύνδεση απέτυχε: "
+msgstr "Αποτυχία σύνδεσης: "
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:297
-#, fuzzy
 msgid "<b>_Connect</b>"
-msgstr "_<b>Σύνδεση</b>"
+msgstr "<b>_Σύνδεση</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:299
 msgid "Connects auto connect profiles A2DP source, A2DP sink, and HID"
-msgstr "Συνδέει τα προφίλ αυτόματης σύνδεσης A2DP source, A2DP sink, και HID"
+msgstr ""
+"Συνδέει τα προφίλ αυτόματης σύνδεσης για συσκευές εισόδου/εξόδου A2DP και HID"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:303
-#, fuzzy
-#| msgid "_<b>Disconnect</b>"
 msgid "<b>_Disconnect</b>"
-msgstr "_<b>Αποσύνδεση</b>"
+msgstr "<b>_Αποσύνδεση</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:304
 msgid "Forcefully disconnect the device"
-msgstr "Εξαναγκαστική αποσύνδεση συσκευής"
+msgstr "Επιβολή αποσύνδεσης της συσκευής"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:320
 msgid "<b>Connect To:</b>"
@@ -818,59 +796,53 @@ msgid "<b>Disconnect:</b>"
 msgstr "<b>Αποσύνδεση:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:336
-#, fuzzy
 msgid "<b>Auto-connect:</b>"
-msgstr "<b>Αποσύνδεση:</b>"
+msgstr "<b>Αυτόματη σύνδεση:</b>"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:356
-#, fuzzy
 msgid "Send a _File…"
-msgstr "Αποστολή _Αρχείου..."
+msgstr "Αποστολή αρ_χείου…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:369
 msgid "_Pair"
-msgstr "_Ζευξη"
+msgstr "Σύ_ζευξη"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:379
 msgid "_Trust"
-msgstr "_Έμπιστο"
+msgstr "Σήμανση ως έμπισ_το"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:384
 msgid "_Untrust"
-msgstr "_Μη έμπιστη"
+msgstr "Σήμανση ως _μη έμπιστο"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:391
 msgid "_Block"
-msgstr ""
+msgstr "Αποκ_λεισμός"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:396
 msgid "_Unblock"
-msgstr ""
+msgstr "Άρση απο_κλεισμού"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:400
-#, fuzzy
-#| msgid "Send files to this device"
 msgid "Block/Unblock this device"
-msgstr "Αποστολή αρχείων σε αυτή την συσκευή"
+msgstr "Αποκλεισμός/άρση αποκλεισμού συσκευής"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:420
-#, fuzzy
 msgid "R_ename device…"
-msgstr "Μετονομασία συσκευής"
+msgstr "Μ_ετονομασία συσκευής…"
 
 #: blueman/gui/manager/ManagerDeviceMenu.py:429
-#, fuzzy
 msgid "_Remove…"
-msgstr "Αφαίρεση"
+msgstr "Α_φαίρεση…"
 
 #: blueman/gui/manager/ManagerProgressbar.py:44
 msgid "Cancel Operation"
-msgstr "Ακύρωση λειτουργίας"
+msgstr "Ακύρωση ενέργειας"
 
 #: blueman/gui/manager/ManagerToolbar.py:37
 #: blueman/gui/manager/ManagerToolbar.py:102
 msgid "Untrust"
-msgstr "Μη Έμπιστη"
+msgstr "Σήμανση ως μη έμπιστο"
 
 #: blueman/gui/DeviceSelectorDialog.py:16
 msgid "Select Device"
@@ -878,7 +850,7 @@ msgstr "Επιλογή συσκευής"
 
 #: blueman/gui/CommonUi.py:65
 msgid "Blueman is a GTK+ Bluetooth manager"
-msgstr "Το Blueman είναι ένα διαχειριστής Bluetooth στο GTK+"
+msgstr "Το Blueman είναι μια εφαρμογή διαχείρισης Bluetooth σε GTK+"
 
 #: blueman/gui/GsmSettings.py:25
 msgid "GSM Settings"
@@ -896,8 +868,8 @@ msgid ""
 "also unload <b>\"%(0)s\"</b>.\n"
 "Proceed?"
 msgstr ""
-"Το plugin <b>\"%(0)s\"</b> εξαρτάται από το <b>%(1)s</b>. Η αποφόρτωση του "
-"<b>%(1)s</b> θα έχει ως αποτέλεσμα την αποφόρτωση και του <b>\"%(0)s\"</b>.\n"
+"Το πρόσθετο <b>«%(0)s»</b> εξαρτάται από το <b>«%(1)s»</b>. Η απενεργοποίηση "
+"του <b>«%(1)s»</b> θα απενεργοποιήσει και το <b>«%(0)s»</b>.\n"
 "Θέλετε να συνεχίσετε;"
 
 #: blueman/gui/applet/PluginDialog.py:241
@@ -907,19 +879,17 @@ msgid ""
 "unload <b>%(0)s</b>.\n"
 "Proceed?"
 msgstr ""
-"Η πρόσθετη λειτουργία <b>%(0)s</b> ερχεται σε σύγκρουση με <b>%(1)s</b>. "
-"Όταν φορτώσετε το <b>%(1)s</b> θα αποφορτώσετε το <b>%(0)s</b>.\n"
+"Το πρόσθετο <b>«%(0)s»</b> έρχεται σε διένεξη με το <b>«%(1)s»</b>. Η "
+"ενεργοποίηση του <b>«%(1)s»</b> θα απενεργοποιήσει το <b>«%(0)s»</b>.\n"
 "Θέλετε να συνεχίσετε;"
 
 #: blueman/gui/applet/PluginDialog.py:267
-#, fuzzy
-#| msgid "Dependency issue"
 msgid "No dependencies"
-msgstr "Πρόβλημα εξάρτησης"
+msgstr "Καμία εξάρτηση"
 
 #: blueman/gui/applet/PluginDialog.py:272
 msgid "No conflicts"
-msgstr ""
+msgstr "Καμία διένεξη"
 
 #: blueman/gui/applet/PluginDialog.py:351
 msgid "Dependency issue"
@@ -930,1690 +900,1599 @@ msgid "Adapter selection"
 msgstr "Επιλογή προσαρμογέα"
 
 #: blueman/gui/DeviceSelectorWidget.py:45
-#, fuzzy
 msgid "Discovering…"
-msgstr "Ανιχνεύσιμο... %ss"
+msgstr "Ανακάλυψη…"
 
 #. translators: device class
 #: blueman/DeviceClass.py:6
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Διάφορα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:8
 msgid "Computer"
-msgstr ""
+msgstr "Υπολογιστής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:10
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:12
-#, fuzzy
 msgid "Access point"
-msgstr "Σημείο πρόσβασης δικτύου"
+msgstr "Σημείο πρόσβασης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:14
 msgid "Audio/video"
-msgstr ""
+msgstr "Συσκευή ήχου/βίντεο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:16
 msgid "Peripheral"
-msgstr ""
+msgstr "Περιφερειακά"
 
 #. translators: device class
 #: blueman/DeviceClass.py:18 blueman/DeviceClass.py:518
 msgid "Imaging"
-msgstr ""
+msgstr "Συσκευή απεικόνισης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:20 blueman/DeviceClass.py:41
 msgid "Wearable"
-msgstr ""
+msgstr "Φορετή συσκευή"
 
 #. translators: device class
 #: blueman/DeviceClass.py:22
 msgid "Toy"
-msgstr ""
+msgstr "Παιχνίδι"
 
 #. translators: device class
 #: blueman/DeviceClass.py:31
-#, fuzzy
 msgid "Desktop"
-msgstr "επιφάνεια εργασίας"
+msgstr "Επιτραπέζιος υπολογιστής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:33
-#, fuzzy
 msgid "Server"
-msgstr "διακομιστής"
+msgstr "Διακομιστής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:35 blueman/DeviceClass.py:173
-#, fuzzy
 msgid "Laptop"
-msgstr "φορητός υπολογιστής"
+msgstr "Φορητός υπολογιστής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:37
-#, fuzzy
 msgid "Handheld"
-msgstr "υπολογιστής παλάμης"
+msgstr "Φορητή κονσόλα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:39
 msgid "Palm"
-msgstr ""
+msgstr "Υπολογιστής παλάμης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:48
-#, fuzzy
 msgid "Cellular"
-msgstr "κινητό"
+msgstr "Κινητό τηλέφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:50
-#, fuzzy
 msgid "Cordless"
-msgstr "ασύρματο"
+msgstr "Ασύρματο τηλέφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:52
-#, fuzzy
 msgid "Smartphone"
-msgstr "έξυπνο τηλέφωνο"
+msgstr "Smartphone"
 
 #. translators: device class
 #: blueman/DeviceClass.py:54
-#, fuzzy
 msgid "Modem"
-msgstr "μόντεμ"
+msgstr "Μόντεμ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:56
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #. translators: device class
 #: blueman/DeviceClass.py:61
 msgid "Fully"
-msgstr ""
+msgstr "Πλήρως"
 
 #. translators: device class
 #: blueman/DeviceClass.py:63
 msgid "1–17 percent"
-msgstr ""
+msgstr "1–17 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:65
 msgid "17–33 percent"
-msgstr ""
+msgstr "17–33 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:67
 msgid "33–50 percent"
-msgstr ""
+msgstr "33–50 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:69
 msgid "50–67 percent"
-msgstr ""
+msgstr "50–67 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:71
 msgid "67–83 percent"
-msgstr ""
+msgstr "67–83 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:73
 msgid "83–99 percent"
-msgstr ""
+msgstr "83–99 τοις εκατό"
 
 #. translators: device class
 #: blueman/DeviceClass.py:75
-#, fuzzy
 msgid "Not available"
-msgstr "Το obexd δεν είναι διαθέσιμο"
+msgstr "Μη διαθέσιμο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:82 blueman/DeviceClass.py:417 blueman/Sdp.py:123
 #: blueman/Sdp.py:164
-#, fuzzy
 msgid "Headset"
-msgstr "σετ ακουστικών"
+msgstr "Ακουστικά με μικρόφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:84 blueman/Sdp.py:145
-#, fuzzy
 msgid "Handsfree"
-msgstr "ακουστικά"
+msgstr "Ακουστικά handsfree"
 
 #. translators: device class
 #: blueman/DeviceClass.py:88 blueman/DeviceClass.py:374
-#, fuzzy
 msgid "Microphone"
-msgstr "μικρόφωνο"
+msgstr "Μικρόφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:90
 msgid "Loudspeaker"
-msgstr ""
+msgstr "Μεγάφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:92 blueman/DeviceClass.py:418
 msgid "Headphones"
-msgstr ""
+msgstr "Ακουστικά κεφαλής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:94
 msgid "Portable audio"
-msgstr ""
+msgstr "Φορητή συσκευή ήχου"
 
 #. translators: device class
 #: blueman/DeviceClass.py:96
 msgid "Car audio"
-msgstr ""
+msgstr "Ηχοσύστημα αυτοκινήτου"
 
 #. translators: device class
 #: blueman/DeviceClass.py:98
 msgid "Set-top box"
-msgstr ""
+msgstr "Αποκωδικοποιητής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:100
 msgid "Hi-Fi audio"
-msgstr ""
+msgstr "Ήχος Hi-Fi"
 
 #. translators: device class
 #: blueman/DeviceClass.py:102
 msgid "VCR"
-msgstr ""
+msgstr "VCR"
 
 #. translators: device class
 #: blueman/DeviceClass.py:104
-#, fuzzy
 msgid "Video camera"
-msgstr "Πηγή ήχου"
+msgstr "Βιντεοκάμερα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:106
 msgid "Camcorder"
-msgstr ""
+msgstr "Βιντεοκάμερα χειρός"
 
 #. translators: device class
 #: blueman/DeviceClass.py:108
-#, fuzzy
 msgid "Video monitor"
-msgstr "Πηγή ήχου"
+msgstr "Οθόνη βίντεο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:110
 msgid "Video display and loudspeaker"
-msgstr ""
+msgstr "Οθόνη βίντεο και μεγάφωνο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:112
-#, fuzzy
 msgid "Video conferencing"
-msgstr "Πηγή ήχου"
+msgstr "Συσκευή τηλεδιάσκεψης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:116
 msgid "Gaming/Toy"
-msgstr ""
+msgstr "Συσκευή παιχνιδιού/παιχνίδι"
 
 #. translators: device class
 #: blueman/DeviceClass.py:125
-#, fuzzy
 msgid "Pointing"
-msgstr "συσκευή επίδειξης"
+msgstr "Συσκευή κατάδειξης"
 
 #. translators: device class
 #: blueman/DeviceClass.py:132
 msgid "Display"
-msgstr ""
+msgstr "Συσκευή προβολής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:134
 msgid "Camera"
-msgstr ""
+msgstr "Φωτογραφική μηχανή"
 
 #. translators: device class
 #: blueman/DeviceClass.py:136
 msgid "Scanner"
-msgstr ""
+msgstr "Σαρωτής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:138
 msgid "Printer"
-msgstr ""
+msgstr "Εκτυπωτής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:143
 msgid "Wrist watch"
-msgstr ""
+msgstr "Ρολόι χειρός"
 
 #. translators: device class
 #: blueman/DeviceClass.py:145
 msgid "Pager"
-msgstr ""
+msgstr "Βομβητής"
 
 #. translators: device class
 #: blueman/DeviceClass.py:147
 msgid "Jacket"
-msgstr ""
+msgstr "Ζακέτα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:149
 msgid "Helmet"
-msgstr ""
+msgstr "Κράνος"
 
 #. translators: device class
 #: blueman/DeviceClass.py:151
 msgid "Glasses"
-msgstr ""
+msgstr "Γυαλιά"
 
 #. translators: device class
 #: blueman/DeviceClass.py:156
 msgid "Robot"
-msgstr ""
+msgstr "Ρομπότ"
 
 #. translators: device class
 #: blueman/DeviceClass.py:158
 msgid "Vehicle"
-msgstr ""
+msgstr "Όχημα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:160
 msgid "Doll"
-msgstr ""
+msgstr "Κούκλα"
 
 #. translators: device class
 #: blueman/DeviceClass.py:162
 msgid "Controller"
-msgstr ""
+msgstr "Χειριστήριο"
 
 #. translators: device class
 #: blueman/DeviceClass.py:164
 msgid "Game"
-msgstr ""
+msgstr "Ηλεκτρονικό παιχνίδι"
 
 #: blueman/DeviceClass.py:168
-#, fuzzy
 msgid "Generic Unknown"
-msgstr "Σύνδεση"
+msgstr "Γενική άγνωστη συσκευή"
 
 #: blueman/DeviceClass.py:169
-#, fuzzy
 msgid "Generic Phone"
-msgstr "Σύνδεση"
+msgstr "Γενικό τηλέφωνο"
 
 #: blueman/DeviceClass.py:170
-#, fuzzy
 msgid "Generic Computer"
-msgstr "Σύνδεση"
+msgstr "Γενικός υπολογιστής"
 
 #: blueman/DeviceClass.py:171
 msgid "Desktop Workstation"
-msgstr ""
+msgstr "Επιτραπέζιος σταθμός εργασίας"
 
 #: blueman/DeviceClass.py:172
-#, fuzzy
 msgid "Server-class Computer"
-msgstr "Σύνδεση"
+msgstr "Υπολογιστής κατηγορίας διακομιστή"
 
 #: blueman/DeviceClass.py:174
 msgid "Handheld PC/PDA (clamshell)"
-msgstr ""
+msgstr "Υπολογιστής χειρός/PDA (αναδιπλούμενο)"
 
 #: blueman/DeviceClass.py:175
 msgid "Palm-size PC/PDA"
-msgstr ""
+msgstr "Υπολογιστής παλάμης/PDA"
 
 #: blueman/DeviceClass.py:176
 msgid "Wearable computer (watch size)"
-msgstr ""
+msgstr "Φορετός υπολογιστής (μεγέθους ρολογιού)"
 
 #: blueman/DeviceClass.py:177
 msgid "Tablet"
-msgstr ""
+msgstr "Tablet"
 
 #: blueman/DeviceClass.py:178
 msgid "Docking Station"
-msgstr ""
+msgstr "Σταθμός σύνδεσης"
 
 #: blueman/DeviceClass.py:179
 msgid "All in One"
-msgstr ""
+msgstr "Υπολογιστής All-in-One"
 
 #: blueman/DeviceClass.py:180
-#, fuzzy
 msgid "Blade Server"
-msgstr "διακομιστής"
+msgstr "Διακομιστής τύπου blade"
 
 #: blueman/DeviceClass.py:181
 msgid "Convertible"
-msgstr ""
+msgstr "Κάμπριο"
 
 #: blueman/DeviceClass.py:182
 msgid "Detachable"
-msgstr ""
+msgstr "Αποσπώμενο"
 
 #: blueman/DeviceClass.py:183
 msgid "IoT Gateway"
-msgstr ""
+msgstr "Πύλη IoT"
 
 #: blueman/DeviceClass.py:184
 msgid "Mini PC"
-msgstr ""
+msgstr "Mini PC"
 
 #: blueman/DeviceClass.py:185
 msgid "Stick PC"
-msgstr ""
+msgstr "Stick PC"
 
 #: blueman/DeviceClass.py:186
-#, fuzzy
 msgid "Generic Watch"
-msgstr "Σύνδεση"
+msgstr "Γενικό ρολόι χειρός"
 
 #: blueman/DeviceClass.py:187
 msgid "Sports Watch"
-msgstr ""
+msgstr "Αθλητικό ρολόι"
 
 #: blueman/DeviceClass.py:188
-#, fuzzy
 msgid "Smartwatch"
-msgstr "έξυπνο τηλέφωνο"
+msgstr "Smartwatch"
 
 #: blueman/DeviceClass.py:189
-#, fuzzy
 msgid "Generic Clock"
-msgstr "Σύνδεση"
+msgstr "Γενικό ρολόι"
 
 #: blueman/DeviceClass.py:190
-#, fuzzy
 msgid "Generic Display"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική οθόνη"
 
 #: blueman/DeviceClass.py:191
-#, fuzzy
 msgid "Generic Remote Control"
-msgstr "Σύνδεση"
+msgstr "Γενικό τηλεχειριστήριο"
 
 #: blueman/DeviceClass.py:192
-#, fuzzy
 msgid "Generic Eye-glasses"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικά γυαλιά"
 
 #: blueman/DeviceClass.py:193
-#, fuzzy
 msgid "Generic Tag"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική ετικέτα"
 
 #: blueman/DeviceClass.py:194
-#, fuzzy
 msgid "Generic Keyring"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική κλειδοθήκη"
 
 #: blueman/DeviceClass.py:195
-#, fuzzy
 msgid "Generic Media Player"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική συσκευή αναπαραγωγής πολυμέσων"
 
 #: blueman/DeviceClass.py:196
-#, fuzzy
 msgid "Generic Barcode Scanner"
-msgstr "Σύνδεση"
+msgstr "Γενικός σαρωτής γραμμωτού κώδικα"
 
 #: blueman/DeviceClass.py:197
-#, fuzzy
 msgid "Generic Thermometer"
-msgstr "Σύνδεση"
+msgstr "Γενικό θερμόμετρο"
 
 #: blueman/DeviceClass.py:198
-#, fuzzy
 msgid "Ear Thermometer"
-msgstr "Σύνδεση"
+msgstr "Θερμόμετρο αυτιού"
 
 #: blueman/DeviceClass.py:199
-#, fuzzy
 msgid "Generic Heart Rate Sensor"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικός αισθητήρας καρδιακών παλμών"
 
 #: blueman/DeviceClass.py:200
 msgid "Heart Rate Belt"
-msgstr ""
+msgstr "Ζώνη καρδιακών παλμών"
 
 #: blueman/DeviceClass.py:201
 msgid "Generic Blood Pressure"
-msgstr ""
+msgstr "Γενικό πιεσόμετρο"
 
 #: blueman/DeviceClass.py:202
 msgid "Arm Blood Pressure"
-msgstr ""
+msgstr "Πιεσόμετρο βραχίονα"
 
 #: blueman/DeviceClass.py:203
 msgid "Wrist Blood Pressure"
-msgstr ""
+msgstr "Πιεσόμετρο καρπού"
 
 #: blueman/DeviceClass.py:204
 msgid "Generic Human Interface Device"
-msgstr ""
+msgstr "Γενική συσκευή ανθρώπινης διεπαφής"
 
 #: blueman/DeviceClass.py:206
 msgid "Mouse"
-msgstr ""
+msgstr "Ποντίκι"
 
 #: blueman/DeviceClass.py:207
 msgid "Joystick"
-msgstr ""
+msgstr "Χειριστήριο μοχλού"
 
 #: blueman/DeviceClass.py:208
 msgid "Gamepad"
-msgstr ""
+msgstr "Χειριστήριο παιχνιδιών"
 
 #: blueman/DeviceClass.py:209
 msgid "Digitizer Tablet"
-msgstr ""
+msgstr "Ταμπλέτα ψηφιοποίησης"
 
 #: blueman/DeviceClass.py:210
 msgid "Card Reader"
-msgstr ""
+msgstr "Συσκευή ανάγνωσης καρτών"
 
 #: blueman/DeviceClass.py:211
 msgid "Digital Pen"
-msgstr ""
+msgstr "Ψηφιακή γραφίδα"
 
 #: blueman/DeviceClass.py:212
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Σαρωτής γραμμωτού κώδικα"
 
 #: blueman/DeviceClass.py:213
 msgid "Touchpad"
-msgstr ""
+msgstr "Επιφάνεια αφής"
 
 #: blueman/DeviceClass.py:214
 msgid "Presentation Remote"
-msgstr ""
+msgstr "Τηλεχειριστήριο παρουσιάσεων"
 
 #: blueman/DeviceClass.py:215
-#, fuzzy
 msgid "Generic Glucose Meter"
-msgstr "Σύνδεση"
+msgstr "Γενικός μετρητής γλυκόζης"
 
 #: blueman/DeviceClass.py:216
-#, fuzzy
 msgid "Generic Running Walking Sensor"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικός αισθητήρας τρεξίματος/βάδισης"
 
 #: blueman/DeviceClass.py:217
 msgid "In-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Αισθητήρας τρεξίματος/βάδισης εντός υποδήματος"
 
 #: blueman/DeviceClass.py:218
 msgid "On-Shoe Running Walking Sensor"
-msgstr ""
+msgstr "Αισθητήρας τρεξίματος/βάδισης επί του υποδήματος"
 
 #: blueman/DeviceClass.py:219
 msgid "On-Hip Running Walking Sensor"
-msgstr ""
+msgstr "Αισθητήρας τρεξίματος/βάδισης επί ισχίου"
 
 #: blueman/DeviceClass.py:220
-#, fuzzy
 msgid "Generic Cycling"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική συσκευή ποδηλασίας"
 
 #: blueman/DeviceClass.py:221
-#, fuzzy
 msgid "Cycling Computer"
-msgstr "Σύνδεση"
+msgstr "Υπολογιστής ποδηλασίας"
 
 #: blueman/DeviceClass.py:222
 msgid "Speed Sensor"
-msgstr ""
+msgstr "Αισθητήρας ταχύτητας"
 
 #: blueman/DeviceClass.py:223
 msgid "Cadence Sensor"
-msgstr ""
+msgstr "Αισθητήρας ρυθμού πεταλιάς"
 
 #: blueman/DeviceClass.py:224
 msgid "Power Sensor"
-msgstr ""
+msgstr "Αισθητήρας ισχύος"
 
 #: blueman/DeviceClass.py:225
 msgid "Speed and Cadence Sensor"
-msgstr ""
+msgstr "Αισθητήρας ταχύτητας και ρυθμού πεταλιάς"
 
 #: blueman/DeviceClass.py:226
-#, fuzzy
 msgid "Generic Control Device"
-msgstr "Σύνδεση"
+msgstr "Γενική συσκευή ελέγχου"
 
 #: blueman/DeviceClass.py:227
 msgid "Switch"
-msgstr ""
+msgstr "Διακόπτης"
 
 #: blueman/DeviceClass.py:228
 msgid "Multi-switch"
-msgstr ""
+msgstr "Πολυδιακόπτης"
 
 #: blueman/DeviceClass.py:229
 msgid "Button"
-msgstr ""
+msgstr "Κουμπί"
 
 #: blueman/DeviceClass.py:230
 msgid "Slider"
-msgstr ""
+msgstr "Ρυθμιστικό"
 
 #: blueman/DeviceClass.py:231
 msgid "Rotary Switch"
-msgstr ""
+msgstr "Περιστροφικός διακόπτης"
 
 #: blueman/DeviceClass.py:232
 msgid "Touch Panel"
-msgstr ""
+msgstr "Πάνελ αφής"
 
 #: blueman/DeviceClass.py:233
 msgid "Single Switch"
-msgstr ""
+msgstr "Μονός διακόπτης"
 
 #: blueman/DeviceClass.py:234
 msgid "Double Switch"
-msgstr ""
+msgstr "Διπλός διακόπτης"
 
 #: blueman/DeviceClass.py:235
 msgid "Triple Switch"
-msgstr ""
+msgstr "Τριπλός διακόπτης"
 
 #: blueman/DeviceClass.py:236
-#, fuzzy
 msgid "Battery Switch"
-msgstr "Τοπικές υπηρεσίες"
+msgstr "Διακόπτης μπαταρίας"
 
 #: blueman/DeviceClass.py:237
 msgid "Energy Harvesting Switch"
-msgstr ""
+msgstr "Διακόπτης συλλογής ενέργειας"
 
 #: blueman/DeviceClass.py:238
 msgid "Push Button"
-msgstr ""
+msgstr "Κουμπί πίεσης"
 
 #: blueman/DeviceClass.py:239
 msgid "Dial"
-msgstr ""
+msgstr "Καντράν"
 
 #: blueman/DeviceClass.py:240
-#, fuzzy
 msgid "Generic Network Device"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική συσκευή δικτύου"
 
 #: blueman/DeviceClass.py:241
-#, fuzzy
 msgid "Access Point"
-msgstr "Σημείο πρόσβασης δικτύου"
+msgstr "Σημείο πρόσβασης"
 
 #: blueman/DeviceClass.py:242
-#, fuzzy
-#| msgid "Device"
 msgid "Mesh Device"
-msgstr "Συσκευή"
+msgstr "Συσκευή mesh"
 
 #: blueman/DeviceClass.py:243
 msgid "Mesh Network Proxy"
-msgstr ""
+msgstr "Διακομιστής μεσολάβησης δικτύου mesh"
 
 #: blueman/DeviceClass.py:244
-#, fuzzy
 msgid "Generic Sensor"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικός αισθητήρας"
 
 #: blueman/DeviceClass.py:245
 msgid "Motion Sensor"
-msgstr ""
+msgstr "Αισθητήρας κίνησης"
 
 #: blueman/DeviceClass.py:246
 msgid "Air quality Sensor"
-msgstr ""
+msgstr "Αισθητήρας ποιότητας αέρα"
 
 #: blueman/DeviceClass.py:247
-#, fuzzy
 msgid "Temperature Sensor"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Αισθητήρας θερμοκρασίας"
 
 #: blueman/DeviceClass.py:248
 msgid "Humidity Sensor"
-msgstr ""
+msgstr "Αισθητήρας υγρασίας"
 
 #: blueman/DeviceClass.py:249
 msgid "Leak Sensor"
-msgstr ""
+msgstr "Αισθητήρας διαρροής"
 
 #: blueman/DeviceClass.py:250
 msgid "Smoke Sensor"
-msgstr ""
+msgstr "Αισθητήρας καπνού"
 
 #: blueman/DeviceClass.py:251
 msgid "Occupancy Sensor"
-msgstr ""
+msgstr "Αισθητήρας πληρότητας χώρου"
 
 #: blueman/DeviceClass.py:252
 msgid "Contact Sensor"
-msgstr ""
+msgstr "Αισθητήρας επαφής"
 
 #: blueman/DeviceClass.py:253
 msgid "Carbon Monoxide Sensor"
-msgstr ""
+msgstr "Αισθητήρας μονοξειδίου του άνθρακα"
 
 #: blueman/DeviceClass.py:254
 msgid "Carbon Dioxide Sensor"
-msgstr ""
+msgstr "Αισθητήρας διοξειδίου του άνθρακα"
 
 #: blueman/DeviceClass.py:255
 msgid "Ambient Light Sensor"
-msgstr ""
+msgstr "Αισθητήρας φωτισμού περιβάλλοντος"
 
 #: blueman/DeviceClass.py:256
 msgid "Energy Sensor"
-msgstr ""
+msgstr "Αισθητήρας ενέργειας"
 
 #: blueman/DeviceClass.py:257
 msgid "Color Light Sensor"
-msgstr ""
+msgstr "Αισθητήρας χρωματικού φωτός"
 
 #: blueman/DeviceClass.py:258
 msgid "Rain Sensor"
-msgstr ""
+msgstr "Αισθητήρας βροχής"
 
 #: blueman/DeviceClass.py:259
-#, fuzzy
-#| msgid "File Sender"
 msgid "Fire Sensor"
-msgstr "Αποστολέας αρχείων"
+msgstr "Αισθητήρας πυρός"
 
 #: blueman/DeviceClass.py:260
 msgid "Wind Sensor"
-msgstr ""
+msgstr "Αισθητήρας ανέμου"
 
 #: blueman/DeviceClass.py:261
 msgid "Proximity Sensor"
-msgstr ""
+msgstr "Αισθητήρας εγγύτητας"
 
 #: blueman/DeviceClass.py:262
 msgid "Multi-Sensor"
-msgstr ""
+msgstr "Πολυαισθητήρας"
 
 #: blueman/DeviceClass.py:263
 msgid "Flush Mounted Sensor"
-msgstr ""
+msgstr "Χωνευτός αισθητήρας"
 
 #: blueman/DeviceClass.py:264
 msgid "Ceiling Mounted Sensor"
-msgstr ""
+msgstr "Αισθητήρας οροφής"
 
 #: blueman/DeviceClass.py:265
 msgid "Wall Mounted Sensor"
-msgstr ""
+msgstr "Αισθητήρας τοίχου"
 
 #: blueman/DeviceClass.py:266
 msgid "Multisensor"
-msgstr ""
+msgstr "Πολυαισθητήρας"
 
 #: blueman/DeviceClass.py:267
 msgid "Energy Meter"
-msgstr ""
+msgstr "Μετρητής ενέργειας"
 
 #: blueman/DeviceClass.py:268
 msgid "Flame Detector"
-msgstr ""
+msgstr "Ανιχνευτής φλόγας"
 
 #: blueman/DeviceClass.py:269
 msgid "Vehicle Tire Pressure Sensor"
-msgstr ""
+msgstr "Αισθητήρας πίεσης ελαστικών οχήματος"
 
 #: blueman/DeviceClass.py:270
 msgid "Generic Light Fixtures"
-msgstr ""
+msgstr "Γενικά φωτιστικά σώματα"
 
 #: blueman/DeviceClass.py:271
 msgid "Wall Light"
-msgstr ""
+msgstr "Φωτιστικό τοίχου"
 
 #: blueman/DeviceClass.py:272
 msgid "Ceiling Light"
-msgstr ""
+msgstr "Φωτιστικό οροφής"
 
 #: blueman/DeviceClass.py:273
 msgid "Floor Light"
-msgstr ""
+msgstr "Φωτιστικό δαπέδου"
 
 #: blueman/DeviceClass.py:274
 msgid "Cabinet Light"
-msgstr ""
+msgstr "Φωτιστικό ντουλάπας"
 
 #: blueman/DeviceClass.py:275
 msgid "Desk Light"
-msgstr ""
+msgstr "Φωτιστικό γραφείου"
 
 #: blueman/DeviceClass.py:276
 msgid "Troffer Light"
-msgstr ""
+msgstr "Φωτιστικό τύπου Troffer"
 
 #: blueman/DeviceClass.py:277
 msgid "Pendant Light"
-msgstr ""
+msgstr "Κρεμαστό φωτιστικό"
 
 #: blueman/DeviceClass.py:278
 msgid "In-ground Light"
-msgstr ""
+msgstr "Φωτιστικό εδάφους"
 
 #: blueman/DeviceClass.py:279
 msgid "Flood Light"
-msgstr ""
+msgstr "Προβολέας φωτισμού"
 
 #: blueman/DeviceClass.py:280
 msgid "Underwater Light"
-msgstr ""
+msgstr "Υποβρύχιο φωτιστικό"
 
 #: blueman/DeviceClass.py:281
 msgid "Bollard with Light"
-msgstr ""
+msgstr "Φωτιζόμενο κολωνάκι"
 
 #: blueman/DeviceClass.py:282
 msgid "Pathway Light"
-msgstr ""
+msgstr "Φωτιστικό διαδρόμου"
 
 #: blueman/DeviceClass.py:283
 msgid "Garden Light"
-msgstr ""
+msgstr "Φωτιστικό κήπου"
 
 #: blueman/DeviceClass.py:284
 msgid "Pole-top Light"
-msgstr ""
+msgstr "Φωτιστικό κορυφής ιστού"
 
 #: blueman/DeviceClass.py:285
 msgid "Spotlight"
-msgstr ""
+msgstr "Σποτ"
 
 #: blueman/DeviceClass.py:286
 msgid "Linear Light"
-msgstr ""
+msgstr "Γραμμικό φωτιστικό"
 
 #: blueman/DeviceClass.py:287
 msgid "Street Light"
-msgstr ""
+msgstr "Φωτιστικό δρόμου"
 
 #: blueman/DeviceClass.py:288
 msgid "Shelves Light"
-msgstr ""
+msgstr "Φωτιστικό ραφιών"
 
 #: blueman/DeviceClass.py:289
 msgid "Bay Light"
-msgstr ""
+msgstr "Φωτιστικό μεγάλης κλίμακας"
 
 #: blueman/DeviceClass.py:290
 msgid "Emergency Exit Light"
-msgstr ""
+msgstr "Φωτιστικό σήμανσης εξόδου κινδύνου"
 
 #: blueman/DeviceClass.py:291
 msgid "Light Controller"
-msgstr ""
+msgstr "Ελεγκτής φωτισμού"
 
 #: blueman/DeviceClass.py:292
 msgid "Light Driver"
-msgstr ""
+msgstr "Οδηγός φωτισμού"
 
 #: blueman/DeviceClass.py:293
 msgid "Bulb"
-msgstr ""
+msgstr "Λαμπτήρας"
 
 #: blueman/DeviceClass.py:294
 msgid "Low-bay Light"
-msgstr ""
+msgstr "Φωτιστικό χαμηλής οροφής"
 
 #: blueman/DeviceClass.py:295
 msgid "High-bay Light"
-msgstr ""
+msgstr "Φωτιστικό υψηλής οροφής"
 
 #: blueman/DeviceClass.py:296
-#, fuzzy
 msgid "Generic Fan"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικός ανεμιστήρας"
 
 #: blueman/DeviceClass.py:297
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Ανεμιστήρας οροφής"
 
 #: blueman/DeviceClass.py:298
 msgid "Axial Fan"
-msgstr ""
+msgstr "Αξονικός ανεμιστήρας"
 
 #: blueman/DeviceClass.py:299
 msgid "Exhaust Fan"
-msgstr ""
+msgstr "Ανεμιστήρας απαγωγής"
 
 #: blueman/DeviceClass.py:300
 msgid "Pedestal Fan"
-msgstr ""
+msgstr "Ανεμιστήρας δαπέδου"
 
 #: blueman/DeviceClass.py:301
 msgid "Desk Fan"
-msgstr ""
+msgstr "Ανεμιστήρας γραφείου"
 
 #: blueman/DeviceClass.py:302
 msgid "Wall Fan"
-msgstr ""
+msgstr "Ανεμιστήρας τοίχου"
 
 #: blueman/DeviceClass.py:303
-#, fuzzy
 msgid "Generic HVAC"
-msgstr "Σύνδεση"
+msgstr "Γενική συσκευή θέρμανσης, εξαερισμού και κλιματισμού (HVAC)"
 
 #: blueman/DeviceClass.py:304
 msgid "Thermostat"
-msgstr ""
+msgstr "Θερμοστάτης"
 
 #: blueman/DeviceClass.py:305
 msgid "Humidifier"
-msgstr ""
+msgstr "Υγραντήρας"
 
 #: blueman/DeviceClass.py:306
 msgid "De-humidifier"
-msgstr ""
+msgstr "Αφυγραντήρας"
 
 #: blueman/DeviceClass.py:307
 msgid "Heater"
-msgstr ""
+msgstr "Θερμαντικό σώμα"
 
 #: blueman/DeviceClass.py:308 blueman/DeviceClass.py:318
 msgid "Radiator"
-msgstr ""
+msgstr "Καλοριφέρ"
 
 #: blueman/DeviceClass.py:309 blueman/DeviceClass.py:319
 msgid "Boiler"
-msgstr ""
+msgstr "Λέβητας"
 
 #: blueman/DeviceClass.py:310 blueman/DeviceClass.py:320
 msgid "Heat Pump"
-msgstr ""
+msgstr "Αντλία θερμότητας"
 
 #: blueman/DeviceClass.py:311 blueman/DeviceClass.py:321
 msgid "Infrared Heater"
-msgstr ""
+msgstr "Θερμαντικό σώμα υπέρυθρων"
 
 #: blueman/DeviceClass.py:312 blueman/DeviceClass.py:322
 msgid "Radiant Panel Heater"
-msgstr ""
+msgstr "Θερμαντικό πάνελ"
 
 #: blueman/DeviceClass.py:313 blueman/DeviceClass.py:323
 msgid "Fan Heater"
-msgstr ""
+msgstr "Αερόθερμο"
 
 #: blueman/DeviceClass.py:314 blueman/DeviceClass.py:324
 msgid "Air Curtain"
-msgstr ""
+msgstr "Αεροκουρτίνα"
 
 #: blueman/DeviceClass.py:315
-#, fuzzy
 msgid "Generic Air Conditioning"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική συσκευή κλιματισμού"
 
 #: blueman/DeviceClass.py:316
-#, fuzzy
 msgid "Generic Humidifier"
-msgstr "Σύνδεση"
+msgstr "Γενικός υγραντήρας"
 
 #: blueman/DeviceClass.py:317
-#, fuzzy
 msgid "Generic Heating"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική συσκευή θέρμανσης"
 
 #: blueman/DeviceClass.py:325
-#, fuzzy
 msgid "Generic Access Control"
-msgstr "Σύνδεση"
+msgstr "Γενική συσκευή ελέγχου πρόσβασης"
 
 #: blueman/DeviceClass.py:326
-#, fuzzy
 msgid "Access Door"
-msgstr "Σημείο πρόσβασης δικτύου"
+msgstr "Πόρτα πρόσβασης"
 
 #: blueman/DeviceClass.py:327
 msgid "Garage Door"
-msgstr ""
+msgstr "Γκαραζόπορτα"
 
 #: blueman/DeviceClass.py:328
 msgid "Emergency Exit Door"
-msgstr ""
+msgstr "Πόρτα εξόδου κινδύνου"
 
 #: blueman/DeviceClass.py:329
-#, fuzzy
 msgid "Access Lock"
-msgstr "Σημείο πρόσβασης δικτύου"
+msgstr "Κλειδαριά πρόσβασης"
 
 #: blueman/DeviceClass.py:330
 msgid "Elevator"
-msgstr ""
+msgstr "Ανελκυστήρας"
 
 #: blueman/DeviceClass.py:331
 msgid "Window"
-msgstr ""
+msgstr "Παράθυρο"
 
 #: blueman/DeviceClass.py:332
 msgid "Entrance Gate"
-msgstr ""
+msgstr "Πύλη εισόδου"
 
 #: blueman/DeviceClass.py:333
 msgid "Door Lock"
-msgstr ""
+msgstr "Κλειδαριά πόρτας"
 
 #: blueman/DeviceClass.py:334
 msgid "Locker"
-msgstr ""
+msgstr "Θυρίδα"
 
 #: blueman/DeviceClass.py:335
 msgid "Generic Motorized Device"
-msgstr ""
+msgstr "Γενική μηχανοκίνητη συσκευή"
 
 #: blueman/DeviceClass.py:336
 msgid "Motorized Gate"
-msgstr ""
+msgstr "Μηχανοκίνητη πύλη"
 
 #: blueman/DeviceClass.py:337
 msgid "Awning"
-msgstr ""
+msgstr "Τέντα"
 
 #: blueman/DeviceClass.py:338
 msgid "Blinds or Shades"
-msgstr ""
+msgstr "Στόρια ή ρολά σκίασης"
 
 #: blueman/DeviceClass.py:339
 msgid "Curtains"
-msgstr ""
+msgstr "Κουρτίνες"
 
 #: blueman/DeviceClass.py:340
 msgid "Screen"
-msgstr ""
+msgstr "Σήτα"
 
 #: blueman/DeviceClass.py:341
-#, fuzzy
 msgid "Generic Power Device"
-msgstr "Σύνδεση"
+msgstr "Γενική συσκευή τροφοδοσίας"
 
 #: blueman/DeviceClass.py:342
 msgid "Power Outlet"
-msgstr ""
+msgstr "Πρίζα ρεύματος"
 
 #: blueman/DeviceClass.py:343
 msgid "Power Strip"
-msgstr ""
+msgstr "Πολύπριζο"
 
 #: blueman/DeviceClass.py:344
-#, fuzzy
-#| msgid "Plugins"
 msgid "Plug"
-msgstr "Πρόσθετα"
+msgstr "Πρίζα"
 
 #: blueman/DeviceClass.py:345
 msgid "Power Supply"
-msgstr ""
+msgstr "Τροφοδοτικό ισχύος"
 
 #: blueman/DeviceClass.py:346
 msgid "LED Driver"
-msgstr ""
+msgstr "Οδηγός LED"
 
 #: blueman/DeviceClass.py:347
 msgid "Fluorescent Lamp Gear"
-msgstr ""
+msgstr "Εξοπλισμός λαμπτήρων φθορισμού"
 
 #: blueman/DeviceClass.py:348
 msgid "HID Lamp Gear"
-msgstr ""
+msgstr "Εξοπλισμός λαμπτήρων HID"
 
 #: blueman/DeviceClass.py:349
 msgid "Charge Case"
-msgstr ""
+msgstr "Θήκη φόρτισης"
 
 #: blueman/DeviceClass.py:350
 msgid "Power Bank"
-msgstr ""
+msgstr "Powerbank"
 
 #: blueman/DeviceClass.py:351
-#, fuzzy
 msgid "Generic Light Source"
-msgstr "Σύνδεση"
+msgstr "Γενική πηγή φωτός"
 
 #: blueman/DeviceClass.py:352
 msgid "Incandescent Light Bulb"
-msgstr ""
+msgstr "Λαμπτήρας πυρακτώσεως"
 
 #: blueman/DeviceClass.py:353
 msgid "LED Lamp"
-msgstr ""
+msgstr "Λαμπτήρας LED"
 
 #: blueman/DeviceClass.py:354
 msgid "HID Lamp"
-msgstr ""
+msgstr "Λαμπτήρας HID"
 
 #: blueman/DeviceClass.py:355
 msgid "Fluorescent Lamp"
-msgstr ""
+msgstr "Λαμπτήρας φθορισμού"
 
 #: blueman/DeviceClass.py:356
 msgid "LED Array"
-msgstr ""
+msgstr "Συστοιχία LED"
 
 #: blueman/DeviceClass.py:357
 msgid "Multi-Color LED Array"
-msgstr ""
+msgstr "Συστοιχία πολύχρωμων LED"
 
 #: blueman/DeviceClass.py:358
 msgid "Low voltage halogen"
-msgstr ""
+msgstr "Λαμπτήρας αλογόνου χαμηλής τάσης"
 
 #: blueman/DeviceClass.py:359
 msgid "Organic light emitting diode (OLED)"
-msgstr ""
+msgstr "Οργανική δίοδος εκπομπής φωτός (OLED)"
 
 #: blueman/DeviceClass.py:360
-#, fuzzy
 msgid "Generic Window Covering"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενικό κάλυμμα παραθύρου"
 
 #: blueman/DeviceClass.py:361
 msgid "Window Shades"
-msgstr ""
+msgstr "Ρολά σκίασης παραθύρου"
 
 #: blueman/DeviceClass.py:362
 msgid "Window Blinds"
-msgstr ""
+msgstr "Στόρια παραθύρου"
 
 #: blueman/DeviceClass.py:363
 msgid "Window Awning"
-msgstr ""
+msgstr "Τέντα παραθύρου"
 
 #: blueman/DeviceClass.py:364
 msgid "Window Curtain"
-msgstr ""
+msgstr "Κουρτίνα παραθύρου"
 
 #: blueman/DeviceClass.py:365
 msgid "Exterior Shutter"
-msgstr ""
+msgstr "Εξωτερικό παντζούρι"
 
 #: blueman/DeviceClass.py:366
 msgid "Exterior Screen"
-msgstr ""
+msgstr "Εξωτερική σήτα"
 
 #: blueman/DeviceClass.py:367
-#, fuzzy
-#| msgid "Audio Sink"
 msgid "Generic Audio Sink"
-msgstr "Προορισμός Ήχου"
+msgstr "Γενική συσκευή εξόδου ήχου"
 
 #: blueman/DeviceClass.py:368
 msgid "Standalone Speaker"
-msgstr ""
+msgstr "Αυτόνομο ηχείο"
 
 #: blueman/DeviceClass.py:369
 msgid "Soundbar"
-msgstr ""
+msgstr "Ηχόμπαρα"
 
 #: blueman/DeviceClass.py:370
 msgid "Bookshelf Speaker"
-msgstr ""
+msgstr "Ηχείο βιβλιοθήκης"
 
 #: blueman/DeviceClass.py:371
 msgid "Standmounted Speaker"
-msgstr ""
+msgstr "Ηχείο βάσης"
 
 #: blueman/DeviceClass.py:372
-#, fuzzy
 msgid "Speakerphone"
-msgstr "έξυπνο τηλέφωνο"
+msgstr "Συσκευή ανοικτής ακρόασης"
 
 #: blueman/DeviceClass.py:373
-#, fuzzy
-#| msgid "Audio Source"
 msgid "Generic Audio Source"
-msgstr "Πηγή ήχου"
+msgstr "Γενική πηγή ήχου"
 
 #: blueman/DeviceClass.py:375
 msgid "Alarm"
-msgstr ""
+msgstr "Ξυπνητήρι"
 
 #: blueman/DeviceClass.py:376
 msgid "Bell"
-msgstr ""
+msgstr "Κουδούνι"
 
 #: blueman/DeviceClass.py:377
 msgid "Horn"
-msgstr ""
+msgstr "Κόρνα"
 
 #: blueman/DeviceClass.py:378
-#, fuzzy
-#| msgid "Pair Device"
 msgid "Broadcasting Device"
-msgstr "Ταίριασμα συσκευής"
+msgstr "Συσκευή εκπομπής"
 
 #: blueman/DeviceClass.py:379
-#, fuzzy
-#| msgid "Service:"
 msgid "Service Desk"
-msgstr "Υπηρεσία:"
+msgstr "Υπηρεσία υποστήριξης"
 
 #: blueman/DeviceClass.py:380
 msgid "Kiosk"
-msgstr ""
+msgstr "Κιόσκι"
 
 #: blueman/DeviceClass.py:381
 msgid "Broadcasting Room"
-msgstr ""
+msgstr "Αίθουσα εκπομπής"
 
 #: blueman/DeviceClass.py:382
-#, fuzzy
-#| msgid "Audio Profile"
 msgid "Auditorium"
-msgstr "Προφίλ Ήχου"
+msgstr "Αμφιθέατρο"
 
 #: blueman/DeviceClass.py:383
-#, fuzzy
 msgid "Generic Motorized Vehicle"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικό μηχανοκίνητο όχημα"
 
 #: blueman/DeviceClass.py:384
 msgid "Car"
-msgstr ""
+msgstr "Αυτοκίνητο"
 
 #: blueman/DeviceClass.py:385
 msgid "Large Goods Vehicle"
-msgstr ""
+msgstr "Όχημα μεγάλων εμπορευμάτων"
 
 #: blueman/DeviceClass.py:386
 msgid "2-Wheeled Vehicle"
-msgstr ""
+msgstr "Δίτροχο όχημα"
 
 #: blueman/DeviceClass.py:387
 msgid "Motorbike"
-msgstr ""
+msgstr "Μοτοσυκλέτα"
 
 #: blueman/DeviceClass.py:388
 msgid "Scooter"
-msgstr ""
+msgstr "Πατίνι"
 
 #: blueman/DeviceClass.py:389
 msgid "Moped"
-msgstr ""
+msgstr "Μοτοποδήλατο"
 
 #: blueman/DeviceClass.py:390
 msgid "3-Wheeled Vehicle"
-msgstr ""
+msgstr "Τρίτροχο όχημα"
 
 #: blueman/DeviceClass.py:391
 msgid "Light Vehicle"
-msgstr ""
+msgstr "Ελαφρύ όχημα"
 
 #: blueman/DeviceClass.py:392
 msgid "Quad Bike"
-msgstr ""
+msgstr "Γουρούνα"
 
 #: blueman/DeviceClass.py:393
 msgid "Minibus"
-msgstr ""
+msgstr "Minibus"
 
 #: blueman/DeviceClass.py:394
 msgid "Bus"
-msgstr ""
+msgstr "Λεωφορείο"
 
 #: blueman/DeviceClass.py:395
 msgid "Trolley"
-msgstr ""
+msgstr "Τρόλεϊ"
 
 #: blueman/DeviceClass.py:396
 msgid "Agricultural Vehicle"
-msgstr ""
+msgstr "Αγροτικό όχημα"
 
 #: blueman/DeviceClass.py:397
 msgid "Camper / Caravan"
-msgstr ""
+msgstr "Αυτοκινούμενο τροχόσπιτο"
 
 #: blueman/DeviceClass.py:398
 msgid "Recreational Vehicle / Motor Home"
-msgstr ""
+msgstr "Όχημα αναψυχής/αυτοκινούμενο τροχόσπιτο"
 
 #: blueman/DeviceClass.py:399
-#, fuzzy
 msgid "Generic Domestic Appliance"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική οικιακή συσκευή"
 
 #: blueman/DeviceClass.py:400
 msgid "Refrigerator"
-msgstr ""
+msgstr "Ψυγείο"
 
 #: blueman/DeviceClass.py:401
 msgid "Freezer"
-msgstr ""
+msgstr "Καταψύκτης"
 
 #: blueman/DeviceClass.py:402
 msgid "Oven"
-msgstr ""
+msgstr "Φούρνος"
 
 #: blueman/DeviceClass.py:403
-#, fuzzy
 msgid "Microwave"
-msgstr "μικρόφωνο"
+msgstr "Φούρνος μικροκυμάτων"
 
 #: blueman/DeviceClass.py:404
 msgid "Toaster"
-msgstr ""
+msgstr "Φρυγανιέρα"
 
 #: blueman/DeviceClass.py:405
 msgid "Washing Machine"
-msgstr ""
+msgstr "Πλυντήριο"
 
 #: blueman/DeviceClass.py:406
 msgid "Dryer"
-msgstr ""
+msgstr "Στεγνωτήριο"
 
 #: blueman/DeviceClass.py:407
 msgid "Coffee maker"
-msgstr ""
+msgstr "Καφετιέρα"
 
 #: blueman/DeviceClass.py:408
 msgid "Clothes iron"
-msgstr ""
+msgstr "Σίδερο ρούχων"
 
 #: blueman/DeviceClass.py:409
 msgid "Curling iron"
-msgstr ""
+msgstr "Ψαλίδι για μπούκλες"
 
 #: blueman/DeviceClass.py:410
 msgid "Hair dryer"
-msgstr ""
+msgstr "Σεσουάρ"
 
 #: blueman/DeviceClass.py:411
 msgid "Vacuum cleaner"
-msgstr ""
+msgstr "Ηλεκτρική σκούπα"
 
 #: blueman/DeviceClass.py:412
 msgid "Robotic vacuum cleaner"
-msgstr ""
+msgstr "Ρομποτική ηλεκτρική σκούπα"
 
 #: blueman/DeviceClass.py:413
 msgid "Rice cooker"
-msgstr ""
+msgstr "Παρασκευαστής ρυζιού"
 
 #: blueman/DeviceClass.py:414
 msgid "Clothes steamer"
-msgstr ""
+msgstr "Ατμοκαθαριστής ρούχων"
 
 #: blueman/DeviceClass.py:415
 msgid "Generic Wearable Audio Device"
-msgstr ""
+msgstr "Γενική φορετή συσκευή ήχου"
 
 #: blueman/DeviceClass.py:416
 msgid "Earbud"
-msgstr ""
+msgstr "Ακουστικό ψείρα"
 
 #: blueman/DeviceClass.py:419
 msgid "Neck Band"
-msgstr ""
+msgstr "Ακουστικά αυχένα"
 
 #: blueman/DeviceClass.py:420
-#, fuzzy
 msgid "Generic Aircraft"
-msgstr "Σύνδεση"
+msgstr "Γενικό αεροσκάφος"
 
 #: blueman/DeviceClass.py:421
 msgid "Light Aircraft"
-msgstr ""
+msgstr "Ελαφρύ αεροσκάφος"
 
 #: blueman/DeviceClass.py:422
-#, fuzzy
 msgid "Microlight"
-msgstr "μικρόφωνο"
+msgstr "Υπερελαφρύ αεροσκάφος"
 
 #: blueman/DeviceClass.py:423
 msgid "Paraglider"
-msgstr ""
+msgstr "Αλεξίπτωτο"
 
 #: blueman/DeviceClass.py:424
 msgid "Large Passenger Aircraft"
-msgstr ""
+msgstr "Μεγάλο επιβατικό αεροσκάφος"
 
 #: blueman/DeviceClass.py:425
 msgid "Generic AV Equipment"
-msgstr ""
+msgstr "Γενικός οπτικοακουστικός εξοπλισμός"
 
 #: blueman/DeviceClass.py:426
 msgid "Amplifier"
-msgstr ""
+msgstr "Ενισχυτής"
 
 #: blueman/DeviceClass.py:427
-#, fuzzy
-#| msgid "Receiving file"
 msgid "Receiver"
-msgstr "Λήψη αρχείου"
+msgstr "Δέκτης"
 
 #: blueman/DeviceClass.py:428
 msgid "Radio"
-msgstr ""
+msgstr "Ραδιόφωνο"
 
 #: blueman/DeviceClass.py:429
 msgid "Tuner"
-msgstr ""
+msgstr "Ραδιοφωνικός δέκτης"
 
 #: blueman/DeviceClass.py:430
 msgid "Turntable"
-msgstr ""
+msgstr "Πικάπ"
 
 #: blueman/DeviceClass.py:431
 msgid "CD Player"
-msgstr ""
+msgstr "Συσκευή αναπαραγωγής CD"
 
 #: blueman/DeviceClass.py:432
 msgid "DVD Player"
-msgstr ""
+msgstr "Συσκευή αναπαραγωγής DVD"
 
 #: blueman/DeviceClass.py:433
 msgid "Bluray Player"
-msgstr ""
+msgstr "Συσκευή αναπαραγωγής Bluray"
 
 #: blueman/DeviceClass.py:434
 msgid "Optical Disc Player"
-msgstr ""
+msgstr "Συσκευή αναπαραγωγής οπτικών δίσκων"
 
 #: blueman/DeviceClass.py:435
 msgid "Set-Top Box"
-msgstr ""
+msgstr "Αποκωδικοποιητής"
 
 #: blueman/DeviceClass.py:436
-#, fuzzy
 msgid "Generic Display Equipment"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενικός εξοπλισμός απεικόνισης"
 
 #: blueman/DeviceClass.py:437
 msgid "Television"
-msgstr ""
+msgstr "Τηλεόραση"
 
 #: blueman/DeviceClass.py:438
-#, fuzzy
 msgid "Monitor"
-msgstr "Πηγή ήχου"
+msgstr "Οθόνη"
 
 #: blueman/DeviceClass.py:439
 msgid "Projector"
-msgstr ""
+msgstr "Προβολέας"
 
 #: blueman/DeviceClass.py:440
-#, fuzzy
 msgid "Generic Hearing aid"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενικό ακουστικό βαρηκοΐας"
 
 #: blueman/DeviceClass.py:441
 msgid "In-ear hearing aid"
-msgstr ""
+msgstr "Ενδωτιαίο ακουστικό βαρηκοΐας"
 
 #: blueman/DeviceClass.py:442
 msgid "Behind-ear hearing aid"
-msgstr ""
+msgstr "Οπισθωτιαίο ακουστικό βαρηκοΐας"
 
 #: blueman/DeviceClass.py:443
 msgid "Cochlear Implant"
-msgstr ""
+msgstr "Κοχλιακό εμφύτευμα"
 
 #: blueman/DeviceClass.py:444
-#, fuzzy
 msgid "Generic Gaming"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική συσκευή παιχνιδιών"
 
 #: blueman/DeviceClass.py:445
 msgid "Home Video Game Console"
-msgstr ""
+msgstr "Οικιακή κονσόλα παιχνιδιών"
 
 #: blueman/DeviceClass.py:446
 msgid "Portable handheld console"
-msgstr ""
+msgstr "Φορητή κονσόλα παιχνιδιών"
 
 #: blueman/DeviceClass.py:447
-#, fuzzy
 msgid "Generic Signage"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική συσκευή σήμανσης"
 
 #: blueman/DeviceClass.py:448
 msgid "Digital Signage"
-msgstr ""
+msgstr "Συσκευή ψηφιακής σήμανσης"
 
 #: blueman/DeviceClass.py:449
 msgid "Electronic Label"
-msgstr ""
+msgstr "Ηλεκτρονική ετικέτα"
 
 #: blueman/DeviceClass.py:450
-#, fuzzy
 msgid "Generic Pulse Oximeter"
-msgstr "Σύνδεση"
+msgstr "Γενικό παλμικό οξύμετρο"
 
 #: blueman/DeviceClass.py:451
 msgid "Fingertip Pulse Oximeter"
-msgstr ""
+msgstr "Παλμικό οξύμετρο δακτύλου"
 
 #: blueman/DeviceClass.py:452
 msgid "Wrist Worn Pulse Oximeter"
-msgstr ""
+msgstr "Παλμικό οξύμετρο καρπού"
 
 #: blueman/DeviceClass.py:453
-#, fuzzy
 msgid "Generic Weight Scale"
-msgstr "Σύνδεση"
+msgstr "Γενική ζυγαριά"
 
 #: blueman/DeviceClass.py:454
 msgid "Generic Personal Mobility Device"
-msgstr ""
+msgstr "Γενική συσκευή προσωπικής μετακίνησης"
 
 #: blueman/DeviceClass.py:455
 msgid "Powered Wheelchair"
-msgstr ""
+msgstr "Ηλεκτροκίνητο αναπηρικό αμαξίδιο"
 
 #: blueman/DeviceClass.py:456
 msgid "Mobility Scooter"
-msgstr ""
+msgstr "Ηλεκτροκίνητο αμαξίδιο μετακίνησης"
 
 #: blueman/DeviceClass.py:457
 msgid "Generic Continuous Glucose Monitor"
-msgstr ""
+msgstr "Γενική συσκευή συνεχούς παρακολούθησης γλυκόζης"
 
 #: blueman/DeviceClass.py:458
 msgid "Generic Insulin Pump"
-msgstr ""
+msgstr "Γενική αντλία ινσουλίνης"
 
 #: blueman/DeviceClass.py:459
 msgid "Insulin Pump, durable pump"
-msgstr ""
+msgstr "Αντλία ινσουλίνης (επαναχρησιμοποιούμενη)"
 
 #: blueman/DeviceClass.py:460
 msgid "Insulin Pump, patch pump"
-msgstr ""
+msgstr "Αντλία ινσουλίνης (επίθεμα)"
 
 #: blueman/DeviceClass.py:461
 msgid "Insulin Pen"
-msgstr ""
+msgstr "Στυλό ινσουλίνης"
 
 #: blueman/DeviceClass.py:462
 msgid "Generic Medication Delivery"
-msgstr ""
+msgstr "Γενική συσκευή χορήγησης φαρμάκων"
 
 #: blueman/DeviceClass.py:463
-#, fuzzy
 msgid "Generic Spirometer"
-msgstr "Σύνδεση"
+msgstr "Γενικό σπιρόμετρο"
 
 #: blueman/DeviceClass.py:464
 msgid "Handheld Spirometer"
-msgstr ""
+msgstr "Φορητό σπιρόμετρο χειρός"
 
 #: blueman/DeviceClass.py:465
 msgid "Generic Outdoor Sports Activity"
-msgstr ""
+msgstr "Γενική συσκευή υπαίθριων αθλητικών δραστηριοτήτων"
 
 #: blueman/DeviceClass.py:466
 msgid "Location Display"
-msgstr ""
+msgstr "Οθόνη εντοπισμού θέσης"
 
 #: blueman/DeviceClass.py:467
 msgid "Location and Navigation Display"
-msgstr ""
+msgstr "Οθόνη εντοπισμού θέσης και πλοήγησης"
 
 #: blueman/DeviceClass.py:468
 msgid "Location Pod"
-msgstr ""
+msgstr "Μονάδα εντοπισμού θέσης"
 
 #: blueman/DeviceClass.py:469
 msgid "Location and Navigation Pod"
-msgstr ""
+msgstr "Μονάδα εντοπισμού θέσης και πλοήγησης"
 
 #: blueman/Sdp.py:88
 msgid "SDP"
-msgstr ""
+msgstr "SDP"
 
 #: blueman/Sdp.py:89
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #: blueman/Sdp.py:90
 msgid "RFCOMM"
-msgstr ""
+msgstr "RFCOMM"
 
 #: blueman/Sdp.py:91
 msgid "TCP"
-msgstr ""
+msgstr "TCP"
 
 #: blueman/Sdp.py:92
 msgid "TCS-BIN"
-msgstr ""
+msgstr "TCS-BIN"
 
 #: blueman/Sdp.py:93
 msgid "TCS-AT"
-msgstr ""
+msgstr "TCS-AT"
 
 #: blueman/Sdp.py:94
 msgid "ATT"
-msgstr ""
+msgstr "ATT"
 
 #: blueman/Sdp.py:95
 msgid "OBEX"
-msgstr ""
+msgstr "OBEX"
 
 #: blueman/Sdp.py:96
 msgid "IP"
-msgstr ""
+msgstr "IP"
 
 #: blueman/Sdp.py:97
 msgid "FTP"
-msgstr ""
+msgstr "FTP"
 
 #: blueman/Sdp.py:98
 msgid "HTTP"
-msgstr ""
+msgstr "HTTP"
 
 #: blueman/Sdp.py:99
 msgid "WSP"
-msgstr ""
+msgstr "WSP"
 
 #: blueman/Sdp.py:100
 msgid "BNEP"
-msgstr ""
+msgstr "BNEP"
 
 #: blueman/Sdp.py:101
 msgid "UPnP/ESDP"
-msgstr ""
+msgstr "UPnP/ESDP"
 
 #: blueman/Sdp.py:102
 msgid "HIDP"
-msgstr ""
+msgstr "HIDP"
 
 #: blueman/Sdp.py:103
 msgid "Hardcopy Control Channel"
-msgstr ""
+msgstr "Κανάλι ελέγχου εκτυπωμένων εγγράφων"
 
 #: blueman/Sdp.py:104
 msgid "Hardcopy Data Channel"
-msgstr ""
+msgstr "Κανάλι δεδομένων εκτυπωμένων εγγράφων"
 
 #: blueman/Sdp.py:105
 msgid "Hardcopy Notification"
-msgstr ""
+msgstr "Ειδοποίηση εκτυπωμένων εγγράφων"
 
 #: blueman/Sdp.py:106
 msgid "AVCTP"
-msgstr ""
+msgstr "AVCTP"
 
 #: blueman/Sdp.py:107
 msgid "AVDTP"
-msgstr ""
+msgstr "AVDTP"
 
 #: blueman/Sdp.py:108
 msgid "CMTP"
-msgstr ""
+msgstr "CMTP"
 
 #: blueman/Sdp.py:109
 msgid "UDI_C-Plane"
-msgstr ""
+msgstr "UDI_C-Plane"
 
 #: blueman/Sdp.py:110 blueman/Sdp.py:111
 msgid "Multi-Channel Adaptation Protocol (MCAP)"
-msgstr ""
+msgstr "Πρωτόκολλο προσαρμογής πολλαπλών καναλιών (MCAP)"
 
 #: blueman/Sdp.py:112
 msgid "L2CAP"
-msgstr ""
+msgstr "L2CAP"
 
 #: blueman/Sdp.py:113
 msgid "ServiceDiscoveryServerServiceClassID"
-msgstr ""
+msgstr "ServiceDiscoveryServerServiceClassID"
 
 #: blueman/Sdp.py:114
 msgid "BrowseGroupDescriptorServiceClassID"
-msgstr ""
+msgstr "BrowseGroupDescriptorServiceClassID"
 
 #: blueman/Sdp.py:115
 msgid "Public Browse Group"
-msgstr ""
+msgstr "Δημόσια ομάδα περιήγησης"
 
 #: blueman/Sdp.py:116
-#, fuzzy
 msgid "Serial Port"
-msgstr "Σειριακές Θύρες"
+msgstr "Σειριακή θύρα"
 
 #: blueman/Sdp.py:117
 msgid "LAN Access Using PPP"
-msgstr ""
+msgstr "Πρόσβαση LAN μέσω PPP"
 
 #: blueman/Sdp.py:118
 msgid "Dialup Networking (DUN)"
-msgstr "Σύνδεση μέσω τηλεφώνου (DUN)"
+msgstr "Δικτύωση μέσω τηλεφώνου (DUN)"
 
 #: blueman/Sdp.py:119
 msgid "IrMC Sync"
-msgstr ""
+msgstr "Συγχρονισμός IrMC"
 
 #: blueman/Sdp.py:120
 msgid "OBEX Object Push"
-msgstr ""
+msgstr "Αποστολή αντικειμένων μέσω OBEX"
 
 #: blueman/Sdp.py:121
-#, fuzzy
 msgid "OBEX File Transfer"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Μεταφορά αρχείων OBEX"
 
 #: blueman/Sdp.py:122
 msgid "IrMC Sync Command"
-msgstr ""
+msgstr "Εντολή συγχρονισμού IrMC"
 
 #: blueman/Sdp.py:124
 msgid "Cordless Telephony"
-msgstr ""
+msgstr "Ασύρματη τηλεφωνία"
 
 #: blueman/Sdp.py:125
 msgid "Audio Source"
@@ -2621,47 +2500,47 @@ msgstr "Πηγή ήχου"
 
 #: blueman/Sdp.py:126
 msgid "Audio Sink"
-msgstr "Προορισμός Ήχου"
+msgstr "Έξοδος ήχου"
 
 #: blueman/Sdp.py:127
 msgid "Remote Control Target"
-msgstr ""
+msgstr "Προορισμός απομακρυσμένου ελέγχου"
 
 #: blueman/Sdp.py:128
 msgid "Advanced Audio"
-msgstr ""
+msgstr "Προηγμένος ήχος"
 
 #: blueman/Sdp.py:129
 msgid "Remote Control"
-msgstr ""
+msgstr "Τηλεχειριστήριο"
 
 #: blueman/Sdp.py:130
 msgid "Video Conferencing"
-msgstr ""
+msgstr "Τηλεδιάσκεψη"
 
 #: blueman/Sdp.py:131
 msgid "Intercom"
-msgstr ""
+msgstr "Θυροτηλέφωνο"
 
 #: blueman/Sdp.py:132
 msgid "Fax"
-msgstr ""
+msgstr "Φαξ"
 
 #: blueman/Sdp.py:133
 msgid "Headset Audio Gateway"
-msgstr ""
+msgstr "Πύλη ήχου ακουστικών με μικρόφωνο"
 
 #: blueman/Sdp.py:134
 msgid "WAP"
-msgstr ""
+msgstr "WAP"
 
 #: blueman/Sdp.py:135
 msgid "WAP Client"
-msgstr ""
+msgstr "Πελάτης WAP"
 
 #: blueman/Sdp.py:136
 msgid "PANU"
-msgstr ""
+msgstr "PANU"
 
 #: blueman/Sdp.py:137
 msgid "Network Access Point"
@@ -2673,474 +2552,455 @@ msgstr "Ομάδα δικτύου"
 
 #: blueman/Sdp.py:139
 msgid "DirectPrinting (BPP)"
-msgstr ""
+msgstr "Άμεση εκτύπωση (BPP)"
 
 #: blueman/Sdp.py:140
 msgid "ReferencePrinting (BPP)"
-msgstr ""
+msgstr "Εκτύπωση μέσω αναφοράς (BPP)"
 
 #: blueman/Sdp.py:141
 msgid "Imaging (BIP)"
-msgstr ""
+msgstr "Απεικόνιση (BIP)"
 
 #: blueman/Sdp.py:142
 msgid "ImagingResponder (BIP)"
-msgstr ""
+msgstr "Αποδέκτης απεικόνισης (BIP)"
 
 #: blueman/Sdp.py:143
 msgid "ImagingAutomaticArchive (BIP)"
-msgstr ""
+msgstr "Αυτόματη αρχειοθέτηση απεικόνισης (BIP)"
 
 #: blueman/Sdp.py:144
 msgid "ImagingReferencedObjects (BIP)"
-msgstr ""
+msgstr "Αντικείμενα αναφοράς απεικόνισης (BIP)"
 
 #: blueman/Sdp.py:146
 msgid "Handsfree Audio Gateway"
-msgstr ""
+msgstr "Πύλη ήχου ακουστικών handsfree"
 
 #: blueman/Sdp.py:147
 msgid "DirectPrintingReferenceObjectsService (BPP)"
-msgstr ""
+msgstr "Υπηρεσία αντικειμένων αναφοράς άμεσης εκτύπωσης (BPP)"
 
 #: blueman/Sdp.py:148
 msgid "ReflectedUI (BPP)"
-msgstr ""
+msgstr "Ανακλώμενο γραφικό περιβάλλον (BPP)"
 
 #: blueman/Sdp.py:149
 msgid "Basic Printing (BPP)"
-msgstr ""
+msgstr "Βασική εκτύπωση (BPP)"
 
 #: blueman/Sdp.py:150
 msgid "Printing Status (BPP)"
-msgstr ""
+msgstr "Κατάσταση εκτύπωσης (BPP)"
 
 #: blueman/Sdp.py:151
 msgid "Human Interface Device Service (HID)"
-msgstr ""
+msgstr "Υπηρεσία συσκευής ανθρώπινης διεπαφής (HID)"
 
 #: blueman/Sdp.py:152
 msgid "HardcopyCableReplacement (HCR)"
-msgstr ""
+msgstr "Αντικατάσταση καλωδίου εκτυπωμένων εγγράφων (HCR)"
 
 #: blueman/Sdp.py:153
 msgid "HCR_Print (HCR)"
-msgstr ""
+msgstr "_Εκτύπωση HCR (HCR)"
 
 #: blueman/Sdp.py:154
 msgid "HCR_Scan (HCR)"
-msgstr ""
+msgstr "_Σάρωση HCR (HCR)"
 
 #: blueman/Sdp.py:155
 msgid "Common ISDN Access (CIP)"
-msgstr ""
+msgstr "Κοινή πρόσβαση ISDN (CIP)"
 
 #: blueman/Sdp.py:156
 msgid "VideoConferencingGW (VCP)"
-msgstr ""
+msgstr "Πύλη τηλεδιάσκεψης (VCP)"
 
 #: blueman/Sdp.py:157
 msgid "UDI-MT"
-msgstr ""
+msgstr "UDI-MT"
 
 #: blueman/Sdp.py:158
 msgid "UDI-TA"
-msgstr ""
+msgstr "UDI-TA"
 
 #: blueman/Sdp.py:159
 msgid "Audio/Video"
-msgstr ""
+msgstr "Ήχος/βίντεο"
 
 #: blueman/Sdp.py:160
 msgid "SIM Access (SAP)"
-msgstr ""
+msgstr "Πρόσβαση SIM (SAP)"
 
 #: blueman/Sdp.py:161
 msgid "Phonebook Access (PBAP) - PCE"
-msgstr ""
+msgstr "Πρόσβαση στον τηλεφωνικό κατάλογο (PBAP) - PCE"
 
 #: blueman/Sdp.py:162
 msgid "Phonebook Access (PBAP) - PSE"
-msgstr ""
+msgstr "Πρόσβαση στον τηλεφωνικό κατάλογο (PBAP) - PSE"
 
 #: blueman/Sdp.py:163
-#, fuzzy
 msgid "Phonebook Access (PBAP)"
-msgstr "Σημείο Πρόσβασης Δικτύου (NAP)"
+msgstr "Πρόσβαση στον τηλεφωνικό κατάλογο (PBAP)"
 
 #: blueman/Sdp.py:165
 msgid "Message Access Server"
-msgstr ""
+msgstr "Διακομιστής πρόσβασης μηνυμάτων"
 
 #: blueman/Sdp.py:166
 msgid "Message Notification Server"
-msgstr ""
+msgstr "Διακομιστής ειδοποιήσεων μηνυμάτων"
 
 #: blueman/Sdp.py:167
-#, fuzzy
 msgid "Message Access Profile (MAP)"
-msgstr "Σημείο Πρόσβασης Δικτύου (NAP)"
+msgstr "Προφίλ πρόσβασης μηνυμάτων (MAP)"
 
 #: blueman/Sdp.py:168
 msgid "GNSS"
-msgstr ""
+msgstr "GNSS"
 
 #: blueman/Sdp.py:169
 msgid "GNSS Server"
-msgstr ""
+msgstr "Διακομιστής GNSS"
 
 #: blueman/Sdp.py:170
 msgid "3D Display"
-msgstr ""
+msgstr "Οθόνη 3D"
 
 #: blueman/Sdp.py:171
 msgid "3D Glasses"
-msgstr ""
+msgstr "Γυαλιά 3D"
 
 #: blueman/Sdp.py:172
 msgid "3D Synchronization (3DSP)"
-msgstr ""
+msgstr "Συγχρονισμός 3D (3DSP)"
 
 #: blueman/Sdp.py:173
 msgid "Multi-Profile Specification (MPS) Profile"
-msgstr ""
+msgstr "Προφίλ προδιαγραφών πολλαπλών προφίλ (MPS)"
 
 #: blueman/Sdp.py:174
 msgid "Multi-Profile Specification (MPS) Service"
-msgstr ""
+msgstr "Υπηρεσία προδιαγραφών πολλαπλών προφίλ (MPS)"
 
 #: blueman/Sdp.py:175
 msgid "Calendar, Task, and Notes (CTN) Access Service"
-msgstr ""
+msgstr "Υπηρεσία πρόσβασης ημερολογίου, εργασιών και σημειώσεων (CTN)"
 
 #: blueman/Sdp.py:176
 msgid "Calendar, Task, and Notes (CTN) Notification Service"
-msgstr ""
+msgstr "Υπηρεσία ειδοποιήσεων ημερολογίου, εργασιών και σημειώσεων (CTN)"
 
 #: blueman/Sdp.py:177
 msgid "Calendar, Task, and Notes (CTN) Profile"
-msgstr ""
+msgstr "Προφίλ ημερολογίου, εργασιών και σημειώσεων (CTN)"
 
 #: blueman/Sdp.py:178
 msgid "PnP Information"
-msgstr ""
+msgstr "Πληροφορίες PnP"
 
 #: blueman/Sdp.py:179
-#, fuzzy
 msgid "Generic Networking"
-msgstr "Ομάδα δικτύου"
+msgstr "Γενική δικτύωση"
 
 #: blueman/Sdp.py:180
-#, fuzzy
 msgid "Generic FileTransfer"
-msgstr "Μεταφορά αρχείων μέσω Bluetooth"
+msgstr "Γενική μεταφορά αρχείων"
 
 #: blueman/Sdp.py:181
 msgid "Generic Audio"
-msgstr ""
+msgstr "Γενικός ήχος"
 
 #: blueman/Sdp.py:182
 msgid "Generic Telephony"
-msgstr ""
+msgstr "Γενική τηλεφωνία"
 
 #: blueman/Sdp.py:183
-#, fuzzy
 msgid "Video Source"
-msgstr "Πηγή ήχου"
+msgstr "Πηγή βίντεο"
 
 #: blueman/Sdp.py:184
-#, fuzzy
 msgid "Video Sink"
-msgstr "Προορισμός Ήχου"
+msgstr "Έξοδος βίντεο"
 
 #: blueman/Sdp.py:185
 msgid "Video Distribution"
-msgstr ""
+msgstr "Διανομή βίντεο"
 
 #: blueman/Sdp.py:186
 msgid "HDP"
-msgstr ""
+msgstr "HDP"
 
 #: blueman/Sdp.py:187
-#, fuzzy
 msgid "HDP Source"
-msgstr "Πηγή ήχου"
+msgstr "Πηγή HDP"
 
 #: blueman/Sdp.py:188
 msgid "HDP Sink"
-msgstr ""
+msgstr "Έξοδος HDP"
 
 #: blueman/Sdp.py:189
 msgid "Generic Access"
-msgstr ""
+msgstr "Γενική πρόσβαση"
 
 #: blueman/Sdp.py:190
 msgid "Generic Attribute"
-msgstr ""
+msgstr "Γενική ιδιότητα"
 
 #: blueman/Sdp.py:191
 msgid "Immediate Alert"
-msgstr ""
+msgstr "Άμεση ειδοποίηση"
 
 #: blueman/Sdp.py:192
 msgid "Link Loss"
-msgstr ""
+msgstr "Απώλεια σύνδεσης"
 
 #: blueman/Sdp.py:193
 msgid "Tx Power"
-msgstr ""
+msgstr "Ισχύς εκπομπής"
 
 #: blueman/Sdp.py:194
-#, fuzzy
 msgid "Current Time Service"
-msgstr "Μετονομασία συσκευής"
+msgstr "Υπηρεσία τρέχουσας ώρας"
 
 #: blueman/Sdp.py:195
 msgid "Reference Time Update Service"
-msgstr ""
+msgstr "Υπηρεσία ενημέρωσης ώρας αναφοράς"
 
 #: blueman/Sdp.py:196
 msgid "Next DST Change Service"
-msgstr ""
+msgstr "Υπηρεσία επόμενης αλλαγής θερινής ώρας"
 
 #: blueman/Sdp.py:197
 msgid "Glucose"
-msgstr ""
+msgstr "Γλυκόζη"
 
 #: blueman/Sdp.py:198
 msgid "Health Thermometer"
-msgstr ""
+msgstr "Θερμόμετρο υγείας"
 
 #: blueman/Sdp.py:199
-#, fuzzy
 msgid "Device Information"
-msgstr "Εμφάνιση πληροφορίες συσκευής"
+msgstr "Πληροφορίες συσκευής"
 
 #: blueman/Sdp.py:200
 msgid "Heart Rate"
-msgstr ""
+msgstr "Καρδιακός ρυθμός"
 
 #: blueman/Sdp.py:201
 msgid "Phone Alert Status Service"
-msgstr ""
+msgstr "Υπηρεσία κατάστασης ειδοποιήσεων τηλεφώνου"
 
 #: blueman/Sdp.py:202
-#, fuzzy
 msgid "Battery Service"
-msgstr "Τοπικές υπηρεσίες"
+msgstr "Υπηρεσία μπαταρίας"
 
 #: blueman/Sdp.py:203
 msgid "Blood Pressure"
-msgstr ""
+msgstr "Αρτηριακή πίεση"
 
 #: blueman/Sdp.py:204
 msgid "Alert Notification Service"
-msgstr ""
+msgstr "Υπηρεσία ειδοποιήσεων"
 
 #: blueman/Sdp.py:205
 msgid "Human Interface Device"
-msgstr ""
+msgstr "Συσκευή ανθρώπινης διεπαφής"
 
 #: blueman/Sdp.py:206
 msgid "Scan Parameters"
-msgstr ""
+msgstr "Παράμετροι σάρωσης"
 
 #: blueman/Sdp.py:207
 msgid "Running Speed and Cadence"
-msgstr ""
+msgstr "Ταχύτητα και ρυθμός τρεξίματος"
 
 #: blueman/Sdp.py:208
 msgid "Automation IO"
-msgstr ""
+msgstr "Αυτοματισμός εισόδων/εξόδων"
 
 #: blueman/Sdp.py:209
 msgid "Cycling Speed and Cadence"
-msgstr ""
+msgstr "Ταχύτητα και ρυθμός πεταλιάς"
 
 #: blueman/Sdp.py:210
 msgid "Cycling Power"
-msgstr ""
+msgstr "Ισχύς ποδηλασίας"
 
 #: blueman/Sdp.py:211
 msgid "Location and Navigation"
-msgstr ""
+msgstr "Εντοπισμός θέσης και πλοήγηση"
 
 #: blueman/Sdp.py:212
 msgid "Environmental Sensing"
-msgstr ""
+msgstr "Περιβαλλοντική ανίχνευση"
 
 #: blueman/Sdp.py:213
 msgid "Body Composition"
-msgstr ""
+msgstr "Σύσταση σώματος"
 
 #: blueman/Sdp.py:214
 msgid "User Data"
-msgstr ""
+msgstr "Δεδομένα χρήστη"
 
 #: blueman/Sdp.py:215
 msgid "Weight Scale"
-msgstr ""
+msgstr "Ζυγαριά"
 
 #: blueman/Sdp.py:216
 msgid "Bond Management"
-msgstr ""
+msgstr "Διαχείριση συζεύξεων"
 
 #: blueman/Sdp.py:217
 msgid "Continuous Glucose Monitoring"
-msgstr ""
+msgstr "Συνεχής παρακολούθηση γλυκόζης"
 
 #: blueman/Sdp.py:218
 msgid "Internet Protocol Support"
-msgstr ""
+msgstr "Υποστήριξη πρωτοκόλλου διαδικτύου"
 
 #: blueman/Sdp.py:219
 msgid "Indoor Positioning"
-msgstr ""
+msgstr "Εσωτερικός εντοπισμός"
 
 #: blueman/Sdp.py:220
 msgid "Pulse Oximeter"
-msgstr ""
+msgstr "Παλμικό οξύμετρο"
 
 #: blueman/Sdp.py:221
 msgid "HTTP Proxy"
-msgstr ""
+msgstr "Διακομιστής μεσολάβησης HTTP"
 
 #: blueman/Sdp.py:222
 msgid "Transport Discovery"
-msgstr ""
+msgstr "Ανακάλυψη μεταφοράς"
 
 #: blueman/Sdp.py:223
-#, fuzzy
 msgid "Object Transfer"
-msgstr "Μεταφορά"
+msgstr "Μεταφορά αντικειμένων"
 
 #: blueman/Sdp.py:224
-#, fuzzy
 msgid "AppleAgent"
-msgstr "Μικροεφαρμογή"
+msgstr "AppleAgent"
 
 #: blueman/Sdp.py:225
-#, fuzzy
 msgid "Primary Service"
-msgstr "Ταίριασμα συσκευής"
+msgstr "Κύρια υπηρεσία"
 
 #: blueman/Sdp.py:226
-#, fuzzy
 msgid "Secondary Service"
-msgstr "Αναζήτηση συσκευών που βρίσκονται κοντά"
+msgstr "Δευτερεύουσα υπηρεσία"
 
 #: blueman/Sdp.py:227
 msgid "Include"
-msgstr ""
+msgstr "Συμπερίληψη"
 
 #: blueman/Sdp.py:228
 msgid "Characteristic Declaration"
-msgstr ""
+msgstr "Δήλωση χαρακτηριστικού"
 
 #: blueman/Sdp.py:229
-#, fuzzy
 msgid "Device Name"
-msgstr "Διαχειριστής Συσκευών"
+msgstr "Όνομα συσκευής"
 
 #: blueman/Sdp.py:230
 msgid "Appearance"
-msgstr ""
+msgstr "Εμφάνιση"
 
 #: blueman/Sdp.py:231
 msgid "Peripheral Privacy Flag"
-msgstr ""
+msgstr "Σημαία απορρήτου περιφερειακής συσκευής"
 
 #: blueman/Sdp.py:232
-#, fuzzy
 msgid "Reconnection Address"
-msgstr "Πρόσφατες _Συνδέσεις"
+msgstr "Διεύθυνση επανασύνδεσης"
 
 #: blueman/Sdp.py:233
 msgid "Peripheral Preferred Connection Parameters"
-msgstr ""
+msgstr "Προτιμώμενες παράμετροι σύνδεσης περιφερειακής συσκευής"
 
 #: blueman/Sdp.py:234
-#, fuzzy
 msgid "Service Changed"
-msgstr "Διαχειριστής Συσκευών"
+msgstr "Η υπηρεσία άλλαξε"
 
 #: blueman/Sdp.py:235
 msgid "System ID"
-msgstr ""
+msgstr "Αναγνωριστικό συστήματος"
 
 #: blueman/Sdp.py:236
 msgid "Model Number String"
-msgstr ""
+msgstr "Συμβολοσειρά αριθμού μοντέλου"
 
 #: blueman/Sdp.py:237
 msgid "Serial Number String"
-msgstr ""
+msgstr "Συμβολοσειρά σειριακού αριθμού"
 
 #: blueman/Sdp.py:238
 msgid "Firmware Revision String"
-msgstr ""
+msgstr "Συμβολοσειρά αναθεώρησης υλικολογισμικού"
 
 #: blueman/Sdp.py:239
 msgid "Hardware Revision String"
-msgstr ""
+msgstr "Συμβολοσειρά αναθεώρησης υλικού"
 
 #: blueman/Sdp.py:240
 msgid "Software Revision String"
-msgstr ""
+msgstr "Συμβολοσειρά αναθεώρησης λογισμικού"
 
 #: blueman/Sdp.py:241
 msgid "Manufacturer Name String"
-msgstr ""
+msgstr "Συμβολοσειρά ονόματος κατασκευαστή"
 
 #: blueman/Sdp.py:242
 msgid "PnP ID"
-msgstr ""
+msgstr "PnP ID"
 
 #: blueman/Sdp.py:243
 msgid "Characteristic Extended Properties"
-msgstr ""
+msgstr "Εκτεταμένες ιδιότητες χαρακτηριστικού"
 
 #: blueman/Sdp.py:244
 msgid "Characteristic User Description"
-msgstr ""
+msgstr "Περιγραφή χρήστη χαρακτηριστικού"
 
 #: blueman/Sdp.py:245
 msgid "Client Characteristic Configuration"
-msgstr ""
+msgstr "Διαμόρφωση χαρακτηριστικού πελάτη"
 
 #: blueman/Sdp.py:246
 msgid "Server Characteristic Configuration"
-msgstr ""
+msgstr "Διαμόρφωση χαρακτηριστικού διακομιστή"
 
 #: blueman/Sdp.py:247
 msgid "Characteristic Presentation Format"
-msgstr ""
+msgstr "Μορφή παρουσίασης χαρακτηριστικού"
 
 #: blueman/Sdp.py:248
 msgid "Characteristic Aggregate Format"
-msgstr ""
+msgstr "Συγκεντρωτική μορφή χαρακτηριστικού"
 
 #: blueman/Sdp.py:249
 msgid "Valid Range"
-msgstr ""
+msgstr "Έγκυρο εύρος"
 
 #: blueman/Sdp.py:250
 msgid "External Report Reference"
-msgstr ""
+msgstr "Παραπομπή εξωτερικής αναφοράς"
 
 #: blueman/Sdp.py:251
-#, fuzzy
 msgid "Report Reference"
-msgstr "Προτιμήσεις προσαρμογέα"
+msgstr "Παραπομπή αναφοράς"
 
 #: blueman/Sdp.py:378
-#, fuzzy
 msgid "Audio and input profiles"
-msgstr "Αυτόματη σύνδεση προφίλ"
+msgstr "Ήχος και προφίλ εισόδου"
 
 #: blueman/Sdp.py:380
 msgid "Proprietary"
-msgstr "Ιδιόκτητο"
+msgstr "Ιδιοταγές"
 
 #: blueman/plugins/manager/Info.py:21
 msgid "yes"
@@ -3152,32 +3012,32 @@ msgstr "όχι"
 
 #: blueman/plugins/manager/Info.py:60
 msgid "<big>Select row(s) and use <i>Control + C</i> to copy</big>"
-msgstr ""
+msgstr "<big>Επιλέξτε σειρές και πατήστε <i>Control + C</i> για αντιγραφή</big>"
 
 #: blueman/plugins/manager/Info.py:125
 msgid "_Info"
-msgstr "_Πληροφορίες"
+msgstr "Π_ληροφορίες"
 
 #: blueman/plugins/manager/Info.py:126
 msgid "Show device information"
-msgstr "Εμφάνιση πληροφορίες συσκευής"
+msgstr "Εμφάνιση πληροφοριών συσκευής"
 
 #: blueman/plugins/manager/Notes.py:59
 msgid "Send _note"
-msgstr "Αποστολή_σημείωσης"
+msgstr "Αποστολή σ_ημείωσης"
 
 #: blueman/plugins/manager/Notes.py:60
 msgid "Send a text note"
-msgstr "Αποστολή σημείωσης ως κείμενο"
+msgstr "Αποστολή σημείωσης κειμένου"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:86
 #, python-format
 msgid "Failed to change profile to %s"
-msgstr "Αποτυχία αλλαγής προφίλ σε %s"
+msgstr "Αποτυχία αλλαγής του προφίλ σε «%s»"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:132
 msgid "Audio Profile"
-msgstr "Προφίλ Ήχου"
+msgstr "Προφίλ ήχου"
 
 #: blueman/plugins/manager/PulseAudioProfile.py:133
 msgid "Select audio profile for PulseAudio"
@@ -3185,26 +3045,29 @@ msgstr "Επιλογή προφίλ ήχου για το PulseAudio"
 
 #: blueman/plugins/BasePlugin.py:34 blueman/plugins/BasePlugin.py:35
 msgid "Unspecified"
-msgstr "Ακαθόριστο"
+msgstr "Μη καθορισμένο"
 
 #: blueman/plugins/applet/AutoConnect.py:22
 msgid ""
 "Tries to auto-connect to configurable services on start and every 60 seconds."
 msgstr ""
+"Προσπαθεί να συνδέεται αυτόματα στις παραμετροποιήσιμες υπηρεσίες κατά την "
+"εκκίνηση και κάθε 60 δευτερόλεπτα."
 
 #: blueman/plugins/applet/AutoConnect.py:68
 #, python-format
 msgid "Automatically connected to %(service)s on %(device)s"
-msgstr "Αυτόματη σύνδεση στο %(service)s του %(device)s"
+msgstr "Έγινε αυτόματη σύνδεση στο %(service)s του %(device)s"
 
 #: blueman/plugins/applet/ConnectionNotifier.py:16
 msgid "Shows desktop notifications when devices get connected or disconnected."
 msgstr ""
+"Εμφανίζει ειδοποιήσεις στην επιφάνεια εργασίας όταν συνδέονται ή "
+"αποσυνδέονται συσκευές."
 
 #: blueman/plugins/applet/ConnectionNotifier.py:37
-#, fuzzy
 msgid "Disconnected"
-msgstr "Γίνεται αποσύνδεση..."
+msgstr "Αποσυνδέθηκε"
 
 #: blueman/plugins/applet/NetUsage.py:155
 #: blueman/plugins/applet/NetUsage.py:267
@@ -3222,8 +3085,8 @@ msgid ""
 "No usage statistics are available yet. Try establishing a connection first "
 "and then check this page."
 msgstr ""
-"Δεν υπάρχουν ακόμα στατιστικά χρήσης. Προσπαθήστε να συνδεθείτε πρώτα και "
-"ξαναγυρίστε μετά σε αυτή τη σελίδα."
+"Δεν υπάρχουν ακόμα στατιστικά χρήσης. Δοκιμάστε πρώτα να συνδεθείτε και, "
+"έπειτα, επιστρέψτε σε αυτήν τη σελίδα."
 
 #: blueman/plugins/applet/NetUsage.py:203
 msgid "day"
@@ -3250,21 +3113,17 @@ msgstr "%d %s %d %s και %d %s"
 
 #: blueman/plugins/applet/NetUsage.py:243
 msgid "Are you sure you want to reset the counter?"
-msgstr "Είστε σίγουροι ότι θέλετε να επανεκκινήσετε τον μετρητή;"
+msgstr "Θέλετε σίγουρα να επαναφέρετε τον μετρητή;"
 
 #: blueman/plugins/applet/NetUsage.py:289
-#, fuzzy
-#| msgid ""
-#| "Allows you to monitor your (mobile broadband) network traffic usage. "
-#| "Useful for limited data access plans. This plugin tracks every device "
-#| "seperately."
 msgid ""
 "Allows you to monitor your (mobile broadband) network traffic usage. Useful "
 "for limited data access plans. This plugin tracks every device separately."
 msgstr ""
-"Σας επιτρέπει να ελέγχετε την κίνηση χρήσης του δικτύου σας (mobile "
-"broadband). Αυτό είναι χρήσιμο για συμβόλαια με περιορισμένη πρόσβαση "
-"δεδομένων. Αυτή η προσθήκη ελέγχει κάθε συσκευή ξεχωριστά."
+"Σας επιτρέπει να παρακολουθείτε την κατανάλωση δεδομένων του δικτύου κινητής "
+"τηλεφωνίας. Είναι χρήσιμο για προγράμματα με περιορισμένο όγκο δεδομένων. "
+"Αυτό το πρόσθετο παρακολουθεί ξεχωριστά την κατανάλωση δεδομένων κάθε "
+"συσκευής."
 
 #: blueman/plugins/applet/NetUsage.py:309
 msgid "Network _Usage"
@@ -3272,23 +3131,25 @@ msgstr "_Χρήση δικτύου"
 
 #: blueman/plugins/applet/NetUsage.py:310
 msgid "Shows network traffic usage"
-msgstr "Εμφανίζει τη χρήση κίνησης δικτύου"
+msgstr "Εμφανίζει τη χρήση της κίνησης δικτύου"
 
 #: blueman/plugins/applet/StatusIcon.py:38
 msgid "Force symbolic status icons"
-msgstr ""
+msgstr "Επιβολή χρήσης συμβολικών εικονιδίων κατάστασης"
 
 #: blueman/plugins/applet/StatusIcon.py:39
 msgid ""
 "When enabled this will force the use of a symbolic version of the blueman "
 "statusicon"
 msgstr ""
+"Εάν ενεργοποιηθεί, θα επιβάλλεται η χρήση της συμβολικής έκδοσης του "
+"εικονιδίου κατάστασης του blueman"
 
 #: blueman/plugins/applet/StatusIcon.py:51
 #: blueman/plugins/applet/ShowConnected.py:80
 #: blueman/plugins/applet/PowerManager.py:174
 msgid "Bluetooth Enabled"
-msgstr "Το Bluetooth Ενεργοποιήθηκε"
+msgstr "Το Bluetooth ενεργοποιήθηκε"
 
 #: blueman/plugins/applet/Networking.py:19
 msgid "Manages local network services, like NAP bridges"
@@ -3299,25 +3160,24 @@ msgid ""
 "Provides support for Dial Up Networking (DUN) with ModemManager and "
 "NetworkManager"
 msgstr ""
-"Παρέχει υποστήριξη για συνδέσεις μέσω τηλεφώνου (DUN) με τη βοήθεια του "
-"Διαχειριστή Modem και του Διαχειριστή Δικτύου"
+"Παρέχει υποστήριξη για δικτύωση μέσω τηλεφώνου (DUN) με τα ModemManager και "
+"NetworkManager"
 
 #: blueman/plugins/applet/RecentConns.py:44
 msgid ""
 "Provides a menu item that contains last used connections for quick access"
 msgstr ""
-"Παρέχει ένα στοιχείο μενού που περιέχει τις πρόσφατες συνδέσεις για γρήγορη "
-"πρόσβαση"
+"Προσθέτει ένα στοιχείο στο μενού που περιέχει τις πρόσφατες συνδέσεις για "
+"γρήγορη πρόσβαση"
 
 #. the maximum number of items RecentConns menu will display
 #: blueman/plugins/applet/RecentConns.py:55
 msgid "Maximum items"
-msgstr "Μέγιστος αριθμός αντικειμένων"
+msgstr "Μέγιστος αριθμός στοιχείων"
 
 #: blueman/plugins/applet/RecentConns.py:56
 msgid "The maximum number of items recent connections menu will display."
-msgstr ""
-"Ο κατάλογος για το μέγιστο αριθμό των πρόσφατων συνδέσεων θα εμφανιστεί."
+msgstr "Θα εμφανίζεται ο μέγιστος αριθμός πρόσφατων συνδέσεων στο μενού."
 
 #: blueman/plugins/applet/RecentConns.py:157
 #, python-format
@@ -3335,24 +3195,23 @@ msgstr "%(service)s στο %(device)s"
 
 #: blueman/plugins/applet/RecentConns.py:178
 msgid "Adapter for this connection is not available"
-msgstr "Ο προσαρμογέας για αυτή τη σύνδεση δεν είναι διαθέσιμος"
+msgstr "Ο προσαρμογέας για αυτήν τη σύνδεση δεν είναι διαθέσιμος"
 
 #: blueman/plugins/applet/RecentConns.py:191
-#, fuzzy
 msgid "Reconnect to…"
-msgstr "Γίνεται αποσύνδεση..."
+msgstr "Επανασύνδεση σε…"
 
 #: blueman/plugins/applet/NMPANSupport.py:18
 msgid ""
 "Provides support for Personal Area Networking (PAN) introduced in "
 "NetworkManager 0.8"
 msgstr ""
-"Παρέχει υποστήριξη για Personal Area Networking (PAN) το οποίο "
-"πρωτοεμφανίστηκε στον NetworkManager 0.8"
+"Παρέχει υποστήριξη για δικτύωση προσωπικού χώρου (PAN), το οποίο εισήχθη για "
+"πρώτη φορά στο NetworkManager 0.8"
 
 #: blueman/plugins/applet/DBusService.py:47
 msgid "Provides DBus API for other Blueman components"
-msgstr "Παρέχει DBus API για άλλα στοιχεία του Blueman"
+msgstr "Παρέχει το DBus API για άλλα στοιχεία του Blueman"
 
 #: blueman/plugins/applet/TransferService.py:127
 msgid "Incoming file over Bluetooth"
@@ -3382,7 +3241,7 @@ msgstr "Παρέχει δυνατότητες μεταφοράς αρχείων 
 
 #: blueman/plugins/applet/TransferService.py:180
 msgid "Configured directory for incoming files does not exist"
-msgstr "Ο ρυθμισμένος ως κατάλογος εισερχομένων αρχείων, δεν υπάρχει"
+msgstr "Δεν υπάρχει ο καθορισμένος κατάλογος εισερχόμενων αρχείων"
 
 #: blueman/plugins/applet/TransferService.py:181
 #, python-format
@@ -3390,54 +3249,54 @@ msgid ""
 "Please make sure that directory \"<b>%s</b>\" exists or configure it with "
 "blueman-services. Until then the default \"%s\" will be used"
 msgstr ""
-"Βεβαιωθείτε ότι ο κατάλογος \"<b>%s</b>\" υπάρχει ή ρυθμίστε τον με τις "
-"υπηρεσίες του blueman. Μέχρι τότε θα χρησιμοποιηθεί η προεπιλογή \"%s\""
+"Βεβαιωθείτε ότι ο κατάλογος «<b>%s</b>» υπάρχει ή διαμορφώστε τον με το "
+"blueman-services. Μέχρι τότε, θα χρησιμοποιείται η προεπιλογή «%s»"
 
 #: blueman/plugins/applet/TransferService.py:303
 msgid "File received"
-msgstr "Ελήφθη αρχείο"
+msgstr "Έγινε λήψη αρχείου"
 
 #: blueman/plugins/applet/TransferService.py:304
 #, python-format
 msgid "File %(0)s from %(1)s successfully received"
-msgstr "Το αρχείο %(0)s ελήφθη επιτυχώς από το %(1)s"
+msgstr "Έγινε επιτυχής λήψη του αρχείου «%(0)s» από το %(1)s"
 
 #: blueman/plugins/applet/TransferService.py:308
 msgid "Open"
-msgstr ""
+msgstr "Άνοιγμα"
 
 #: blueman/plugins/applet/TransferService.py:312
 msgid "Transfer failed"
-msgstr "Η μεταφορά απέτυχε"
+msgstr "Αποτυχία μεταφοράς"
 
 #: blueman/plugins/applet/TransferService.py:313
 #, python-format
 msgid "Transfer of file %(0)s failed"
-msgstr "Η μεταφορά του αρχείου %(0)s απέτυχε"
+msgstr "Η μεταφορά του αρχείου «%(0)s» απέτυχε"
 
 #: blueman/plugins/applet/TransferService.py:333
 #: blueman/plugins/applet/TransferService.py:342
 msgid "Files received"
-msgstr "Ελήφθησαν αρχεία"
+msgstr "Έγινε λήψη αρχείων"
 
 #: blueman/plugins/applet/TransferService.py:334
 #, python-format
 msgid "Received %(files)d file in the background"
 msgid_plural "Received %(files)d files in the background"
-msgstr[0] "Ελήφθη %(files)d αρχείο στο παρασκήνιο"
-msgstr[1] "Ελήφθησαν %(files)d αρχεία στο παρασκήνιο"
+msgstr[0] "Έγινε λήψη %(files)d αρχείου στο παρασκήνιο"
+msgstr[1] "Έγινε λήψη %(files)d αρχείων στο παρασκήνιο"
 
 #: blueman/plugins/applet/TransferService.py:339
 #: blueman/plugins/applet/TransferService.py:347
 msgid "Open Location"
-msgstr ""
+msgstr "Άνοιγμα τοποθεσίας"
 
 #: blueman/plugins/applet/TransferService.py:343
 #, python-format
 msgid "Received %(files)d more file in the background"
 msgid_plural "Received %(files)d more files in the background"
-msgstr[0] "Ελήφθη άλλο %(files)d αρχείο στο παρασκήνιο"
-msgstr[1] "Ελήφθησαν άλλα %(files)d αρχεία στο παρασκήνιο"
+msgstr[0] "Έγινε λήψη %(files)d ακόμη αρχείου στο παρασκήνιο"
+msgstr[1] "Έγινε λήψη %(files)d ακόμη αρχείων στο παρασκήνιο"
 
 #: blueman/plugins/applet/KillSwitch.py:37
 msgid ""
@@ -3445,24 +3304,33 @@ msgid ""
 "turning Bluetooth back on from an icon that shows its status; provided it "
 "isn't unplugged by the system, or physically."
 msgstr ""
+"Αλλάζει την κατάσταση του διακόπτη του Bluetooth, ώστε να συμφωνεί με την "
+"κατάσταση λειτουργίας του Bluetooth. Επιτρέπει την επανενεργοποίηση του "
+"Bluetooth από το εικονίδιο που εμφανίζει την κατάστασή του, εφόσον ο "
+"προσαρμογέας δεν έχει απενεργοποιηθεί από το σύστημα ούτε έχει αποσυνδεθεί."
 
 #: blueman/plugins/applet/StandardItems.py:22
 msgid "Adds standard menu items to the status icon menu"
-msgstr "Προσθέτει τυπικά στοιχεία μενού στο μενού εικονιδίων κατάστασης"
+msgstr "Προσθέτει τυπικά στοιχεία μενού στο μενού του εικονιδίου κατάστασης"
 
 #: blueman/plugins/applet/StandardItems.py:34
 msgid "Toggle the manager on clicking the system tray icon"
 msgstr ""
+"Ενεργοποίηση της εφαρμογής διαχείρισης κάνοντας κλικ στο εικονίδιο στην "
+"περιοχή εικονιδίων συστήματος"
 
 #: blueman/plugins/applet/StandardItems.py:35
 msgid ""
 "Clicking the system tray icon will toggle the manager instead of focusing on "
 "it."
 msgstr ""
+"Κάνοντας κλικ στο εικονίδιο στην περιοχή εικονιδίων συστήματος, θα γίνεται "
+"ενεργοποίηση ή απενεργοποίηση της εφαρμογής διαχείρισης, αντί για εστίαση σε "
+"αυτή."
 
 #: blueman/plugins/applet/StandardItems.py:46
 msgid "Send _Files to Device"
-msgstr "Αποστολή _Αρχείου σε Συσκευή"
+msgstr "Αποστολή αρ_χείων σε συσκευή"
 
 #: blueman/plugins/applet/StandardItems.py:51
 msgid "_Devices"
@@ -3474,22 +3342,21 @@ msgstr "Προσαρμο_γείς"
 
 #: blueman/plugins/applet/StandardItems.py:105
 msgid "applet"
-msgstr "Μικροεφαρμογή"
+msgstr "μικροεφαρμογή"
 
 #: blueman/plugins/applet/AuthAgent.py:8
 msgid "Provides passkey, authentication services for BlueZ daemon"
 msgstr ""
-"Παρέχει υπηρεσίες φράσης-κλειδιού και αυθεντικοποίησης για τον δαίμονα BlueZ"
+"Παρέχει υπηρεσίες κλειδιών πρόσβασης και αυθεντικοποίησης για τη διεργασία "
+"παρασκηνίου του BlueZ"
 
 #: blueman/plugins/applet/ExitItem.py:7
 msgid "Adds an exit menu item to quit the applet"
-msgstr ""
-"Προσθέτει ένα αντικείμενο μενού εξόδου στον κατάλογο για τερματισμό της "
-"μικροεφαρμογής"
+msgstr "Προσθέτει ένα στοιχείο μενού για τερματισμό της μικροεφαρμογής"
 
 #: blueman/plugins/applet/DhcpClient.py:15
 msgid "Provides a basic dhcp client for Bluetooth PAN connections."
-msgstr "Παρέχει ένα βασικό πελάτη dhcp για συνδέσεις Bluetooth PAN."
+msgstr "Παρέχει έναν βασικό πελάτη DHCP για συνδέσεις PAN μέσω Bluetooth."
 
 #: blueman/plugins/applet/DhcpClient.py:48
 #: blueman/plugins/applet/DhcpClient.py:56
@@ -3500,12 +3367,12 @@ msgstr "Δίκτυο Βluetooth"
 #: blueman/plugins/applet/DhcpClient.py:49
 #, python-format
 msgid "Interface %(0)s bound to IP address %(1)s"
-msgstr "Η διεπαφή %(0)s έχει αντιστοιχιστεί με την διεύθυνση IP %(1)s"
+msgstr "Η διεπαφή %(0)s συνδέθηκε στη διεύθυνση IP %(1)s"
 
 #: blueman/plugins/applet/DhcpClient.py:56
 #, python-format
 msgid "Failed to obtain an IP address on %s"
-msgstr "Αποτυχία κατά την απόκτηση διεύθυνσης IP από το %s"
+msgstr "Αποτυχία απόκτησης διεύθυνσης IP στο %s"
 
 #: blueman/plugins/applet/DhcpClient.py:61
 #, python-format
@@ -3513,40 +3380,34 @@ msgid ""
 "Trying to obtain an IP address on %s\n"
 "Please wait…"
 msgstr ""
-"Προσπάθεια λήψης μιας διεύθυνσης IP%s\n"
-"Παρακαλώ περιμένετε…"
+"Απόπειρα απόκτησης διεύθυνσης IP στο %s\n"
+"Περιμένετε…"
 
 #: blueman/plugins/applet/ShowConnected.py:22
-#, fuzzy
-#| msgid ""
-#| "Adds an indication on the status icon when Bluetooth is active and shows "
-#| "the number of connections in the tooltip."
 msgid ""
 "Adds an indication on the status icon when Bluetooth is active and shows the "
 "connections in the tooltip."
 msgstr ""
 "Προσθέτει μια ένδειξη στο εικονίδιο κατάστασης όταν το Bluetooth είναι "
-"ενεργοποιημένο και δείχνει τον αριθμό των συνδέσεων στο μήνυμα που "
-"εμφανίζεται όταν ο δρομέας του ποντικιού βρίσκεται πάνω στο εικονίδιο "
-"κατάστασης."
+"ενεργό και εμφανίζει τις συνδέσεις ως υπόδειξη."
 
 #: blueman/plugins/applet/ShowConnected.py:73
 msgid "Bluetooth Active"
-msgstr "Bluetooth Ενεργό"
+msgstr "Bluetooth: ενεργό"
 
 #: blueman/plugins/applet/ShowConnected.py:82
 #: blueman/plugins/applet/PowerManager.py:177
 msgid "Bluetooth Disabled"
-msgstr "Το Bluetooth Απενεργοποιήθηκε"
+msgstr "Bluetooth: ανενεργό"
 
 #: blueman/plugins/applet/DisconnectItems.py:14
 msgid "Adds disconnect menu items"
-msgstr ""
+msgstr "Προσθέτει στοιχεία για αποσύνδεση στο μενού"
 
 #: blueman/plugins/applet/DisconnectItems.py:40
 #, python-format
 msgid "Disconnect %s"
-msgstr ""
+msgstr "Αποσύνδεση του %s"
 
 #: blueman/plugins/applet/DiscvManager.py:16
 msgid ""
@@ -3554,11 +3415,12 @@ msgid ""
 "it is set to hidden by default"
 msgstr ""
 "Παρέχει ένα στοιχείο μενού για προσωρινή ενεργοποίηση της ορατότητας του "
-"προεπιλεγμένου προσαρμογέα, όταν αυτός κανονικά είναι ρυθμισμένος σε απόκρυψη"
+"προεπιλεγμένου προσαρμογέα, όταν αυτός είναι ρυθμισμένος να μην είναι ορατός "
+"από προεπιλογή"
 
 #: blueman/plugins/applet/DiscvManager.py:26
 msgid "Discoverable timeout"
-msgstr "Χρονικό όριο λειτουργίας ορατότητας"
+msgstr "Χρονικό όριο ορατότητας"
 
 #: blueman/plugins/applet/DiscvManager.py:27
 msgid "Amount of time in seconds discoverable mode will last"
@@ -3569,28 +3431,26 @@ msgstr ""
 #: blueman/plugins/applet/DiscvManager.py:35
 #: blueman/plugins/applet/DiscvManager.py:126
 msgid "_Make Discoverable"
-msgstr "Ορισμός ως Ανι_χνεύσιμο"
+msgstr "Ορισμός ως ανι_χνεύσιμο"
 
 #: blueman/plugins/applet/DiscvManager.py:36
 msgid "Make the default adapter temporarily visible"
-msgstr "Προσωρινή ενεργοποίηση ορατότητας προεπιλεγμένου προσαρμογέα"
+msgstr "Προσωρινή ενεργοποίηση της ορατότητας του προεπιλεγμένου προσαρμογέα"
 
 #: blueman/plugins/applet/DiscvManager.py:61
 #, python-format
 msgid "Discoverable… %ss"
-msgstr "Ανιχνεύσιμο... %ss"
+msgstr "Ανιχνεύσιμο... %s δευτ."
 
 #: blueman/plugins/applet/DiscvManager.py:63
-#, fuzzy
-#| msgid "Discoverable… %ss"
 msgid "Discoverable…"
-msgstr "Ανιχνεύσιμο... %ss"
+msgstr "Ανιχνεύσιμο…"
 
 #: blueman/plugins/applet/Menu.py:115
 msgid ""
 "Provides a menu for the applet and an API for other plugins to manipulate it"
 msgstr ""
-"Παρέχει ένα μενού για την μικροεφαρμογή και ένα API για χειρισμό της από "
+"Παρέχει ένα μενού για τη μικροεφαρμογή και ένα API για τον χειρισμό της από "
 "άλλα πρόσθετα"
 
 #: blueman/plugins/applet/PPPSupport.py:73
@@ -3599,8 +3459,8 @@ msgid ""
 "Successfully connected to <b>DUN</b> service on <b>%(0)s.</b>\n"
 "Network is now available through <b>%(1)s</b>"
 msgstr ""
-"Επιτυχής σύνδεση στην υπηρεσία <b>DUN</b> στο <b>%(0)s.</b>\n"
-"Το δίκτυο είναι τώρα διαθέσιμο μέσω <b>%(1)s</b>"
+"Έγινε επιτυχής σύνδεση στην υπηρεσία <b>DUN</b> του <b>%(0)s.</b>\n"
+"Το δίκτυο είναι πλέον διαθέσιμο μέσω <b>%(1)s</b>"
 
 #: blueman/plugins/applet/PPPSupport.py:82
 msgid "Provides basic support for connecting to the internet via DUN profile."
@@ -3619,15 +3479,6 @@ msgid "Script to execute on connection"
 msgstr "Δέσμη εντολών προς εκτέλεση κατά τη σύνδεση"
 
 #: blueman/plugins/applet/SerialManager.py:33
-#, fuzzy
-#| msgid ""
-#| "<span size=\"small\">The following arguments will be passed:\n"
-#| "Address, Name, service name, uuid16s, rfcomm node\n"
-#| "For example:\n"
-#| "AA:BB:CC:DD:EE:FF, Phone, DUN service, 0x1103, /dev/rfcomm0\n"
-#| "uuid16s are returned as a comma seperated list\n"
-#| "\n"
-#| "Upon device disconnection the script will be sent a HUP signal</span>"
 msgid ""
 "<span size=\"small\">The following arguments will be passed:\n"
 "Address, Name, service name, uuid16s, rfcomm node\n"
@@ -3637,14 +3488,14 @@ msgid ""
 "\n"
 "Upon device disconnection the script will be sent a HUP signal</span>"
 msgstr ""
-"<span size=\"small\"> Τα ακόλουθα πεδία θα προστεθούν:\n"
-"Διεύθυνση, Όνομα, όνομα υπηρεσίας, uuid16, rfcomm node\n"
-"Παραδείγματος χάριν:\n"
-"AA:BB:CC:DD:EE:FF, Τηλέφωνο, Υπηρεσία DUN, 0x1103, /dev/rfcomm0\n"
-"Τα uuid16 θα εμφανίζονται σε μια λίστα χωρισμένα με κόμματα\n"
+"<span size=\"small\">Θα προστεθούν τα εξής ορίσματα:\n"
+"Διεύθυνση, όνομα, όνομα υπηρεσίας, UUID16, κόμβος RFCOMM\n"
+"Για παράδειγμα:\n"
+"AA:BB:CC:DD:EE:FF, Τηλέφωνο, υπηρεσία DUN, 0x1103, /dev/rfcomm0\n"
+"Τα UUID16 επιστρέφονται ως λίστα χωρισμένη με κόμματα\n"
 "\n"
-"Με την αποσύνδεση της συσκευής θα αποσταλεί ένα σήμα HUP στη δέσμη εντολών</"
-"span>"
+"Κατά την αποσύνδεση της συσκευής, αποστέλλεται ένα σήμα HUP στη δέσμη "
+"εντολών</span>"
 
 #: blueman/plugins/applet/SerialManager.py:64
 msgid "Serial port connected"
@@ -3655,8 +3506,8 @@ msgstr "Η σειριακή θύρα συνδέθηκε"
 msgid ""
 "Serial port service on device <b>%s</b> now will be available via <b>%s</b>"
 msgstr ""
-"Η υπηρεσία σειριακής θύρα της συσκευής <b>%s</b> θα είναι διαθέσιμη μέσω "
-"<b>%s</b>"
+"Η υπηρεσία σειριακής θύρα της συσκευής <b>%s</b> θα είναι πλέον διαθέσιμη "
+"μέσω <b>%s</b>"
 
 #: blueman/plugins/applet/SerialManager.py:115
 msgid "Serial port connection script failed"
@@ -3668,7 +3519,7 @@ msgid ""
 "There was a problem launching script %s\n"
 "%s"
 msgstr ""
-"Υπήρξε ένα πρόβλημα κατά την εκτέλεση της δέσμης εντολών %s\n"
+"Προέκυψε πρόβλημα κατά την εκκίνηση της δέσμης εντολών %s\n"
 "%s"
 
 #: blueman/plugins/applet/PowerManager.py:32
@@ -3678,7 +3529,7 @@ msgstr "Ελέγχει την κατάσταση ενέργειας του πρ�
 #: blueman/plugins/applet/PowerManager.py:42
 #: blueman/plugins/applet/PowerManager.py:155
 msgid "<b>Turn Bluetooth _Off</b>"
-msgstr "<b>_Απενεργοποίηση Bluetooth</b>"
+msgstr "<b>Απενεργ_οποίηση Bluetooth</b>"
 
 #: blueman/plugins/applet/PowerManager.py:44
 #: blueman/plugins/applet/PowerManager.py:157
@@ -3687,7 +3538,7 @@ msgstr "Απενεργοποίηση όλων των προσαρμογέων"
 
 #: blueman/plugins/applet/PowerManager.py:146
 msgid "<b>Turn Bluetooth _On</b>"
-msgstr "<b>_Ενεργοποίηση Bluetooth</b>"
+msgstr "<b>Ενεργ_οποίηση Bluetooth</b>"
 
 #: blueman/plugins/applet/PowerManager.py:148
 msgid "Turn on all adapters"
@@ -3698,21 +3549,17 @@ msgid ""
 "Temporarily suspends the screensaver when a bluetooth game controller is "
 "connected."
 msgstr ""
-"Διακόπτει προσωρινά την προφύλαξη οθόνης όταν ένα χειριστήριο παιχνιδιού "
-"συνδεθεί."
+"Διακόπτει προσωρινά την προφύλαξη οθόνης όταν είναι συνδεδεμένο ένα "
+"χειριστήριο παιχνιδιού."
 
 #: blueman/plugins/applet/StatusNotifierItem.py:10
-#, fuzzy
 msgid "Provides a StatusNotifierItem to show a statusicon"
 msgstr ""
-"Χρησιμοποιεί τη βιβλιοθήκη libappindicator για να εμφανίσει ένα εικονίδιο "
-"κατάστασης"
+"Παρέχει ένα StatusNotifierItem για την εμφάνιση ενός εικονιδίου κατάστασης"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:19
-#, fuzzy
-#| msgid "Adds standard menu items to the status icon menu"
 msgid "Adds audio profile selector to the status icon menu"
-msgstr "Προσθέτει τυπικά στοιχεία μενού στο μενού εικονιδίων κατάστασης"
+msgstr "Προσθέτει ένα μενού επιλογής προφίλ ήχου στο εικονίδιο κατάστασης"
 
 #: blueman/plugins/applet/PulseAudioProfile.py:83
 #, python-format
@@ -3731,7 +3578,8 @@ msgstr "Μη έγκυρη διεύθυνση IP"
 #, python-format
 msgid "IP address conflicts with interface %s which has the same address"
 msgstr ""
-"Η διεύθυνση IP συγκρούεται με τη διεπαφή %s η οποία έχει την ίδια διεύθυνση"
+"Η διεύθυνση IP έρχεται σε διένεξη με τη διεπαφή %s, η οποία έχει την ίδια "
+"διεύθυνση"
 
 #: blueman/plugins/services/Network.py:103
 #, python-format
@@ -3740,14 +3588,14 @@ msgid ""
 "configuration  %s/%s\n"
 "This may cause incorrect network behavior"
 msgstr ""
-"Η διεύθυνση IP επικαλύπτεται από τις ρυθμίσεις της διεπαφής %s, η οποία έχει "
-"παράμετρους %s/%s\n"
-"Αυτό μπορεί να προκαλέσει εσφαλμένη συμπεριφορά δικτύου"
+"Η διεύθυνση IP επικαλύπτεται με το υποδίκτυο της διεπαφής %s, η οποία έχει "
+"την εξής διαμόρφωση: %s/%s.\n"
+"Αυτό ενδέχεται να προκαλέσει προβλήματα στη λειτουργία του δικτύου"
 
 #: blueman/plugins/services/Network.py:228
 #: blueman/plugins/services/Network.py:237
 msgid "Not currently supported with this setup"
-msgstr "Δεν υποστηρίζονται αυτή τη στιγμή με αυτή τη ρύθμιση"
+msgstr "Δεν υποστηρίζονται με αυτήν τη διαμόρφωση"
 
 #: blueman/plugins/services/Transfer.py:14
 msgid "Transfer"
@@ -3760,32 +3608,32 @@ msgstr ""
 
 #: blueman/services/DialupNetwork.py:23
 msgid "Dialup Settings"
-msgstr "Ρυθμίσεις Dialup"
+msgstr "Ρυθμίσεις δικτύωσης μέσω τηλεφώνου"
 
 #: blueman/services/meta/SerialService.py:45
 #, python-format
 msgid "Serial Port %s"
-msgstr "Σειριακή Θύρα %s"
+msgstr "Σειριακή θύρα %s"
 
 #: blueman/services/meta/NetworkService.py:51
 msgid "Renew IP Address"
-msgstr "Ανανέωση Διεύθυνσης IP"
+msgstr "Ανανέωση διεύθυνσης IP"
 
 #: data/blueman-adapters.desktop.in:4
 msgid "Set Bluetooth Adapter Properties"
-msgstr "Ρύθμιση προσαρμογέα Bluetooth"
+msgstr "Ορισμός ιδιοτήτων προσαρμογέα Bluetooth"
 
 #: data/blueman.desktop.in:3
 msgid "Blueman Applet"
-msgstr "Εφαρμογή blueman"
+msgstr "Μικροεφαρμογή Blueman"
 
 #: data/blueman.desktop.in:4 data/blueman-manager.desktop.in:4
 msgid "Blueman Bluetooth Manager"
-msgstr "Διαχειριστής bluetooth του blueman"
+msgstr "Διαχείριση Bluetooth Blueman"
 
 #: data/blueman-manager.desktop.in:3
 msgid "Bluetooth Manager"
-msgstr "Διαχειριστής Bluetooth"
+msgstr "Διαχείριση Bluetooth"
 
 #: data/thunar-sendto-blueman.desktop.in:5
 msgid "Bluetooth Device"
@@ -3813,7 +3661,7 @@ msgstr "Εκκίνηση υπηρεσίας ΡΡΡ"
 
 #: data/configs/org.blueman.policy.in:29
 msgid "Launching PPP daemon requires privileges"
-msgstr "Η εκκίνηση της υπηρεσίας ΡΡΡ απαιτεί διακαιώματα"
+msgstr "Η εκκίνηση της διεργασίας παρασκηνίου ΡΡΡ απαιτεί δικαιώματα"
 
 #: data/configs/org.blueman.policy.in:37
 msgid "Set RfKill State"
@@ -3821,7 +3669,7 @@ msgstr "Ορισμός κατάστασης RfKill"
 
 #: data/configs/org.blueman.policy.in:38
 msgid "Setting RfKill State requires privileges"
-msgstr "Η ρύθμιση κατάστασης RfKill απαιτεί δικαιώματα"
+msgstr "Η ρύθμιση της κατάστασης του RfKill απαιτεί δικαιώματα"
 
 #~ msgid "Recent _Connections"
 #~ msgstr "Πρόσφατες _Συνδέσεις"
