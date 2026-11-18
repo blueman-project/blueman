@@ -38,20 +38,7 @@ if __name__ == '__main__':
                         help=_("Files to be send to the bluetooth device"))
 
     args = parser.parse_args()
-
-    if args.LEVEL.upper() == "DEBUG":
-        log_level = logging.DEBUG
-    elif args.LEVEL.upper() == "INFO":
-        log_level = logging.INFO
-    elif args.LEVEL.upper() == "WARNING":
-        log_level = logging.WARNING
-    elif args.LEVEL.upper() == "ERROR":
-        log_level = logging.ERROR
-    elif args.LEVEL.upper() == "CRITICAL":
-        log_level = logging.CRITICAL
-    else:
-        log_level = logging.WARNING
-
+    log_level = logging.getLevelName(args.LEVEL.upper())
     create_logger(log_level, "blueman-sendto", syslog=args.syslog)
 
     set_proc_title()
