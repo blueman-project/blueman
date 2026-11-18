@@ -225,9 +225,8 @@ class ManagerDeviceList(DeviceList):
         posdata = self.get_path_at_pos(int(cast(Gdk.EventButton, event).x), int(cast(Gdk.EventButton, event).y))
         if posdata is None:
             return False
-        else:
-            path = posdata[0]
-            assert path is not None
+        path = posdata[0]
+        assert path is not None
 
         tree_iter = self.filter.get_iter(path)
         assert tree_iter is not None
@@ -239,6 +238,9 @@ class ManagerDeviceList(DeviceList):
 
         if self.menu is None:
             self.menu = ManagerDeviceMenu(self.Blueman)
+
+        if self.menu.get_op(row["device"]):
+            return False
 
         if event.type == Gdk.EventType._2BUTTON_PRESS and cast(Gdk.EventButton, event).button == 1:
             if self.menu.show_generic_connect_calc(row["device"]['UUIDs']):
