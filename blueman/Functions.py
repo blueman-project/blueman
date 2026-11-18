@@ -23,6 +23,7 @@ from collections.abc import Callable, Iterable
 import re
 import os
 import pathlib
+import shutil
 import sys
 import errno
 from gettext import gettext as _
@@ -49,6 +50,7 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository import Gio
+from gi.repository import GLib
 
 __all__ = ["check_bluetooth_status", "launch", "setup_icon_path", "adapter_path_to_name", "e_", "bmexit",
            "format_bytes", "create_menuitem", "have", "set_proc_title", "create_logger", "create_parser", "open_rfcomm",
@@ -59,9 +61,8 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
     try:
         applet = AppletService()
         powermanager = AppletPowerManagerService()
-    except DBusProxyFailed as e:
-        logging.exception(e)
-        print("Blueman applet needs to be running")
+    except DBusProxyFailed:
+        logging.exception("Blueman applet needs to be running")
         exitfunc()
         return
 
@@ -84,7 +85,7 @@ def check_bluetooth_status(message: str, exitfunc: Callable[[], Any]) -> None:
 
     powermanager.set_bluetooth_status(True)
     if not powermanager.get_bluetooth_status():
-        print('Failed to enable bluetooth')
+        logging.error("Failed to enable bluetooth")
         exitfunc()
 
 
@@ -95,8 +96,17 @@ def launch(
     icon_name: str | None = None,
     name: str = "blueman",
     sn: bool = True,
+    args: Iterable[str] | None = None,
 ) -> bool:
-    """Launch a gui app with startup notification"""
+    """Launch a gui app with startup notification.
+
+    ``cmd`` is the program to run. Pass options as an ``args`` iterable rather
+    than embedding them in ``cmd``: each program token and argument is then
+    shell-quoted individually so argument boundaries follow an argv contract
+    instead of GLib command-line parsing. The legacy form, where ``cmd`` itself
+    is a full command line, is still accepted when ``args`` is omitted but is
+    deprecated.
+    """
     context = None
     gtktimestamp = Gtk.get_current_event_time()
     if gtktimestamp == 0:
@@ -122,6 +132,13 @@ def launch(
     else:
         command = pathlib.Path(cmd).expanduser()
 
+    if args is not None:
+        # argv contract: quote each token so spaces/quotes/separators in
+        # arguments cannot cross argument boundaries.
+        command_line = " ".join(GLib.shell_quote(arg) for arg in (command.as_posix(), *args))
+    else:
+        command_line = command.as_posix()
+
     if paths:
         files: list[Gio.File] | None = [Gio.File.new_for_commandline_arg(p) for p in paths]
     else:
@@ -130,7 +147,7 @@ def launch(
     if icon_name and context is not None:
         context.set_icon_name(icon_name)
 
-    appinfo = Gio.AppInfo.create_from_commandline(command.as_posix(), name, flags)
+    appinfo = Gio.AppInfo.create_from_commandline(command_line, name, flags)
     launched: bool = appinfo.launch(files, context)
 
     if not launched:
@@ -168,10 +185,10 @@ def format_bytes(size: float) -> tuple[float, str]:
     if size < 1024:
         ret = size
         suffix = _("B")
-    elif 1024 < size < (1024 * 1024):
+    elif size < (1024 * 1024):
         ret = size / 1024
         suffix = _("KB")
-    elif (1024 * 1024) < size < (1024 * 1024 * 1024):
+    elif size < (1024 * 1024 * 1024):
         ret = size / (1024 * 1024)
         suffix = _("MB")
     else:
@@ -207,23 +224,39 @@ def create_menuitem(
 
 
 def have(t: str) -> pathlib.Path | None:
-    pathstr = os.environ['PATH'] + ':/sbin:/usr/sbin'
-    for path in [pathlib.Path(p, t) for p in pathstr.split(":")]:
-        if path.exists() and os.access(path, os.EX_OK):
-            return path
-    return None
+    search_path = os.environ.get("PATH", os.defpath)
+    # System binaries such as dhcp clients commonly live in sbin dirs that are
+    # not on a desktop session's PATH; append them if missing.
+    for sbin in ("/sbin", "/usr/sbin"):
+        if sbin not in search_path.split(os.pathsep):
+            search_path += os.pathsep + sbin
+
+    found = shutil.which(t, path=search_path)
+    return pathlib.Path(found) if found else None
 
 
 def set_proc_title(name: str | None = None) -> int:
-    """Set the process title"""
+    """Set the process title via ``prctl(PR_SET_NAME)``.
+
+    Only Linux exposes ``prctl`` through glibc; on other platforms this is a
+    no-op returning 0. Returns -1 if libc/prctl cannot be reached.
+    """
 
     if not name:
         name = pathlib.Path(sys.argv[0]).name
 
-    libc = cdll.LoadLibrary('libc.so.6')
-    buff = create_string_buffer(len(name) + 1)
-    buff.value = name.encode("UTF-8")
-    ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
+    if not sys.platform.startswith("linux"):
+        logging.debug("set_proc_title is only supported on Linux")
+        return 0
+
+    try:
+        libc = cdll.LoadLibrary('libc.so.6')
+        buff = create_string_buffer(len(name) + 1)
+        buff.value = name.encode("UTF-8")
+        ret: int = libc.prctl(15, byref(buff), 0, 0, 0)
+    except (OSError, AttributeError):
+        logging.exception("Failed to set process title")
+        return -1
 
     if ret != 0:
         logging.error("Failed to set process title")
@@ -243,6 +276,12 @@ def create_logger(
     date_fmt: str | None = None,
     syslog: bool = False,
 ) -> logging.Logger:
+    """Configure and return the root logger for an entry point.
+
+    Used by every blueman binary (see ``apps/*.in``) to set the process-wide
+    log level, name, and format. With ``syslog`` enabled a SysLogHandler is
+    added when ``/dev/log`` is available, otherwise logging stays on stderr.
+    """
     if log_format is None:
         log_format = logger_format
     if date_fmt is None:
@@ -253,10 +292,16 @@ def create_logger(
     logger.name = name
 
     if syslog:
-        syslog_handler = logging.handlers.SysLogHandler(address="/dev/log")
-        syslog_formatter = logging.Formatter(syslog_logger_format)
-        syslog_handler.setFormatter(syslog_formatter)
-        logger.addHandler(syslog_handler)
+        try:
+            syslog_handler = logging.handlers.SysLogHandler(address="/dev/log")
+        except OSError:
+            # /dev/log is absent on non-Linux platforms and minimal containers;
+            # the basicConfig stderr handler still provides logging.
+            logging.warning("Syslog socket /dev/log unavailable, logging to stderr only")
+        else:
+            syslog_formatter = logging.Formatter(syslog_logger_format)
+            syslog_handler.setFormatter(syslog_formatter)
+            logger.addHandler(syslog_handler)
 
     return logger
 
@@ -266,11 +311,19 @@ def create_parser(
     syslog: bool = True,
     loglevel: bool = True,
 ) -> argparse.ArgumentParser:
+    """Build the shared argument parser used by every blueman entry point.
+
+    Adds the common ``--loglevel`` and ``--syslog`` options (each toggleable)
+    so all binaries in ``apps/*.in`` expose a consistent CLI surface.
+    """
     if parser is None:
         parser = argparse.ArgumentParser()
 
     if loglevel:
-        parser.add_argument("--loglevel", dest="LEVEL", default="warning")
+        parser.add_argument(
+            "--loglevel", dest="LEVEL", default="warning", type=str.lower,
+            choices=["debug", "info", "warning", "error", "critical"],
+            help="Logging verbosity (case-insensitive); defaults to warning.")
 
     if syslog:
         parser.add_argument("--syslog", dest="syslog", action="store_true")
@@ -327,7 +380,7 @@ def get_local_interfaces() -> dict[str, tuple[str, str | None]]:
                 mask = _netmask_for_ifacename(name, sock)
                 ip_dict[name] = (ipaddr, mask)
     except OSError:
-        logging.error('Socket creation failed', exc_info=True)
+        logging.exception('Socket creation failed')
         return {}
 
     return ip_dict
@@ -337,24 +390,25 @@ def bmexit(msg: str | int | None = None) -> None:
     raise SystemExit(msg)
 
 
-def log_system_info() -> None:
-    def parse_os_release(path: Path) -> dict[str, str]:
-        release_dict = {}
-        try:
-            with path.open() as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith("#"):
-                        continue
-                    try:
-                        key, val = line.split("=")
-                        release_dict[key] = val.strip("\"")
-                    except ValueError:
-                        logging.error(f"Unable to parse line: {line}")
-        except OSError:
-            logging.error(f"Could not read {path.as_uri()}")
-        return release_dict
+def parse_os_release(path: Path) -> dict[str, str]:
+    release_dict = {}
+    try:
+        with path.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                key, sep, val = line.partition("=")
+                if not sep:
+                    logging.error(f"Unable to parse line: {line}")
+                    continue
+                release_dict[key] = val.strip("\"")
+    except OSError:
+        logging.error(f"Could not read {path.as_uri()}")
+    return release_dict
 
+
+def log_system_info() -> None:
     try:
         complete = subprocess.run(
             [BLUETOOTHD_PATH, "-v"],
