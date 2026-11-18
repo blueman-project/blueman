@@ -24,7 +24,7 @@ class ManagerMenu:
         self.blueman = blueman
         self.Config = Gio.Settings(schema_id="org.blueman.general")
 
-        self.adapter_items: dict[str, tuple[Gtk.RadioMenuItem, Adapter]] = {}
+        self.adapter_items: dict[ObjectPath, tuple[Gtk.RadioMenuItem, Adapter]] = {}
         self._adapters_group: Sequence[Gtk.RadioMenuItem] = []
         self._insert_adapter_item_pos = 2
 
@@ -98,9 +98,9 @@ class ManagerMenu:
         else:
             self.item_device.props.sensitive = False
 
-    def on_adapter_property_changed(self, _adapter: Adapter, name: str, value: Any, path: str) -> None:
+    def on_adapter_property_changed(self, _adapter: Adapter, name: str, value: Any, object_path: ObjectPath) -> None:
         if name == "Name" or name == "Alias":
-            item = self.adapter_items[path][0]
+            item = self.adapter_items[object_path][0]
             item.set_label(value)
         elif name == "Discovering":
             if self.Search:
@@ -142,8 +142,8 @@ class ManagerMenu:
 
         self._update_power()
 
-    def on_adapter_removed(self, _devicelist: ManagerDeviceList, adapter_path: str) -> None:
-        item, adapter = self.adapter_items.pop(adapter_path)
+    def on_adapter_removed(self, _devicelist: ManagerDeviceList, object_path: ObjectPath) -> None:
+        item, adapter = self.adapter_items.pop(object_path)
         menu = self.item_adapter.get_submenu()
         assert isinstance(menu, Gtk.Menu)
 

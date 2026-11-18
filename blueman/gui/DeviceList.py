@@ -48,7 +48,7 @@ class DeviceList(GenericList):
             tabledata = []
 
         # cache for fast lookup in the list
-        self.path_to_row: dict[str, Gtk.TreeRowReference] = {}
+        self.path_to_row: dict[ObjectPath, Gtk.TreeRowReference] = {}
 
         self.manager = Manager()
         self._managerhandlers: list[int] = []
@@ -98,25 +98,25 @@ class DeviceList(GenericList):
             self.manager.disconnect(handler)
         super().destroy()
 
-    def __on_manager_signal(self, _manager: Manager, path: ObjectPath, signal_name: str) -> None:
+    def __on_manager_signal(self, _manager: Manager, object_path: ObjectPath, signal_name: str) -> None:
         if signal_name == 'adapter-removed':
-            if path == self.__adapter_path:
+            if object_path == self.__adapter_path:
                 self.clear()
                 self.Adapter = None
                 self.set_adapter()
-            self.emit("adapter-removed", path)
+            self.emit("adapter-removed", object_path)
 
         if signal_name == 'adapter-added':
             if self.Adapter is None:
-                self.set_adapter(path)
+                self.set_adapter(object_path)
 
-            self.emit("adapter-added", path)
+            self.emit("adapter-added", object_path)
 
         if signal_name == 'device-created':
-            self.device_add_event(path)
+            self.device_add_event(object_path)
 
         if signal_name == 'device-removed':
-            self.device_remove_event(path)
+            self.device_remove_event(object_path)
 
     def on_selection_changed(self, selection: Gtk.TreeSelection) -> None:
         model, tree_iter = selection.get_selected()
@@ -126,8 +126,8 @@ class DeviceList(GenericList):
             dev = row["device"]
             self.emit("device-selected", dev, tree_iter)
 
-    def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, path: ObjectPath) -> None:
-        if not self.Adapter or self.Adapter.get_object_path() != path:
+    def _on_property_changed(self, _adapter: AnyAdapter, key: str, value: object, object_path: ObjectPath) -> None:
+        if not self.Adapter or self.Adapter.get_object_path() != object_path:
             return
 
         if key == "Discovering" and not value:
@@ -135,8 +135,8 @@ class DeviceList(GenericList):
 
         self.emit("adapter-property-changed", self.Adapter, (key, value))
 
-    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, path: ObjectPath) -> None:
-        tree_iter = self.find_device_by_path(path)
+    def _on_device_property_changed(self, _device: AnyDevice, key: str, value: object, object_path: ObjectPath) -> None:
+        tree_iter = self.find_device_by_path(object_path)
 
         if tree_iter is not None:
             dev = self.get(tree_iter, "device")["device"]
@@ -303,7 +303,7 @@ class DeviceList(GenericList):
             return None
 
     def do_cache(self, tree_iter: Gtk.TreeIter, kwargs: dict[str, Any]) -> None:
-        object_path = None
+        object_path: ObjectPath | None = None
 
         if "device" in kwargs:
             if kwargs["device"]:
@@ -313,7 +313,7 @@ class DeviceList(GenericList):
             if kwargs["dbus_path"]:
                 object_path = kwargs['dbus_path']
             else:
-                existing = self.get(tree_iter, "dbus_path")["dbus_path"]
+                existing: ObjectPath = self.get(tree_iter, "dbus_path")["dbus_path"]
                 if existing is not None:
                     del self.path_to_row[existing]
 

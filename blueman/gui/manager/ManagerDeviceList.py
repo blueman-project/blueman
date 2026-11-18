@@ -168,9 +168,9 @@ class ManagerDeviceList(DeviceList):
 
         context.finish(True, False, time)
 
-        path = self.get_path_at_pos(x, y)
-        if path:
-            tree_iter = self.get_iter(path[0])
+        tree_path = self.get_path_at_pos(x, y)
+        if tree_path:
+            tree_iter = self.get_iter(tree_path[0])
             assert tree_iter is not None
             device = self.get(tree_iter, "device")["device"]
             command = f"blueman-sendto --device={device['Address']}"
@@ -183,19 +183,19 @@ class ManagerDeviceList(DeviceList):
     def drag_motion(self, _widget: Gtk.Widget, drag_context: Gdk.DragContext, x: int, y: int, timestamp: int) -> bool:
         result = self.get_path_at_pos(x, y)
         if result is not None:
-            path = result[0]
-            assert path is not None
-            path = self.filter.convert_path_to_child_path(path)
-            if path is None:
+            tree_path = result[0]
+            assert tree_path is not None
+            tree_path = self.filter.convert_path_to_child_path(tree_path)
+            if tree_path is None:
                 return False
 
-            if not self.selection.path_is_selected(path):
-                tree_iter = self.get_iter(path)
+            if not self.selection.path_is_selected(tree_path):
+                tree_iter = self.get_iter(tree_path)
                 assert tree_iter is not None
                 has_obj_push = self._has_objpush(self.get(tree_iter, "device")["device"])
                 if has_obj_push:
                     Gdk.drag_status(drag_context, Gdk.DragAction.COPY, timestamp)
-                    self.set_cursor(path)
+                    self.set_cursor(tree_path)
                     return True
                 else:
                     Gdk.drag_status(drag_context, Gdk.DragAction.DEFAULT, timestamp)
@@ -226,10 +226,10 @@ class ManagerDeviceList(DeviceList):
         if posdata is None:
             return False
         else:
-            path = posdata[0]
-            assert path is not None
+            tree_path = posdata[0]
+            assert tree_path is not None
 
-        tree_iter = self.filter.get_iter(path)
+        tree_iter = self.filter.get_iter(tree_path)
         assert tree_iter is not None
         child_iter = self.filter.convert_iter_to_child_iter(tree_iter)
         assert child_iter is not None
@@ -551,17 +551,17 @@ class ManagerDeviceList(DeviceList):
         return fader
 
     def tooltip_query(self, _tw: Gtk.Widget, x: int, y: int, _kb: bool, tooltip: Gtk.Tooltip) -> bool:
-        path = self.get_path_at_pos(x, y)
-        if path is None:
+        tree_path = self.get_path_at_pos(x, y)
+        if tree_path is None:
             return False
 
-        if path[0] != self.tooltip_row or path[1] != self.tooltip_col:
-            self.tooltip_row = path[0]
-            self.tooltip_col = path[1]
+        if tree_path[0] != self.tooltip_row or tree_path[1] != self.tooltip_col:
+            self.tooltip_row = tree_path[0]
+            self.tooltip_col = tree_path[1]
             return False
 
-        if path[1] == self.view_columns["device_surface"]:
-            tree_iter = self.get_iter(path[0])
+        if tree_path[1] == self.view_columns["device_surface"]:
+            tree_iter = self.get_iter(tree_path[0])
             assert tree_iter is not None
 
             row = self.get(tree_iter, "connected", "trusted", "paired", "blocked")
@@ -581,14 +581,14 @@ class ManagerDeviceList(DeviceList):
             else:
                 return False
 
-            self.tooltip_row = path[0]
-            self.tooltip_col = path[1]
+            self.tooltip_row = tree_path[0]
+            self.tooltip_col = tree_path[1]
             return True
 
-        elif path[1] == self.view_columns["battery_pb"] \
-                or path[1] == self.view_columns["tpl_pb"] \
-                or path[1] == self.view_columns["rssi_pb"]:
-            tree_iter = self.get_iter(path[0])
+        elif tree_path[1] == self.view_columns["battery_pb"] \
+                or tree_path[1] == self.view_columns["tpl_pb"] \
+                or tree_path[1] == self.view_columns["rssi_pb"]:
+            tree_iter = self.get_iter(tree_path[0])
             assert tree_iter is not None
 
             dt = self.get(tree_iter, "connected")["connected"]
@@ -602,7 +602,7 @@ class ManagerDeviceList(DeviceList):
             tpl = self.get(tree_iter, "tpl")["tpl"]
 
             if battery != 0:
-                if path[1] == self.view_columns["battery_pb"]:
+                if tree_path[1] == self.view_columns["battery_pb"]:
                     lines.append(f"<b>Battery: {int(battery)}%</b>")
                 else:
                     lines.append(f"Battery: {int(battery)}%")
@@ -619,7 +619,7 @@ class ManagerDeviceList(DeviceList):
                 else:
                     rssi_state = _("Too much")
 
-                if path[1] == self.view_columns["rssi_pb"]:
+                if tree_path[1] == self.view_columns["rssi_pb"]:
                     lines.append(_("<b>Received Signal Strength: %(rssi)u%%</b> <i>(%(rssi_state)s)</i>") %
                                  {"rssi": rssi, "rssi_state": rssi_state})
                 else:
@@ -638,7 +638,7 @@ class ManagerDeviceList(DeviceList):
                 else:
                     tpl_state = _("Very High")
 
-                if path[1] == self.view_columns["tpl_pb"]:
+                if tree_path[1] == self.view_columns["tpl_pb"]:
                     lines.append(_("<b>Transmit Power Level: %(tpl)u%%</b> <i>(%(tpl_state)s)</i>") %
                                  {"tpl": tpl, "tpl_state": tpl_state})
                 else:
@@ -646,8 +646,8 @@ class ManagerDeviceList(DeviceList):
                                  {"tpl": tpl, "tpl_state": tpl_state})
 
             tooltip.set_markup("\n".join(lines))
-            self.tooltip_row = path[0]
-            self.tooltip_col = path[1]
+            self.tooltip_row = tree_path[0]
+            self.tooltip_col = tree_path[1]
             return True
         return False
 
