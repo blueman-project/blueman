@@ -1,6 +1,7 @@
 from gettext import gettext as _
 import atexit
 import os
+import sys
 import time
 import logging
 from argparse import Namespace
@@ -44,15 +45,21 @@ class SendTo:
 
         self.device: Device | None = None
         self._manager = manager = Manager()
-        self._manager.connect_signal("adapter-added", self.__on_manager_signal, "adapter-added")
-        self._manager.connect_signal("adapter-removed", self.__on_manager_signal, "adapter-removed")
-        self._manager.connect_signal("device-created", self.__on_manager_signal, "device-added")
-        self._manager.connect_signal("device-removed", self.__on_manager_signal, "device-removed")
+        self._setup_signal_handlers(self._manager, {
+            "adapter-added": (self.__on_manager_signal, "adapter-added"),
+            "adapter-removed": (self.__on_manager_signal, "adapter-removed"),
+            "device-created": (self.__on_manager_signal, "device-added"),
+            "device-removed": (self.__on_manager_signal, "device-removed"),
+        })
 
         self.__any_adapter = AnyAdapter()
-        self.__any_adapter.connect_signal("property-changed", self.__on_adapter_property_changed)
+        self._setup_signal_handlers(self.__any_adapter, {
+            "property-changed": (self.__on_adapter_property_changed,),
+        })
         self.__any_device = AnyDevice()
-        self.__any_device.connect_signal("property-changed", self.__on_device_property_changed)
+        self._setup_signal_handlers(self.__any_device, {
+            "property-changed": (self.__on_device_property_changed,),
+        })
 
         adapter: Adapter | None = None
         adapters = manager.get_adapters()
@@ -60,12 +67,22 @@ class SendTo:
 
         if len(adapters) == 0:
             logging.error("Error: No Adapters present")
+            dialog = ErrorDialog(
+                _("No Bluetooth adapters found"),
+                _("Connect or enable a Bluetooth adapter and try sending the file(s) again."),
+                icon_name="blueman")
+            dialog.run()
+            dialog.destroy()
             bmexit()
 
         if parsed_args.source is not None:
             try:
                 adapter = manager.get_adapter(parsed_args.source)
             except DBusNoSuchAdapterError:
+                # Tell the CLI user their -s/--source choice was not found and
+                # is being ignored, instead of only logging to the console.
+                print(f"Unknown adapter {parsed_args.source!r}, falling back to the first available adapter",
+                      file=sys.stderr)
                 logging.error("Unknown adapter, trying first available")
 
         if adapter is None:
@@ -106,6 +123,14 @@ class SendTo:
             self.do_send()
             self.__cleanup()
 
+    @staticmethod
+    def _setup_signal_handlers(source: GObject.Object, handlers: dict[str, tuple[Any, ...]]) -> None:
+        """Connect each signal to its (callback, *args), replacing repeated
+        connect_signal boilerplate. connect_signal is an alias of
+        GObject.connect, so the connection semantics are unchanged."""
+        for signal_name, (callback, *args) in handlers.items():
+            source.connect(signal_name, callback, *args)
+
     def __on_manager_signal(self, _manager: Manager, object_path: ObjectPath, signal_name: str) -> None:
         logging.debug(f"{object_path} {signal_name}")
         match signal_name:
@@ -137,10 +162,7 @@ class SendTo:
 
     def _has_objpush(self, object_path: ObjectPath) -> bool:
         device = Device(obj_path=object_path)
-        for uuid in device["UUIDs"]:
-            if ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID:
-                return True
-        return False
+        return any(ServiceUUID(uuid).short_uuid == OBEX_OBJPUSH_SVCLASS_ID for uuid in device["UUIDs"])
 
     def _start_discovery(self, from_timer: bool = False) -> bool:
         for adapter in self._manager.get_adapters():
@@ -282,8 +304,8 @@ class Sender(Gtk.Dialog):
             self.obex_manager.connect_signal('session-added', self.on_session_added)
             self.obex_manager.connect_signal('session-removed', self.on_session_removed)
         except GLib.Error as e:
-            if 'StartServiceByName' in e.message:
-                logging.debug(e.message)
+            if 'StartServiceByName' in str(e):
+                logging.debug(str(e))
                 parent = self.get_toplevel()
                 assert isinstance(parent, Gtk.Container)
                 d = ErrorDialog(_("obexd not available"), _("Failed to autostart obex service. Make sure the obex "
@@ -304,14 +326,19 @@ class Sender(Gtk.Dialog):
         logging.info(f"Sending to {device['Address']}")
         self.l_dest.props.label = device.display_name
 
-        # Stop discovery if discovering and let adapter settle for a second
+        # Stop discovery if discovering and let the adapter settle for a second
+        # before creating the session, without blocking the UI thread.
         if self.adapter["Discovering"]:
             self.adapter.stop_discovery()
-            time.sleep(1)
-
-        self.create_session()
+            GLib.timeout_add_seconds(1, self._create_session_timeout)
+        else:
+            self.create_session()
 
         self.show()
+
+    def _create_session_timeout(self) -> bool:
+        self.create_session()
+        return False  # one-shot timer
 
     def create_session(self) -> None:
         self.client.create_session(self.device['Address'], self.adapter["Address"])
@@ -357,24 +384,28 @@ class Sender(Gtk.Dialog):
 
         self._last_bytes = progress
 
-        tm = time.time()
+        # Monotonic clock: a wall-clock step (NTP/manual) must not stall or spam
+        # the speed/ETA throttle.
+        tm = time.monotonic()
         if tm - self._last_update > 0.5:
             spd = self.speed.calc(self.total_transferred)
             (size, units) = format_bytes(spd)
-            try:
+            if spd > 0:
                 x = ((self.total_bytes - self.total_transferred) / spd) + 1
                 if x > 60:
                     x /= 60
                     eta = ngettext("%(minutes)d Minute", "%(minutes)d Minutes", round(x)) % {"minutes": round(x)}
                 else:
                     eta = ngettext("%(seconds)d Second", "%(seconds)d Seconds", round(x)) % {"seconds": round(x)}
-            except ZeroDivisionError:
+            else:
+                logging.debug("Speed is zero, cannot estimate ETA")
                 eta = None
 
             self._update_pb_text(size, units, eta)
             self._last_update = tm
 
-        self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
+        if self.total_bytes > 0:
+            self.pb.props.fraction = float(self.total_transferred) / self.total_bytes
 
     def on_transfer_completed(self, _transfer: Transfer) -> None:
         del self.files[-1]
