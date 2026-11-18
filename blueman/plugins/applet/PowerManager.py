@@ -35,6 +35,24 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     __icon__ = "gnome-power-manager-symbolic"
     __dbus_iface_name__ = "org.blueman.Applet.PowerManager"
 
+    __gsettings__ = {
+        "schema": "org.blueman.plugins.powermanager",
+        "path": None
+    }
+
+    __options__ = {
+        "last-power-state": {
+            "type": bool,
+            "default": False
+        },
+        "restore-power-state": {
+            "type": bool,
+            "default": False,
+            "name": "Restore power state",
+            "desc": "Restore the last known power state of bluetooth."
+        }
+    }
+
     class State(Enum):
         ON = 2
         OFF = 1
@@ -57,14 +75,16 @@ class PowerManager(AppletPlugin, StatusIconProvider):
     def on_unload(self) -> None:
         self.parent.Plugins.Menu.unregister(self)
 
-    @property
-    def CurrentState(self) -> bool:
-        return self.current_state
-
     def on_manager_state_changed(self, state: bool) -> None:
         if state:
             def timeout() -> bool:
-                self.request_power_state(self.get_adapter_state())
+                if self.get_option("restore-power-state"):
+                    new_power_state = self.get_option("last-power-state")
+                    logging.info(f"Restoring last known bluetooth power state {new_power_state}")
+                else:
+                    new_power_state = self.get_adapter_state()
+
+                self.request_power_state(new_power_state)
                 return False
 
             GLib.timeout_add(1000, timeout)
@@ -85,7 +105,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
 
             self.adapter_state = state
         except Exception:
-            logging.error("Exception occurred", exc_info=True)
+            logging.error(f"Failed to set new power state: {state}", exc_info=True)
 
     class Callback:
         def __init__(self, parent: "PowerManager", state: bool):
@@ -166,6 +186,7 @@ class PowerManager(AppletPlugin, StatusIconProvider):
         if self.current_state != new_state:
             logging.info(f"Signalling {new_state}")
             self.current_state = new_state
+            self.set_option("last-power-state", self.current_state)
 
             self._emit_dbus_signal("BluetoothStatusChanged", new_state)
             for plugin in self.parent.Plugins.get_loaded_plugins(PowerStateListener):

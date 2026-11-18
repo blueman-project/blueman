@@ -57,17 +57,17 @@ class SettingsWidget(Gtk.Box):
         self.show_all()
 
     def construct_settings(self) -> None:
-        for k, v in self.inst.__class__.__options__.items():
-            if len(v) > 2:
-
-                label = Gtk.Label(label=v["name"])
+        for name, option in self.inst.__class__.__options__.items():
+            # Skip options without name and description in the plugin dialog.
+            if "desc" in option and "name" in option:
+                label = Gtk.Label(label=option["name"])
                 label.props.xalign = 0.0
 
-                w = self.get_control_widget(k, v)
+                w = self.get_control_widget(name, option)
 
                 self.pack_start(w, False, False, 0)
 
-                label = Gtk.Label(label="<i >" + v["desc"] + "</i>", wrap=True, use_markup=True, xalign=0.0)
+                label = Gtk.Label(label="<i >" + option["desc"] + "</i>", wrap=True, use_markup=True, xalign=0.0)
                 self.pack_start(label, False, False, 0)
 
     def handle_change(self, widget: Gtk.Widget, opt: str, params: Option, prop: str) -> None:
