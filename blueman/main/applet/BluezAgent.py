@@ -9,7 +9,7 @@ from blueman.bluemantyping import ObjectPath
 from blueman.bluez.Device import Device
 from blueman.bluez.AgentManager import AgentManager
 from blueman.Sdp import ServiceUUID
-from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog
+from blueman.gui.Notification import Notification, _NotificationBubble, _NotificationDialog, NotificationAction
 from blueman.main.Builder import Builder
 from blueman.main.DbusService import DbusService, DbusError
 
@@ -227,10 +227,13 @@ class BluezAgent(DbusService):
 
         if passkey:
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey:06}</b>"
-        actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
+        actions = [
+            NotificationAction("confirm", _("Confirm"), on_confirm_action),
+            NotificationAction("deny", _("Deny"), on_confirm_action)
+        ]
 
-        self._notification = Notification("Bluetooth", notify_message, 0,
-                                          actions=actions, actions_cb=on_confirm_action, icon_name="blueman")
+        self._notification = Notification("Bluetooth", notify_message, 0, actions=actions,
+                                          icon_name="blueman")
         self._notification.show()
 
     def _on_request_authorization(self, object_path: ObjectPath, ok: Callable[[], None],
@@ -256,11 +259,11 @@ class BluezAgent(DbusService):
         service = ServiceUUID(uuid).name
         notify_message = \
             _("Authorization request for:") + f"\n{dev_str}\n" + _("Service:") + f" <b>{service}</b>"
-        actions = [("always", _("Always accept")),
-                   ("accept", _("Accept")),
-                   ("deny", _("Deny"))]
+        actions = [
+            NotificationAction("always", _("Always accept"), on_auth_action),
+            NotificationAction("accept", _("Accept"), on_auth_action),
+            NotificationAction("deny", _("Deny"), on_auth_action)]
 
-        n = Notification(_("Bluetooth Authentication"), notify_message, 0,
-                         actions=actions, actions_cb=on_auth_action, icon_name="blueman")
+        n = Notification(_("Bluetooth Authentication"), notify_message, 0, actions=actions, icon_name="blueman")
         n.show()
         self._service_notifications.append(n)
