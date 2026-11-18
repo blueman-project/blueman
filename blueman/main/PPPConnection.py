@@ -39,6 +39,8 @@ pppd_errors = {
     19: "We failed to authenticate ourselves to the peer."
 }
 
+RFCOMM_FILE_CLOSED = "RFCOMM file descriptor is not open"
+
 
 class PPPException(Exception):
     pass
@@ -66,6 +68,11 @@ class PPPConnection(GObject.GObject):
         self.pwd = pwd
         self.port = port
         self.interface: str | None = None
+        self.file: int | None = None
+        self.pppd: subprocess.Popen[bytes] | None = None
+        self.io_watch: int | None = None
+        self.timeout: int | None = None
+        self.buffer = ""
 
         self.commands: MutableSequence[str | tuple[str, Callable[[list[str]], None], Iterable[str]]] = [
             "ATZ E0 V1 X4 &C1 +FCLASS=0",
@@ -81,7 +88,24 @@ class PPPConnection(GObject.GObject):
             self.commands.insert(-1, f'AT+CGDCONT=1,"IP","{self.apn}"')
 
     def cleanup(self) -> None:
-        os.close(self.file)
+        if self.file is None:
+            return
+        try:
+            os.close(self.file)
+        except OSError:
+            logging.exception("Failed to close PPP rfcomm file descriptor")
+        finally:
+            self.file = None
+
+    def _remove_io_watch(self) -> None:
+        if self.io_watch is not None:
+            GLib.source_remove(self.io_watch)
+            self.io_watch = None
+
+    def _remove_timeout(self) -> None:
+        if self.timeout is not None:
+            GLib.source_remove(self.timeout)
+            self.timeout = None
 
     def connect_callback(self, response: list[str]) -> None:
         if "CONNECT" in response:
@@ -163,6 +187,9 @@ class PPPConnection(GObject.GObject):
         return True
 
     def check_pppd(self) -> bool:
+        if self.pppd is None:
+            return False
+
         status = self.pppd.poll()
         if status is not None:
             if status == 0:
@@ -180,6 +207,8 @@ class PPPConnection(GObject.GObject):
         return True
 
     def send_command(self, command: str) -> None:
+        if self.file is None:
+            raise PPPException(RFCOMM_FILE_CLOSED)
         logging.info(f"--> {command}")
         out = f"{command}\r\n"
         os.write(self.file, out.encode("UTF-8"))
@@ -187,17 +216,20 @@ class PPPConnection(GObject.GObject):
 
     def on_data_ready(self, _source: int, condition: GLib.IOCondition, command_id: int) -> bool:
         if condition & GLib.IO_ERR or condition & GLib.IO_HUP:
-            GLib.source_remove(self.timeout)
+            self._remove_timeout()
             self.__cmd_response_cb(None, PPPException("Socket error"), command_id)
             self.cleanup()
             return False
         try:
+            if self.file is None:
+                raise OSError(errno.EBADF, RFCOMM_FILE_CLOSED)
             self.buffer += os.read(self.file, 1).decode('utf-8')
         except OSError as e:
             if e.errno == errno.EAGAIN:
                 logging.error("Got EAGAIN")
                 return True
             else:
+                self._remove_timeout()
                 self.__cmd_response_cb(None, PPPException("Socket error"), command_id)
                 logging.exception(e)
                 self.cleanup()
@@ -211,6 +243,7 @@ class PPPConnection(GObject.GObject):
             lines = [x.strip("\r\n") for x in lines if x != ""]
             logging.info(f"<-- {lines}")
 
+            self._remove_timeout()
             self.__cmd_response_cb(lines, None, command_id)
             return False
 
@@ -218,13 +251,17 @@ class PPPConnection(GObject.GObject):
 
     def wait_for_reply(self, command_id: int) -> None:
         def on_timeout() -> bool:
-            GLib.source_remove(self.io_watch)
+            self.timeout = None
+            self._remove_io_watch()
             self.__cmd_response_cb(None, PPPException("Modem initialization timed out"), command_id)
             self.cleanup()
             return False
 
         self.buffer = ""
         self.term_found = False
+
+        if self.file is None:
+            raise PPPException(RFCOMM_FILE_CLOSED)
 
         self.io_watch = GLib.io_add_watch(self.file, GLib.IO_IN | GLib.IO_ERR | GLib.IO_HUP, self.on_data_ready,
                                           command_id)
