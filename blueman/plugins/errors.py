@@ -4,3 +4,11 @@ class PluginException(Exception):
 
 class UnsupportedPlatformError(PluginException):
     pass
+
+
+class PluginError(PluginException):
+    pass
+
+
+class PluginDependencyError(PluginError):
+    pass
