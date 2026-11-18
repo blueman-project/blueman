@@ -23,6 +23,7 @@
 #include <arpa/inet.h>
 #include <ctype.h>
 #include <fcntl.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,82 +54,101 @@ static inline unsigned long __tv_to_jiffies(const struct timeval *tv)
         return jif/10000;
 }
 
-int _create_bridge(const char* name) {
-	int sock;
-	sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock < 0) {
-		return -errno;
-	}
-	
-	int err;
+/* Bounded, NUL-terminated, zero-padded copy of an interface name.
+ *
+ * This deliberately avoids strncpy(). The Linux kernel deprecated it
+ * (Documentation/process/deprecated.rst) because it does not guarantee
+ * NUL-termination when the source fills the buffer and its zero-padding
+ * obscures intent, and after a six-year, 362-commit conversion effort the
+ * API was removed from the kernel entirely for v7.2:
+ * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=1a3746ccbb0a97bed3c06ccde6b880013b1dddc1
+ * The kernel's replacement is strscpy()/strscpy_pad(), which has no portable
+ * userspace equivalent, so this helper implements the strscpy_pad()
+ * semantics we need explicitly: the copy is bounded to IFNAMSIZ - 1 so the
+ * result is always terminated, and the whole buffer is zeroed first because
+ * the bridge ioctls always read a full IFNAMSIZ bytes — the padding is
+ * required, not cosmetic. */
+static void copy_ifname(char dst[IFNAMSIZ], const char *name)
+{
+	/* memchr instead of strnlen: same bounded scan, but ISO C */
+	const char *end = memchr(name, '\0', IFNAMSIZ - 1);
+	size_t len = end != NULL ? (size_t) (end - name) : IFNAMSIZ - 1;
 
-	err = ioctl(sock, SIOCBRADDBR, name);
-	if (err < 0) {
-		close(sock);
+	memset(dst, 0, IFNAMSIZ);
+	memcpy(dst, name, len);
+}
+
+int _create_bridge(const char* name) {
+	/* the kernel always copies IFNAMSIZ bytes for SIOCBRADDBR/SIOCBRDELBR,
+	 * so hand it a fixed-size zero-padded buffer instead of the raw string
+	 * to keep the read within bounds */
+	char ifname[IFNAMSIZ];
+	copy_ifname(ifname, name);
+
+	int sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0)
 		return -errno;
+
+	if (ioctl(sock, SIOCBRADDBR, ifname) < 0) {
+		int err = errno;
+		close(sock);
+		return -err;
 	}
-		
-	
-	struct timeval tv;
-        tv.tv_sec = 0;
-        tv.tv_usec = 1000000 * (0 - tv.tv_sec);
-        
-        
-        unsigned long args[5];
-        struct ifreq ifr;
-        
-        args[0] = BRCTL_SET_BRIDGE_FORWARD_DELAY;
-        args[1] = __tv_to_jiffies(&tv);
-        args[2] = 0;
-        args[3] = 0;
-        args[4] = 0;
-        
-        memcpy(ifr.ifr_name, name, IFNAMSIZ);
-        ifr.ifr_data = (char *) &args;
-        
-	ioctl(sock, SIOCDEVPRIVATE, &ifr);
-	
+
+	struct timeval tv = { 0, 0 };  /* forward delay of 0 */
+	unsigned long args[5] = { BRCTL_SET_BRIDGE_FORWARD_DELAY, __tv_to_jiffies(&tv), 0, 0, 0 };
+	struct ifreq ifr;
+
+	memset(&ifr, 0, sizeof(ifr));
+	memcpy(ifr.ifr_name, ifname, IFNAMSIZ);
+	ifr.ifr_data = (char *) args;
+
+	/* setting the forward delay uses BRCTL_SET_BRIDGE_FORWARD_DELAY via
+	 * SIOCDEVPRIVATE, a legacy ioctl interface. Treat failure as non-fatal:
+	 * the bridge itself was already created above, so failing here would
+	 * leave a half-created bridge behind and turn a working NAP setup into
+	 * a hard failure on kernels that reject the legacy interface. */
+	(void) ioctl(sock, SIOCDEVPRIVATE, &ifr);
+
 	close(sock);
 	return 0;
 }
-	
-	
+
+
 int _destroy_bridge(const char* name) {
-	int sock;
-	sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock < 0) {
+	/* zero-padded IFNAMSIZ buffer; see copy_ifname */
+	char ifname[IFNAMSIZ];
+	copy_ifname(ifname, name);
+
+	int sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock < 0)
 		return -errno;
-	}
-	
-	int err;
-	
+
 	struct ifreq req;
-	memset(&req, 0, sizeof (struct ifreq));
-	strncpy(req.ifr_name, name, IFNAMSIZ);
-	
-	err = ioctl(sock, SIOCGIFFLAGS, &req);
-	if (err < 0) {
+	memset(&req, 0, sizeof(req));
+	memcpy(req.ifr_name, ifname, IFNAMSIZ);
+
+	if (ioctl(sock, SIOCGIFFLAGS, &req) < 0) {
+		int err = errno;
 		close(sock);
-		return -errno;
+		return -err;
 	}
-	
+
 	req.ifr_flags &= ~(IFF_UP | IFF_RUNNING);
 
-	err = ioctl(sock, SIOCSIFFLAGS, &req);
-
-	if (err < 0) {
+	if (ioctl(sock, SIOCSIFFLAGS, &req) < 0) {
+		int err = errno;
 		close(sock);
-		return -errno;
+		return -err;
 	}
 
-	err = ioctl(sock, SIOCBRDELBR, name);
-	if (err < 0) {
+	if (ioctl(sock, SIOCBRDELBR, ifname) < 0) {
+		int err = errno;
 		close(sock);
-		return -errno;
+		return -err;
 	}
-		
+
 	close(sock);
-	
 	return 0;
 }
 
@@ -137,43 +157,49 @@ static int find_conn(int s, int dev_id, long arg)
 	struct hci_conn_list_req *cl;
 	struct hci_conn_info *ci;
 	int i;
-	int ret = 0;
 
 	if (!(cl = malloc(10 * sizeof(*ci) + sizeof(*cl))))
-		goto out;
+		return 0;
 
 	cl->dev_id = dev_id;
 	cl->conn_num = 10;
 	ci = cl->conn_info;
 
-	if (ioctl(s, HCIGETCONNLIST, (void *) cl))
-		goto out;
+	if (ioctl(s, HCIGETCONNLIST, (void *) cl)) {
+		free(cl);
+		return 0;
+	}
 
-	for (i = 0; i < cl->conn_num; i++, ci++)
-		if (!bacmp((bdaddr_t *) arg, &ci->bdaddr)) {
-			ret = 1;
-			goto out;
+	/* the kernel caps conn_num at the requested count; clamp anyway so a
+	 * broken contract can never walk past the 10 entries allocated above */
+	if (cl->conn_num > 10)
+		cl->conn_num = 10;
+
+	for (i = 0; i < cl->conn_num; i++, ci++) {
+		if (!bacmp((bdaddr_t *)(intptr_t) arg, &ci->bdaddr)) {
+			free(cl);
+			return 1;
 		}
+	}
 
-out:
 	free(cl);
-	return ret;
+	return 0;
 }
 
 
 
-int connection_init(int dev_id, char *addr, struct conn_info_handles *ci)
+int connection_init(int dev_id, const char *addr, struct conn_info_handles *ci)
 {
 	struct hci_conn_info_req *cr = NULL;
 	bdaddr_t bdaddr;
-	
-	int dd;
+	int dd = -1;
 	int ret = 1;
 
-	str2ba(addr, &bdaddr);
+	if (str2ba(addr, &bdaddr) < 0)
+		return ERR_INVALID_ADDRESS;
 
 	if (dev_id < 0) {
-		dev_id = hci_for_each_dev(HCI_UP, find_conn, (long) &bdaddr);
+		dev_id = hci_for_each_dev(HCI_UP, find_conn, (long)(intptr_t) &bdaddr);
 		if (dev_id < 0) {
 			ret = ERR_NOT_CONNECTED;
 			goto out;
@@ -198,18 +224,19 @@ int connection_init(int dev_id, char *addr, struct conn_info_handles *ci)
 		ret = ERR_GET_CONN_INFO_FAILED;
 		goto out;
 	}
-	
+
 	ci->dd = dd;
 	ci->handle = cr->conn_info->handle;
+	dd = -1;  /* ownership transferred to ci; closed by connection_close */
 
 out:
-	if (cr)
-		free(cr);
-	
+	free(cr);
+	if (dd >= 0)
+		hci_close_dev(dd);
 	return ret;
 }
 
-int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi)
+int connection_get_rssi(const struct conn_info_handles *ci, int8_t *ret_rssi)
 {
 	int8_t rssi;
 	if (hci_read_rssi(ci->dd, htobs(ci->handle), &rssi, 1000) < 0) {
@@ -220,8 +247,8 @@ int connection_get_rssi(struct conn_info_handles *ci, int8_t *ret_rssi)
 
 }
 
-int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type)
-{ 	
+int connection_get_tpl(const struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t type)
+{
 	int8_t level;
 	if (hci_read_transmit_power_level(ci->dd, htobs(ci->handle), type, &level, 1000) < 0) {
 		return ERR_READ_TPL_FAILED;
@@ -229,49 +256,50 @@ int connection_get_tpl(struct conn_info_handles *ci, int8_t *ret_tpl, uint8_t ty
 	*ret_tpl = level;
 	return 1;
 }
-	
+
 int connection_close(struct conn_info_handles *ci)
 {
+	/* idempotent: invalidate dd so a second close (or a close before a
+	 * successful connection_init) never touches a recycled descriptor */
+	if (ci->dd < 0)
+		return 1;
 	hci_close_dev(ci->dd);
+	ci->dd = -1;
 	return 1;
 }
 
 int
-get_rfcomm_channel(uint16_t service_class, char* btd_addr) {
+get_rfcomm_channel(uint16_t service_class, const char *btd_addr) {
     bdaddr_t target;
-    sdp_session_t *session = 0;
+    sdp_session_t *session = NULL;
     uuid_t service_uuid;
     int err;
     int port_num = 0;
-    sdp_list_t *response_list = NULL, *search_list, *attrid_list;
+    sdp_list_t *response_list = NULL, *search_list = NULL, *attrid_list = NULL;
+    uint32_t range = 0x0000ffff;
 
-    str2ba(btd_addr, &target);
+    if (str2ba(btd_addr, &target) < 0)
+        return 0;
     sdp_uuid16_create(&service_uuid, service_class);
 
     session = sdp_connect(BDADDR_ANY, &target, SDP_RETRY_IF_BUSY);
 
     if (!session) {
         printf("Failed to connect to sdp\n");
-        return port_num;
+        return 0;
     }
 
     search_list = sdp_list_append(NULL, &service_uuid);
-
-    uint32_t range = 0x0000ffff;
     attrid_list = sdp_list_append(NULL, &range);
 
     err = sdp_service_search_attr_req(session, search_list, SDP_ATTR_REQ_RANGE, attrid_list, &response_list);
 
     if (err) {
         printf("Failed to search attributes\n");
-        sdp_list_free(response_list, 0);
-        sdp_list_free(search_list, 0);
-        sdp_list_free(attrid_list, 0);
-        return port_num;
+        goto cleanup;
     }
     // go through each of the service records
-    sdp_list_t *r = response_list;
-    for (; r; r = r->next) {
+    for (sdp_list_t *r = response_list; r; r = r->next) {
         sdp_record_t *rec = (sdp_record_t*) r->data;
         sdp_list_t *proto_list;
 
@@ -311,6 +339,11 @@ get_rfcomm_channel(uint16_t service_class, char* btd_addr) {
         }
         sdp_record_free(rec);
     }
+
+cleanup:
+    sdp_list_free(response_list, 0);
+    sdp_list_free(search_list, 0);
+    sdp_list_free(attrid_list, 0);
     sdp_close(session);
     return port_num;
 }
@@ -319,7 +352,6 @@ int
 get_rfcomm_list(struct rfcomm_dev_list_req **result)
 {
 	struct rfcomm_dev_list_req *dl;
-	struct rfcomm_dev_info *di;
 	int ctl = -1;
 	int ret = 1;
 
@@ -329,14 +361,13 @@ get_rfcomm_list(struct rfcomm_dev_list_req **result)
 		goto out;
 	}
 
-	dl = malloc(sizeof(*dl) + RFCOMM_MAX_DEV * sizeof(*di));
+	dl = malloc(sizeof(*dl) + RFCOMM_MAX_DEV * sizeof(struct rfcomm_dev_info));
 	if (dl == NULL) {
 		ret = ERR_CANNOT_ALLOCATE;
 		goto out;
 	}
 
 	dl->dev_num = RFCOMM_MAX_DEV;
-	di = dl->dev_info;
 
 	if (ioctl(ctl, RFCOMMGETDEVLIST, (void *) dl) < 0) {
 		ret = ERR_GET_RFCOMM_LIST_FAILED;
@@ -345,15 +376,15 @@ get_rfcomm_list(struct rfcomm_dev_list_req **result)
 	}
 
 	*result = dl;
-	
+
 out:
 	if (ctl >= 0)
 		close(ctl);
 	return ret;
 }
 
-int create_rfcomm_device(char *local_address, char *remote_address, int channel) {
-    int sk, dev, ret;
+int create_rfcomm_device(const char *local_address, const char *remote_address, int channel) {
+    int sk = -1, dev, ret;
     struct sockaddr_rc laddr, raddr;
     struct rfcomm_dev_req req;
 
@@ -363,8 +394,12 @@ int create_rfcomm_device(char *local_address, char *remote_address, int channel)
         goto out;
     }
 
+    memset(&laddr, 0, sizeof(laddr));
     laddr.rc_family = AF_BLUETOOTH;
-    str2ba(local_address, &laddr.rc_bdaddr);
+    if (str2ba(local_address, &laddr.rc_bdaddr) < 0) {
+        ret = ERR_INVALID_ADDRESS;
+        goto out;
+    }
     laddr.rc_channel = 0;
 
     if (bind(sk, (struct sockaddr *) &laddr, sizeof(laddr)) < 0) {
@@ -372,8 +407,12 @@ int create_rfcomm_device(char *local_address, char *remote_address, int channel)
         goto out;
     }
 
+    memset(&raddr, 0, sizeof(raddr));
     raddr.rc_family = AF_BLUETOOTH;
-    str2ba(remote_address, &raddr.rc_bdaddr);
+    if (str2ba(remote_address, &raddr.rc_bdaddr) < 0) {
+        ret = ERR_INVALID_ADDRESS;
+        goto out;
+    }
     raddr.rc_channel = channel;
 
     if (connect(sk, (struct sockaddr *) &raddr, sizeof(raddr)) < 0) {
