@@ -125,7 +125,7 @@ class PPPConnection(GObject.GObject):
 
     def connect_rfcomm(self) -> None:
 
-        self.file = open_rfcomm(self.port, os.O_RDWR)
+        self.file = open_rfcomm(self.port, rw=True)
 
         tty.setraw(self.file)
 
