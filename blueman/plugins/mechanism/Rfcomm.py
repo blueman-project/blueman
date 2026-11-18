@@ -1,6 +1,7 @@
 import os
 import subprocess
 import signal
+import logging
 from blueman.Constants import RFCOMM_WATCHER_PATH
 from blueman.plugins.MechanismPlugin import MechanismPlugin
 
@@ -11,7 +12,11 @@ class Rfcomm(MechanismPlugin):
         self.parent.add_method("CloseRFCOMM", ("n",), "", self._close_rfcomm)
 
     def _open_rfcomm(self, port_id: int) -> None:
-        subprocess.Popen([RFCOMM_WATCHER_PATH, f"/dev/rfcomm{port_id:d}"])
+        try:
+            subprocess.Popen([RFCOMM_WATCHER_PATH, f"/dev/rfcomm{port_id:d}"])
+        except OSError:
+            logging.exception(f"Failed to start rfcomm watcher for /dev/rfcomm{port_id:d}")
+            raise
 
     def _close_rfcomm(self, port_id: int) -> None:
         out, err = subprocess.Popen(['ps', '-e', 'o', 'pid,args'], stdout=subprocess.PIPE).communicate()
