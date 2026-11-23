@@ -212,7 +212,7 @@ class Blueman(Gtk.Application):
 
         menu_item = self.builder.get_widget("bt_status_item", Gtk.MenuItem)
         menu_image = self.builder.get_widget("im_bt_status_item", Gtk.Image)
-        menu_item.set_label(menu_label)
+        menu_item.props.label = menu_label
         menu_image.props.icon_name = menu_icon_name
 
     def _on_configure(self, _window: Gtk.ApplicationWindow, event: Gdk.EventConfigure) -> bool:
