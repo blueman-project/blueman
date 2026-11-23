@@ -35,10 +35,16 @@ class MenuService(DbusService):
         if self._source_id is not None:
             GLib.source_remove(self._source_id)
             self._source_id = None
+        self._layout_cache = None
         super().unregister()
 
     def set_items(self, items: Iterable[MenuItemDict]) -> None:
-        self._items = OrderedDict((item["id"], item) for item in items)
+        new_items = OrderedDict((item["id"], item) for item in items)
+        if new_items == self._items and (
+            self._revision_advertised == self._revision or self._source_id is not None
+        ):
+            return
+        self._items = new_items
         self._revision += 1
         self._layout_cache = None
         if self._source_id is None:
