@@ -89,4 +89,6 @@ class GtkStatusIcon(IndicatorInterface):
         self.indicator.props.visible = visible
 
     def set_menu(self, menu: Iterable[MenuItemDict]) -> None:
+        if self._menu is not None:
+            self._menu.destroy()
         self._menu = build_menu(((item["id"], item) for item in menu), self._on_activate)
