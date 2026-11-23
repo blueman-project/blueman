@@ -18,6 +18,11 @@
     <property name="icon-name">help-about-symbolic</property>
     <property name="visible">True</property>
   </object>
+  <object class="GtkImage" id="im_bt_status_item">
+    <property name="can-focus">False</property>
+    <property name="icon-name">bluetooth-symbolic</property>
+    <property name="visible">True</property>
+  </object>
   <object class="GtkImage" id="im_plugins">
     <property name="can-focus">False</property>
     <property name="icon-name">application-x-addon-symbolic</property>
@@ -67,6 +72,16 @@
                   <object class="GtkMenu">
                     <property name="can-focus">False</property>
                     <property name="visible">True</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="bt_status_item">
+                        <property name="action-name">app.bluetooth_status</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">im_bt_status_item</property>
+                        <property name="label" translatable="yes">Turn Bluetooth _On</property>
+                        <property name="use-stock">False</property>
+                        <property name="use-underline">True</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkImageMenuItem" id="search_item">
                         <property name="action-name">app.inquiry</property>
