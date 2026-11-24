@@ -7,6 +7,7 @@ _INTERFACE = "org.bluez.Battery1"
 
 class Battery(Base):
     _interface_name = _INTERFACE
+    _fallbacks = {"Percentage": 0}
 
 
 class AnyBattery(AnyBase):
