@@ -98,6 +98,12 @@ class Base(GObject.Object, metaclass=BaseMeta):
                           callback, reply_handler, error_handler)
 
     def get(self, name: str) -> Any:
+        # Serve from the proxy cache (kept fresh by PropertiesChanged)
+        # whenever possible so the GUI thread avoids synchronous bus
+        # round trips for every property read.
+        cached = self.__proxy.get_cached_property(name)
+        if cached is not None:
+            return cached.unpack()
         try:
             prop = self.__proxy.call_sync(
                 'org.freedesktop.DBus.Properties.Get',
@@ -128,14 +134,25 @@ class Base(GObject.Object, metaclass=BaseMeta):
         return ObjectPath(self.__proxy.get_object_path())
 
     def get_properties(self) -> dict[str, Any]:
-        param = GLib.Variant('(s)', (self._interface_name,))
-        res = self.__proxy.call_sync('org.freedesktop.DBus.Properties.GetAll',
-                                     param,
-                                     Gio.DBusCallFlags.NONE,
-                                     DBUS_TIMEOUT,
-                                     None)
+        # Prefer the proxy cache (kept fresh by PropertiesChanged) and only
+        # hit the bus synchronously when the cache is entirely cold, so the
+        # GUI thread does not block on busy services like bluetoothd.
+        names = self.__proxy.get_cached_property_names()
+        if names:
+            props: dict[str, Any] = {}
+            for name in names:
+                value = self.__proxy.get_cached_property(name)
+                if value is not None:
+                    props[name] = value.unpack()
+        else:
+            param = GLib.Variant('(s)', (self._interface_name,))
+            res = self.__proxy.call_sync('org.freedesktop.DBus.Properties.GetAll',
+                                         param,
+                                         Gio.DBusCallFlags.NONE,
+                                         DBUS_TIMEOUT,
+                                         None)
 
-        props: dict[str, Any] = res.unpack()[0]
+            props = res.unpack()[0]
         for k, v in self.__fallback.items():
             if k in props:
                 continue
