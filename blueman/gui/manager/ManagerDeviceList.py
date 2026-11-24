@@ -136,7 +136,13 @@ class ManagerDeviceList(DeviceList):
         if obj_path not in self._batteries:
             battery_proxy = Battery(obj_path=obj_path)
             self._batteries[obj_path] = battery_proxy
-            logging.debug(f"{obj_path} {battery_proxy['Percentage']}")
+            # Some devices expose a Battery1 interface without a Percentage
+            # property; guard so logging can't raise.
+            try:
+                percentage = battery_proxy["Percentage"]
+            except Exception:
+                percentage = None
+            logging.debug(f"{obj_path} {percentage}")
 
     def on_battery_removed(self, _manager: Manager, obj_path: str) -> None:
         if obj_path in self._batteries:
@@ -501,8 +507,9 @@ class ManagerDeviceList(DeviceList):
         bars = {}
 
         obj_path = device.get_object_path()
-        if obj_path in self._batteries:
-            bars["battery"] = self._batteries[obj_path]["Percentage"]
+        battery = self._batteries.get(obj_path)
+        if battery is not None and "Percentage" in battery:
+            bars["battery"] = battery["Percentage"]
 
         # cinfo init may fail for bluetooth devices version 4 and up
         # FIXME Workaround is horrible and we should show something better
