@@ -124,14 +124,17 @@ class Blueman(Gtk.Application):
             # Quit application if primary window is closed
             self.window.connect("delete-event", self._on_delete)
 
-        self.window.present_with_time(Gtk.get_current_event_time())
+        event_time = Gtk.get_current_event_time()
+        self.window.present_with_time(event_time)
 
-        # D-Bus activation carries no GDK event, so Gtk.get_current_event_time()
-        # returns 0 and the window manager's focus prevention ignores the
-        # raise request - the window maps but stays buried. Explicitly restack.
-        gdk_window = self.window.get_window()
-        if gdk_window is not None:
-            gdk_window.raise_()
+        # D-Bus activation carries no GDK event, so event_time is 0 and the
+        # window manager's focus prevention ignores the raise request - the
+        # window maps but stays buried. Only in that case force a restack;
+        # with a real event the timestamp is usable as-is.
+        if not event_time:
+            gdk_window = self.window.get_window()
+            if gdk_window is not None:
+                gdk_window.raise_()
 
     def on_applet_signal(self, _proxy: AppletService | AppletPowerManagerService, _sender: str, signal_name: str,
                          params: GLib.Variant) -> None:
