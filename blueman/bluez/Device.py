@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from blueman.bluemantyping import ObjectPath
 
-from blueman.bluez.Base import Base
+from blueman.bluez.Base import Base, LONG_DBUS_TIMEOUT
 from blueman.bluez.AnyBase import AnyBase
 from blueman.bluez.errors import BluezDBusException
 
@@ -17,14 +17,14 @@ class Device(Base):
         reply_handler: Callable[[], None] | None = None,
         error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
-        self._call('Pair', reply_handler=reply_handler, error_handler=error_handler)
+        self._call('Pair', reply_handler=reply_handler, error_handler=error_handler, timeout=LONG_DBUS_TIMEOUT)
 
     def connect(  # type: ignore
         self,
         reply_handler: Callable[[], None] | None = None,
         error_handler: Callable[[BluezDBusException], None] | None = None,
     ) -> None:
-        self._call('Connect', reply_handler=reply_handler, error_handler=error_handler)
+        self._call('Connect', reply_handler=reply_handler, error_handler=error_handler, timeout=LONG_DBUS_TIMEOUT)
 
     def disconnect(  # type: ignore
         self,

@@ -142,6 +142,7 @@ class BluezAgent(DbusService):
         if self.dialog:
             logging.info("Agent: Another dialog still active, cancelling")
             err(BluezErrorCanceled("Canceled"))
+            return
 
         self.dialog, pin_entry = self.build_passkey_dialog(dev_str, dialog_msg, is_numeric)
         if not self.dialog:
@@ -225,7 +226,7 @@ class BluezAgent(DbusService):
         logging.info("Agent.RequestConfirmation")
         notify_message = _("Pairing request for:") + f"\n{self.get_device_string(object_path)}"
 
-        if passkey:
+        if passkey is not None:
             notify_message += "\n" + _("Confirm value for authentication:") + f" <b>{passkey:06}</b>"
         actions = [("confirm", _("Confirm")), ("deny", _("Deny"))]
 

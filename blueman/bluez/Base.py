@@ -8,6 +8,7 @@ from blueman.bluez.errors import parse_dbus_error, BluezDBusException
 import logging
 
 DBUS_TIMEOUT = 10 * 1_000
+LONG_DBUS_TIMEOUT = 60 * 1_000
 
 
 class BaseMeta(GObjectMeta):
@@ -77,6 +78,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
         param: GLib.Variant | None = None,
         reply_handler: Callable[..., None] | None = None,
         error_handler: Callable[[BluezDBusException], None] | None = None,
+        timeout: int = DBUS_TIMEOUT,
     ) -> None:
         def callback(
             proxy: Gio.DBusProxy,
@@ -94,7 +96,7 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 else:
                     logging.error(f"Unhandled error for {self.__proxy.get_interface_name()}.{method}", exc_info=True)
 
-        self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, DBUS_TIMEOUT, None,
+        self.__proxy.call(method, param, Gio.DBusCallFlags.NONE, timeout, None,
                           callback, reply_handler, error_handler)
 
     def get(self, name: str) -> Any:
@@ -116,13 +118,20 @@ class Base(GObject.Object, metaclass=BaseMeta):
                 raise parse_dbus_error(e)
 
     def set(self, name: str, value: str | int | bool) -> None:
+        def callback(proxy: Gio.DBusProxy, result: Gio.AsyncResult) -> None:
+            try:
+                proxy.call_finish(result)
+            except GLib.Error as e:
+                logging.error(f"Failed to set {self._interface_name}.{name}: {e.message}")
+
         v = GLib.Variant(self.__variant_map[type(value)], value)
         param = GLib.Variant('(ssv)', (self._interface_name, name, v))
         self.__proxy.call('org.freedesktop.DBus.Properties.Set',
                           param,
                           Gio.DBusCallFlags.NONE,
                           DBUS_TIMEOUT,
-                          None)
+                          None,
+                          callback)
 
     def get_object_path(self) -> ObjectPath:
         return ObjectPath(self.__proxy.get_object_path())

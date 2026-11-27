@@ -1,4 +1,5 @@
 from gettext import gettext as _
+import logging
 from typing import TYPE_CHECKING, Any
 from blueman.bluemantyping import ObjectPath, BtAddress
 
@@ -76,6 +77,11 @@ class AutoConnect(AppletPlugin):
         powered = any(adapter["Powered"] for adapter in self.parent.Manager.get_adapters())
         if powered:
             self.__event_source = GLib.timeout_add_seconds(self.get_option("interval"), self._run)
+            GLib.idle_add(self._run_once)
+
+    def _run_once(self) -> bool:
+        self._run()
+        return False
 
     def stop_timer(self) -> None:
         if self.__event_source is not None:
@@ -113,8 +119,8 @@ class AutoConnect(AppletPlugin):
                              {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
-            def err(_reason: Exception | str) -> None:
-                pass
+            def err(reason: Exception | str, dev: Device | None = device) -> None:
+                logging.debug(f"Auto-connect failed for {dev.display_name if dev else btaddress}: {reason}")
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)
 

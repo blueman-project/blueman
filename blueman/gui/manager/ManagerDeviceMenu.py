@@ -36,6 +36,7 @@ if TYPE_CHECKING:
     from blueman.main.Manager import Blueman
 
 DBUS_TIMEOUT = 10 * 1_000
+CONNECT_DBUS_TIMEOUT = 60 * 1_000
 
 
 class DeviceMenuItem:
@@ -165,7 +166,7 @@ class ManagerDeviceMenu(Gtk.Menu):
 
         self._appl.ConnectService('(os)', device.get_object_path(), uuid,
                                   result_handler=success, error_handler=fail,
-                                  timeout=DBUS_TIMEOUT)
+                                  timeout=CONNECT_DBUS_TIMEOUT)
 
         prog.start()
 
@@ -338,10 +339,10 @@ class ManagerDeviceMenu(Gtk.Menu):
         btaddress: BtAddress = self.SelectedDevice["Address"]
         generic_autoconnect = (btaddress, str(generic_service)) in set(config["services"])
 
-        if row["connected"] or generic_autoconnect or autoconnect_items:
+        if row["paired"] or row["connected"] or generic_autoconnect or autoconnect_items:
             self.append(self._create_header(_("<b>Auto-connect:</b>")))
 
-            if row["connected"] or generic_autoconnect:
+            if row["paired"] or row["connected"] or generic_autoconnect:
                 item = Gtk.CheckMenuItem(label=generic_service.name)
                 config.bind_to_menuitem(item, (btaddress, str(generic_service)))
                 item.show()
@@ -350,7 +351,7 @@ class ManagerDeviceMenu(Gtk.Menu):
             for it in sorted(autoconnect_items, key=attrgetter("position")):
                 self.append(it.item)
 
-        if (powered and show_generic_connect) or connect_items or disconnect_items or autoconnect_items:
+        if (powered and show_generic_connect) or connect_items or disconnect_items or autoconnect_items or row["paired"]:
             item = Gtk.SeparatorMenuItem()
             item.show()
             self.append(item)
