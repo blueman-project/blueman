@@ -119,8 +119,8 @@ class AutoConnect(AppletPlugin):
                              {"service": service_name, "device": dev.display_name},
                              icon_name=dev["Icon"]).show()
 
-            def err(reason: Exception | str, dev: Device | None = device) -> None:
-                logging.debug(f"Auto-connect failed for {dev.display_name if dev else btaddress}: {reason}")
+            def err(reason: Exception | str, dev: Device | None = device, addr: BtAddress = btaddress) -> None:
+                logging.debug(f"Auto-connect failed for {dev.display_name if dev else addr}: {reason}")
 
             self.parent.Plugins.DBusService.connect_service(device.get_object_path(), uuid, reply, err)
 
